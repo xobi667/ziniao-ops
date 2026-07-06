@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "workflows": [
+    {
+      "id": "daily_check",
+      "name": "Daily store health check",
+      "phrases": ["巡店", "日报", "每天检查", "今日店铺", "店铺体检", "全部情况", "全店巡检", "daily", "health"],
+      "views": ["overview", "orders", "ads", "business", "finance", "chat", "returns"],
+      "required_metrics": [
+        "sales_amount",
+        "orders_count",
+        "conversion_rate",
+        "visitors",
+        "ad_spend",
+        "ad_sales",
+        "roas",
+        "pending_shipments",
+        "unread_messages",
+        "refund_or_return_count",
+        "available_balance"
+      ],
+      "questions": [
+        "今天销售额、订单数、转化率是否异常",
+        "广告花费、广告销售额、ROAS 是否异常",
+        "是否有待发货、退款售后、未读客服消息需要处理",
+        "是否有财务回款或余额异常"
+      ]
+    },
+    {
+      "id": "overview",
+      "name": "Overall data summary",
+      "phrases": ["全部数据", "总览", "概览", "整体情况", "全部情况", "summary", "overview"],
+      "views": ["overview", "business"],
+      "required_metrics": ["sales_amount", "orders_count", "visitors", "conversion_rate", "average_order_value"],
+      "questions": ["整体数据是否异常", "和昨日/上周相比变化最大的是哪项"]
+    },
+    {
+      "id": "ads",
+      "name": "Ads performance check",
+      "phrases": ["广告", "广告数据", "投流", "投放", "ads", "sponsored"],
+      "views": ["ads"],
+      "required_metrics": ["ad_spend", "impressions", "clicks", "ctr", "cpc", "ad_sales", "roas", "acos"],
+      "questions": ["广告是否超预算", "ROAS/ACOS 是否异常", "哪些计划需要人工复核"]
+    },
+    {
+      "id": "orders",
+      "name": "Order operation check",
+      "phrases": ["订单", "出单", "待发货", "未发货", "orders"],
+      "views": ["orders", "logistics"],
+      "required_metrics": ["orders_count", "pending_shipments", "cancelled_orders", "late_shipments"],
+      "questions": ["是否有待发货或即将超时订单", "是否有异常取消或物流风险"]
+    },
+    {
+      "id": "products",
+      "name": "Product/listing check",
+      "phrases": ["商品", "产品", "刊登", "listing", "sku"],
+      "views": ["products", "inventory"],
+      "required_metrics": ["active_products", "inactive_products", "out_of_stock_skus", "low_stock_skus"],
+      "questions": ["是否有下架/违规/库存不足商品", "是否有需要补货或优化的 SKU"]
+    },
+    {
+      "id": "finance",
+      "name": "Finance check",
+      "phrases": ["财务", "钱包", "结算", "回款", "账单", "finance", "wallet"],
+      "views": ["finance"],
+      "required_metrics": ["available_balance", "pending_payout", "settlement_amount", "fees"],
+      "questions": ["余额、结算、手续费是否异常", "是否有待处理账单"]
+    },
+    {
+      "id": "service",
+      "name": "Customer service and after-sale check",
+      "phrases": ["客服", "售后", "退款", "评价", "差评", "消息", "chat", "review", "refund"],
+      "views": ["chat", "returns", "reviews"],
+      "required_metrics": ["unread_messages", "response_risk_count", "refund_or_return_count", "negative_reviews"],
+      "questions": ["是否有未读消息或回复超时风险", "是否有退款售后或差评需要人工处理"]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing activity check",
+      "phrases": ["营销", "优惠券", "活动", "直播", "联盟", "marketing", "campaign"],
+      "views": ["marketing", "vouchers", "campaigns", "livestream", "affiliate"],
+      "required_metrics": ["active_campaigns", "voucher_usage", "affiliate_sales", "livestream_sales"],
+      "questions": ["活动/优惠券是否正常", "是否有报名、直播或联盟机会"]
+    }
+  ],
+  "safe_rules": [
+    "Read visible data only unless the user explicitly authorizes a safe export.",
+    "Do not click submit, publish, spend, refund, delete, edit settings, or payment buttons.",
+    "Do not handle passwords, verification codes, cookies, tokens, or browser session data.",
+    "Do not claim a module was checked unless it was actually opened or visible data was provided."
+  ]
+}

@@ -1,0 +1,35 @@
+# Local shop data and machine-specific config
+shops.json
+shops.detected.json
+shops.local.json
+shops.private.json
+shops.csv
+shops.*.csv
+ziniao.local.json
+ziniao.*.local.json
+.env
+*.env
+sensitive-patterns.local.txt
+.upstreams/
+.ziniao-ops/
+reports.local/
+
+# Generated packages and logs
+*.zip
+*.log
+*.tmp
+*.xlsx
+*.xls
+*.png
+*.jpg
+*.jpeg
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,4 @@
+店铺名称,平台,国家,别名,紫鸟店铺名,总览URL,订单URL,商品URL,库存URL,广告页URL,营销中心URL,商业分析URL,流量URL,财务URL,客服URL,评价URL,物流URL,售后URL,CompassURL,看板URL,DiscoveryURL,全效宝URL
+EXAMPLE_SHOPEE_MY,shopee,my,"example shopee my;example-my-sp",EXAMPLE_SHOPEE_MY,https://seller.shopee.com.my/datacenter/overview,https://seller.shopee.com.my/portal/sale/order,https://seller.shopee.com.my/portal/product/list/all,,https://seller.shopee.com.my/portal/marketing/pas/index,https://seller.shopee.com.my/portal/marketing,https://seller.shopee.com.my/datacenter/overview,,,,,,,,,,
+EXAMPLE_TIKTOK_ID,tiktok,id,"example tiktok id;example-id-tt",EXAMPLE_TIKTOK_ID,,,,,https://seller-id.tokopedia.com/ads-creation,,,,,,,,,https://seller-id.tokopedia.com/compass/data-overview,,,
+EXAMPLE_LAZADA_MY,lazada,my,"example lazada my;example-my-la",EXAMPLE_LAZADA_MY,,,,,,,,,,,,,,,https://sellercenter.lazada.com.my/ba/dashboard,https://sellercenter.lazada.com.my/discovery,https://sellercenter.lazada.com.my/sponsored-solutions/smax

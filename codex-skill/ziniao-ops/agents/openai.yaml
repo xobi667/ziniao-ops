@@ -1,0 +1,7 @@
+interface:
+  display_name: "Ziniao Ops"
+  short_description: "Open, check, and report local seller operations through Ziniao"
+  default_prompt: "Use $ziniao-ops to open a seller store, check operations data, or create a read-only operations report on this computer."
+
+policy:
+  allow_implicit_invocation: true

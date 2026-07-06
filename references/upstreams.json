@@ -1,0 +1,98 @@
+{
+  "own_repository": {
+    "name": "xobi667/ziniao-ops",
+    "skill_name": "ziniao-ops",
+    "url": "https://github.com/xobi667/ziniao-ops.git",
+    "default_branch": "main"
+  },
+  "upstreams": [
+    {
+      "name": "tianyehedashu/ziniao-mcp",
+      "type": "ziniao-cli-mcp",
+      "url": "https://github.com/tianyehedashu/ziniao-mcp",
+      "git_url": "",
+      "branch": "",
+      "license": "MIT",
+      "sync_mode": "manual",
+      "watch": "CLI commands, optional MCP server, site presets, RPA flows, skill installer ideas",
+      "adoption_policy": "Track manually through GitHub/PyPI because unauthenticated git ls-remote currently returns repository not found; keep default ziniao-ops install independent from this dependency."
+    },
+    {
+      "name": "PyPI ziniao",
+      "type": "package-doc",
+      "url": "https://pypi.org/project/ziniao/",
+      "git_url": "",
+      "branch": "",
+      "license": "MIT via upstream repository",
+      "sync_mode": "manual",
+      "watch": "Published package version and install command changes",
+      "adoption_policy": "Use as package reference only; do not make it a default employee dependency."
+    },
+    {
+      "name": "zpoint/vibe-seller",
+      "type": "seller-browser-automation-framework",
+      "url": "https://github.com/zpoint/vibe-seller",
+      "git_url": "https://github.com/zpoint/vibe-seller.git",
+      "branch": "main",
+      "license": "Apache-2.0",
+      "sync_mode": "mirror",
+      "watch": "Local-first seller automation, store isolation, CDP/browser control, task reporting",
+      "adoption_policy": "Borrow concepts; do not turn ziniao-ops into a long-running web service by default."
+    },
+    {
+      "name": "WW-AI-Lab/auto-ziniao",
+      "type": "ziniao-zclaw-flow-engine",
+      "url": "https://github.com/WW-AI-Lab/auto-ziniao",
+      "git_url": "https://github.com/WW-AI-Lab/auto-ziniao.git",
+      "branch": "develop",
+      "license": "Personal/internal-use license; not Apache/MIT",
+      "sync_mode": "mirror-reference-only",
+      "watch": "ZClaw bridge boundary, flow validation, WebAdmin concepts, self-heal records",
+      "adoption_policy": "Reference architecture only unless permission is granted; do not copy code into this public repo."
+    },
+    {
+      "name": "BrowserMCP/mcp",
+      "type": "generic-browser-mcp",
+      "url": "https://github.com/BrowserMCP/mcp",
+      "git_url": "https://github.com/BrowserMCP/mcp.git",
+      "branch": "main",
+      "license": "Apache-2.0",
+      "sync_mode": "mirror",
+      "watch": "Existing-profile browser control, local privacy model, MCP browser control patterns",
+      "adoption_policy": "Use for future optional generic browser/MCP integration notes only."
+    },
+    {
+      "name": "ComposioHQ/awesome-codex-skills",
+      "type": "codex-skill-catalog",
+      "url": "https://github.com/ComposioHQ/awesome-codex-skills",
+      "git_url": "https://github.com/ComposioHQ/awesome-codex-skills.git",
+      "branch": "master",
+      "license": "Repository license applies upstream",
+      "sync_mode": "mirror",
+      "watch": "Codex skill packaging and discovery patterns",
+      "adoption_policy": "Track ecosystem patterns; do not add unrelated skills to this repo."
+    },
+    {
+      "name": "clawdbot-ai/awesome-openclaw-skills-zh",
+      "type": "openclaw-skill-catalog-zh",
+      "url": "https://github.com/clawdbot-ai/awesome-openclaw-skills-zh",
+      "git_url": "",
+      "branch": "",
+      "license": "Repository license applies upstream",
+      "sync_mode": "manual",
+      "watch": "Chinese skill wording, browser and MCP skill categories, user-facing install patterns",
+      "adoption_policy": "Manual review only because the recorded GitHub repository is not currently accessible through git ls-remote; review third-party skill security before adopting anything."
+    },
+    {
+      "name": "Ziniao Open Platform docs",
+      "type": "official-doc",
+      "url": "https://open.ziniao.com/docSupport?docId=98",
+      "git_url": "",
+      "branch": "",
+      "license": "Official documentation terms apply",
+      "sync_mode": "manual",
+      "watch": "Ziniao Open Platform and assistant/ZClaw documentation changes",
+      "adoption_policy": "Prefer official docs for future ZClaw or Open Platform support."
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+把下面这段发给员工电脑上的 Codex，用来让它只修这台电脑的 ziniao-ops 本地开店包：
+
+你现在只负责修复这台电脑上的员工本地开店包 ziniao-ops，让我可以用自然语言打开 Shopee / TikTok / Tokopedia / Lazada 店铺后台和订单、商品、库存、广告、经营分析、财务、客服、评价、物流、售后等运营模块。
+
+先做这些事：
+1. 找到 Codex 配置里的 ziniao-ops 包路径：
+   - 如果 CODEX_HOME 存在，读取 $env:CODEX_HOME\ziniao-ops.json。
+   - 否则读取 $env:USERPROFILE\.codex\ziniao-ops.json。
+   - 如果配置不存在，询问我 ziniao-ops 解压在哪个目录，并让我先运行 install-codex-skill.ps1。
+2. 进入这个包目录，只检查这里面的文件，不要修改其他项目。
+3. 先运行：
+   .\diagnose-local.ps1
+4. 根据诊断结果修复本机适配问题：
+   - skill_config_missing：运行 .\install-codex-skill.ps1，然后提醒我重启 Codex。
+   - ziniao_shops_unavailable：先让我打开并登录紫鸟，然后运行 .\open-shop.ps1 -List -RefreshZiniao；不要凭空造店铺，也不要提交真实店铺清单。
+   - can_sync_ziniao_shops=true 但 shops.json 为空：这是正常情况，首次开店会自动从本机紫鸟生成缓存。
+   - python_missing：提醒我安装 Python 3，或检查 py/python 是否在 PATH。
+   - pywinauto_missing_for_lazada：运行 .\install-python-deps.ps1。
+   - ziniao_path_not_detected：检测本机紫鸟路径；如果检测不到，让我手动打开紫鸟或填写 ziniao.local.json 的 client_path。
+   - ziniao_webdriver_not_reachable：让我先打开并登录紫鸟，再重试；不要偷开普通 URL 冒充成功。
+5. 如果是脚本不适配这台电脑，可以只改 ziniao-ops 包内这些文件：
+   - install-codex-skill.ps1
+   - diagnose-local.ps1
+   - setup-ziniao.ps1
+   - open-store.ps1
+   - open-shop.ps1
+   - scripts\open-shop.ps1
+   - scripts\sync-ziniao-shops.py
+   - scripts\ziniao-gui-open.py
+   - scripts\ziniao-webdriver-open.py
+   - scripts\lazada-gui-open.py
+   - scripts\import-shops-csv.ps1
+   - references\view-intents.md
+   - references\popup-handling.md
+   - shops.json
+   - ziniao.local.json
+
+硬边界：
+- 不要读取、复制、输出、保存密码、验证码、浏览器会话数据、token、私钥。
+- 不要帮我绕过登录、验证码、2FA 或安全验证。
+- 不要修改任何外部主项目，不要动任何采集业务代码。
+- 不要把普通 URL 打开当成“精准打开成功”，除非我明确允许 UrlFallback。
+- 默认以本机紫鸟浏览器列表作为员工可打开店铺范围；不要要求我手工填写全量 shops.json。
+- 页面跳到登录页时，直接告诉我这台电脑没登录，让我手动登录后重试。
+- Lazada 可以用视觉/GUI 方式处理，但不要依赖固定坐标；优先按窗口文本和可见按钮判断。
+- 广告、公告、教程弹窗只允许点关闭、跳过、稍后、我知道了、Not now、Skip、Close 等安全按钮；不要点击会创建广告、付款、提交、发布、改设置的按钮。
+
+修好后必须验证：
+1. 重新运行：
+   .\diagnose-local.ps1
+2. 至少做一次 dry-run，例如：
+   .\open-shop.ps1 "example tiktok id" -View compass -DryRun -Json
+   .\open-shop.ps1 "example shopee my" -View orders -DryRun -Json
+3. 汇报：
+   - 改了哪些文件
+   - 诊断还剩哪些 issues
+   - 哪个店铺 dry-run 匹配到了什么
+   - 是否已经发起打开；如果进入登录页，要明确说需要本机手动登录
+
+我可能会这样说，你都要理解成打开店铺：
+- 打开 example shopee my 全部数据
+- 看 example shopee my 订单数据
+- 打开 example shopee my 财务
+- 看 example shopee my 客服消息
+- 打开 example shopee my 售后退款
+- 打开 example tiktok id 的 compass
+- 开一下 example shopee my 广告页
+- 进入 example tiktok id 后台
+- 看 example lazada my dashboard
+- 打开 Lazada 全效宝
+- 进 Shopee 数据中心
+- 店铺打不开，帮我自检
+- 紫鸟打不开，帮我看本机缺什么
+- 页面被广告弹窗挡住了，帮我跳过

@@ -1,0 +1,56 @@
+员工快速开店安装说明
+
+1. 从 GitHub Releases 下载 zip，解压到电脑任意位置。
+2. 进入真正包含 install.ps1 的 ziniao-ops 文件夹。
+3. 在 PowerShell 运行：
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
+4. install.ps1 会检查 Python/Node/Git/磁盘空间，并询问依赖要安装到哪个目录。默认可以直接回车；如果 C 盘空间小，建议输入 D 盘或 E 盘目录，例如 D:\ziniao-ops-tools。
+5. install.ps1 会安装 Codex skill、本地 Python GUI 依赖，并询问是否安装上游增强工具：ziniao CLI、auto-ziniao、BrowserMCP server、Vibe Seller。
+6. install.ps1 会自动打开/置顶紫鸟。如果看到紫鸟登录页，请在紫鸟窗口手动登录；登录完成后脚本会继续扫描店铺。
+7. 如果安装时不方便登录紫鸟，可以先运行：
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -SkipZiniaoSetup
+   之后再运行：
+   powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-ziniao.ps1
+8. 如果 Windows 提示脚本被阻止，先运行：
+   Get-ChildItem -Recurse -File | Unblock-File
+   然后重新运行安装命令。
+9. 重启 Codex。
+10. 对 Codex 说：
+   打开 <店铺关键词> 全部数据
+   打开 <店铺关键词> 订单数据
+   打开 <店铺关键词> 广告数据
+   打开 <店铺关键词> 店铺后台
+   给 <店铺关键词> 做今日巡店
+   给 <店铺关键词> 生成运营日报
+   批量巡店 <店铺关键词> 和 另一个店铺
+   把刚才的运营报告发飞书
+   打开 <店铺关键词> 财务
+   看 <店铺关键词> 客服消息
+   打开 <店铺关键词> 售后退款
+   看 <店铺关键词> 数据中心
+   打开 example tiktok id 的 compass
+   打开 example lazada my 的 dashboard
+   店铺打不开，帮我自检
+   页面被广告弹窗挡住了，帮我跳过
+
+注意：
+- 这套工具不会自动登录，不保存密码，不处理验证码。
+- 电脑本机必须由员工本人登录紫鸟和对应店铺后台。
+- 安装时会自动跑紫鸟就绪检查；如果等待超时，登录完成后运行 .\setup-ziniao.ps1，或者再说同一句开店命令。
+- 真正开店时会自动走 .\open-store.ps1：它会拉起紫鸟并等待你在紫鸟窗口登录，登录完成后自动继续打开店铺，不需要再说“继续”。
+- 首次紫鸟就绪检查会自动扫描本机紫鸟里的店铺浏览器，生成 shops.json 缓存。
+- 本机紫鸟里没有的店铺，Codex 不会打开。
+- 不要把 shops.json、ziniao.local.json、.env、日志、截图提交到 GitHub。
+- 如果 Lazada 打不开，可以运行：
+  .\install.ps1 -InstallLazadaDeps
+- 如果要完整自动安装到 D 盘，可以运行：
+  powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -NonInteractive -InstallLazadaDeps -InstallOptionalTools -InstallMissingRuntimes -LocalToolsRoot "D:\ziniao-ops-tools"
+- 如果只想检查上游增强工具装了没，可以运行：
+  .\scripts\status-upstream-adapters.ps1
+- 如果诊断里出现 ziniao_shops_unavailable 或 ziniao_webdriver_not_reachable，先运行 .\setup-ziniao.ps1。
+- 如果返回 ziniao_login_required，说明紫鸟已经打开并置顶，但还在登录页；登录后运行 .\setup-ziniao.ps1。
+- 如果页面跳到登录页，说明这台电脑对应店铺还没登录，需要员工手动登录后再试。
+- 巡店/日报会先生成任务清单，再打开对应模块读取可见数据，最后生成报告。
+- 发飞书前必须确认目标会话；报告里不能含密码、验证码、cookie、token 或 session。
+- 如果这台电脑不适配，把 本机适配修复提示词.txt 发给员工自己的 Codex。
+- 对方 Codex 只能修这个 ziniao-ops 本地包，不能碰主采集项目，不能处理密码、浏览器会话数据、验证码。

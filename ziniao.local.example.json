@@ -1,0 +1,5 @@
+﻿{
+  "webdriver_port": 16851,
+  "client_path": "",
+  "note": "Optional local Ziniao executable path. Leave empty when Ziniao is already running or can be auto-detected. Do not store passwords here."
+}

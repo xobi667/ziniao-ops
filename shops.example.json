@@ -1,0 +1,101 @@
+﻿{
+  "version": 1,
+  "updated_at": "2026-07-04",
+  "source": "ziniao_detected",
+  "shops": [
+    {
+      "name": "EXAMPLE_SHOPEE_MY",
+      "platform": "shopee",
+      "country": "my",
+      "aliases": [
+        "example shopee my",
+        "example-my-sp"
+      ],
+      "open_method": "ziniao_webdriver",
+      "ziniao_name": "EXAMPLE_SHOPEE_MY",
+      "browser_oauth": "",
+      "browser_id": "",
+      "allow_url_fallback": false,
+      "views": {
+        "home": {
+          "url": "https://seller.shopee.com.my/"
+        },
+        "overview": {
+          "url": "https://seller.shopee.com.my/datacenter/overview"
+        },
+        "orders": {
+          "url": "https://seller.shopee.com.my/portal/sale/order"
+        },
+        "products": {
+          "url": "https://seller.shopee.com.my/portal/product/list/all"
+        },
+        "ads": {
+          "url": "https://seller.shopee.com.my/portal/marketing/pas/index"
+        },
+        "marketing": {
+          "url": "https://seller.shopee.com.my/portal/marketing"
+        },
+        "business": {
+          "url": "https://seller.shopee.com.my/datacenter/overview"
+        }
+      }
+    },
+    {
+      "name": "EXAMPLE_TIKTOK_ID",
+      "platform": "tiktok",
+      "country": "id",
+      "aliases": [
+        "example tiktok id",
+        "example-id-tt"
+      ],
+      "open_method": "ziniao_webdriver",
+      "ziniao_name": "EXAMPLE_TIKTOK_ID",
+      "browser_oauth": "",
+      "browser_id": "",
+      "allow_url_fallback": false,
+      "views": {
+        "home": {
+          "url": "https://seller-id.tokopedia.com/"
+        },
+        "overview": {
+          "url": "https://seller-id.tokopedia.com/compass/data-overview"
+        },
+        "ads": {
+          "url": "https://seller-id.tokopedia.com/ads-creation"
+        },
+        "compass": {
+          "url": "https://seller-id.tokopedia.com/compass/data-overview"
+        }
+      }
+    },
+    {
+      "name": "EXAMPLE_LAZADA_MY",
+      "platform": "lazada",
+      "country": "my",
+      "aliases": [
+        "example lazada my",
+        "example-my-la"
+      ],
+      "open_method": "ziniao_gui",
+      "ziniao_name": "EXAMPLE_LAZADA_MY",
+      "allow_url_fallback": false,
+      "views": {
+        "home": {
+          "url": "https://sellercenter.lazada.com.my/"
+        },
+        "overview": {
+          "url": "https://sellercenter.lazada.com.my/ba/dashboard"
+        },
+        "dashboard": {
+          "url": "https://sellercenter.lazada.com.my/ba/dashboard"
+        },
+        "discovery": {
+          "url": "https://sellercenter.lazada.com.my/discovery"
+        },
+        "smax": {
+          "url": "https://sellercenter.lazada.com.my/sponsored-solutions/smax"
+        }
+      }
+    }
+  ]
+}
