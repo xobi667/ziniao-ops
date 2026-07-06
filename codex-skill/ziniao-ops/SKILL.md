@@ -1,6 +1,6 @@
 ---
 name: ziniao-ops
-description: Open, check, troubleshoot, and report on employee-local seller store backends and operational data pages from the package path recorded by install-codex-skill.ps1, using local shops.json, PowerShell scripts, Ziniao, visual clicks, read-only workflow plans, optional upstream sync/adapters, and optionally lark-cli/Feishu to send reports. Use when the user asks Codex to open/check/enter a Shopee, TikTok/Tokopedia, or Lazada store on the employee's own computer, or asks for ziniao-ops upstream sync, ziniao CLI/MCP, auto-ziniao, Vibe Seller, BrowserMCP, including Chinese triggers such as 打开店铺, 开店铺, 进店铺后台, 店铺后台, 店铺打不开, 紫鸟打不开, 登录页, 全部数据, 店铺总览, 订单, 商品, 库存, 广告, 营销, 运营数据, 数据中心, 商业分析, 生意参谋, 流量, 财务, 客服, 评价, 优惠券, 活动, 直播, 联盟, 物流, 售后, 退款, Compass, 罗盘, TikTok Shop, Tokopedia Seller Center, Lazada ASC, dashboard, discovery, 全效宝, Max 全站推广, smax, 巡店, 店铺体检, 日报, 运营报告, 批量巡店, 发飞书, 上游同步, 同步更新, or 本机不适配.
+description: Open, check, troubleshoot, operate, and report on employee-local seller store backends and operational data pages from the package path recorded by install-codex-skill.ps1, using local shops.json, PowerShell scripts, Ziniao, visual clicks, read-only workflow plans, optional upstream/external-tool catalogs, local self-learning notes, and optionally lark-cli/Feishu to send reports. Use when the user asks Codex to open/check/enter/operate a Shopee, TikTok/Tokopedia, or Lazada store on the employee's own computer, or asks for LinkFox, Seller Sprite, Amazon Reviews, market research, review insights, creative tools, ziniao-ops upstream sync, ziniao CLI/MCP, auto-ziniao, Vibe Seller, BrowserMCP, including Chinese triggers such as 打开店铺, 开店铺, 进店铺后台, 店铺后台, 操作一下, 不知道点什么, 下一步, 店铺打不开, 紫鸟打不开, 登录页, 全部数据, 店铺总览, 订单, 商品, 库存, 广告, 营销, 运营数据, 数据中心, 商业分析, 生意参谋, 流量, 财务, 客服, 评价, 优惠券, 活动, 直播, 联盟, 物流, 售后, 退款, Compass, 罗盘, TikTok Shop, Tokopedia Seller Center, Lazada ASC, dashboard, discovery, 全效宝, Max 全站推广, smax, 巡店, 店铺体检, 日报, 运营报告, 批量巡店, 发飞书, LinkFox, Seller Sprite, 卖家精灵, Amazon Reviews, 评论分析, 素材生成, 上游同步, 同步更新, or 本机不适配.
 ---
 
 # Ziniao Ops
@@ -107,7 +107,13 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "setup-ziniao
 
 If it returns `ziniao_login_required`, tell the employee: “紫鸟已经打开并置顶，请在紫鸟窗口完成登录；完成后重新运行 setup-ziniao 或重新说同一句开店命令。”
 
-3. Open a store with a local keyword. Use `open-store.ps1` for real user requests. It first tries to reuse the current Ziniao window or already-open store window. If the current Ziniao account list is already showing the target store row, the GUI path should click that row's start/switch button directly. Only when quick reuse fails should it prepare Ziniao, wait for the employee to complete local Ziniao login if needed, scan the local browser list, then automatically continue into `open-shop.ps1`. The employee should not need to say “continue” after logging in.
+3. For normal employee requests, prefer `operate-store.ps1` over raw `open-store.ps1`. It resolves the user's intent, creates a read-only task file, opens the first relevant view, and returns concrete next-step instructions so the user does not need to know which seller-backend button to click.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "operate-store.ps1") "<店铺关键词>" "<用户原话>"
+```
+
+Use `open-store.ps1` only when the user explicitly wants just opening or when debugging the opener. It first tries to reuse the current Ziniao window or already-open store window. If the current Ziniao account list is already showing the target store row, the GUI path should click that row's start/switch button directly. Only when quick reuse fails should it prepare Ziniao, wait for the employee to complete local Ziniao login if needed, scan the local browser list, then automatically continue into `open-shop.ps1`. The employee should not need to say “continue” after logging in.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "open-store.ps1") "<店铺关键词>" -View overview
@@ -172,6 +178,18 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\new-
 ```
 
 Do not silently operate many stores. Show the generated checklist or summarize the store count, workflow, and first commands before proceeding.
+
+If a workflow fails or the employee corrects the process, record a local-only learning note:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\record-ops-learning.ps1") -Kind "fix" -Store "<店铺关键词>" -Intent "<用户原话>" -Problem "<问题>" -Fix "<修复>"
+```
+
+Read local lessons before repeating a failed workflow:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\show-ops-learning.ps1")
+```
 
 4. If the user only wants to test matching:
 
@@ -261,6 +279,20 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\inst
 ```
 
 Do not copy code from `.upstreams` into the public repo automatically. Review license and safety first. For `auto-ziniao`, treat the mirror as reference-only unless explicit permission is granted.
+
+For LinkFox, Seller Sprite, Amazon Reviews, creative tools, or self-improving agent questions, read:
+
+```text
+<package_root>\references\external-tools.md
+```
+
+Then check official external tool status:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\check-external-tools.ps1")
+```
+
+Do not claim closed SaaS tools are installed by this package. LinkFox tools and Seller Sprite require explicit user account/API/MCP setup. Use them as optional routes for market research, Amazon reviews, creative generation, and Amazon research, not as dependencies for local Ziniao store opening.
 
 Use `scripts\invoke-ziniao-cli.ps1` only when the optional `ziniao` CLI is installed and the user asks for that route. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
 

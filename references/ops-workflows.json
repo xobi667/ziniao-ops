@@ -2,6 +2,23 @@
   "version": 1,
   "workflows": [
     {
+      "id": "quick_start",
+      "name": "Open store and show action menu",
+      "phrases": ["操作一下", "看一下", "看看", "打开店铺操作", "进入店铺操作", "进店铺", "开店铺", "店铺后台", "不知道点什么", "能干嘛", "下一步"],
+      "views": ["overview"],
+      "required_metrics": [
+        "page_loaded",
+        "visible_summary_kpis",
+        "visible_todo_badges",
+        "visible_alerts"
+      ],
+      "questions": [
+        "店铺后台是否已经正常打开",
+        "首页是否有待处理事项、红点、告警或明显异常",
+        "用户下一步更可能需要看订单、广告、商品、客服售后、财务还是营销"
+      ]
+    },
+    {
       "id": "daily_check",
       "name": "Daily store health check",
       "phrases": ["巡店", "日报", "每天检查", "今日店铺", "店铺体检", "全部情况", "全店巡检", "daily", "health"],

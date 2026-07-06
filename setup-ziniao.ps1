@@ -176,5 +176,5 @@ Write-SetupResult ([ordered]@{
   dry_run = [bool]$DryRun
   login_check = $loginJson
   sync = $syncJson
-  next_step = "Restart Codex, then say: open <store keyword> overview/orders/ads data."
+  next_step = "Restart Codex, then say: open <store keyword> operations/overview/orders/ads data."
 }) 0

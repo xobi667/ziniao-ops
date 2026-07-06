@@ -93,11 +93,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -SkipZiniaoSet
 powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-ziniao.ps1
 ```
 
-然后重启 Codex，直接对 Codex 说：`打开 <店铺关键词> 全部数据`、`打开 <店铺关键词> 订单数据` 或 `打开 <店铺关键词> 广告数据`。
+然后重启 Codex，直接对 Codex 说：`打开 <店铺关键词> 操作一下`、`打开 <店铺关键词> 全部数据`、`打开 <店铺关键词> 订单数据` 或 `打开 <店铺关键词> 广告数据`。
 
 首次成功准备紫鸟时，脚本会自动扫描本机紫鸟里的店铺浏览器，生成本机 `shops.json` 缓存。员工不需要手工填店铺清单。
 
-Codex 实际开店时会走 `open-store.ps1`：它会先复用当前已经打开的紫鸟窗口或店铺窗口；如果紫鸟列表里已经显示目标店铺行和“启动/切换”按钮，会直接点这一行。只有快速复用失败时，才进入紫鸟就绪检查、拉起登录页并等待员工本人登录。登录完成后脚本会继续扫描店铺并打开目标店铺，不需要再对 Codex 说“继续”。如果紫鸟要求验证码或安全验证，员工必须自己完成。
+Codex 实际操作店铺时会优先走 `operate-store.ps1`：它会判断用户想做什么、打开第一个相关页面，并返回下一步操作向导。只开店铺环境时才走 `open-store.ps1`：它会先复用当前已经打开的紫鸟窗口或店铺窗口；如果紫鸟列表里已经显示目标店铺行和“启动/切换”按钮，会直接点这一行。只有快速复用失败时，才进入紫鸟就绪检查、拉起登录页并等待员工本人登录。登录完成后脚本会继续扫描店铺并打开目标店铺，不需要再对 Codex 说“继续”。如果紫鸟要求验证码或安全验证，员工必须自己完成。
 
 如果 Windows 提示脚本来自互联网被阻止，先在解压目录运行：
 
@@ -154,6 +154,20 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 ```
 
 ## 直接用脚本打开
+
+更推荐的一句话操作入口：
+
+```powershell
+.\operate-store.ps1 "<店铺关键词>" "打开店铺操作一下"
+.\operate-store.ps1 "<店铺关键词>" "看全部数据"
+.\operate-store.ps1 "<店铺关键词>" "处理订单"
+.\operate-store.ps1 "<店铺关键词>" "看广告数据"
+.\operate-store.ps1 "<店铺关键词>" "做今日巡店"
+```
+
+`operate-store.ps1` 会先判断用户意图，生成只读任务计划，打开第一个相关页面，并返回下一步要找什么入口、读什么指标、哪些按钮不能点。面向小白员工时，Codex 应优先用这个入口。
+
+只打开店铺环境时再用：
 
 ```powershell
 .\open-store.ps1 "example shopee my" -View overview
@@ -416,6 +430,40 @@ CSV 常用字段：`店铺名称`、`平台`、`国家`、`别名`，以及 `总
 - 可选外部适配：本机装了 `ziniao` CLI 时可走 `scripts\invoke-ziniao-cli.ps1`；本机装了 `auto-ziniao` 时可走 `scripts\invoke-auto-ziniao.ps1`；本机装了 BrowserMCP/Vibe Seller 时可作为人工批准后的外部浏览器自动化路线。
 - 本地镜像同步：Vibe Seller、BrowserMCP、Codex/OpenClaw skills 清单可 clone 到 `.upstreams/` 方便后续人工合并设计。
 - 参考但不复制：`auto-ziniao` 许可证是个人/内部自用，能同步到本机参考，但不能把代码直接拷进这个开源仓库。
+
+## 外部工具目录
+
+LinkFox Agent、LinkFox AI、LinkFox Skills、Amazon Reviews、Self Improving Agent、Seller Sprite/卖家精灵这类工具记录在：
+
+```powershell
+.\references\external-tools.json
+.\references\external-tools.md
+```
+
+检查官方入口和可识别版本：
+
+```powershell
+.\scripts\check-external-tools.ps1
+.\scripts\check-external-tools.ps1 -Json
+```
+
+规则：
+
+- LinkFox / Seller Sprite 这类闭源 SaaS、付费账号、第三方 skill，不会被 `install.ps1` 静默安装。
+- 能自动更新的只限本地开源组件或本仓库脚本。
+- 外部工具只作为可选路线：市场洞察、亚马逊评论分析、素材生成、亚马逊选品/关键词/API/MCP。
+- 本地紫鸟开店、店铺巡检、运营报告不依赖这些外部工具。
+
+## 本地自学习
+
+如果一次开店、巡店、页面导航失败，Codex 可以把经验记录到本机忽略目录 `.ziniao-ops`：
+
+```powershell
+.\scripts\record-ops-learning.ps1 -Kind fix -Store "<店铺关键词>" -Intent "看广告数据" -Problem "广告入口不在首页" -Fix "先点营销中心再点广告"
+.\scripts\show-ops-learning.ps1
+```
+
+这个日志不提交 GitHub，不保存密码、验证码、cookie、token。
 
 ## 推送前检查
 

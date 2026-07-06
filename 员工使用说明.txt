@@ -28,8 +28,9 @@
    看 <店铺关键词> 客服消息
    打开 <店铺关键词> 售后退款
    看 <店铺关键词> 数据中心
-   打开 example tiktok id 的 compass
-   打开 example lazada my 的 dashboard
+   打开 <TikTok店铺关键词> 的 compass
+   打开 <Lazada店铺关键词> 的 dashboard
+   打开 <店铺关键词> 操作一下
    店铺打不开，帮我自检
    页面被广告弹窗挡住了，帮我跳过
 
@@ -37,7 +38,7 @@
 - 这套工具不会自动登录，不保存密码，不处理验证码。
 - 电脑本机必须由员工本人登录紫鸟和对应店铺后台。
 - 安装时会自动跑紫鸟就绪检查；如果等待超时，登录完成后运行 .\setup-ziniao.ps1，或者再说同一句开店命令。
-- 真正开店时会自动走 .\open-store.ps1：如果紫鸟或店铺已经打开，它会先直接复用当前窗口；如果紫鸟列表里已经显示目标店铺行，会直接点同一行的“启动/切换”。只有当前窗口不可用时，才拉起紫鸟并等待你在紫鸟窗口登录，登录完成后自动继续打开店铺，不需要再说“继续”。
+- 真正操作店铺时会优先走 .\operate-store.ps1：它会判断你想看什么、打开第一个相关页面，并告诉 Codex 下一步要找什么入口和读什么指标。只开店铺环境时才走 .\open-store.ps1；如果紫鸟或店铺已经打开，它会先直接复用当前窗口。
 - 首次紫鸟就绪检查会自动扫描本机紫鸟里的店铺浏览器，生成 shops.json 缓存。
 - 本机紫鸟里没有的店铺，Codex 不会打开。
 - 不要把 shops.json、ziniao.local.json、.env、日志、截图提交到 GitHub。
@@ -47,6 +48,8 @@
   powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1 -NonInteractive -InstallLazadaDeps -InstallOptionalTools -InstallMissingRuntimes -LocalToolsRoot "D:\ziniao-ops-tools"
 - 如果只想检查上游增强工具装了没，可以运行：
   .\scripts\status-upstream-adapters.ps1
+- 如果要检查 LinkFox、卖家精灵、Amazon Reviews 等外部工具入口是否可用，可以运行：
+  .\scripts\check-external-tools.ps1
 - 如果诊断里出现 ziniao_shops_unavailable 或 ziniao_webdriver_not_reachable，先运行 .\setup-ziniao.ps1。
 - 如果返回 ziniao_login_required，说明紫鸟已经打开并置顶，但还在登录页；登录后运行 .\setup-ziniao.ps1。
 - 如果页面跳到登录页，说明这台电脑对应店铺还没登录，需要员工手动登录后再试。
