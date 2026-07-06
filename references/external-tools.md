@@ -4,6 +4,8 @@ Use this when the user asks whether to install LinkFox, Seller Sprite, review-in
 
 Machine-readable config lives in `references/external-tools.json`.
 
+For the broader ecommerce platform/API/tool map, use `references/ecommerce-capability-map.md` and `references/ecommerce-capability-map.json`.
+
 ## Decision Rules
 
 - Do not silently install closed SaaS tools, paid tools, browser extensions, or third-party skills.

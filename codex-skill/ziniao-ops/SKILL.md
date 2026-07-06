@@ -1,6 +1,6 @@
 ---
 name: ziniao-ops
-description: Open, check, troubleshoot, operate, and report on employee-local seller store backends and operational data pages from the package path recorded by install-codex-skill.ps1, using local shops.json, PowerShell scripts, Ziniao, visual clicks, read-only workflow plans, optional upstream/external-tool catalogs, local self-learning notes, and optionally lark-cli/Feishu to send reports. Use when the user asks Codex to open/check/enter/operate a Shopee, TikTok/Tokopedia, or Lazada store on the employee's own computer, or asks for LinkFox, Seller Sprite, Amazon Reviews, market research, review insights, creative tools, ziniao-ops upstream sync, ziniao CLI/MCP, auto-ziniao, Vibe Seller, BrowserMCP, including Chinese triggers such as 打开店铺, 开店铺, 进店铺后台, 店铺后台, 操作一下, 不知道点什么, 下一步, 店铺打不开, 紫鸟打不开, 登录页, 全部数据, 店铺总览, 订单, 商品, 库存, 广告, 营销, 运营数据, 数据中心, 商业分析, 生意参谋, 流量, 财务, 客服, 评价, 优惠券, 活动, 直播, 联盟, 物流, 售后, 退款, Compass, 罗盘, TikTok Shop, Tokopedia Seller Center, Lazada ASC, dashboard, discovery, 全效宝, Max 全站推广, smax, 巡店, 店铺体检, 日报, 运营报告, 批量巡店, 发飞书, LinkFox, Seller Sprite, 卖家精灵, Amazon Reviews, 评论分析, 素材生成, 上游同步, 同步更新, or 本机不适配.
+description: Open, check, troubleshoot, operate, and report on employee-local seller store backends and operational data pages from the package path recorded by install-codex-skill.ps1, using local shops.json, PowerShell scripts, Ziniao, visual clicks, read-only workflow plans, optional upstream/external-tool catalogs, ecommerce capability maps, platform API roadmaps, local self-learning notes, and optionally lark-cli/Feishu to send reports. Use when the user asks Codex to open/check/enter/operate a Shopee, TikTok/Tokopedia, or Lazada store on the employee's own computer, or asks for LinkFox, Seller Sprite, Amazon Reviews, Keepa, Jungle Scout, Helium 10, DataHawk, VOC.AI, Shulex VOC, Creatify, Shopify, BigCommerce, ShipStation, Shippo, AfterShip, TaxJar, Avalara, market research, review insights, creative tools, logistics, finance/tax, ERP, repricing, official platform APIs, ziniao-ops upstream sync, ziniao CLI/MCP, auto-ziniao, Vibe Seller, BrowserMCP, including Chinese triggers such as 打开店铺, 开店铺, 进店铺后台, 店铺后台, 操作一下, 不知道点什么, 下一步, 店铺打不开, 紫鸟打不开, 登录页, 全部数据, 店铺总览, 订单, 商品, 库存, 广告, 营销, 运营数据, 数据中心, 商业分析, 生意参谋, 流量, 财务, 客服, 评价, 优惠券, 活动, 直播, 联盟, 物流, 售后, 退款, Compass, 罗盘, TikTok Shop, Tokopedia Seller Center, Lazada ASC, dashboard, discovery, 全效宝, Max 全站推广, smax, 巡店, 店铺体检, 日报, 运营报告, 批量巡店, 发飞书, LinkFox, Seller Sprite, 卖家精灵, Amazon Reviews, 评论分析, 素材生成, 上游同步, 同步更新, 电商工具, 平台API, 官方接口, or 本机不适配.
 ---
 
 # Ziniao Ops
@@ -293,6 +293,21 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\chec
 ```
 
 Do not claim closed SaaS tools are installed by this package. LinkFox tools and Seller Sprite require explicit user account/API/MCP setup. Use them as optional routes for market research, Amazon reviews, creative generation, and Amazon research, not as dependencies for local Ziniao store opening.
+
+For broader ecommerce capability questions such as "还缺什么", "能不能做市场研究/评论分析/物流/财务/ERP/广告优化", or "全网电商工具都安排上", read:
+
+```text
+<package_root>\references\ecommerce-capability-map.md
+<package_root>\references\platform-api-roadmap.md
+```
+
+Then check official platform/API/tool status:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\check-ecommerce-tools.ps1")
+```
+
+Treat the result as a capability map, not an installation command. Official APIs, paid SaaS tools, browser extensions, external MCP servers, and marketplace research tools require explicit user-owned account setup. Never upload local seller data to these tools by default.
 
 Use `scripts\invoke-ziniao-cli.ps1` only when the optional `ziniao` CLI is installed and the user asks for that route. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
 

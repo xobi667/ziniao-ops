@@ -76,6 +76,22 @@
       "questions": ["是否有下架/违规/库存不足商品", "是否有需要补货或优化的 SKU"]
     },
     {
+      "id": "inventory",
+      "name": "Inventory risk check",
+      "phrases": ["库存", "缺货", "低库存", "补货", "仓库", "stock", "inventory"],
+      "views": ["inventory", "products"],
+      "required_metrics": ["out_of_stock_skus", "low_stock_skus", "reserved_stock", "available_stock"],
+      "questions": ["是否有缺货或低库存 SKU", "是否有库存同步异常或需要补货的商品"]
+    },
+    {
+      "id": "traffic",
+      "name": "Traffic and conversion check",
+      "phrases": ["流量", "访客", "曝光", "点击", "转化", "traffic", "visitor", "conversion"],
+      "views": ["traffic", "business", "overview"],
+      "required_metrics": ["visitors", "impressions", "clicks", "ctr", "conversion_rate", "average_order_value"],
+      "questions": ["流量、点击、转化是否异常", "变化最大的是曝光、点击率、转化率还是客单价"]
+    },
+    {
       "id": "finance",
       "name": "Finance check",
       "phrases": ["财务", "钱包", "结算", "回款", "账单", "finance", "wallet"],
@@ -84,12 +100,52 @@
       "questions": ["余额、结算、手续费是否异常", "是否有待处理账单"]
     },
     {
+      "id": "reviews",
+      "name": "Review and rating risk check",
+      "phrases": ["评价", "评论", "差评", "星级", "review", "rating"],
+      "views": ["reviews", "products"],
+      "required_metrics": ["negative_reviews", "low_star_reviews", "unreplied_reviews", "product_issue_keywords"],
+      "questions": ["是否有低星评价或差评需要处理", "评论里是否暴露质量、物流、尺码、包装或功能问题"]
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics and fulfillment check",
+      "phrases": ["物流", "发货", "履约", "运单", "面单", "shipping", "logistics", "fulfillment"],
+      "views": ["logistics", "orders"],
+      "required_metrics": ["pending_shipments", "late_shipments", "failed_pickups", "tracking_anomalies"],
+      "questions": ["是否有待发货、即将超时或物流异常", "是否有面单、揽收或跟踪问题需要人工处理"]
+    },
+    {
+      "id": "returns",
+      "name": "Return and after-sale risk check",
+      "phrases": ["售后", "退款", "退货", "退货退款", "returns", "refund"],
+      "views": ["returns", "orders", "reviews"],
+      "required_metrics": ["refund_or_return_count", "pending_after_sale", "dispute_count", "return_reasons"],
+      "questions": ["是否有待处理售后、退款或争议", "退款原因是否指向商品、物流或客服问题"]
+    },
+    {
       "id": "service",
       "name": "Customer service and after-sale check",
-      "phrases": ["客服", "售后", "退款", "评价", "差评", "消息", "chat", "review", "refund"],
+      "phrases": ["客服", "消息", "回复", "会话", "chat", "message", "inbox"],
       "views": ["chat", "returns", "reviews"],
       "required_metrics": ["unread_messages", "response_risk_count", "refund_or_return_count", "negative_reviews"],
       "questions": ["是否有未读消息或回复超时风险", "是否有退款售后或差评需要人工处理"]
+    },
+    {
+      "id": "compliance",
+      "name": "Listing and account compliance check",
+      "phrases": ["违规", "下架", "审核", "封禁", "限制", "处罚", "合规", "compliance", "violation"],
+      "views": ["products", "overview"],
+      "required_metrics": ["policy_warnings", "suspended_listings", "restricted_products", "account_health_alerts"],
+      "questions": ["是否有商品下架、审核失败或账号健康告警", "是否有需要人工复核的平台政策风险"]
+    },
+    {
+      "id": "creative",
+      "name": "Creative asset operation check",
+      "phrases": ["素材", "主图", "图片", "视频", "商拍", "creative", "image", "video"],
+      "views": ["products", "marketing"],
+      "required_metrics": ["products_missing_images", "products_with_weak_media", "campaign_creative_needs"],
+      "questions": ["哪些商品素材需要优化", "是否需要转到 LinkFox AI、Creatify 或 Canva 等外部工具"]
     },
     {
       "id": "marketing",

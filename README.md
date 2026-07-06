@@ -236,8 +236,15 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 - `ads`：广告投放复盘。
 - `orders`：订单/发货检查。
 - `products`：商品/库存检查。
+- `inventory`：缺货、低库存、补货风险。
+- `traffic`：流量、曝光、点击、转化检查。
 - `finance`：财务/结算检查。
-- `service`：客服、售后、评价风险检查。
+- `reviews`：评价、评论、差评风险。
+- `logistics`：物流、履约、面单、发货风险。
+- `returns`：售后、退款、退货风险。
+- `service`：客服、消息、回复超时风险。
+- `compliance`：商品违规、下架、账号健康风险。
+- `creative`：商品素材、主图、视频优化入口。
 - `marketing`：营销、优惠券、活动、直播、联盟检查。
 
 ## 精准打开方式
@@ -412,6 +419,14 @@ CSV 常用字段：`店铺名称`、`平台`、`国家`、`别名`，以及 `总
 .\scripts\status-upstream-adapters.ps1
 ```
 
+检查电商平台 API 和外部工具官方入口是否可达：
+
+```powershell
+.\scripts\check-ecommerce-tools.ps1
+.\scripts\check-ecommerce-tools.ps1 -Json
+.\scripts\check-ecommerce-tools.ps1 -Category market_research
+```
+
 安装或补齐这些可选上游命令：
 
 ```powershell
@@ -431,6 +446,33 @@ CSV 常用字段：`店铺名称`、`平台`、`国家`、`别名`，以及 `总
 - 本地镜像同步：Vibe Seller、BrowserMCP、Codex/OpenClaw skills 清单可 clone 到 `.upstreams/` 方便后续人工合并设计。
 - 参考但不复制：`auto-ziniao` 许可证是个人/内部自用，能同步到本机参考，但不能把代码直接拷进这个开源仓库。
 
+## 电商能力地图
+
+`ziniao-ops` 现在不只记录紫鸟开店能力，也记录跨境电商运营需要补齐的外部能力：
+
+```powershell
+.\references\ecommerce-capability-map.json
+.\references\ecommerce-capability-map.md
+.\references\platform-api-roadmap.md
+```
+
+覆盖范围：
+
+- P0：Shopee、TikTok Shop、Lazada、Amazon SP-API、Amazon Ads API 等官方平台 API 路线。
+- P1：市场研究、评论洞察、广告增长、素材生成。
+- P2：客服、物流、财税、ERP、多渠道库存订单。
+- P3：改价/调价这类高风险写操作，只记录路线，不默认自动化。
+
+检测官方入口和外部工具状态：
+
+```powershell
+.\scripts\check-ecommerce-tools.ps1
+.\scripts\check-ecommerce-tools.ps1 -Category official_platform_api
+.\scripts\check-ecommerce-tools.ps1 -Category reviews_and_voice_of_customer
+```
+
+规则很明确：官方 API、SaaS、MCP、付费工具都不能静默安装，也不能把店铺数据自动传出去。只有用户自己配置账号和权限后，Codex 才能按对应路线使用。
+
 ## 外部工具目录
 
 LinkFox Agent、LinkFox AI、LinkFox Skills、Amazon Reviews、Self Improving Agent、Seller Sprite/卖家精灵这类工具记录在：
@@ -446,6 +488,8 @@ LinkFox Agent、LinkFox AI、LinkFox Skills、Amazon Reviews、Self Improving Ag
 .\scripts\check-external-tools.ps1
 .\scripts\check-external-tools.ps1 -Json
 ```
+
+更完整的电商工具和平台 API 能力清单见 `references\ecommerce-capability-map.json`，用 `scripts\check-ecommerce-tools.ps1` 检查。
 
 规则：
 

@@ -159,6 +159,10 @@ if ($SkipOptionalTools) {
   $installUpstreams = Ask-YesNo "是否安装可选上游增强工具？包含 ziniao CLI、auto-ziniao、BrowserMCP server、Vibe Seller 和 Playwright 浏览器文件，体积较大。" $true
 }
 
+if ($installUpstreams) {
+  Write-Host "注意：LinkFox、Seller Sprite、Keepa、VOC.AI、ShipStation、TaxJar 等外部电商 SaaS/API 只会记录和检测，不会静默安装或自动上传店铺数据。"
+}
+
 if ($installGuiDeps -or $installUpstreams) {
   Show-DriveSummary
   $defaultToolsRoot = Join-Path $root ".ziniao-ops"
@@ -257,6 +261,13 @@ if (Test-Path -LiteralPath $status) {
   Write-Host ""
   Write-Host "Optional upstream adapter status..."
   powershell -NoProfile -ExecutionPolicy Bypass -File $status
+}
+
+$ecommerceStatus = Join-Path $root "scripts\check-ecommerce-tools.ps1"
+if (Test-Path -LiteralPath $ecommerceStatus) {
+  Write-Host ""
+  Write-Host "Ecommerce platform/API/tool catalog status..."
+  powershell -NoProfile -ExecutionPolicy Bypass -File $ecommerceStatus -TimeoutSec 8
 }
 
 Write-Host ""

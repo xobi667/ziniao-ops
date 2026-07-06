@@ -171,6 +171,7 @@ $required = @(
   "scripts\invoke-auto-ziniao.ps1",
   "scripts\install-upstream-tools.ps1",
   "scripts\check-external-tools.ps1",
+  "scripts\check-ecommerce-tools.ps1",
   "scripts\record-ops-learning.ps1",
   "scripts\show-ops-learning.ps1",
   "scripts\new-ops-task.ps1",
@@ -183,6 +184,9 @@ $required = @(
   "references\external-projects.md",
   "references\external-tools.md",
   "references\external-tools.json",
+  "references\ecommerce-capability-map.md",
+  "references\ecommerce-capability-map.json",
+  "references\platform-api-roadmap.md",
   "references\upstreams.md",
   "references\upstreams.json",
   "references\upstream-integration.md"

@@ -14,6 +14,8 @@ Each workflow has:
 - `required_metrics`: metrics Codex should try to read from visible pages or user-provided exports.
 - `questions`: analysis questions the final report should answer.
 
+Current workflow coverage includes overall dashboard, ads, orders, products, inventory, traffic, finance, reviews, logistics, returns, customer service, compliance, creative assets, and marketing activities.
+
 ## Execution rules
 
 1. Generate a task plan with `scripts\new-ops-task.ps1`.
