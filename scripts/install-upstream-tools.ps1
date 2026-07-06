@@ -234,7 +234,7 @@ exit `$LASTEXITCODE
 
   $cmdText = @"
 @echo off
-set PLAYWRIGHT_BROWSERS_PATH=$playwrightBrowsers
+set "PLAYWRIGHT_BROWSERS_PATH=$playwrightBrowsers"
 "$vibeExe" %*
 exit /b %ERRORLEVEL%
 "@

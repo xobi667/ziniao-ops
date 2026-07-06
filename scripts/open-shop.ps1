@@ -513,7 +513,8 @@ $navigationUrl = if ($NavigateView) { $url } else { "" }
 $ziniaoName = if ($shop.ziniao_name) { [string]$shop.ziniao_name } else { [string]$shop.name }
 $browserOauth = if ($shop.browser_oauth) { [string]$shop.browser_oauth } else { "" }
 $browserId = if ($shop.browser_id) { [string]$shop.browser_id } else { "" }
-$allowUrlFallback = [bool]$UrlFallback -or [bool]$shop.allow_url_fallback
+$configuredUrlFallback = [bool]$shop.allow_url_fallback
+$allowUrlFallback = [bool]$UrlFallback
 
 $payload = @{
   ok = $true
@@ -532,6 +533,8 @@ $payload = @{
     needs_visual_navigation = [bool]$visualNavigationRequired
     open_method = $method
     ziniao_name = $ziniaoName
+    configured_url_fallback = $configuredUrlFallback
+    url_fallback_allowed = $allowUrlFallback
   }
   login_policy = @{
     requires_local_login = $true

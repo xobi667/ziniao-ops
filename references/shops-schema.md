@@ -69,6 +69,7 @@ Rules:
 - Use `ziniao_name` and `aliases` for matching local Ziniao account names.
 - Use `open_command` only when the normal precision methods are not enough. It is disabled by default and requires `-AllowCommand`.
 - `open_command` may contain placeholders: `{url}`, `{name}`, `{platform}`, `{view}`. Placeholders are inserted as PowerShell single-quoted literals, so write templates like `Start-Process {url}` instead of adding your own quotes around `{url}`. Only use it in a trusted local `shops.json`.
+- `allow_url_fallback` is only a local preference flag for diagnostics/documentation. It does not authorize fallback by itself; the opening command must still pass `-UrlFallback`.
 - Prefer `aliases` that employees naturally say to Codex.
 - If one keyword matches multiple shops, ask for platform/country instead of guessing.
 - `views` are target hints by default. The main script opens the precise local store first; it navigates to a view URL only when `-NavigateView` is passed.

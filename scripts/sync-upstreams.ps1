@@ -30,6 +30,22 @@ function Add-Result($Record) {
   $script:items += [pscustomobject]$Record
 }
 
+function Resolve-RepoPath([string]$Base, [string]$Path) {
+  $expanded = [Environment]::ExpandEnvironmentVariables($Path)
+  if ([System.IO.Path]::IsPathRooted($expanded)) {
+    return [System.IO.Path]::GetFullPath($expanded)
+  }
+  return [System.IO.Path]::GetFullPath((Join-Path $Base $expanded))
+}
+
+function Test-IsInsidePath([string]$Parent, [string]$Child) {
+  $parentFull = [System.IO.Path]::GetFullPath($Parent).TrimEnd('\', '/')
+  $childFull = [System.IO.Path]::GetFullPath($Child).TrimEnd('\', '/')
+  if ($childFull.Equals($parentFull, [System.StringComparison]::OrdinalIgnoreCase)) { return $true }
+  $parentWithSep = $parentFull + [System.IO.Path]::DirectorySeparatorChar
+  return $childFull.StartsWith($parentWithSep, [System.StringComparison]::OrdinalIgnoreCase)
+}
+
 if (!(Test-Path -LiteralPath $configPath)) {
   $result = [ordered]@{
     ok = $false
@@ -72,9 +88,8 @@ if (!$git) {
   exit 1
 }
 
-New-Item -ItemType Directory -Force -Path $UpstreamRoot | Out-Null
-$resolvedUpstreamRoot = (Resolve-Path -LiteralPath $UpstreamRoot).Path
-if (!$resolvedUpstreamRoot.StartsWith($Root, [System.StringComparison]::OrdinalIgnoreCase)) {
+$resolvedUpstreamRoot = Resolve-RepoPath $Root $UpstreamRoot
+if (!(Test-IsInsidePath $Root $resolvedUpstreamRoot)) {
   $result = [ordered]@{
     ok = $false
     synced_at = $checkedAt
@@ -86,6 +101,7 @@ if (!$resolvedUpstreamRoot.StartsWith($Root, [System.StringComparison]::OrdinalI
   if ($Json) { $result | ConvertTo-Json -Depth 8 } else { Write-Host "SYNC_UPSTREAMS_FAILED: refusing to sync outside repo root" }
   exit 1
 }
+New-Item -ItemType Directory -Force -Path $resolvedUpstreamRoot | Out-Null
 
 $filters = @($Name | Where-Object { $_ })
 foreach ($upstream in @($config.upstreams)) {
