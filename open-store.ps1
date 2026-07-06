@@ -9,6 +9,7 @@
   [string]$Platform = "",
 
   [int]$LoginTimeoutSeconds = 1800,
+  [int]$FastOpenTimeoutSeconds = 15,
 
   [switch]$NavigateView,
   [switch]$UrlFallback,
@@ -101,8 +102,96 @@ if (!(Test-Path -LiteralPath $openScript)) {
   }) 1
 }
 
+function Invoke-OpenShopCommand([int]$TimeoutSeconds, [switch]$CurrentWindowFirst) {
+  $openArgs = @(
+    "-NoProfile",
+    "-ExecutionPolicy", "Bypass",
+    "-File", $openScript,
+    $Query,
+    "-View", $View,
+    "-LoginTimeoutSeconds", ([string]$TimeoutSeconds),
+    "-Json"
+  )
+  if ($Platform) { $openArgs += @("-Platform", $Platform) }
+  if ($NavigateView) { $openArgs += "-NavigateView" }
+  if ($UrlFallback) { $openArgs += "-UrlFallback" }
+  if ($AllowHomeFallback) { $openArgs += "-AllowHomeFallback" }
+  if ($DryRun) { $openArgs += "-DryRun" }
+  if ($CurrentWindowFirst) { $openArgs += "-CurrentWindowFirst" }
+
+  $output = @(& powershell @openArgs 2>&1)
+  $code = $LASTEXITCODE
+  [pscustomobject]@{
+    Code = $code
+    Json = ConvertFrom-JsonOutput $output
+    Output = $output
+  }
+}
+
+function Test-SetupCannotFixOpenFailure($OpenJson) {
+  if (!$OpenJson) { return $false }
+  $error = [string]$OpenJson.error
+  if (!$error -and $OpenJson.open) { $error = [string]$OpenJson.open.error }
+  return ($error -in @(
+    "multiple_matches",
+    "view_url_missing",
+    "command_disabled",
+    "python_missing",
+    "pywinauto_missing",
+    "non_windows"
+  ))
+}
+
 if (!$Json) {
-  Write-Host "Opening Ziniao and waiting for local login if needed."
+  Write-Host "Trying the current Ziniao window or already-open store first."
+}
+
+$fastTimeout = [Math]::Max(0, [Math]::Min($FastOpenTimeoutSeconds, $LoginTimeoutSeconds))
+$fastOpen = Invoke-OpenShopCommand -TimeoutSeconds $fastTimeout -CurrentWindowFirst
+if ($fastOpen.Code -eq 0) {
+  if ($Json) {
+    Write-OneShotResult ([ordered]@{
+      ok = $true
+      method = "open_store_fast_path"
+      query = $Query
+      view = $View
+      view_inferred_from_query = $ViewWasInferred
+      current_window_first = $true
+      open = $fastOpen.Json
+      raw_open_output = if ($fastOpen.Json) { $null } else { $fastOpen.Output }
+    }) 0
+  }
+  if ($fastOpen.Json -and $fastOpen.Json.message) {
+    Write-Host $fastOpen.Json.message
+  } else {
+    $fastOpen.Output | ForEach-Object { Write-Output $_ }
+  }
+  exit 0
+}
+
+if (Test-SetupCannotFixOpenFailure $fastOpen.Json) {
+  if ($Json) {
+    Write-OneShotResult ([ordered]@{
+      ok = $false
+      method = "open_store_fast_path"
+      query = $Query
+      view = $View
+      view_inferred_from_query = $ViewWasInferred
+      current_window_first = $true
+      open = $fastOpen.Json
+      raw_open_output = if ($fastOpen.Json) { $null } else { $fastOpen.Output }
+    }) $fastOpen.Code
+  }
+  if ($fastOpen.Json -and $fastOpen.Json.message) {
+    Write-Host $fastOpen.Json.message
+  } else {
+    $fastOpen.Output | ForEach-Object { Write-Output $_ }
+  }
+  exit $fastOpen.Code
+}
+
+if (!$Json) {
+  Write-Host "Current-window quick open did not finish. Preparing Ziniao and waiting for local login if needed."
   Write-Host "Complete login in the Ziniao window; this command will continue automatically after login."
 }
 
@@ -153,37 +242,28 @@ if (!$Json) {
   Write-Host "Ziniao is ready. Opening the requested store..."
 }
 
-$openArgs = @(
-  "-NoProfile",
-  "-ExecutionPolicy", "Bypass",
-  "-File", $openScript,
-  $Query,
-  "-View", $View,
-  "-LoginTimeoutSeconds", "180"
-)
-if ($Platform) { $openArgs += @("-Platform", $Platform) }
-if ($NavigateView) { $openArgs += "-NavigateView" }
-if ($UrlFallback) { $openArgs += "-UrlFallback" }
-if ($AllowHomeFallback) { $openArgs += "-AllowHomeFallback" }
-if ($DryRun) { $openArgs += "-DryRun" }
-if ($Json) { $openArgs += "-Json" }
-
-$openOutput = @(& powershell @openArgs 2>&1)
-$openCode = $LASTEXITCODE
+$openResult = Invoke-OpenShopCommand -TimeoutSeconds 180
+$openOutput = $openResult.Output
+$openCode = $openResult.Code
 if ($Json) {
-  $openJson = ConvertFrom-JsonOutput $openOutput
   Write-OneShotResult ([ordered]@{
-    ok = ($openCode -eq 0 -and $openJson -and [bool]$openJson.ok)
+    ok = ($openCode -eq 0 -and $openResult.Json -and [bool]$openResult.Json.ok)
     method = "open_store_after_login"
     query = $Query
     view = $View
     view_inferred_from_query = $ViewWasInferred
+    fast_open = $fastOpen.Json
+    raw_fast_open_output = if ($fastOpen.Json) { $null } else { $fastOpen.Output }
     setup = $setupJson
     setup_warning = $setupWarning
-    open = $openJson
-    raw_open_output = if ($openJson) { $null } else { $openOutput }
+    open = $openResult.Json
+    raw_open_output = if ($openResult.Json) { $null } else { $openOutput }
   }) $openCode
 }
 
-$openOutput | ForEach-Object { Write-Output $_ }
+if ($openResult.Json -and $openResult.Json.message) {
+  Write-Host $openResult.Json.message
+} else {
+  $openOutput | ForEach-Object { Write-Output $_ }
+}
 exit $openCode

@@ -62,7 +62,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-ziniao.ps1
 - If Ziniao asks for login or verification, complete it locally in the Ziniao window.
 - If setup was skipped or timed out, run `setup-ziniao.ps1`.
 - Restart Codex.
-- Ask Codex to open the store. Codex should use `open-store.ps1` so login handoff and store opening happen in one command.
+- Ask Codex to open the store. Codex should use `open-store.ps1`; it first reuses the current Ziniao/store window when possible, then falls back to login handoff and store opening in one command.
 - For store operations beyond opening, Codex can generate read-only tasks with `new-ops-task.ps1`, batch checklists with `new-ops-batch.ps1`, and reports with `new-ops-report.ps1`.
 - Sending reports to Feishu/Lark must be an explicit action after confirming the target chat/user.
 - Similar projects exist, including Vibe Seller, auto-ziniao/OpenClaw, and ziniao/ziniao-mcp routes, but this package is the lightweight Codex skill route and does not require storing Ziniao passwords or `ZCLAW_API_KEY`.

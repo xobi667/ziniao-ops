@@ -107,7 +107,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "setup-ziniao
 
 If it returns `ziniao_login_required`, tell the employee: “紫鸟已经打开并置顶，请在紫鸟窗口完成登录；完成后重新运行 setup-ziniao 或重新说同一句开店命令。”
 
-3. Open a store with a local keyword. Use `open-store.ps1` for real user requests. It prepares Ziniao, waits for the employee to complete local Ziniao login if needed, scans the local browser list, then automatically continues into `open-shop.ps1`. The employee should not need to say “continue” after logging in.
+3. Open a store with a local keyword. Use `open-store.ps1` for real user requests. It first tries to reuse the current Ziniao window or already-open store window. If the current Ziniao account list is already showing the target store row, the GUI path should click that row's start/switch button directly. Only when quick reuse fails should it prepare Ziniao, wait for the employee to complete local Ziniao login if needed, scan the local browser list, then automatically continue into `open-shop.ps1`. The employee should not need to say “continue” after logging in.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "open-store.ps1") "<店铺关键词>" -View overview
@@ -129,8 +129,9 @@ Common user phrases should map to the same command:
 
 Default precision methods:
 
-- Shopee / TikTok: local Ziniao webdriver/API (`ziniao_webdriver`).
-- Lazada: local Ziniao GUI (`ziniao_gui`).
+- Current-window quick path: reuse the already-open Ziniao account list or store window first. Do not run setup or wait for login when the target store row is already visible and can be confirmed.
+- Shopee / TikTok: local Ziniao webdriver/API (`ziniao_webdriver`) after the current-window quick path.
+- Lazada: local Ziniao GUI (`ziniao_gui`) after the current-window quick path.
 - If Ziniao webdriver/API cannot return `browserList` because of login state or local API issues, fall back to the generic Ziniao GUI opener. It should search the visible Ziniao account list by the user's keyword, confirm the target row text, and click only that row's start/switch button.
 - Store list source: local Ziniao browser list. Employees can only open stores visible in their own local Ziniao account.
 - Ziniao path is not fixed. The installer writes `ziniao.local.json` when it can detect the executable; runtime also checks `ZINIAO_CLIENT_PATH`, `ZINIAO_PATH`, common install folders and PATH. If scanning fails, scripts try to auto-launch Ziniao and wait up to 180 seconds for the employee to log in locally.
@@ -301,7 +302,7 @@ Never store or print passwords, verification codes, browser session data, or tok
 
 - Multiple matches: show candidates and ask for platform/country/more keywords.
 - No match: run `open-shop.ps1 -List -RefreshZiniao`; if still missing, tell the employee this local Ziniao account does not contain that store.
-- Ziniao not running or not logged in during a real open request: use `open-store.ps1`, not a separate `setup-ziniao.ps1` plus a second user prompt. It should launch/foreground Ziniao, wait for local login, scan the local browser list, and continue to open the requested store. If timeout happens, tell the employee the same command can be run again after login.
+- Ziniao not running or not logged in during a real open request: use `open-store.ps1`, not a separate `setup-ziniao.ps1` plus a second user prompt. It should first try current-window reuse; if that fails, it should launch/foreground Ziniao, wait for local login, scan the local browser list, and continue to open the requested store. If timeout happens, tell the employee the same command can be run again after login.
 - Ziniao API login-state error after waiting: use the GUI fallback path if the user requested an actual open, not a dry-run.
 - `ziniao_login_required`: Ziniao is visible but stopped on its own login page. The script raises the login window and waits for local login before failing. Do not click login or handle credentials; if it times out, ask the employee to complete login locally and rerun the same command.
 - Browser opens login page: this means the employee computer is not logged in for that store. Do not assist with credentials; tell the employee to log in manually, then run the same command again.

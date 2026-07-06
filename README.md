@@ -97,7 +97,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-ziniao.ps1
 
 首次成功准备紫鸟时，脚本会自动扫描本机紫鸟里的店铺浏览器，生成本机 `shops.json` 缓存。员工不需要手工填店铺清单。
 
-如果紫鸟没开，脚本会尝试自动打开紫鸟。Codex 实际开店时会走 `open-store.ps1`：它会把紫鸟登录页拉到前台，最长默认等待 30 分钟；员工在紫鸟窗口完成登录后，脚本自动继续扫描店铺并打开目标店铺，不需要再对 Codex 说“继续”。如果紫鸟要求验证码或安全验证，员工必须自己完成。
+Codex 实际开店时会走 `open-store.ps1`：它会先复用当前已经打开的紫鸟窗口或店铺窗口；如果紫鸟列表里已经显示目标店铺行和“启动/切换”按钮，会直接点这一行。只有快速复用失败时，才进入紫鸟就绪检查、拉起登录页并等待员工本人登录。登录完成后脚本会继续扫描店铺并打开目标店铺，不需要再对 Codex 说“继续”。如果紫鸟要求验证码或安全验证，员工必须自己完成。
 
 如果 Windows 提示脚本来自互联网被阻止，先在解压目录运行：
 
@@ -163,7 +163,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 .\open-store.ps1 "example lazada my" -View dashboard
 ```
 
-`open-store.ps1` 是员工的一句话入口：先准备紫鸟，必要时等待员工本机登录，登录后自动继续打开店铺。
+`open-store.ps1` 是员工的一句话入口：先复用当前已经打开的紫鸟窗口/店铺窗口；如果当前窗口不可用，再准备紫鸟、等待员工本机登录，并在登录后自动继续打开店铺。
 
 只测试匹配，不打开：
 
@@ -230,13 +230,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 
 默认不是简单打开 URL，也不是强制固定跳某个页面；默认只是精准打开员工本机对应店铺环境，然后让 Codex 视觉点击进入订单、商品、库存、广告、经营分析、财务、客服、评价、物流、售后或平台专属页面。
 
-- Shopee / TikTok：先从本机紫鸟 webdriver/API 扫描店铺浏览器，再匹配 `ziniao_name` / `browser_oauth` / `browser_id` 后启动对应紫鸟店铺环境。如果 API 登录态异常，会退回紫鸟 GUI 搜索，确认目标店铺行后点击启动/切换。
-- Lazada：走本机紫鸟 GUI，搜索 `ziniao_name`，点击启动/切换，再点“打开账号”。
+- Shopee / TikTok：优先复用当前紫鸟窗口里已经显示的目标店铺行，直接点击同一行的启动/切换；不行再从本机紫鸟 webdriver/API 扫描店铺浏览器，匹配 `ziniao_name` / `browser_oauth` / `browser_id` 后启动对应紫鸟店铺环境。如果 API 登录态异常，会退回紫鸟 GUI 搜索，确认目标店铺行后点击启动/切换。
+- Lazada：优先复用当前紫鸟窗口里已经显示的目标店铺行；不行再走本机紫鸟 GUI 搜索 `ziniao_name`，点击启动/切换，再点“打开账号”。
 - 如果精准打开失败，默认不会偷偷降级成普通 URL，避免串到错误账号。
 - 只有明确加 `-UrlFallback` 才允许精准失败后退回普通链接打开。
 - 只有明确加 `-NavigateView` 才会在开店后强制跳 `views` 里的 URL。
 - 自动扫描出来的店铺如果没有视图 URL，会先打开紫鸟店铺环境，再由 Codex 视觉点击目标运营模块；手工维护的视图缺 URL 仍会失败。
-- 如果紫鸟未运行，脚本会尝试自动打开紫鸟并等待员工登录；如果等待超时，需要员工手动登录后重试。
+- 如果紫鸟或店铺已经打开，脚本应直接复用当前窗口；如果紫鸟未运行，脚本才会尝试自动打开紫鸟并等待员工登录。
 - 如果返回 `ziniao_login_required`，说明紫鸟已经打开但停在登录页；员工在本机完成登录后重新说同一句开店命令。
 - `open_command` 默认不会执行；只有确认 `shops.json` 可信并明确加 `-AllowCommand` 才允许执行本地命令。
 

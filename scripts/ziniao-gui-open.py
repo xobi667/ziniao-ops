@@ -585,7 +585,67 @@ def _wait_new_store_window(desktop, before_handles: set[int], timeout: float = 4
     return None
 
 
+def _window_title(win) -> str:
+    try:
+        return (win.window_text() or "").strip()
+    except Exception:
+        return ""
+
+
+def _window_class_name(win) -> str:
+    try:
+        return str(getattr(win.element_info, "class_name", "") or "")
+    except Exception:
+        return ""
+
+
+def _find_existing_store_window(desktop, names: list[str]):
+    try:
+        wins = desktop.windows()
+    except Exception:
+        wins = []
+    for win in wins:
+        title = _window_title(win)
+        if not title:
+            continue
+        if "紫鸟" in title or "Ziniao" in title or "ZiNiao" in title:
+            continue
+        class_name = _window_class_name(win)
+        if class_name != "Chrome_WidgetWin_1" and not any(
+            marker in title for marker in ("Seller", "Shopee", "TikTok", "Tokopedia", "Lazada", "ASC")
+        ):
+            continue
+        if _matches_target_name(title, names):
+            _bring_to_front(win)
+            return win
+    return None
+
+
+def _open_visible_target_if_present(main, desktop, names: list[str]):
+    button, error, fatal = _find_target_start_button(main, names)
+    if fatal:
+        return None, error, True
+    if not button:
+        return None, error, False
+    before = _record_windows(desktop)
+    try:
+        button.click_input()
+    except Exception as exc:
+        return None, f"点击当前可见店铺行失败: {exc}", False
+    store_win = _wait_new_store_window(desktop, before, timeout=18.0)
+    if store_win:
+        _bring_to_front(store_win)
+        return store_win, "", False
+    existing = _find_existing_store_window(desktop, names)
+    if existing:
+        return existing, "", False
+    return main, "", False
+
+
 def _search_and_open(main, desktop, keyboard, names: list[str]):
+    existing = _find_existing_store_window(desktop, names)
+    if existing:
+        return existing, ""
     try:
         main.set_focus()
     except Exception:
@@ -593,6 +653,12 @@ def _search_and_open(main, desktop, keyboard, names: list[str]):
     _click_text(main, ["账号", "全部账号", "全 部 账 号", "浏览器", "店铺"], timeout=4)
     time.sleep(1)
     main = _find_ziniao_window(desktop, timeout=3) or main
+
+    store_win, error, fatal = _open_visible_target_if_present(main, desktop, names)
+    if fatal:
+        return None, error
+    if store_win:
+        return store_win, ""
 
     edit = _find_best_search_edit(main)
     if not edit:
@@ -643,6 +709,7 @@ def main() -> int:
     parser.add_argument("--config", default="")
     parser.add_argument("--login-timeout", type=int, default=180)
     parser.add_argument("--login-check-only", action="store_true", help="Only launch/foreground Ziniao and verify it is past the login page.")
+    parser.add_argument("--no-launch", action="store_true", help="Only use an already-open Ziniao window; do not launch or restart Ziniao.")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
@@ -660,12 +727,12 @@ def main() -> int:
     Desktop, keyboard = _import_pywinauto()
     config = _load_config(args.config)
     desktop = Desktop(backend="uia")
-    main_win = _find_ziniao_window(desktop, timeout=5)
+    main_win = _find_ziniao_window(desktop, timeout=3 if args.no_launch else 5)
     started_ziniao = False
-    if not main_win:
+    if not main_win and not args.no_launch:
         started_ziniao = _start_ziniao(config)
         main_win = _find_ziniao_window(desktop, timeout=35)
-    if not main_win:
+    if not main_win and not args.no_launch:
         started_ziniao = _restart_ziniao_visible(config) or started_ziniao
         main_win = _find_ziniao_window(desktop, timeout=45)
     if not main_win:
@@ -673,8 +740,8 @@ def main() -> int:
             {
                 "ok": False,
                 "method": "ziniao_gui",
-                "error": "ziniao_window_not_found",
-                "message": "未找到本机紫鸟窗口。请员工先打开并登录紫鸟。",
+                "error": "ziniao_window_not_found_current_only" if args.no_launch else "ziniao_window_not_found",
+                "message": "当前没有可复用的紫鸟窗口。" if args.no_launch else "未找到本机紫鸟窗口。请员工先打开并登录紫鸟。",
                 "started_ziniao": started_ziniao,
             },
             1,

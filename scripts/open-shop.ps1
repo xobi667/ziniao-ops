@@ -15,6 +15,7 @@
   [switch]$UrlFallback,
   [switch]$AllowHomeFallback,
   [switch]$AllowCommand,
+  [switch]$CurrentWindowFirst,
 
   [int]$LoginTimeoutSeconds = 180,
   [switch]$RefreshZiniao,
@@ -111,31 +112,59 @@ function Invoke-ZiniaoGuiFallback {
   param(
     [string]$ShopName,
     [string]$ZiniaoName = "",
-    [string[]]$Aliases = @()
+    [string[]]$Aliases = @(),
+    [int]$TimeoutSeconds = $LoginTimeoutSeconds,
+    [switch]$NoLaunch,
+    [switch]$ContinueOnFailure
   )
   $script = Join-Path $root "scripts\ziniao-gui-open.py"
   if (!(Test-Path -LiteralPath $script)) {
-    Write-Result @{
+    $missingPayload = @{
       ok = $false
       error = "ziniao_gui_script_missing"
       message = "紫鸟 GUI 兜底脚本不存在: $script"
-    } 1
+    }
+    if ($ContinueOnFailure) {
+      return [pscustomobject]@{ Code = 1; Output = @(); Payload = $missingPayload }
+    }
+    Write-Result $missingPayload 1
   }
   $argsList = @(
     "--shop-name", $ShopName,
     "--query", $Query,
     "--view", $View,
     "--ziniao-name", $ZiniaoName,
-    "--login-timeout", ([string]$LoginTimeoutSeconds),
+    "--login-timeout", ([string]$TimeoutSeconds),
     "--json"
   )
+  if ($NoLaunch) { $argsList += "--no-launch" }
   foreach ($alias in @($Aliases)) {
     if ($alias) {
       $argsList += @("--alias", [string]$alias)
     }
   }
-  Invoke-PythonFilePassthru $script $argsList
-  exit $script:LastPythonExitCode
+  [array]$python = @(Get-PythonCommand)
+  if ($python.Count -eq 0) {
+    $payload = @{
+      ok = $false
+      error = "python_missing"
+      message = "Python was not found on this computer. Install Python 3, or make sure python/py is available in PATH."
+    }
+    if ($ContinueOnFailure) {
+      return [pscustomobject]@{ Code = 3; Output = @(); Payload = $payload }
+    }
+    Write-Result $payload 3
+  }
+  $pythonExe = $python[0]
+  $pythonArgs = @()
+  if ($python.Count -gt 1) { $pythonArgs = @($python[1..($python.Count - 1)]) }
+  $output = @(& $pythonExe @pythonArgs $script @argsList 2>&1)
+  $code = $LASTEXITCODE
+  if ($ContinueOnFailure) {
+    return [pscustomobject]@{ Code = $code; Output = $output; Payload = $null }
+  }
+  $output | ForEach-Object { Write-Output $_ }
+  exit $code
 }
 
 function Invoke-ZiniaoShopSync {
@@ -332,6 +361,14 @@ if (!$PSBoundParameters.ContainsKey("View")) {
   if ($inferred -and $inferred -ne "home") {
     $View = $inferred
     $ViewWasInferred = $true
+  }
+}
+
+if ($CurrentWindowFirst -and !$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
+  $quickGui = Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -TimeoutSeconds 0 -NoLaunch -ContinueOnFailure
+  if ($quickGui.Code -eq 0) {
+    $quickGui.Output | ForEach-Object { Write-Output $_ }
+    exit 0
   }
 }
 

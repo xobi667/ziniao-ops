@@ -335,6 +335,59 @@ def _wait_new_store_window(desktop, before_handles: set[int], timeout: float = 3
     return None
 
 
+def _window_title(win) -> str:
+    try:
+        return (win.window_text() or "").strip()
+    except Exception:
+        return ""
+
+
+def _window_class_name(win) -> str:
+    try:
+        return str(getattr(win.element_info, "class_name", "") or "")
+    except Exception:
+        return ""
+
+
+def _find_existing_store_window(desktop, names: list[str]):
+    try:
+        wins = desktop.windows()
+    except Exception:
+        wins = []
+    for win in wins:
+        title = _window_title(win)
+        if not title:
+            continue
+        if "紫鸟" in title or "Ziniao" in title or "ZiNiao" in title:
+            continue
+        class_name = _window_class_name(win)
+        if class_name != "Chrome_WidgetWin_1" and not any(marker in title for marker in ("Seller Center", "Lazada", "ASC")):
+            continue
+        if _matches_target_name(title, names):
+            return win
+    return None
+
+
+def _open_visible_target_if_present(main, desktop, names: list[str]):
+    button, error, fatal = _find_target_start_button(main, names)
+    if fatal:
+        return None, error, True
+    if not button:
+        return None, error, False
+    before = _record_windows(desktop)
+    try:
+        button.click_input()
+    except Exception as exc:
+        return None, f"点击当前可见店铺行失败: {exc}", False
+    store_win = _wait_new_store_window(desktop, before, timeout=18.0)
+    if store_win:
+        return store_win, "", False
+    existing = _find_existing_store_window(desktop, names)
+    if existing:
+        return existing, "", False
+    return main, "", False
+
+
 def _navigate_window(win, keyboard, url: str) -> bool:
     if not url:
         return True
@@ -351,6 +404,9 @@ def _navigate_window(win, keyboard, url: str) -> bool:
 
 
 def _search_and_open(main, desktop, keyboard, names: list[str]):
+    existing = _find_existing_store_window(desktop, names)
+    if existing:
+        return existing, ""
     try:
         main.set_focus()
     except Exception:
@@ -358,6 +414,12 @@ def _search_and_open(main, desktop, keyboard, names: list[str]):
     _click_text(main, ["账号", "全部账号", "全 部 账 号"], timeout=4)
     time.sleep(1)
     main = _find_ziniao_window(desktop) or main
+
+    store_win, error, fatal = _open_visible_target_if_present(main, desktop, names)
+    if fatal:
+        return None, error
+    if store_win:
+        return store_win, ""
 
     edit = _find_first_edit(main)
     if not edit:
@@ -402,6 +464,7 @@ def main() -> int:
     parser.add_argument("--ziniao-name", default="")
     parser.add_argument("--alias", action="append", default=[])
     parser.add_argument("--config", default="")
+    parser.add_argument("--no-launch", action="store_true", help="Only use an already-open Ziniao window; do not launch Ziniao.")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
@@ -420,7 +483,7 @@ def main() -> int:
     config = _load_config(args.config)
     desktop = Desktop(backend="uia")
     main_win = _find_ziniao_window(desktop)
-    if not main_win:
+    if not main_win and not args.no_launch:
         _start_ziniao(config)
         main_win = _find_ziniao_window(desktop)
     if not main_win:
@@ -428,7 +491,7 @@ def main() -> int:
             {
                 "ok": False,
                 "method": "ziniao_gui",
-                "message": "未找到本机紫鸟窗口。请员工先打开并登录紫鸟。",
+                "message": "当前没有可复用的紫鸟窗口。" if args.no_launch else "未找到本机紫鸟窗口。请员工先打开并登录紫鸟。",
             },
             1,
         )
