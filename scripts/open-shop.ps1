@@ -19,6 +19,7 @@
 
   [int]$LoginTimeoutSeconds = 180,
   [switch]$RefreshZiniao,
+  [switch]$AllowRestart,
   [switch]$DryRun,
   [switch]$List,
   [switch]$Json
@@ -124,6 +125,7 @@ function Invoke-ZiniaoGuiFallback {
     [string[]]$Aliases = @(),
     [int]$TimeoutSeconds = $LoginTimeoutSeconds,
     [switch]$NoLaunch,
+    [switch]$AllowRestart,
     [switch]$ContinueOnFailure
   )
   $script = Join-Path $root "scripts\ziniao-gui-open.py"
@@ -147,6 +149,7 @@ function Invoke-ZiniaoGuiFallback {
     "--json"
   )
   if ($NoLaunch) { $argsList += "--no-launch" }
+  if ($AllowRestart) { $argsList += "--allow-restart" }
   if ($NoLaunch -and $ContinueOnFailure) { $argsList += @("--fast-visible-click", "--quick-only") }
   foreach ($alias in @($Aliases)) {
     if ($alias) {
@@ -205,7 +208,7 @@ function Invoke-ZiniaoShopSync {
   $code = $LASTEXITCODE
   if ($code -ne 0) {
     if (!$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
-      Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query)
+      Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -AllowRestart:$AllowRestart
     }
     if ($output.Count -gt 0) {
       $output | ForEach-Object { Write-Output $_ }
@@ -446,7 +449,7 @@ foreach ($shop in $shops) {
 $ordered = @($matches | Sort-Object @{ Expression = "score"; Descending = $true }, platform, name)
 if ($ordered.Count -eq 0) {
   if (!$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
-    Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query)
+    Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -AllowRestart:$AllowRestart
   }
   Write-Result @{ ok = $false; message = "No local shop matched: $Query" } 1
 }
@@ -628,7 +631,7 @@ if ($method -eq "ziniao_webdriver") {
   $code = Invoke-PythonScript $script $argsList
   if ($code -eq 0) { exit 0 }
   if (!$UrlOnly -and !$NavigateView) {
-    Invoke-ZiniaoGuiFallback -ShopName ([string]$shop.name) -ZiniaoName $ziniaoName -Aliases @($shop.aliases)
+    Invoke-ZiniaoGuiFallback -ShopName ([string]$shop.name) -ZiniaoName $ziniaoName -Aliases @($shop.aliases) -AllowRestart:$AllowRestart
   }
   if ($allowUrlFallback) {
     Write-Host "精准打开失败，按 UrlFallback 退回普通链接打开。"

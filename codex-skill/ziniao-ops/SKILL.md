@@ -352,6 +352,7 @@ Never store or print passwords, verification codes, browser session data, or tok
 - Multiple matches: show candidates and ask for platform/country/more keywords.
 - No match: run `open-shop.ps1 -List -RefreshZiniao`; if still missing, tell the employee this local Ziniao account does not contain that store.
 - Ziniao not running or not logged in during a real open request: use `open-store.ps1`, not a separate `setup-ziniao.ps1` plus a second user prompt. It should first try current-window reuse; if that fails, it should launch/foreground Ziniao, wait for local login, scan the local browser list, and continue to open the requested store. If timeout happens, tell the employee the same command can be run again after login.
+- Do not forcibly restart or kill Ziniao during normal opening. Only pass `open-shop.ps1 -AllowRestart` or `ziniao-gui-open.py --allow-restart` when the user explicitly confirms the current Ziniao process may be restarted.
 - Ziniao API login-state error after waiting: use the GUI fallback path if the user requested an actual open, not a dry-run.
 - `ziniao_login_required`: Ziniao is visible but stopped on its own login page. The script raises the login window and waits for local login before failing. Do not click login or handle credentials; if it times out, ask the employee to complete login locally and rerun the same command.
 - Browser opens login page: this means the employee computer is not logged in for that store. Do not assist with credentials; tell the employee to log in manually, then run the same command again.

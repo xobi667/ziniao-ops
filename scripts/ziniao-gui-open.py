@@ -691,7 +691,7 @@ def _fast_visible_search_and_open(main, desktop, keyboard, names: list[str]):
         existing = _find_existing_store_window(desktop, names)
         if existing:
             return existing, "", False
-        return main, "", False
+        return None, "点击启动/切换后未确认到新的店铺窗口", False
     except Exception as exc:
         return None, f"当前窗口快速点击失败: {exc}", False
 
@@ -736,7 +736,7 @@ def _open_visible_target_if_present(main, desktop, names: list[str]):
     existing = _find_existing_store_window(desktop, names)
     if existing:
         return existing, "", False
-    return main, "", False
+    return None, "点击启动/切换后未确认到新的店铺窗口", False
 
 
 def _search_and_open(main, desktop, keyboard, names: list[str]):
@@ -790,7 +790,10 @@ def _search_and_open(main, desktop, keyboard, names: list[str]):
                 store_win = _wait_new_store_window(desktop, before)
                 if store_win:
                     return store_win, ""
-                return main, ""
+                existing = _find_existing_store_window(desktop, [name])
+                if existing:
+                    return existing, ""
+                return None, "点击启动/切换后未确认到新的店铺窗口"
         except Exception as exc:
             return None, f"搜索/启动紫鸟店铺失败: {exc}"
     return None, last_error or "紫鸟未匹配到店铺，请检查本机紫鸟是否已登录且包含该店铺"
@@ -807,6 +810,7 @@ def main() -> int:
     parser.add_argument("--login-timeout", type=int, default=180)
     parser.add_argument("--login-check-only", action="store_true", help="Only launch/foreground Ziniao and verify it is past the login page.")
     parser.add_argument("--no-launch", action="store_true", help="Only use an already-open Ziniao window; do not launch or restart Ziniao.")
+    parser.add_argument("--allow-restart", action="store_true", help="Allow forcibly restarting Ziniao if no visible Ziniao window is found.")
     parser.add_argument("--fast-visible-click", action="store_true", help="Use coordinate-based quick click for an already-filtered/open Ziniao account list.")
     parser.add_argument("--quick-only", action="store_true", help="Return after quick current-window checks; do not run slow UIA search.")
     parser.add_argument("--json", action="store_true")
@@ -831,7 +835,7 @@ def main() -> int:
     if not main_win and not args.no_launch:
         started_ziniao = _start_ziniao(config)
         main_win = _find_ziniao_window(desktop, timeout=35)
-    if not main_win and not args.no_launch:
+    if not main_win and not args.no_launch and args.allow_restart:
         started_ziniao = _restart_ziniao_visible(config) or started_ziniao
         main_win = _find_ziniao_window(desktop, timeout=45)
     if not main_win:
@@ -840,7 +844,7 @@ def main() -> int:
                 "ok": False,
                 "method": "ziniao_gui",
                 "error": "ziniao_window_not_found_current_only" if args.no_launch else "ziniao_window_not_found",
-                "message": "当前没有可复用的紫鸟窗口。" if args.no_launch else "未找到本机紫鸟窗口。请员工先打开并登录紫鸟。",
+                "message": "当前没有可复用的紫鸟窗口。" if args.no_launch else "未找到本机紫鸟窗口。请员工先打开并登录紫鸟；如需自动强制重启紫鸟，请显式传入 --allow-restart。",
                 "started_ziniao": started_ziniao,
             },
             1,

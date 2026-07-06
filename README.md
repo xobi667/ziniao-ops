@@ -191,6 +191,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 .\open-shop.ps1 -List -RefreshZiniao
 ```
 
+默认不会强制结束或重启紫鸟。只有员工确认当前紫鸟可以被重启时，才使用 `.\open-shop.ps1 "<店铺关键词>" -AllowRestart`。
+
 ## 运营助理工作流
 
 `ziniao-ops` 不只负责打开页面。现在可以先生成运营任务，再让 Codex 按任务逐项打开页面、读取可见指标、形成报告。

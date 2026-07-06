@@ -2,7 +2,6 @@
   [Parameter(Mandatory = $true)]
   [string]$ReportPath,
   [string]$ReceiveId = "",
-  [ValidateSet("chat_id", "open_id", "user_id", "email")]
   [string]$ReceiveIdType = "chat_id",
   [switch]$AllowSend,
   [switch]$Json
@@ -57,10 +56,20 @@ if (!$ReceiveId) {
   }) 2
 }
 
+$validReceiveIdTypes = @("chat_id", "open_id", "email")
+if ($ReceiveIdType -notin $validReceiveIdTypes) {
+  Write-Result ([ordered]@{
+    ok = $false
+    error = "invalid_receive_id_type"
+    message = "ReceiveIdType must be chat_id, open_id, or email. For direct user messages, use ReceiveIdType open_id with a Feishu open_id that starts with ou_."
+    receive_id_type = $ReceiveIdType
+    path = $fullReportPath
+  }) 2
+}
+
 $receivePatterns = @{
   chat_id = '^oc_[A-Za-z0-9_-]+$'
   open_id = '^ou_[A-Za-z0-9_-]+$'
-  user_id = '^ou_[A-Za-z0-9_-]+$'
   email = '^[^@\s]+@[^@\s]+\.[^@\s]+$'
 }
 if ($ReceiveId -notmatch $receivePatterns[$ReceiveIdType]) {

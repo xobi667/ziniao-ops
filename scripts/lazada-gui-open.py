@@ -444,7 +444,7 @@ def _open_visible_target_if_present(main, desktop, names: list[str]):
     existing = _find_existing_store_window(desktop, names)
     if existing:
         return existing, "", False
-    return main, "", False
+    return None, "点击启动/切换后未确认到新的店铺窗口", False
 
 
 def _navigate_window(win, keyboard, url: str) -> bool:
@@ -516,6 +516,10 @@ def _search_and_open(main, desktop, keyboard, names: list[str], login_timeout: i
                 store_win = _wait_new_store_window(desktop, before)
                 if store_win:
                     return store_win, ""
+                existing = _find_existing_store_window(desktop, [name])
+                if existing:
+                    return existing, ""
+                return None, "点击启动/切换后未确认到新的店铺窗口"
         except Exception as exc:
             return None, f"搜索/启动 Lazada 店铺失败: {exc}"
     return None, last_error or "紫鸟未匹配到 Lazada 店铺，请检查 ziniao_name / aliases"
