@@ -68,6 +68,7 @@ if (!$CommandArgs -or $CommandArgs.Count -eq 0) {
 }
 
 $joinedArgs = ($CommandArgs -join " ")
+$firstArg = if ($CommandArgs.Count -gt 0) { [string]$CommandArgs[0] } else { "" }
 if ($joinedArgs -match "(?i)(password|passwd|pwd|secret|token|cookie|session|private[_-]?key|api[_-]?key)") {
   Write-Result ([ordered]@{
     ok = $false
@@ -76,7 +77,8 @@ if ($joinedArgs -match "(?i)(password|passwd|pwd|secret|token|cookie|session|pri
   }) 4
 }
 
-if ($joinedArgs -match "(?i)(^|\\s)(serve|server|daemon)(\\s|$)" -and !$AllowLongRunning) {
+$longRunningCommand = ($firstArg -match "(?i)^(serve|server|daemon)$")
+if ($longRunningCommand -and !$AllowLongRunning) {
   Write-Result ([ordered]@{
     ok = $false
     error = "long_running_command_refused"

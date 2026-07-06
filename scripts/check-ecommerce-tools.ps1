@@ -45,6 +45,9 @@ function Add-Target {
     [string]$Priority
   )
   if (!$Url) { return }
+  if ($CategoryName -and !($script:knownCategories -contains $CategoryName)) {
+    [void]$script:knownCategories.Add($CategoryName)
+  }
   if ($Category -and $CategoryName -ne $Category) { return }
   $key = ("{0}|{1}|{2}" -f $Id, $Kind, $Url).ToLowerInvariant()
   foreach ($target in $Targets) {
@@ -144,6 +147,7 @@ if ($map.PSObject.Properties.Name -contains "_parse_error") {
 }
 
 $targets = New-Object System.Collections.ArrayList
+$knownCategories = New-Object System.Collections.ArrayList
 
 foreach ($platform in @($map.platforms)) {
   foreach ($url in @($platform.official_urls)) {
@@ -178,6 +182,23 @@ if ($external -and !($external.PSObject.Properties.Name -contains "_parse_error"
       }
     }
   }
+}
+
+$allCategories = @($knownCategories | Sort-Object)
+if ($Category -and @($targets).Count -eq 0 -and ($allCategories -notcontains $Category)) {
+  $result = [ordered]@{
+    ok = $false
+    checked_at = $checkedAt
+    root = $Root
+    error = "invalid_category"
+    message = "Unknown category filter: $Category"
+    category_filter = $Category
+    categories = $allCategories
+    total = 0
+    targets = @()
+  }
+  if ($Json) { $result | ConvertTo-Json -Depth 8 } else { Write-Host "ECOMMERCE_TOOL_CHECK_FAILED: $($result.message)" }
+  exit 2
 }
 
 $MaxConcurrency = [Math]::Max(1, $MaxConcurrency)

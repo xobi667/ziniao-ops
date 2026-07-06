@@ -26,6 +26,13 @@ def _print_json(payload: dict, code: int) -> None:
     raise SystemExit(code)
 
 
+def _resolve_repo_path(value: str) -> Path:
+    path = Path(os.path.expandvars(str(value))).expanduser()
+    if not path.is_absolute():
+        path = ROOT / path
+    return path
+
+
 def _norm(text: str | None) -> str:
     value = str(text or "").strip().lower()
     for suffix in (" 自营", "自营", "-自营", " 自營", "自營", "-自營", " 合作", "合作", "-合作"):
@@ -36,7 +43,7 @@ def _norm(text: str | None) -> str:
 
 
 def _load_config(path: str | None) -> dict:
-    target = Path(path) if path else ROOT / "ziniao.local.json"
+    target = _resolve_repo_path(path) if path else ROOT / "ziniao.local.json"
     if not target.exists():
         target = ROOT / "ziniao.local.example.json"
     if not target.exists():
@@ -48,13 +55,14 @@ def _load_config(path: str | None) -> dict:
 
 
 def _path_from_env_or_config(config: dict) -> list[Path]:
-    values = [
-        str(config.get("client_path") or "").strip(),
+    result: list[Path] = []
+    config_value = str(config.get("client_path") or "").strip()
+    if config_value:
+        result.append(_resolve_repo_path(config_value))
+    for value in [
         os.environ.get("ZINIAO_CLIENT_PATH", "").strip(),
         os.environ.get("ZINIAO_PATH", "").strip(),
-    ]
-    result: list[Path] = []
-    for value in values:
+    ]:
         if value:
             result.append(Path(os.path.expandvars(value)).expanduser())
     return result
