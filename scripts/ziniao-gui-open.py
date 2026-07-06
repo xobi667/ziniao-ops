@@ -312,6 +312,15 @@ def _bring_to_front(win) -> None:
         pass
 
 
+def _click_screen(x: int, y: int) -> None:
+    user32 = ctypes.windll.user32
+    user32.SetCursorPos(int(x), int(y))
+    time.sleep(0.05)
+    user32.mouse_event(0x0002, 0, 0, 0, 0)
+    time.sleep(0.03)
+    user32.mouse_event(0x0004, 0, 0, 0, 0)
+
+
 def _looks_like_login_page(win) -> bool:
     text = _top_window_text(win)
     if not text:
@@ -599,6 +608,86 @@ def _window_class_name(win) -> str:
         return ""
 
 
+def _text_at_points(desktop, points: list[tuple[int, int]]) -> list[str]:
+    texts: list[str] = []
+    seen: set[str] = set()
+    for x, y in points:
+        try:
+            ctrl = desktop.from_point(int(x), int(y))
+        except Exception:
+            continue
+        controls = [ctrl]
+        try:
+            parent = ctrl.parent()
+            if parent:
+                controls.append(parent)
+        except Exception:
+            pass
+        for item in controls:
+            text = _control_text(item)
+            if text and text not in seen:
+                seen.add(text)
+                texts.append(text)
+    return texts
+
+
+def _fast_visible_search_and_open(main, desktop, keyboard, names: list[str]):
+    if not names:
+        return None, "缺少店铺关键词", False
+    rect = _control_rect(main)
+    if not rect:
+        return None, "未能读取紫鸟窗口位置", False
+    query = next((name for name in names if str(name or "").strip()), "")
+    if not query:
+        return None, "缺少店铺关键词", False
+
+    _bring_to_front(main)
+    time.sleep(0.2)
+    width = max(1, rect.right - rect.left)
+
+    # Ziniao's account list has stable geometry. This quick path is only used
+    # for an already-open window; slow UIA enumeration remains the safe fallback.
+    tab_x = rect.left + int(width * 0.50)
+    tab_y = rect.top + 122
+    search_x = rect.left + min(width - 70, max(150, int(width * 0.48)))
+    search_y = rect.top + 204
+    search_submit_x = rect.right - 26
+    row_y = rect.top + 276
+    button_x = rect.right - 78
+    label_y = rect.top + 250
+    label_points = [
+        (rect.left + 95, label_y),
+        (rect.left + 150, label_y),
+        (rect.left + min(width - 150, 230), label_y),
+        (rect.left + 150, label_y + 18),
+    ]
+
+    try:
+        _click_screen(tab_x, tab_y)
+        time.sleep(0.15)
+        _click_screen(search_x, search_y)
+        keyboard.send_keys("^a")
+        keyboard.send_keys(query, with_spaces=True, pause=0.01)
+        _click_screen(search_submit_x, search_y)
+        time.sleep(1.4)
+        main = _find_ziniao_window(desktop, timeout=1) or main
+        texts = _text_at_points(desktop, label_points)
+        if not any(_matches_target_name(text, names) for text in texts):
+            return None, "当前可见首行没有确认到目标店铺名称", False
+        before = _record_windows(desktop)
+        _click_screen(button_x, row_y)
+        store_win = _wait_new_store_window(desktop, before, timeout=18.0)
+        if store_win:
+            _bring_to_front(store_win)
+            return store_win, "", False
+        existing = _find_existing_store_window(desktop, names)
+        if existing:
+            return existing, "", False
+        return main, "", False
+    except Exception as exc:
+        return None, f"当前窗口快速点击失败: {exc}", False
+
+
 def _find_existing_store_window(desktop, names: list[str]):
     try:
         wins = desktop.windows()
@@ -710,6 +799,8 @@ def main() -> int:
     parser.add_argument("--login-timeout", type=int, default=180)
     parser.add_argument("--login-check-only", action="store_true", help="Only launch/foreground Ziniao and verify it is past the login page.")
     parser.add_argument("--no-launch", action="store_true", help="Only use an already-open Ziniao window; do not launch or restart Ziniao.")
+    parser.add_argument("--fast-visible-click", action="store_true", help="Use coordinate-based quick click for an already-filtered/open Ziniao account list.")
+    parser.add_argument("--quick-only", action="store_true", help="Return after quick current-window checks; do not run slow UIA search.")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
@@ -792,6 +883,48 @@ def main() -> int:
         text = str(item or "").strip()
         if text and text not in names:
             names.append(text)
+
+    if args.fast_visible_click:
+        existing = _find_existing_store_window(desktop, names)
+        if existing:
+            _print_json(
+                {
+                    "ok": True,
+                    "method": "ziniao_gui_current_window",
+                    "message": "已复用当前已打开的店铺窗口。",
+                    "shop": args.shop_name,
+                    "view": args.view,
+                    "searched": names,
+                    "started_ziniao": started_ziniao,
+                },
+                0,
+            )
+        store_win, error, fatal = _fast_visible_search_and_open(main_win, desktop, keyboard, names)
+        if store_win:
+            _print_json(
+                {
+                    "ok": True,
+                    "method": "ziniao_gui_current_window",
+                    "message": "已复用当前紫鸟窗口并点击可见店铺行的启动/切换按钮。",
+                    "shop": args.shop_name,
+                    "view": args.view,
+                    "searched": names,
+                    "started_ziniao": started_ziniao,
+                },
+                0,
+            )
+        if fatal or args.quick_only:
+            _print_json(
+                {
+                    "ok": False,
+                    "method": "ziniao_gui_current_window",
+                    "error": "current_window_not_reusable",
+                    "message": error or "当前紫鸟窗口无法快速复用。",
+                    "searched": names,
+                    "started_ziniao": started_ziniao,
+                },
+                1,
+            )
 
     store_win, error = _search_and_open(main_win, desktop, keyboard, names)
     if not store_win:

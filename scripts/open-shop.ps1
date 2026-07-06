@@ -138,6 +138,7 @@ function Invoke-ZiniaoGuiFallback {
     "--json"
   )
   if ($NoLaunch) { $argsList += "--no-launch" }
+  if ($NoLaunch -and $ContinueOnFailure) { $argsList += @("--fast-visible-click", "--quick-only") }
   foreach ($alias in @($Aliases)) {
     if ($alias) {
       $argsList += @("--alias", [string]$alias)
