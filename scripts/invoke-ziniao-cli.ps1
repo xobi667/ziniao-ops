@@ -8,6 +8,7 @@
 
 $ErrorActionPreference = "Continue"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path $PSScriptRoot "path-utils.ps1")
 
 function Get-LocalStateRoot {
   $cfgPath = Join-Path $root "ziniao.local.json"
@@ -15,7 +16,7 @@ function Get-LocalStateRoot {
     try {
       $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
       if ($cfg.local_state_root) {
-        return [Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)
+        return Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.local_state_root)
       }
     } catch {
     }
@@ -24,11 +25,15 @@ function Get-LocalStateRoot {
 }
 
 function Get-ToolPath([string]$Name) {
-  $localBin = Join-Path (Get-LocalStateRoot) "bin"
-  foreach ($ext in @(".ps1", ".cmd", ".exe", ".bat", "")) {
-    $candidate = Join-Path $localBin ($Name + $ext)
-    if (Test-Path -LiteralPath $candidate -PathType Leaf) {
-      return (Resolve-Path -LiteralPath $candidate).Path
+  $localState = Get-LocalStateRoot
+  $localBin = Join-Path $localState "bin"
+  $ziniaoCliScripts = Join-Path $localState "tools\ziniao-cli-venv\Scripts"
+  foreach ($dir in @($ziniaoCliScripts, $localBin)) {
+    foreach ($ext in @(".ps1", ".cmd", ".exe", ".bat", "")) {
+      $candidate = Join-Path $dir ($Name + $ext)
+      if (Test-Path -LiteralPath $candidate -PathType Leaf) {
+        return (Resolve-Path -LiteralPath $candidate).Path
+      }
     }
   }
   $cmd = Get-Command $Name -ErrorAction SilentlyContinue

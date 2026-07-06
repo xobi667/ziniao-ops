@@ -1,6 +1,7 @@
 ﻿$ErrorActionPreference = "Continue"
 
 $packageRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
+. (Join-Path $packageRoot "scripts\path-utils.ps1")
 $codexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $env:USERPROFILE ".codex" }
 $skillRoot = Join-Path $codexHome "skills"
 $skillConfigPath = Join-Path $codexHome "ziniao-ops.json"
@@ -42,7 +43,7 @@ function Find-ZiniaoExe {
   if (Test-Path -LiteralPath $ziniaoConfigPath) {
     try {
       $localConfig = Get-Content -LiteralPath $ziniaoConfigPath -Raw | ConvertFrom-Json
-      if ($localConfig.client_path) { $candidates.Add([string]$localConfig.client_path) }
+      if ($localConfig.client_path) { $candidates.Add((Resolve-ZiniaoOpsRepoPath $packageRoot ([string]$localConfig.client_path))) }
     } catch {
     }
   }
@@ -85,11 +86,11 @@ function Get-PythonCommand {
     try {
       $cfg = Get-Content -LiteralPath $ziniaoConfigPath -Raw | ConvertFrom-Json
       if ($cfg.python_path) {
-        $pythonPath = [Environment]::ExpandEnvironmentVariables([string]$cfg.python_path)
+        $pythonPath = Resolve-ZiniaoOpsRepoPath $packageRoot ([string]$cfg.python_path)
         if (Test-Path -LiteralPath $pythonPath -PathType Leaf) { return @($pythonPath) }
       }
       if ($cfg.local_state_root) {
-        $venvPython = Join-Path ([Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)) "tools\python-venv\Scripts\python.exe"
+        $venvPython = Join-Path (Resolve-ZiniaoOpsRepoPath $packageRoot ([string]$cfg.local_state_root)) "tools\python-venv\Scripts\python.exe"
         if (Test-Path -LiteralPath $venvPython -PathType Leaf) { return @($venvPython) }
       }
     } catch {

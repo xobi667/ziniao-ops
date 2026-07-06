@@ -258,7 +258,15 @@ while ($queue.Count -gt 0 -or $jobs.Count -gt 0) {
     $output = @()
     try { $output = @(Receive-Job -Job $job -ErrorAction SilentlyContinue) } catch { $output = @() }
     if ($output.Count -gt 0) {
-      foreach ($item in $output) { [void]$resultList.Add($item) }
+      foreach ($item in $output) {
+        [void]$resultList.Add((New-TargetResult $target ([pscustomobject]@{
+          reachable = [bool]$item.reachable
+          status_code = [int]$item.status_code
+          final_url = [string]$item.final_url
+          title = [string]$item.title
+          error = [string]$item.error
+        })))
+      }
     } else {
       [void]$resultList.Add((New-TargetResult $target ([pscustomobject]@{
         reachable = $false

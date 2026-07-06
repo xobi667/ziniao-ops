@@ -135,6 +135,8 @@ function Test-SetupCannotFixOpenFailure($OpenJson) {
   return ($error -in @(
     "multiple_matches",
     "view_url_missing",
+    "shops_cache_missing",
+    "shops_cache_empty",
     "command_disabled",
     "python_missing",
     "pywinauto_missing",
@@ -167,6 +169,27 @@ if ($fastOpen.Code -eq 0) {
     $fastOpen.Output | ForEach-Object { Write-Output $_ }
   }
   exit 0
+}
+
+if ($DryRun) {
+  if ($Json) {
+    Write-OneShotResult ([ordered]@{
+      ok = $false
+      method = "open_store_dry_run"
+      query = $Query
+      view = $View
+      view_inferred_from_query = $ViewWasInferred
+      current_window_first = $true
+      open = $fastOpen.Json
+      raw_open_output = if ($fastOpen.Json) { $null } else { $fastOpen.Output }
+    }) $fastOpen.Code
+  }
+  if ($fastOpen.Json -and $fastOpen.Json.message) {
+    Write-Host $fastOpen.Json.message
+  } else {
+    $fastOpen.Output | ForEach-Object { Write-Output $_ }
+  }
+  exit $fastOpen.Code
 }
 
 if (Test-SetupCannotFixOpenFailure $fastOpen.Json) {

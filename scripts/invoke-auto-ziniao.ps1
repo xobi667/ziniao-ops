@@ -11,6 +11,7 @@
 
 $ErrorActionPreference = "Continue"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path $PSScriptRoot "path-utils.ps1")
 
 function Get-LocalStateRoot {
   $cfgPath = Join-Path $root "ziniao.local.json"
@@ -18,7 +19,7 @@ function Get-LocalStateRoot {
     try {
       $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
       if ($cfg.local_state_root) {
-        return [Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)
+        return Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.local_state_root)
       }
     } catch {
     }
@@ -39,7 +40,7 @@ function Get-ToolPath([string]$Name) {
     $cfgPath = Join-Path $root "ziniao.local.json"
     if (Test-Path -LiteralPath $cfgPath) {
       $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
-      if ($cfg.npm_prefix) { $npmPrefix = [Environment]::ExpandEnvironmentVariables([string]$cfg.npm_prefix) }
+      if ($cfg.npm_prefix) { $npmPrefix = Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.npm_prefix) }
     }
   } catch {
   }

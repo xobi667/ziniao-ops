@@ -6,6 +6,7 @@
 $ErrorActionPreference = "Stop"
 
 $packageRoot = (Resolve-Path -LiteralPath $PSScriptRoot).Path
+. (Join-Path $packageRoot "scripts\path-utils.ps1")
 $configPath = Join-Path $packageRoot "ziniao.local.json"
 
 function Test-IsWindows {
@@ -64,7 +65,7 @@ if (!$LocalStateRoot -and (Test-Path -LiteralPath $configPath)) {
   try {
     $cfg = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
     if ($cfg.local_state_root) {
-      $LocalStateRoot = [Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)
+      $LocalStateRoot = Resolve-ZiniaoOpsRepoPath $packageRoot ([string]$cfg.local_state_root)
     }
   } catch {
   }
@@ -73,7 +74,7 @@ if (!$LocalStateRoot) {
   $LocalStateRoot = Join-Path $packageRoot ".ziniao-ops"
 }
 
-$localState = [Environment]::ExpandEnvironmentVariables($LocalStateRoot)
+$localState = Resolve-ZiniaoOpsRepoPath $packageRoot $LocalStateRoot
 $toolsRoot = Join-Path $localState "tools"
 $venvRoot = Join-Path $toolsRoot "python-venv"
 $tmpRoot = Join-Path $localState "tmp"

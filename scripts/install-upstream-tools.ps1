@@ -12,12 +12,13 @@
 $ErrorActionPreference = "Stop"
 
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path $PSScriptRoot "path-utils.ps1")
 $configPath = Join-Path $root "ziniao.local.json"
 if (!$LocalStateRoot -and (Test-Path -LiteralPath $configPath)) {
   try {
     $existingConfig = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
     if ($existingConfig.local_state_root) {
-      $LocalStateRoot = [Environment]::ExpandEnvironmentVariables([string]$existingConfig.local_state_root)
+      $LocalStateRoot = Resolve-ZiniaoOpsRepoPath $root ([string]$existingConfig.local_state_root)
     }
   } catch {
   }
@@ -25,7 +26,7 @@ if (!$LocalStateRoot -and (Test-Path -LiteralPath $configPath)) {
 if (!$LocalStateRoot) {
   $LocalStateRoot = Join-Path $root ".ziniao-ops"
 }
-$localState = [Environment]::ExpandEnvironmentVariables($LocalStateRoot)
+$localState = Resolve-ZiniaoOpsRepoPath $root $LocalStateRoot
 $toolsRoot = Join-Path $localState "tools"
 $localBin = Join-Path $localState "bin"
 $tempRoot = Join-Path $localState "tmp"
@@ -123,8 +124,9 @@ function Get-PythonUserScripts([hashtable]$Python) {
 
 function Ensure-NpmPrefix {
   if ($NpmPrefix) {
-    Ensure-Directory $NpmPrefix
-    return $NpmPrefix
+    $resolved = Resolve-ZiniaoOpsRepoPath $root $NpmPrefix
+    Ensure-Directory $resolved
+    return $resolved
   }
 
   $fallback = Join-Path $localState "npm-global"

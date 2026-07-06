@@ -7,6 +7,7 @@
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath $PSScriptRoot).Path
+. (Join-Path $root "scripts\path-utils.ps1")
 
 if (!$Out) {
   $Out = Join-Path $root "shops.json"
@@ -18,11 +19,11 @@ function Get-PythonCommand {
     try {
       $cfg = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
       if ($cfg.python_path) {
-        $pythonPath = [Environment]::ExpandEnvironmentVariables([string]$cfg.python_path)
+        $pythonPath = Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.python_path)
         if (Test-Path -LiteralPath $pythonPath -PathType Leaf) { return @($pythonPath) }
       }
       if ($cfg.local_state_root) {
-        $venvPython = Join-Path ([Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)) "tools\python-venv\Scripts\python.exe"
+        $venvPython = Join-Path (Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.local_state_root)) "tools\python-venv\Scripts\python.exe"
         if (Test-Path -LiteralPath $venvPython -PathType Leaf) { return @($venvPython) }
       }
     } catch {
