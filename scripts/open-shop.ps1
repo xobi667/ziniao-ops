@@ -612,6 +612,7 @@ if ($method -eq "ziniao_gui") {
     "--view", $actualView,
     "--url", $navigationUrl,
     "--ziniao-name", $ziniaoName,
+    "--login-timeout", ([string]$LoginTimeoutSeconds),
     "--json"
   )
   foreach ($alias in @($shop.aliases)) {

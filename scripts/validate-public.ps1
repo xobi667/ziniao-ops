@@ -170,6 +170,7 @@ $required = @(
   "scripts\invoke-ziniao-cli.ps1",
   "scripts\invoke-auto-ziniao.ps1",
   "scripts\install-upstream-tools.ps1",
+  "scripts\sensitive-text.ps1",
   "scripts\check-external-tools.ps1",
   "scripts\check-ecommerce-tools.ps1",
   "scripts\record-ops-learning.ps1",

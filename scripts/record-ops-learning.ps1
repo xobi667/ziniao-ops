@@ -11,6 +11,7 @@
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path $PSScriptRoot "sensitive-text.ps1")
 if (!$StatePath) {
   $stateDir = Join-Path $root ".ziniao-ops"
   New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
@@ -20,8 +21,7 @@ if (!$StatePath) {
 function ConvertTo-SafeText([string]$Value) {
   if (!$Value) { return "" }
   $text = $Value.Trim()
-  $text = $text -replace "(?i)(password|passwd|token|cookie|secret|验证码|密码)\s*[:=]\s*\S+", '$1=<redacted>'
-  return $text
+  return ConvertTo-ZiniaoOpsSafeText $text
 }
 
 $items = @()

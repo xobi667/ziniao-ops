@@ -124,14 +124,26 @@ function Get-PythonUserScripts([hashtable]$Python) {
 function Ensure-NpmPrefix {
   if ($NpmPrefix) {
     Ensure-Directory $NpmPrefix
-    Invoke-Checked -FilePath "npm" -Arguments @("config", "set", "prefix", $NpmPrefix)
     return $NpmPrefix
   }
 
   $fallback = Join-Path $localState "npm-global"
   Ensure-Directory $fallback
-  Invoke-Checked -FilePath "npm" -Arguments @("config", "set", "prefix", $fallback)
   return $fallback
+}
+
+function Clear-ProjectNpmPrefixConfig([string]$ProjectPrefix) {
+  if (!$ProjectPrefix) { return }
+  try {
+    $configured = (& npm config get prefix --location=user 2>$null | Select-Object -First 1)
+    if (!$configured) { return }
+    $configuredFull = [System.IO.Path]::GetFullPath([Environment]::ExpandEnvironmentVariables($configured.Trim())).TrimEnd("\")
+    $projectFull = [System.IO.Path]::GetFullPath($ProjectPrefix).TrimEnd("\")
+    if ($configuredFull -ieq $projectFull) {
+      Invoke-Checked -FilePath "npm" -Arguments @("config", "delete", "prefix", "--location=user")
+    }
+  } catch {
+  }
 }
 
 Ensure-Directory $localState
@@ -186,6 +198,7 @@ if (!$SkipNodePackages) {
     throw "npm was not found. Install Node.js first, or rerun with -SkipNodePackages."
   }
   $resolvedNpmPrefix = Ensure-NpmPrefix
+  Clear-ProjectNpmPrefixConfig $resolvedNpmPrefix
   $env:npm_config_prefix = $resolvedNpmPrefix
   $env:npm_config_cache = Join-Path $localState "npm-cache"
   Ensure-Directory $env:npm_config_cache

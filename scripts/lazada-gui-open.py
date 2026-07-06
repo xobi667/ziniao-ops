@@ -145,6 +145,57 @@ def _find_ziniao_window(desktop):
     return None
 
 
+def _top_window_text(win) -> str:
+    parts: list[str] = []
+    try:
+        title = (win.window_text() or "").strip()
+        if title:
+            parts.append(title)
+    except Exception:
+        pass
+    try:
+        for ctrl in win.descendants():
+            text = _control_text(ctrl)
+            if text:
+                parts.append(text)
+            if len(parts) > 120:
+                break
+    except Exception:
+        pass
+    return "\n".join(parts)
+
+
+def _looks_like_login_page(win) -> bool:
+    text = _top_window_text(win)
+    if not text:
+        return False
+    markers = ["验证码登录", "个人密码登录", "企业登录", "企业密码", "微信登录", "记住密码", "登录", "密码"]
+    return sum(1 for marker in markers if marker in text) >= 2
+
+
+def _wait_login_if_needed(desktop, win, timeout: int):
+    if not _looks_like_login_page(win):
+        return win, False, ""
+    try:
+        win.set_focus()
+    except Exception:
+        pass
+    if timeout <= 0:
+        return win, True, "紫鸟当前停留在登录页，请员工先在紫鸟窗口完成登录后重试。"
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        time.sleep(2)
+        refreshed = _find_ziniao_window(desktop) or win
+        if not _looks_like_login_page(refreshed):
+            return refreshed, True, ""
+        try:
+            refreshed.set_focus()
+        except Exception:
+            pass
+        win = refreshed
+    return win, True, "等待紫鸟登录超时，请员工完成登录后重新执行同一句命令。"
+
+
 def _click_text(root, candidates: list[str], timeout: float = 8.0) -> bool:
     deadline = time.time() + timeout
     while time.time() < deadline:
@@ -403,10 +454,13 @@ def _navigate_window(win, keyboard, url: str) -> bool:
         return False
 
 
-def _search_and_open(main, desktop, keyboard, names: list[str]):
+def _search_and_open(main, desktop, keyboard, names: list[str], login_timeout: int):
     existing = _find_existing_store_window(desktop, names)
     if existing:
         return existing, ""
+    main, was_login, login_error = _wait_login_if_needed(desktop, main, login_timeout)
+    if login_error:
+        return None, login_error
     try:
         main.set_focus()
     except Exception:
@@ -414,6 +468,9 @@ def _search_and_open(main, desktop, keyboard, names: list[str]):
     _click_text(main, ["账号", "全部账号", "全 部 账 号"], timeout=4)
     time.sleep(1)
     main = _find_ziniao_window(desktop) or main
+    main, was_login, login_error = _wait_login_if_needed(desktop, main, login_timeout)
+    if login_error:
+        return None, login_error
 
     store_win, error, fatal = _open_visible_target_if_present(main, desktop, names)
     if fatal:
@@ -465,6 +522,7 @@ def main() -> int:
     parser.add_argument("--alias", action="append", default=[])
     parser.add_argument("--config", default="")
     parser.add_argument("--no-launch", action="store_true", help="Only use an already-open Ziniao window; do not launch Ziniao.")
+    parser.add_argument("--login-timeout", type=int, default=180, help="Seconds to wait if Ziniao is on its own login page.")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
@@ -502,7 +560,7 @@ def main() -> int:
         if text and text not in names:
             names.append(text)
 
-    store_win, error = _search_and_open(main_win, desktop, keyboard, names)
+    store_win, error = _search_and_open(main_win, desktop, keyboard, names, args.login_timeout)
     if not store_win:
         _print_json(
             {

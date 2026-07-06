@@ -3,6 +3,7 @@
   [switch]$SkipGuiDeps,
   [switch]$InstallOptionalTools,
   [switch]$SkipOptionalTools,
+  [switch]$CheckEcommerceTools,
   [switch]$SkipZiniaoSetup,
   [switch]$NonInteractive,
   [switch]$InstallMissingRuntimes,
@@ -264,10 +265,13 @@ if (Test-Path -LiteralPath $status) {
 }
 
 $ecommerceStatus = Join-Path $root "scripts\check-ecommerce-tools.ps1"
-if (Test-Path -LiteralPath $ecommerceStatus) {
+if ($CheckEcommerceTools -and (Test-Path -LiteralPath $ecommerceStatus)) {
   Write-Host ""
   Write-Host "Ecommerce platform/API/tool catalog status..."
-  powershell -NoProfile -ExecutionPolicy Bypass -File $ecommerceStatus -TimeoutSec 8
+  powershell -NoProfile -ExecutionPolicy Bypass -File $ecommerceStatus -Category official_platform_api -TimeoutSec 3
+} elseif (Test-Path -LiteralPath $ecommerceStatus) {
+  Write-Host ""
+  Write-Host "Skipped ecommerce URL catalog check. Run with -CheckEcommerceTools or use .\scripts\check-ecommerce-tools.ps1 later."
 }
 
 Write-Host ""
