@@ -168,6 +168,7 @@ $required = @(
   "scripts\sync-upstreams.ps1",
   "scripts\status-upstream-adapters.ps1",
   "scripts\path-utils.ps1",
+  "scripts\powershell-utils.ps1",
   "scripts\invoke-ziniao-cli.ps1",
   "scripts\invoke-auto-ziniao.ps1",
   "scripts\install-upstream-tools.ps1",

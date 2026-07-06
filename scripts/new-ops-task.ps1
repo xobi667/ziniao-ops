@@ -10,6 +10,7 @@
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+. (Join-Path $PSScriptRoot "powershell-utils.ps1")
 $workflowPath = Join-Path $root "references\ops-workflows.json"
 
 function ConvertTo-SafeFileName([string]$Value) {
@@ -69,8 +70,9 @@ if (!$OutputPath) {
 
 $openCommands = @()
 foreach ($view in $views) {
-  $openCommands += ".\open-store.ps1 `"$Store`" -View $view"
+  $openCommands += ".\open-store.ps1 $(ConvertTo-ZiniaoOpsPowerShellLiteral $Store) -View $(ConvertTo-ZiniaoOpsPowerShellLiteral $view)"
 }
+$reportCommand = ".\scripts\new-ops-report.ps1 -Store $(ConvertTo-ZiniaoOpsPowerShellLiteral $Store) -Platform $(ConvertTo-ZiniaoOpsPowerShellLiteral $Platform) -View $(ConvertTo-ZiniaoOpsPowerShellLiteral ([string]$workflowObj.id)) -TimeRange $(ConvertTo-ZiniaoOpsPowerShellLiteral $TimeRange) -MetricsJson '{}'"
 
 $content = @"
 # Ziniao Ops Task
@@ -105,7 +107,7 @@ $(Join-MarkdownList $safeRules)
 ## Report Command
 
 ````powershell
-.\scripts\new-ops-report.ps1 -Store "$Store" -Platform "$Platform" -View "$($workflowObj.id)" -TimeRange "$TimeRange" -MetricsJson "{}"
+$reportCommand
 ````
 "@
 

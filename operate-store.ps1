@@ -21,6 +21,7 @@ $root = (Resolve-Path -LiteralPath $PSScriptRoot).Path
 $workflowPath = Join-Path $root "references\ops-workflows.json"
 $openStorePath = Join-Path $root "open-store.ps1"
 $taskScriptPath = Join-Path $root "scripts\new-ops-task.ps1"
+. (Join-Path $root "scripts\powershell-utils.ps1")
 
 function Write-Result($Payload, [int]$Code = 0) {
   if ($Json) {
@@ -242,7 +243,7 @@ if (Test-Path -LiteralPath $taskScriptPath) {
   $taskJson = ConvertFrom-JsonOutput $taskOutput
 }
 
-$openCommand = ".\open-store.ps1 `"$Store`" -View $firstView"
+$openCommand = ".\open-store.ps1 $(ConvertTo-ZiniaoOpsPowerShellLiteral $Store) -View $(ConvertTo-ZiniaoOpsPowerShellLiteral $firstView)"
 $openJson = $null
 $openCode = 0
 $rawOpenOutput = $null
@@ -270,7 +271,7 @@ $nextSteps = @(
   ("优先读取这些可见信息：{0}" -f ((@($playbook.read)) -join " / "))
 )
 foreach ($view in $remainingViews) {
-  $nextSteps += ("后续需要再看 `{0}`，可继续运行：.\open-store.ps1 `"{1}`" -View {0}" -f $view, $Store)
+  $nextSteps += ("后续需要再看 `{0}`，可继续运行：.\open-store.ps1 {1} -View {2}" -f $view, (ConvertTo-ZiniaoOpsPowerShellLiteral $Store), (ConvertTo-ZiniaoOpsPowerShellLiteral $view))
 }
 $nextSteps += "所有动作默认只读；发布、付款、退款、改价、改广告预算、发消息前必须停下来让用户确认。"
 
