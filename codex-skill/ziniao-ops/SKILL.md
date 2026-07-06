@@ -305,6 +305,7 @@ Then check official platform/API/tool status:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\check-ecommerce-tools.ps1")
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\check-ecommerce-tools.ps1") -Category official_platform_api -TimeoutSec 1 -TotalTimeoutSec 20 -MaxConcurrency 8
 ```
 
 Treat the result as a capability map, not an installation command. Official APIs, paid SaaS tools, browser extensions, external MCP servers, and marketplace research tools require explicit user-owned account setup. Never upload local seller data to these tools by default.
@@ -322,10 +323,11 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\new-
 If the user asks to send an operations report to Feishu/Lark, prefer an available Feishu/Lark IM tool. If using local `lark-cli`, dry-run first:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\send-ops-report-lark.ps1") -ReportPath "<report.md>" -ReceiveId "<chat-or-user-id>"
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\send-ops-report-lark.ps1") -ReportPath "<report.md>" -ReceiveId "<oc_chat_id>"
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\send-ops-report-lark.ps1") -ReportPath "<report.md>" -ReceiveId "<ou_open_id>" -ReceiveIdType open_id
 ```
 
-Only rerun with `-AllowSend` after the target chat/user is clear. Do not send reports containing passwords, verification codes, cookies, tokens, or session data.
+Only rerun with `-AllowSend` after the target chat/user is clear. Chat IDs must start with `oc_`; direct user targets must use a Feishu open_id that starts with `ou_`. Do not send reports containing passwords, verification codes, cookies, tokens, or session data.
 
 ## Feishu / lark-cli
 

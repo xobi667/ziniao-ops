@@ -2,6 +2,8 @@ param(
   [string]$Root = "",
   [string]$Category = "",
   [int]$TimeoutSec = 15,
+  [int]$TotalTimeoutSec = 60,
+  [int]$MaxConcurrency = 8,
   [switch]$Json
 )
 
@@ -96,6 +98,27 @@ function Get-UrlStatus([string]$Url, [int]$Timeout) {
   return [pscustomobject]$record
 }
 
+function New-TargetResult {
+  param(
+    $Target,
+    $Status
+  )
+  return [pscustomobject][ordered]@{
+    id = [string]$Target.id
+    name = [string]$Target.name
+    category = [string]$Target.category
+    kind = [string]$Target.kind
+    priority = [string]$Target.priority
+    configured_status = [string]$Target.configured_status
+    url = [string]$Target.url
+    reachable = [bool]$Status.reachable
+    status_code = [int]$Status.status_code
+    title = [string]$Status.title
+    final_url = [string]$Status.final_url
+    error = [string]$Status.error
+  }
+}
+
 $map = Read-JsonFile $mapPath
 if (!$map) {
   $result = [ordered]@{
@@ -157,24 +180,133 @@ if ($external -and !($external.PSObject.Properties.Name -contains "_parse_error"
   }
 }
 
-$results = @()
-foreach ($target in @($targets)) {
-  $status = Get-UrlStatus ([string]$target.url) $TimeoutSec
-  $results += [pscustomobject][ordered]@{
-    id = [string]$target.id
-    name = [string]$target.name
-    category = [string]$target.category
-    kind = [string]$target.kind
-    priority = [string]$target.priority
-    configured_status = [string]$target.configured_status
-    url = [string]$target.url
-    reachable = [bool]$status.reachable
-    status_code = [int]$status.status_code
-    title = [string]$status.title
-    final_url = [string]$status.final_url
-    error = [string]$status.error
+$MaxConcurrency = [Math]::Max(1, $MaxConcurrency)
+$TotalTimeoutSec = [Math]::Max(1, $TotalTimeoutSec)
+$jobScript = {
+  param($Target, [int]$Timeout)
+  try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls11 -bor [Net.SecurityProtocolType]::Tls
+  } catch {
+  }
+  $record = [ordered]@{
+    reachable = $false
+    status_code = 0
+    final_url = [string]$Target.url
+    title = ""
+    error = ""
+  }
+  try {
+    $resp = Invoke-WebRequest -Uri ([string]$Target.url) -UseBasicParsing -Method Get -TimeoutSec $Timeout
+    $record.status_code = [int]$resp.StatusCode
+    $record.reachable = $true
+    if ($resp.BaseResponse -and $resp.BaseResponse.ResponseUri) {
+      $record.final_url = [string]$resp.BaseResponse.ResponseUri.AbsoluteUri
+    }
+    $html = [string]$resp.Content
+    $m = [regex]::Match($html, "<title[^>]*>(.*?)</title>", "IgnoreCase,Singleline")
+    if ($m.Success) {
+      $record.title = [System.Net.WebUtility]::HtmlDecode(($m.Groups[1].Value -replace "\s+", " ").Trim())
+    }
+  } catch {
+    $record.error = $_.Exception.Message
+    try {
+      if ($_.Exception.Response -and $_.Exception.Response.StatusCode) {
+        $code = [int]$_.Exception.Response.StatusCode
+        $record.status_code = $code
+        if (($code -ge 200 -and $code -lt 400) -or $code -in @(401, 403, 405)) {
+          $record.reachable = $true
+        }
+      }
+    } catch {
+    }
+  }
+  [pscustomobject][ordered]@{
+    id = [string]$Target.id
+    name = [string]$Target.name
+    category = [string]$Target.category
+    kind = [string]$Target.kind
+    priority = [string]$Target.priority
+    configured_status = [string]$Target.configured_status
+    url = [string]$Target.url
+    reachable = [bool]$record.reachable
+    status_code = [int]$record.status_code
+    title = [string]$record.title
+    final_url = [string]$record.final_url
+    error = [string]$record.error
   }
 }
+
+$resultList = New-Object System.Collections.ArrayList
+$queue = New-Object System.Collections.Queue
+foreach ($target in @($targets)) { $queue.Enqueue($target) }
+$jobs = @()
+$jobTargets = @{}
+$deadline = (Get-Date).AddSeconds($TotalTimeoutSec)
+$timedOut = $false
+
+while ($queue.Count -gt 0 -or $jobs.Count -gt 0) {
+  while ($queue.Count -gt 0 -and $jobs.Count -lt $MaxConcurrency -and (Get-Date) -lt $deadline) {
+    $target = $queue.Dequeue()
+    $job = Start-Job -ScriptBlock $jobScript -ArgumentList $target, $TimeoutSec
+    $jobs += $job
+    $jobTargets[[string]$job.Id] = $target
+  }
+
+  $done = @($jobs | Where-Object { $_.State -in @("Completed", "Failed", "Stopped") })
+  foreach ($job in $done) {
+    $target = $jobTargets[[string]$job.Id]
+    $output = @()
+    try { $output = @(Receive-Job -Job $job -ErrorAction SilentlyContinue) } catch { $output = @() }
+    if ($output.Count -gt 0) {
+      foreach ($item in $output) { [void]$resultList.Add($item) }
+    } else {
+      [void]$resultList.Add((New-TargetResult $target ([pscustomobject]@{
+        reachable = $false
+        status_code = 0
+        final_url = [string]$target.url
+        title = ""
+        error = ("job_" + ([string]$job.State).ToLowerInvariant())
+      })))
+    }
+    Remove-Job -Job $job -Force -ErrorAction SilentlyContinue
+    [void]$jobTargets.Remove([string]$job.Id)
+    $jobs = @($jobs | Where-Object { $_.Id -ne $job.Id })
+  }
+
+  if ((Get-Date) -ge $deadline -and ($queue.Count -gt 0 -or $jobs.Count -gt 0)) {
+    $timedOut = $true
+    foreach ($job in @($jobs)) {
+      $target = $jobTargets[[string]$job.Id]
+      Stop-Job -Job $job -ErrorAction SilentlyContinue
+      Remove-Job -Job $job -Force -ErrorAction SilentlyContinue
+      [void]$resultList.Add((New-TargetResult $target ([pscustomobject]@{
+        reachable = $false
+        status_code = 0
+        final_url = [string]$target.url
+        title = ""
+        error = "total_timeout"
+      })))
+    }
+    $jobs = @()
+    while ($queue.Count -gt 0) {
+      $target = $queue.Dequeue()
+      [void]$resultList.Add((New-TargetResult $target ([pscustomobject]@{
+        reachable = $false
+        status_code = 0
+        final_url = [string]$target.url
+        title = ""
+        error = "total_timeout"
+      })))
+    }
+    break
+  }
+
+  if ($done.Count -eq 0 -and $jobs.Count -gt 0) {
+    Start-Sleep -Milliseconds 100
+  }
+}
+
+$results = @($resultList.ToArray())
 
 $warnings = @($results | Where-Object { !$_.reachable })
 $categories = @($results | Select-Object -ExpandProperty category -Unique | Sort-Object)
@@ -183,6 +315,10 @@ $result = [ordered]@{
   checked_at = $checkedAt
   root = $Root
   category_filter = $Category
+  timeout_sec = $TimeoutSec
+  total_timeout_sec = $TotalTimeoutSec
+  max_concurrency = $MaxConcurrency
+  timed_out = $timedOut
   total = @($results).Count
   reachable = @($results | Where-Object { $_.reachable }).Count
   warnings = @($warnings).Count

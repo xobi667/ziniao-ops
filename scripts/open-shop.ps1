@@ -31,6 +31,15 @@ if (!$ShopsPath) {
 }
 $ViewWasInferred = $false
 
+function Resolve-RepoPath([string]$Path) {
+  if (!$Path) { return "" }
+  $expanded = [Environment]::ExpandEnvironmentVariables($Path)
+  if ([System.IO.Path]::IsPathRooted($expanded)) {
+    return [System.IO.Path]::GetFullPath($expanded)
+  }
+  return [System.IO.Path]::GetFullPath((Join-Path $root $expanded))
+}
+
 function Write-Result($obj, [int]$Code = 0) {
   if ($Json) {
     $obj | ConvertTo-Json -Depth 10
@@ -51,11 +60,11 @@ function Get-PythonCommand {
     try {
       $cfg = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
       if ($cfg.python_path) {
-        $pythonPath = [Environment]::ExpandEnvironmentVariables([string]$cfg.python_path)
+        $pythonPath = Resolve-RepoPath ([string]$cfg.python_path)
         if (Test-Path -LiteralPath $pythonPath -PathType Leaf) { return @($pythonPath) }
       }
       if ($cfg.local_state_root) {
-        $venvPython = Join-Path ([Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)) "tools\python-venv\Scripts\python.exe"
+        $venvPython = Join-Path (Resolve-RepoPath ([string]$cfg.local_state_root)) "tools\python-venv\Scripts\python.exe"
         if (Test-Path -LiteralPath $venvPython -PathType Leaf) { return @($venvPython) }
       }
     } catch {
@@ -373,8 +382,18 @@ if ($CurrentWindowFirst -and !$DryRun -and !$List -and $Query -and !$UrlOnly -an
   }
 }
 
-if ($RefreshZiniao -or (Test-ShopsNeedSync $ShopsPath)) {
+if ($RefreshZiniao -or (!$DryRun -and (Test-ShopsNeedSync $ShopsPath))) {
   Invoke-ZiniaoShopSync
+}
+
+if ($DryRun -and !(Test-Path -LiteralPath $ShopsPath)) {
+  Write-Result @{
+    ok = $false
+    error = "shops_cache_missing"
+    message = "DryRun only tests the local shop cache and will not scan Ziniao. Run setup-ziniao.ps1 or open-shop.ps1 -List -RefreshZiniao first."
+    dry_run = $true
+    shops_path = $ShopsPath
+  } 1
 }
 
 if (!(Test-Path -LiteralPath $ShopsPath)) {
@@ -387,6 +406,16 @@ if (!(Test-Path -LiteralPath $ShopsPath)) {
 
 $data = Get-Content -LiteralPath $ShopsPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $shops = @($data.shops)
+
+if ($DryRun -and !$RefreshZiniao -and $shops.Count -eq 0) {
+  Write-Result @{
+    ok = $false
+    error = "shops_cache_empty"
+    message = "DryRun only tests the local shop cache and will not scan Ziniao. Run setup-ziniao.ps1 or open-shop.ps1 -List -RefreshZiniao first."
+    dry_run = $true
+    shops_path = $ShopsPath
+  } 1
+}
 
 if ($List) {
   $rows = $shops | ForEach-Object {

@@ -28,7 +28,7 @@ if (!(Test-Path -LiteralPath $fullReportPath -PathType Leaf)) {
   Write-Result ([ordered]@{ ok = $false; error = "report_not_found"; message = "Report file not found."; path = $fullReportPath }) 2
 }
 
-$text = Get-Content -LiteralPath $fullReportPath -Raw
+$text = Get-Content -LiteralPath $fullReportPath -Raw -Encoding UTF8
 if (Test-ZiniaoOpsSecretText $text) {
   Write-Result ([ordered]@{
     ok = $false
@@ -60,14 +60,14 @@ if (!$ReceiveId) {
 $receivePatterns = @{
   chat_id = '^oc_[A-Za-z0-9_-]+$'
   open_id = '^ou_[A-Za-z0-9_-]+$'
-  user_id = '^[A-Za-z0-9_-]+$'
+  user_id = '^ou_[A-Za-z0-9_-]+$'
   email = '^[^@\s]+@[^@\s]+\.[^@\s]+$'
 }
 if ($ReceiveId -notmatch $receivePatterns[$ReceiveIdType]) {
   Write-Result ([ordered]@{
     ok = $false
     error = "invalid_receive_id"
-    message = "ReceiveId format does not match ReceiveIdType. Refusing to send."
+    message = "ReceiveId format does not match ReceiveIdType. For direct user messages, use a Feishu open_id that starts with ou_."
     receive_id_type = $ReceiveIdType
     path = $fullReportPath
   }) 2

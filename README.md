@@ -225,9 +225,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 
 ```powershell
 .\scripts\send-ops-report-lark.ps1 -ReportPath ".\reports.local\example.md" -ReceiveId "<chat_id>"
+.\scripts\send-ops-report-lark.ps1 -ReportPath ".\reports.local\example.md" -ReceiveId "<open_id>" -ReceiveIdType open_id
 ```
 
-确认目标会话和命令没问题后才加 `-AllowSend`。报告里如果出现密码、验证码、cookie、token、session 等敏感词，脚本会拒绝发送。
+群聊 `ReceiveId` 使用 `oc_...`；私聊使用飞书 `open_id`，也就是 `ou_...`。确认目标会话和命令没问题后才加 `-AllowSend`。报告里如果出现密码、验证码、cookie、token、session 等敏感词，脚本会拒绝发送。
 
 内置工作流定义在 `references\ops-workflows.json`，说明见 `references\ops-workflows.md`。当前包含：
 
@@ -425,6 +426,7 @@ CSV 常用字段：`店铺名称`、`平台`、`国家`、`别名`，以及 `总
 .\scripts\check-ecommerce-tools.ps1
 .\scripts\check-ecommerce-tools.ps1 -Json
 .\scripts\check-ecommerce-tools.ps1 -Category market_research
+.\scripts\check-ecommerce-tools.ps1 -Category official_platform_api -TimeoutSec 1 -TotalTimeoutSec 20 -MaxConcurrency 8
 ```
 
 安装或补齐这些可选上游命令：
@@ -469,6 +471,7 @@ CSV 常用字段：`店铺名称`、`平台`、`国家`、`别名`，以及 `总
 .\scripts\check-ecommerce-tools.ps1
 .\scripts\check-ecommerce-tools.ps1 -Category official_platform_api
 .\scripts\check-ecommerce-tools.ps1 -Category reviews_and_voice_of_customer
+.\scripts\check-ecommerce-tools.ps1 -Category official_platform_api -TimeoutSec 1 -TotalTimeoutSec 20 -MaxConcurrency 8
 ```
 
 规则很明确：官方 API、SaaS、MCP、付费工具都不能静默安装，也不能把店铺数据自动传出去。只有用户自己配置账号和权限后，Codex 才能按对应路线使用。

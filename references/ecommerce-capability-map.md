@@ -97,6 +97,7 @@ Filter one category:
 ```powershell
 .\scripts\check-ecommerce-tools.ps1 -Category market_research
 .\scripts\check-ecommerce-tools.ps1 -Category logistics_and_fulfillment
+.\scripts\check-ecommerce-tools.ps1 -Category official_platform_api -TimeoutSec 1 -TotalTimeoutSec 20 -MaxConcurrency 8
 ```
 
 The script checks official URLs and docs pages. It does not install paid tools, create accounts, submit store data, or update external SaaS.

@@ -19,6 +19,16 @@ function Test-Mirror($SafeName) {
   }
 }
 
+function Resolve-RepoPath([string]$Path) {
+  if (!$Path) { return "" }
+  $expanded = [Environment]::ExpandEnvironmentVariables($Path)
+  if (!$expanded) { return "" }
+  if ([System.IO.Path]::IsPathRooted($expanded)) {
+    return [System.IO.Path]::GetFullPath($expanded)
+  }
+  return [System.IO.Path]::GetFullPath((Join-Path $Root $expanded))
+}
+
 function Get-LocalStateRoot {
   $defaultState = Join-Path $Root ".ziniao-ops"
   $cfgPath = Join-Path $Root "ziniao.local.json"
@@ -26,7 +36,7 @@ function Get-LocalStateRoot {
     try {
       $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
       if ($cfg.local_state_root) {
-        return [Environment]::ExpandEnvironmentVariables([string]$cfg.local_state_root)
+        return Resolve-RepoPath ([string]$cfg.local_state_root)
       }
     } catch {
     }
@@ -39,7 +49,7 @@ function Get-UniqueExistingOrCandidateDirs([string[]]$Dirs) {
   $result = @()
   foreach ($dir in $Dirs) {
     if (!$dir) { continue }
-    $expanded = [Environment]::ExpandEnvironmentVariables($dir)
+    $expanded = Resolve-RepoPath $dir
     if (!$expanded) { continue }
     $key = $expanded.ToLowerInvariant()
     if ($seen.ContainsKey($key)) { continue }
@@ -82,7 +92,7 @@ function Get-NpmGlobalPrefix {
     try {
       $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
       if ($cfg.npm_prefix) {
-        return [Environment]::ExpandEnvironmentVariables([string]$cfg.npm_prefix)
+        return Resolve-RepoPath ([string]$cfg.npm_prefix)
       }
     } catch {
     }
