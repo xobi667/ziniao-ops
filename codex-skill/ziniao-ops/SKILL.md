@@ -1,6 +1,6 @@
 ---
 name: ziniao-ops
-description: Open, check, troubleshoot, operate, and report on employee-local seller store backends and operational data pages from the package path recorded by install-codex-skill.ps1, using local shops.json, PowerShell scripts, Ziniao, visual clicks, read-only workflow plans, optional upstream/external-tool catalogs, ecommerce capability maps, platform API roadmaps, local self-learning notes, and optionally lark-cli/Feishu to send reports. Use when the user asks Codex to open/check/enter/operate a Shopee, TikTok/Tokopedia, or Lazada store on the employee's own computer, or asks for LinkFox, Seller Sprite, Amazon Reviews, Keepa, Jungle Scout, Helium 10, DataHawk, VOC.AI, Shulex VOC, Creatify, Shopify, BigCommerce, ShipStation, Shippo, AfterShip, TaxJar, Avalara, market research, review insights, creative tools, logistics, finance/tax, ERP, repricing, official platform APIs, ziniao-ops upstream sync, ziniao CLI/MCP, auto-ziniao, Vibe Seller, BrowserMCP, including Chinese triggers such as 打开店铺, 开店铺, 进店铺后台, 店铺后台, 操作一下, 不知道点什么, 下一步, 店铺打不开, 紫鸟打不开, 登录页, 全部数据, 店铺总览, 订单, 商品, 库存, 广告, 营销, 运营数据, 数据中心, 商业分析, 生意参谋, 流量, 财务, 客服, 评价, 优惠券, 活动, 直播, 联盟, 物流, 售后, 退款, Compass, 罗盘, TikTok Shop, Tokopedia Seller Center, Lazada ASC, dashboard, discovery, 全效宝, Max 全站推广, smax, 巡店, 店铺体检, 日报, 运营报告, 批量巡店, 发飞书, LinkFox, Seller Sprite, 卖家精灵, Amazon Reviews, 评论分析, 素材生成, 上游同步, 同步更新, 电商工具, 平台API, 官方接口, or 本机不适配.
+description: Open, operate, troubleshoot, and report on employee-local Shopee, TikTok/Tokopedia, and Lazada seller backends through the local ziniao CLI first, with built-in PowerShell/WebDriver fallback, visual navigation, read-only operation plans, optional lark-cli/Feishu reporting, and optional ecommerce tool/API reference maps. Use when the user asks to open a store, enter seller backend, check ads/operations/order/product/finance/review/logistics pages, handle login-page or popup blockers, run shop checks/reports, refresh the local Ziniao shop cache, diagnose Ziniao setup, or review external ecommerce tools/API routes. Triggers include 打开店铺, 店铺后台, 操作一下, 全部数据, 运营数据, 数据中心, 广告后台, Compass, Lazada dashboard, 全效宝, 巡店, 店铺体检, 日报, 发飞书, 上游同步, 电商工具, 平台API, 本机不适配.
 ---
 
 # Ziniao Ops
@@ -50,7 +50,7 @@ If the employee is setting up this package for the first time, or if Ziniao logi
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "setup-ziniao.ps1")
 ```
 
-This opens or foregrounds Ziniao, waits for the employee to complete local Ziniao login, then scans the local Ziniao browser list into `shops.json`. It must not enter credentials or solve verification.
+By default, try the local `ziniao` CLI first because it can list/open stores and inspect pages without foreground mouse control. Use `scripts\invoke-ziniao-cli.ps1 -AllowExternalCommand -Json list-stores` as the first readiness check when the CLI is installed. If the CLI is missing or returns a business error such as `success:false` / login-state failure, fall back to `setup-ziniao.ps1` for the built-in non-mouse WebDriver/API diagnostic. If foreground GUI/login handoff is acceptable, explicitly add `-AllowGuiMouse`; it must still never enter credentials or solve verification.
 
 For first-time installation, prefer the package installer instead of manually calling individual scripts:
 
@@ -64,10 +64,10 @@ Interpret `diagnose-local.ps1` results directly:
 
 - `can_sync_ziniao_shops=true`: the package can scan local Ziniao and auto-generate `shops.json`; missing `shops.json` is not a blocker.
 - `detected_ziniao_shops_count`: number of stores detected from this computer's local Ziniao browser list.
-- `ziniao_shops_unavailable`: local shop cache is empty and Ziniao scanning failed. Run `setup-ziniao.ps1`; it launches/foregrounds Ziniao, waits for local login, and scans local store browsers into `shops.json`.
+- `ziniao_shops_unavailable`: local shop cache is empty and Ziniao scanning failed. Run `setup-ziniao.ps1` for the non-mouse WebDriver/API check. If diagnosis shows login-state failure, ask the employee to open/log in to Ziniao manually; only use `setup-ziniao.ps1 -AllowGuiMouse` when foreground GUI/mouse control is acceptable.
 - `python_missing`: install Python 3 first.
 - `ziniao_path_not_detected`: open Ziniao manually or fill `ziniao.local.json` `client_path`.
-- `ziniao_webdriver_not_reachable`: Shopee/TikTok precision opening and local store scanning will fail until local Ziniao is open/logged in and the webdriver/API port is reachable. Run `setup-ziniao.ps1` first.
+- `ziniao_webdriver_not_reachable`: Shopee/TikTok precision opening and local store scanning will fail until local Ziniao is open/logged in and the webdriver/API port is reachable. Run `setup-ziniao.ps1` first; add `-AllowGuiMouse` only after the employee accepts foreground control.
 - `pywinauto_missing_for_lazada`: run `install-python-deps.ps1` before Lazada precision opening.
 - If `ready_for_shopee_tiktok=true`, Shopee/TikTok store matching should work; backend access still depends on local seller login state.
 - If `ready_for_lazada=true`, Lazada GUI automation prerequisites are present; visual/window differences can still require manual help.
@@ -105,15 +105,23 @@ Test-Path (Join-Path $ZiniaoOpsHome "open-shop.ps1")
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "setup-ziniao.ps1")
 ```
 
-If it returns `ziniao_login_required`, tell the employee: “紫鸟已经打开并置顶，请在紫鸟窗口完成登录；完成后重新运行 setup-ziniao 或重新说同一句开店命令。”
+If it reports a Ziniao login-state error, tell the employee to open/log in to Ziniao manually and rerun the same command. Use `setup-ziniao.ps1 -AllowGuiMouse` only if the employee accepts foreground window/mouse control.
 
-3. For normal employee requests, prefer `operate-store.ps1` over raw `open-store.ps1`. It resolves the user's intent, creates a read-only task file, opens the first relevant view, and returns concrete next-step instructions so the user does not need to know which seller-backend button to click.
+3. For normal employee requests, prefer the local `ziniao` CLI route first when it is installed. It is the default non-mouse route for listing stores, opening a store, taking snapshots/screenshots, reading URL/title/text, clicking by selector, and running read-only page inspection.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-ziniao-cli.ps1") -AllowExternalCommand -Json list-stores
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-ziniao-cli.ps1") -AllowExternalCommand -Json open-store "<store-id>"
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-ziniao-cli.ps1") -AllowExternalCommand -Json --store "<store-id>" snapshot
+```
+
+If the CLI is missing, cannot list the target store, or returns a login-state/business error, fall back to `operate-store.ps1` for normal work. It resolves the user's intent, creates a read-only task file, opens the first relevant view, and returns concrete next-step instructions so the user does not need to know which seller-backend button to click.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "operate-store.ps1") "<店铺关键词>" "<用户原话>"
 ```
 
-Use `open-store.ps1` only when the user explicitly wants just opening or when debugging the opener. It first tries to reuse the current Ziniao window or already-open store window. If the current Ziniao account list is already showing the target store row, the GUI path should click that row's start/switch button directly. Only when quick reuse fails should it prepare Ziniao, wait for the employee to complete local Ziniao login if needed, scan the local browser list, then automatically continue into `open-shop.ps1`. The employee should not need to say “continue” after logging in.
+Use `open-store.ps1` only when the user explicitly wants just opening or when debugging the built-in opener. Its default path must use non-mouse WebDriver/API opening. Only when the employee explicitly accepts foreground GUI control and the command includes `-AllowGuiMouse` may it focus Ziniao, search visible store rows, or click the target row's 启动/切换 button. With `-AllowGuiMouse`, `open-store.ps1` goes directly to the built-in opener instead of running setup/sync first, so a local empty shop cache does not block the basic open action.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "open-store.ps1") "<店铺关键词>" -View overview
@@ -135,14 +143,17 @@ Common user phrases should map to the same command:
 
 Default precision methods:
 
-- Current-window quick path: reuse the already-open Ziniao account list or store window first. Do not run setup or wait for login when the target store row is already visible and can be confirmed.
-- Shopee / TikTok: local Ziniao webdriver/API (`ziniao_webdriver`) after the current-window quick path.
-- Lazada: local Ziniao GUI (`ziniao_gui`) after the current-window quick path.
-- If Ziniao webdriver/API cannot return `browserList` because of login state or local API issues, fall back to the generic Ziniao GUI opener. It should search the visible Ziniao account list by the user's keyword, confirm the target row text, and click only that row's start/switch button.
+- Default opening must avoid foreground mouse/keyboard automation. Do not use the current-window GUI quick path, pywinauto GUI search, coordinate clicks, or Lazada GUI opening unless the employee explicitly accepts foreground GUI control and the command includes `-AllowGuiMouse`.
+- `ziniao` CLI is the default route when installed. Use `list-stores` to get candidate stores, match the user's keyword to the CLI store id/name, then use `open-store <store-id>` and CLI inspection commands such as `snapshot`, `screenshot`, `url`, `title`, `text`, or `eval`.
+- Shopee / TikTok fallback: local Ziniao webdriver/API (`ziniao_webdriver`) remains the built-in non-mouse route when CLI is unavailable or fails.
+- Lazada fallback: precision opening still requires local Ziniao GUI (`ziniao_gui`), so it must stop with `gui_mouse_confirmation_required` unless `-AllowGuiMouse` is explicitly present.
+- If the CLI or Ziniao webdriver/API cannot return stores because of login state or local API issues, do not automatically fall back to GUI. Ask whether foreground GUI/mouse control is acceptable; only then rerun with `-AllowGuiMouse`.
 - Store list source: local Ziniao browser list. Employees can only open stores visible in their own local Ziniao account.
-- Ziniao path is not fixed. The installer writes `ziniao.local.json` when it can detect the executable; runtime also checks `ZINIAO_CLIENT_PATH`, `ZINIAO_PATH`, common install folders and PATH. If scanning fails, scripts try to auto-launch Ziniao and wait up to 180 seconds for the employee to log in locally.
+- Ziniao path is not fixed. The installer writes `ziniao.local.json` when it can detect the executable; runtime also checks `ZINIAO_CLIENT_PATH`, `ZINIAO_PATH`, common install folders and PATH. If CLI scanning fails, scripts try the non-mouse WebDriver/API path and wait for an already logged-in local Ziniao session.
+- Do not use CLI commands that export/import/restore cookies, tokens, sessions, or other auth material by default. Never pass secret-like arguments to the CLI.
 - URL-only mode is a fallback and must be explicit with `-UrlOnly` or `-UrlFallback`.
 - Force URL navigation only when explicitly needed with `-NavigateView`; otherwise use visual clicks after the store opens.
+- Treat basic open and page verification as separate steps. `open-store.ps1` may return `window_verified=false` after it clicked the confirmed target store row but could not prove a new backend window appeared yet. In that case say “已在本机紫鸟中发起店铺打开”, not “已进入后台”. Only claim the backend page is open after URL/title/visible page evidence confirms a seller backend.
 - For stores auto-detected from Ziniao, view URLs may be empty. In that case open the local store environment first, then use visual clicks to reach the requested operations module or data page. Explicit `-NavigateView` still requires a URL.
 - For manually maintained stores, missing requested view URLs still fail by default. Use `-AllowHomeFallback` only when the user accepts opening home instead.
 - Local command execution from `open_command` is disabled by default. Use `-AllowCommand` only when the local `shops.json` is trusted.
@@ -264,7 +275,7 @@ For exact upstream feature status and optional adapter commands, read:
 <package_root>\references\upstream-integration.md
 ```
 
-Default route remains the built-in employee-local Ziniao opener. Use optional external adapters only when the user explicitly asks for the upstream route or when diagnosing upstream support:
+Default route is the local `ziniao` CLI when installed, with the built-in employee-local Ziniao opener as fallback. Use other optional external adapters only when the user explicitly asks for the upstream route or when diagnosing upstream support:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\status-upstream-adapters.ps1")
@@ -310,7 +321,44 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\chec
 
 Treat the result as a capability map, not an installation command. Official APIs, paid SaaS tools, browser extensions, external MCP servers, and marketplace research tools require explicit user-owned account setup. Never upload local seller data to these tools by default.
 
-Use `scripts\invoke-ziniao-cli.ps1` only when the optional `ziniao` CLI is installed and the user asks for that route. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
+For 心舰 ERP / Xinjian ERP advertising tasks, especially 产品广告分时数据, hourly ad performance, ROAS by hour, or requests that include `erp.xinjianerp.com`, read:
+
+```text
+<package_root>\references\xinjian-erp.md
+```
+
+Then use the non-mouse data workflow first:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -ProbeEndpoint -Json
+```
+
+The workflow writes a Markdown summary and an Excel workbook. Treat the `excel_output` path in JSON output as the main deliverable for requests that ask for a table or Excel file.
+
+If 心舰 returns `账号未登录`, do not switch to system Chrome, BrowserMCP, Ziniao GUI, coordinate clicks, or foreground automation by default. First look for a local export or ask the employee to export the required hourly product ad data. Use an in-app browser login handoff only if that browser is available; the employee must enter credentials and verification manually.
+
+If the employee is ready to export from 心舰 ERP, run the non-mouse download handoff before they export:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\wait-xinjian-export.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -TimeoutSec 300 -Json
+```
+
+If the employee explicitly asks to solve 心舰 login and the in-app browser is unavailable, use the isolated manual login bridge. It starts a temporary Edge/Chrome profile and local DevTools port; the employee must enter credentials and verification manually. Do not read cookies, localStorage, access tokens, or passwords.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\open-xinjian-login.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\fetch-xinjian-browser-data.ps1") -Port 9339 -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
+```
+
+If the employee says to run 心舰 directly through 紫鸟, use the running 紫鸟 browser bridge first:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-ziniao-bridge.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
+```
+
+If it returns `manual_xinjian_login_in_ziniao_required`, 心舰 is open in a 紫鸟 browser but not logged in; the employee must manually complete 心舰 login there.
+
+Use `scripts\invoke-ziniao-cli.ps1` by default for local store list/open/inspect commands when the optional `ziniao` CLI is installed. The wrapper still refuses secret-like arguments and long-running commands unless explicitly allowed. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
 
 BrowserMCP and Vibe Seller are optional external routes. BrowserMCP still requires its Chrome extension and MCP client config. Vibe Seller is a full service and should not be started unless the user explicitly asks for that route and required local keys/configuration are present.
 
@@ -350,11 +398,11 @@ Never store or print passwords, verification codes, browser session data, or tok
 ## Failure Handling
 
 - Multiple matches: show candidates and ask for platform/country/more keywords.
-- No match: run `open-shop.ps1 -List -RefreshZiniao`; if still missing, tell the employee this local Ziniao account does not contain that store.
-- Ziniao not running or not logged in during a real open request: use `open-store.ps1`, not a separate `setup-ziniao.ps1` plus a second user prompt. It should first try current-window reuse; if that fails, it should launch/foreground Ziniao, wait for local login, scan the local browser list, and continue to open the requested store. If timeout happens, tell the employee the same command can be run again after login.
+- No match: first run CLI `list-stores`; if it cannot list usable stores, run `open-shop.ps1 -List -RefreshZiniao`; if still missing, tell the employee this local Ziniao account does not contain that store.
+- Ziniao not running or not logged in during a real open request: first try CLI `list-stores`; if that fails, try the built-in non-mouse webdriver/API route. Do not launch setup/login handoff or GUI fallback by default because it can focus Ziniao and interfere with the employee's mouse. Ask whether foreground GUI/mouse control is acceptable; only then rerun with `-AllowGuiMouse`.
 - Do not forcibly restart or kill Ziniao during normal opening. Only pass `open-shop.ps1 -AllowRestart` or `ziniao-gui-open.py --allow-restart` when the user explicitly confirms the current Ziniao process may be restarted.
-- Ziniao API login-state error after waiting: use the GUI fallback path if the user requested an actual open, not a dry-run.
-- `ziniao_login_required`: Ziniao is visible but stopped on its own login page. The script raises the login window and waits for local login before failing. Do not click login or handle credentials; if it times out, ask the employee to complete login locally and rerun the same command.
+- Ziniao API login-state error after waiting: use the GUI fallback path only after the user explicitly accepts foreground GUI/mouse control with `-AllowGuiMouse`.
+- Ziniao login-state errors: WebDriver/API may be reachable while the local client has no valid login context. Do not click login or handle credentials. Ask the employee to complete login locally and rerun the same command; use `-AllowGuiMouse` only after explicit acceptance of foreground GUI/mouse control.
 - Browser opens login page: this means the employee computer is not logged in for that store. Do not assist with credentials; tell the employee to log in manually, then run the same command again.
 - Precision open fails: do not silently open a normal URL. Ask whether to use `-UrlFallback`.
 - URL missing for the requested view on a manually maintained shop: do not report success. Ask for the correct link, or rerun with `-AllowHomeFallback` only if the user accepts opening home.

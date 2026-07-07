@@ -22,6 +22,19 @@ function Test-IsWindows {
   return ($env:OS -eq "Windows_NT")
 }
 
+function Test-ZiniaoDesktopExe([string]$Path) {
+  if (!$Path -or !(Test-Path -LiteralPath $Path -PathType Leaf)) { return $false }
+  try {
+    $dir = Split-Path -Parent $Path
+    if ((Test-Path -LiteralPath (Join-Path $dir "resources.pak")) -or (Test-Path -LiteralPath (Join-Path $dir "resources"))) {
+      return $true
+    }
+    return ((Get-Item -LiteralPath $Path).Length -gt 10000000)
+  } catch {
+    return $false
+  }
+}
+
 function Get-FreeBytesForPath([string]$Path) {
   try {
     $qualified = [System.IO.Path]::GetFullPath($Path)
@@ -114,12 +127,12 @@ function Find-ZiniaoExe {
       }
   }
   foreach ($candidate in $candidates) {
-    if ($candidate -and (Test-Path -LiteralPath $candidate -PathType Leaf)) {
+    if ($candidate -and (Test-ZiniaoDesktopExe $candidate)) {
       return (Resolve-Path -LiteralPath $candidate).Path
     }
   }
   $cmd = Get-Command ziniao.exe -ErrorAction SilentlyContinue
-  if ($cmd) { return $cmd.Source }
+  if ($cmd -and (Test-ZiniaoDesktopExe $cmd.Source)) { return $cmd.Source }
   return ""
 }
 
@@ -194,6 +207,6 @@ Write-Host "Installed Codex skill: $target"
 Write-Host "Wrote package config: $configPath"
 Write-Host "Package root: $packageRoot"
 Write-Host "Restart Codex and ask: 打开 <店铺关键词> 操作一下 / 全部数据 / 订单数据 / 广告数据"
-Write-Host "Codex should use operate-store.ps1 for normal work. For opening only, open-store.ps1 first reuses the current Ziniao/store window, then falls back to login handoff, shop scan, and automatic continue."
+Write-Host "Codex should use operate-store.ps1 for normal work. For opening only, open-store.ps1 defaults to non-mouse WebDriver/API; foreground GUI fallback requires -AllowGuiMouse."
 Write-Host "Optional pre-check: powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-ziniao.ps1"
 Write-Host "If this computer is different and opening still fails, give 本机适配修复提示词.txt to this computer's Codex."

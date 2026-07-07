@@ -14,6 +14,7 @@
   [switch]$NavigateView,
   [switch]$UrlFallback,
   [switch]$AllowHomeFallback,
+  [switch]$AllowGuiMouse,
   [switch]$DryRun,
   [switch]$Json
 )
@@ -116,8 +117,9 @@ function Invoke-OpenShopCommand([int]$TimeoutSeconds, [switch]$CurrentWindowFirs
   if ($NavigateView) { $openArgs += "-NavigateView" }
   if ($UrlFallback) { $openArgs += "-UrlFallback" }
   if ($AllowHomeFallback) { $openArgs += "-AllowHomeFallback" }
+  if ($AllowGuiMouse) { $openArgs += "-AllowGuiMouse" }
   if ($DryRun) { $openArgs += "-DryRun" }
-  if ($CurrentWindowFirst) { $openArgs += "-CurrentWindowFirst" }
+  if ($CurrentWindowFirst -and $AllowGuiMouse) { $openArgs += "-CurrentWindowFirst" }
 
   $output = @(& powershell @openArgs 2>&1)
   $code = $LASTEXITCODE
@@ -138,6 +140,10 @@ function Test-SetupCannotFixOpenFailure($OpenJson) {
     "shops_cache_missing",
     "shops_cache_empty",
     "command_disabled",
+    "gui_mouse_confirmation_required",
+    "ziniao_gui_match_failed",
+    "ziniao_login_required",
+    "current_window_not_reusable",
     "python_missing",
     "pywinauto_missing",
     "non_windows"
@@ -148,8 +154,29 @@ if (!$Json) {
   Write-Host "Trying the current Ziniao window or already-open store first."
 }
 
+if ($AllowGuiMouse) {
+  $guiOpen = Invoke-OpenShopCommand -TimeoutSeconds $LoginTimeoutSeconds
+  if ($Json) {
+    Write-OneShotResult ([ordered]@{
+      ok = ($guiOpen.Code -eq 0 -and $guiOpen.Json -and [bool]$guiOpen.Json.ok)
+      method = "open_store_gui_direct"
+      query = $Query
+      view = $View
+      view_inferred_from_query = $ViewWasInferred
+      open = $guiOpen.Json
+      raw_open_output = if ($guiOpen.Json) { $null } else { $guiOpen.Output }
+    }) $guiOpen.Code
+  }
+  if ($guiOpen.Json -and $guiOpen.Json.message) {
+    Write-Host $guiOpen.Json.message
+  } else {
+    $guiOpen.Output | ForEach-Object { Write-Output $_ }
+  }
+  exit $guiOpen.Code
+}
+
 $fastTimeout = [Math]::Max(0, [Math]::Min($FastOpenTimeoutSeconds, $LoginTimeoutSeconds))
-$fastOpen = Invoke-OpenShopCommand -TimeoutSeconds $fastTimeout -CurrentWindowFirst
+$fastOpen = Invoke-OpenShopCommand -TimeoutSeconds $fastTimeout
 if ($fastOpen.Code -eq 0) {
   if ($Json) {
     Write-OneShotResult ([ordered]@{
@@ -213,6 +240,29 @@ if (Test-SetupCannotFixOpenFailure $fastOpen.Json) {
   exit $fastOpen.Code
 }
 
+if (!$AllowGuiMouse) {
+  if ($Json) {
+    Write-OneShotResult ([ordered]@{
+      ok = $false
+      method = "open_store_gui_mouse_required"
+      error = "gui_mouse_confirmation_required"
+      message = "Opening did not finish through non-mouse automation. Setup or GUI fallback may focus Ziniao and move the mouse; rerun with -AllowGuiMouse only when that is acceptable."
+      query = $Query
+      view = $View
+      view_inferred_from_query = $ViewWasInferred
+      current_window_first = $false
+      open = $fastOpen.Json
+      raw_open_output = if ($fastOpen.Json) { $null } else { $fastOpen.Output }
+      next_step = "Use .\\open-shop.ps1 with -DryRun -Json for matching checks, or rerun this command with -AllowGuiMouse when the employee accepts foreground GUI control."
+    }) 4
+  }
+  if ($fastOpen.Json -and $fastOpen.Json.message) {
+    Write-Host $fastOpen.Json.message
+  }
+  Write-Host "Opening did not finish through non-mouse automation. Rerun with -AllowGuiMouse only if foreground GUI control is acceptable."
+  exit 4
+}
+
 if (!$Json) {
   Write-Host "Current-window quick open did not finish. Preparing Ziniao and waiting for local login if needed."
   Write-Host "Complete login in the Ziniao window; this command will continue automatically after login."
@@ -225,6 +275,7 @@ $setupArgs = @(
   "-LoginTimeoutSeconds", ([string]$LoginTimeoutSeconds),
   "-Json"
 )
+if ($AllowGuiMouse) { $setupArgs += "-AllowGuiMouse" }
 $setupOutput = @(& powershell @setupArgs 2>&1)
 $setupCode = $LASTEXITCODE
 $setupJson = ConvertFrom-JsonOutput $setupOutput
@@ -236,7 +287,7 @@ if ($setupCode -ne 0) {
     "Ziniao setup did not finish."
   }
   $setupError = if ($setupJson -and $setupJson.error) { [string]$setupJson.error } else { "ziniao_setup_failed" }
-  if ($setupError -in @("ziniao_shop_sync_failed", "ziniao_browser_list_empty", "ziniao_no_usable_shops")) {
+  if ($setupError -in @("ziniao_shop_sync_failed", "ziniao_browser_list_empty", "ziniao_no_usable_shops") -or ($AllowGuiMouse -and $setupError -eq "ziniao_webdriver_user_data_in_use")) {
     $setupWarning = [ordered]@{
       error = $setupError
       message = $message

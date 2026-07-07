@@ -16,6 +16,7 @@
   [switch]$AllowHomeFallback,
   [switch]$AllowCommand,
   [switch]$CurrentWindowFirst,
+  [switch]$AllowGuiMouse,
 
   [int]$LoginTimeoutSeconds = 180,
   [switch]$RefreshZiniao,
@@ -204,10 +205,13 @@ function Invoke-ZiniaoShopSync {
   if ($python.Count -gt 1) { $pythonArgs = @($python[1..($python.Count - 1)]) }
   $syncTimeoutSeconds = [Math]::Min(25, [Math]::Max(4, $LoginTimeoutSeconds))
   $syncArgs = @($script, "--out", $ShopsPath, "--json", "--timeout", ([string]$syncTimeoutSeconds), "--login-timeout", ([string]$LoginTimeoutSeconds))
+  if ($AllowGuiMouse) {
+    $syncArgs += "--allow-visible-client"
+  }
   $output = @(& $pythonExe @pythonArgs @syncArgs 2>&1)
   $code = $LASTEXITCODE
   if ($code -ne 0) {
-    if (!$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
+    if ($AllowGuiMouse -and !$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
       Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -AllowRestart:$AllowRestart
     }
     if ($output.Count -gt 0) {
@@ -377,12 +381,16 @@ if (!$PSBoundParameters.ContainsKey("View")) {
   }
 }
 
-if ($CurrentWindowFirst -and !$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
+if ($AllowGuiMouse -and $CurrentWindowFirst -and !$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
   $quickGui = Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -TimeoutSeconds 0 -NoLaunch -ContinueOnFailure
   if ($quickGui.Code -eq 0) {
     $quickGui.Output | ForEach-Object { Write-Output $_ }
     exit 0
   }
+}
+
+if (!$RefreshZiniao -and $AllowGuiMouse -and !$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView -and (Test-ShopsNeedSync $ShopsPath)) {
+  Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -AllowRestart:$AllowRestart
 }
 
 if ($RefreshZiniao -or (!$DryRun -and (Test-ShopsNeedSync $ShopsPath))) {
@@ -448,7 +456,7 @@ foreach ($shop in $shops) {
 
 $ordered = @($matches | Sort-Object @{ Expression = "score"; Descending = $true }, platform, name)
 if ($ordered.Count -eq 0) {
-  if (!$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
+  if ($AllowGuiMouse -and !$DryRun -and !$List -and $Query -and !$UrlOnly -and !$NavigateView) {
     Invoke-ZiniaoGuiFallback -ShopName $Query -ZiniaoName $Query -Aliases @($Query) -AllowRestart:$AllowRestart
   }
   Write-Result @{ ok = $false; message = "No local shop matched: $Query" } 1
@@ -538,6 +546,7 @@ $payload = @{
     ziniao_name = $ziniaoName
     configured_url_fallback = $configuredUrlFallback
     url_fallback_allowed = $allowUrlFallback
+    gui_mouse_allowed = [bool]$AllowGuiMouse
   }
   login_policy = @{
     requires_local_login = $true
@@ -560,6 +569,15 @@ if ($command -and !$AllowCommand) {
 
 if ($DryRun) {
   Write-Result $payload 0
+}
+
+if ($method -eq "ziniao_gui" -and !$AllowGuiMouse) {
+  Write-Result @{
+    ok = $false
+    error = "gui_mouse_confirmation_required"
+    message = "This open path requires foreground GUI automation and may move the mouse or focus Ziniao. Rerun with -AllowGuiMouse only when the employee accepts that."
+    matched = $payload.matched
+  } 4
 }
 
 function Invoke-UrlOpen {
@@ -623,6 +641,9 @@ if ($method -eq "ziniao_webdriver") {
     "--login-timeout", ([string]$LoginTimeoutSeconds),
     "--json"
   )
+  if ($AllowGuiMouse) {
+    $argsList += "--allow-visible-client"
+  }
   foreach ($alias in @($shop.aliases)) {
     if ($alias) {
       $argsList += @("--alias", [string]$alias)
@@ -630,7 +651,7 @@ if ($method -eq "ziniao_webdriver") {
   }
   $code = Invoke-PythonScript $script $argsList
   if ($code -eq 0) { exit 0 }
-  if (!$UrlOnly -and !$NavigateView) {
+  if ($AllowGuiMouse -and !$UrlOnly -and !$NavigateView) {
     Invoke-ZiniaoGuiFallback -ShopName ([string]$shop.name) -ZiniaoName $ziniaoName -Aliases @($shop.aliases) -AllowRestart:$AllowRestart
   }
   if ($allowUrlFallback) {

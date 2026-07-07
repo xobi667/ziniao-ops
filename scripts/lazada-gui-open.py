@@ -93,6 +93,18 @@ def _common_ziniao_paths() -> list[Path]:
     return result
 
 
+def _is_ziniao_desktop_exe(candidate: Path) -> bool:
+    if not candidate.exists() or not candidate.is_file():
+        return False
+    parent = candidate.parent
+    if (parent / "resources.pak").exists() or (parent / "resources").is_dir():
+        return True
+    try:
+        return candidate.stat().st_size > 10_000_000
+    except OSError:
+        return False
+
+
 def _find_ziniao_exe(config: dict) -> Path | None:
     checked: set[str] = set()
     for candidate in _path_from_env_or_config(config) + _common_ziniao_paths():
@@ -100,11 +112,11 @@ def _find_ziniao_exe(config: dict) -> Path | None:
         if key in checked:
             continue
         checked.add(key)
-        if candidate.exists() and candidate.is_file():
+        if _is_ziniao_desktop_exe(candidate):
             return candidate
     for command in ("ziniao.exe", "ZiNiao.exe"):
         found = shutil.which(command)
-        if found:
+        if found and _is_ziniao_desktop_exe(Path(found)):
             return Path(found)
     return None
 

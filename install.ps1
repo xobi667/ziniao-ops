@@ -145,7 +145,7 @@ if (!$SkipGuiDeps) {
   if ($InstallLazadaDeps) {
     $installGuiDeps = $true
   } elseif ($isInteractive) {
-    $installGuiDeps = Ask-YesNo "是否安装紫鸟 GUI/Lazada 精准打开依赖 pywinauto？建议安装，setup-ziniao 和 Lazada GUI 兜底会用到。" $true
+    $installGuiDeps = Ask-YesNo "是否安装紫鸟 GUI/Lazada 精准打开依赖 pywinauto？建议安装，Lazada GUI 和显式 -AllowGuiMouse 兜底会用到。" $true
   } else {
     $installGuiDeps = $false
   }
@@ -245,7 +245,7 @@ if (!$SkipZiniaoSetup) {
   if (Test-Path -LiteralPath $setupZiniao) {
     Write-Host ""
     Write-Host "Preparing local Ziniao session..."
-    Write-Host "If Ziniao asks for login or verification, finish it in the Ziniao window. The script will continue after login."
+    Write-Host "Default setup uses the non-mouse WebDriver/API path. If it reports a login-state error, open and log in to Ziniao manually, then rerun setup."
     Invoke-ChildScript $setupZiniao @("-LoginTimeoutSeconds", ([string]$LoginTimeoutSeconds)) -WarnOnly | Out-Null
   }
 }

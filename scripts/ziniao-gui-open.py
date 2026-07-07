@@ -95,6 +95,18 @@ def _common_ziniao_paths() -> list[Path]:
     return result
 
 
+def _is_ziniao_desktop_exe(candidate: Path) -> bool:
+    if not candidate.exists() or not candidate.is_file():
+        return False
+    parent = candidate.parent
+    if (parent / "resources.pak").exists() or (parent / "resources").is_dir():
+        return True
+    try:
+        return candidate.stat().st_size > 10_000_000
+    except OSError:
+        return False
+
+
 def _find_ziniao_exe(config: dict) -> Path | None:
     checked: set[str] = set()
     for candidate in _path_from_env_or_config(config) + _common_ziniao_paths():
@@ -102,11 +114,11 @@ def _find_ziniao_exe(config: dict) -> Path | None:
         if key in checked:
             continue
         checked.add(key)
-        if candidate.exists() and candidate.is_file():
+        if _is_ziniao_desktop_exe(candidate):
             return candidate
     for command in ("ziniao.exe", "ZiNiao.exe"):
         found = shutil.which(command)
-        if found:
+        if found and _is_ziniao_desktop_exe(Path(found)):
             return Path(found)
     return None
 
@@ -213,6 +225,7 @@ def _enum_visible_windows():
 def _find_ziniao_window(desktop, timeout: float = 35.0):
     deadline = time.time() + timeout
     while time.time() < deadline:
+        fallback = None
         for item in _enum_visible_windows():
             title = item.get("title") or ""
             class_name = item.get("class_name") or ""
@@ -221,7 +234,11 @@ def _find_ziniao_window(desktop, timeout: float = 35.0):
                     from pywinauto import Application
 
                     app = Application(backend="uia").connect(handle=item["handle"], timeout=5)
-                    return app.window(handle=item["handle"])
+                    win = app.window(handle=item["handle"])
+                    if title.strip() == "紫鸟浏览器":
+                        return win
+                    if fallback is None:
+                        fallback = win
                 except Exception:
                     continue
             if class_name == "Chrome_WidgetWin_1":
@@ -242,9 +259,15 @@ def _find_ziniao_window(desktop, timeout: float = 35.0):
                         from pywinauto import Application
 
                         app = Application(backend="uia").connect(handle=item["handle"], timeout=5)
-                        return app.window(handle=item["handle"])
+                        win = app.window(handle=item["handle"])
+                        if _looks_like_account_list(win):
+                            return win
+                        if fallback is None:
+                            fallback = win
                 except Exception:
                     continue
+        if fallback is not None:
+            return fallback
         time.sleep(0.5)
     return None
 
@@ -335,6 +358,30 @@ def _looks_like_login_page(win) -> bool:
         return False
     login_markers = ["验证码登录", "个人密码登录", "企业登录", "企业密码", "微信登录", "记住密码"]
     return sum(1 for marker in login_markers if marker in text) >= 2
+
+
+def _looks_like_account_list(win) -> bool:
+    text = _top_window_text(win)
+    if not text:
+        return False
+    list_markers = ["账号", "设备", "云号", "批量操作", "启动"]
+    return sum(1 for marker in list_markers if marker in text) >= 3
+
+
+def _wait_same_window_store_page(win, had_account_list: bool, timeout: float = 10.0):
+    if not had_account_list:
+        return None
+    deadline = time.time() + timeout
+    # Ziniao often opens the selected browser inside the same top-level
+    # Chrome_WidgetWin_1 window, so no new handle appears.
+    time.sleep(2.0)
+    while time.time() < deadline:
+        if _looks_like_login_page(win):
+            return None
+        if not _looks_like_account_list(win):
+            return win
+        time.sleep(0.5)
+    return None
 
 
 def _wait_login_if_needed(desktop, win, timeout: int):
@@ -592,9 +639,16 @@ def _wait_new_store_window(desktop, before_handles: set[int], timeout: float = 4
                 handle = int(win.handle)
                 title = (win.window_text() or "").strip()
                 class_name = getattr(win.element_info, "class_name", "")
-                if handle not in before_handles and class_name == "Chrome_WidgetWin_1":
+                if handle in before_handles:
+                    continue
+                if _window_blocker_reason(win):
                     return win
-                if handle not in before_handles and ("Seller" in title or "Shopee" in title or "TikTok" in title or "Lazada" in title):
+                if _looks_like_plain_search_window(title):
+                    continue
+                seller_title = any(marker in title for marker in ("Seller", "Shopee", "TikTok", "Tokopedia", "Lazada", "ASC"))
+                if class_name == "Chrome_WidgetWin_1" and (_is_ziniao_process_window(win) or seller_title):
+                    return win
+                if seller_title:
                     return win
             except Exception:
                 continue
@@ -614,6 +668,84 @@ def _window_class_name(win) -> str:
         return str(getattr(win.element_info, "class_name", "") or "")
     except Exception:
         return ""
+
+
+def _window_process_path(win) -> str:
+    try:
+        pid = int(getattr(win.element_info, "process_id", 0) or 0)
+    except Exception:
+        pid = 0
+    if pid <= 0:
+        return ""
+    try:
+        output = subprocess.check_output(
+            [
+                "powershell",
+                "-NoProfile",
+                "-Command",
+                f"(Get-Process -Id {pid} -ErrorAction SilentlyContinue).Path",
+            ],
+            text=True,
+            timeout=5,
+        )
+        return output.strip()
+    except Exception:
+        return ""
+
+
+def _is_ziniao_process_window(win) -> bool:
+    return "ziniao" in _window_process_path(win).lower()
+
+
+def _looks_like_plain_search_window(title: str) -> bool:
+    value = str(title or "")
+    markers = [
+        "Google 搜索",
+        "Google Search",
+        "Bing",
+        "百度一下",
+        "百度搜索",
+        " - Google Chrome",
+        " - Microsoft Edge",
+    ]
+    if not any(marker in value for marker in markers):
+        return False
+    seller_markers = ("Seller Center", "Shopee", "TikTok Shop", "Tokopedia", "Lazada", "ASC")
+    return not any(marker in value for marker in seller_markers)
+
+
+def _blocker_reason_from_text(text: str) -> str:
+    value = str(text or "")
+    blocker_markers = [
+        ("ziniao_space_required", ["需要释放空间", "释放空间才能继续", "磁盘空间不足", "空间不足"]),
+        ("ziniao_update_or_modal_blocked", ["稍后再说", "立即更新", "发现新版本"]),
+    ]
+    for error, markers in blocker_markers:
+        if any(marker in value for marker in markers):
+            return error
+    return ""
+
+
+def _window_blocker_reason(win) -> str:
+    title = _window_title(win)
+    reason = _blocker_reason_from_text(title)
+    if reason:
+        return reason
+    try:
+        return _blocker_reason_from_text(_top_window_text(win))
+    except Exception:
+        return ""
+
+
+def _find_blocker_window(desktop):
+    try:
+        wins = desktop.windows()
+    except Exception:
+        wins = []
+    for win in wins:
+        if _window_blocker_reason(win):
+            return win
+    return None
 
 
 def _text_at_points(desktop, points: list[tuple[int, int]]) -> list[str]:
@@ -683,15 +815,26 @@ def _fast_visible_search_and_open(main, desktop, keyboard, names: list[str]):
         if not any(_matches_target_name(text, names) for text in texts):
             return None, "当前可见首行没有确认到目标店铺名称", False
         before = _record_windows(desktop)
+        had_account_list = _looks_like_account_list(main)
         _click_screen(button_x, row_y)
         store_win = _wait_new_store_window(desktop, before, timeout=18.0)
         if store_win:
+            blocker = _window_blocker_reason(store_win)
+            if blocker:
+                return None, f"紫鸟弹窗阻塞店铺打开: {blocker}", False
             _bring_to_front(store_win)
             return store_win, "", False
+        blocker_win = _find_blocker_window(desktop)
+        if blocker_win:
+            return None, f"紫鸟弹窗阻塞店铺打开: {_window_blocker_reason(blocker_win)}", False
         existing = _find_existing_store_window(desktop, names)
         if existing:
             return existing, "", False
-        return None, "点击启动/切换后未确认到新的店铺窗口", False
+        same_window = _wait_same_window_store_page(main, had_account_list)
+        if same_window:
+            _bring_to_front(same_window)
+            return same_window, "", False
+        return main, "已点击目标店铺启动/切换，但未确认到新的店铺窗口", False
     except Exception as exc:
         return None, f"当前窗口快速点击失败: {exc}", False
 
@@ -707,10 +850,13 @@ def _find_existing_store_window(desktop, names: list[str]):
             continue
         if "紫鸟" in title or "Ziniao" in title or "ZiNiao" in title:
             continue
+        if _looks_like_plain_search_window(title):
+            continue
         class_name = _window_class_name(win)
-        if class_name != "Chrome_WidgetWin_1" and not any(
-            marker in title for marker in ("Seller", "Shopee", "TikTok", "Tokopedia", "Lazada", "ASC")
-        ):
+        seller_title = any(marker in title for marker in ("Seller", "Shopee", "TikTok", "Tokopedia", "Lazada", "ASC"))
+        if class_name != "Chrome_WidgetWin_1" and not seller_title:
+            continue
+        if class_name == "Chrome_WidgetWin_1" and not (_is_ziniao_process_window(win) or seller_title):
             continue
         if _matches_target_name(title, names):
             _bring_to_front(win)
@@ -725,18 +871,29 @@ def _open_visible_target_if_present(main, desktop, names: list[str]):
     if not button:
         return None, error, False
     before = _record_windows(desktop)
+    had_account_list = _looks_like_account_list(main)
     try:
         button.click_input()
     except Exception as exc:
         return None, f"点击当前可见店铺行失败: {exc}", False
     store_win = _wait_new_store_window(desktop, before, timeout=18.0)
     if store_win:
+        blocker = _window_blocker_reason(store_win)
+        if blocker:
+            return None, f"紫鸟弹窗阻塞店铺打开: {blocker}", False
         _bring_to_front(store_win)
         return store_win, "", False
+    blocker_win = _find_blocker_window(desktop)
+    if blocker_win:
+        return None, f"紫鸟弹窗阻塞店铺打开: {_window_blocker_reason(blocker_win)}", False
     existing = _find_existing_store_window(desktop, names)
     if existing:
         return existing, "", False
-    return None, "点击启动/切换后未确认到新的店铺窗口", False
+    same_window = _wait_same_window_store_page(main, had_account_list)
+    if same_window:
+        _bring_to_front(same_window)
+        return same_window, "", False
+    return main, "已点击目标店铺启动/切换，但未确认到新的店铺窗口", False
 
 
 def _search_and_open(main, desktop, keyboard, names: list[str]):
@@ -786,14 +943,24 @@ def _search_and_open(main, desktop, keyboard, names: list[str]):
                 last_error = error
             if button:
                 before = _record_windows(desktop)
+                had_account_list = _looks_like_account_list(main)
                 button.click_input()
                 store_win = _wait_new_store_window(desktop, before)
                 if store_win:
+                    blocker = _window_blocker_reason(store_win)
+                    if blocker:
+                        return None, f"紫鸟弹窗阻塞店铺打开: {blocker}"
                     return store_win, ""
+                blocker_win = _find_blocker_window(desktop)
+                if blocker_win:
+                    return None, f"紫鸟弹窗阻塞店铺打开: {_window_blocker_reason(blocker_win)}"
                 existing = _find_existing_store_window(desktop, [name])
                 if existing:
                     return existing, ""
-                return None, "点击启动/切换后未确认到新的店铺窗口"
+                same_window = _wait_same_window_store_page(main, had_account_list)
+                if same_window:
+                    return same_window, ""
+                return main, "已点击目标店铺启动/切换，但未确认到新的店铺窗口"
         except Exception as exc:
             return None, f"搜索/启动紫鸟店铺失败: {exc}"
     return None, last_error or "紫鸟未匹配到店铺，请检查本机紫鸟是否已登录且包含该店铺"
@@ -952,15 +1119,25 @@ def main() -> int:
             1,
         )
 
+    window_title = _window_title(store_win)
+    window_verified = not _looks_like_account_list(store_win) and window_title.strip() != "紫鸟浏览器"
+    message = (
+        "已通过本机紫鸟 GUI 打开并确认店铺窗口；能否进入后台取决于该紫鸟店铺是否已登录平台账号。"
+        if window_verified
+        else "已在本机紫鸟中点击目标店铺启动/切换；窗口尚未确认，若停在登录页或未弹出窗口，请员工在本机处理后重试。"
+    )
     _print_json(
         {
             "ok": True,
             "method": "ziniao_gui",
-            "message": "已通过本机紫鸟 GUI 发起店铺打开；能否进入后台取决于该紫鸟店铺是否已登录平台账号。",
+            "message": message,
             "shop": args.shop_name,
             "view": args.view,
             "searched": names,
             "started_ziniao": started_ziniao,
+            "window_title": window_title,
+            "window_verified": window_verified,
+            "launch_note": error,
             "login_policy": {
                 "requires_local_ziniao": True,
                 "requires_local_store_login": True,

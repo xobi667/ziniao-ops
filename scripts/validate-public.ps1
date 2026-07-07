@@ -39,6 +39,7 @@ $builtInPatterns = @(
   ("C:\\Users\\" + "Administrator"),
   ("D:\\UserData\\" + "Desktop"),
   ("E:\\" + "ZiNiao"),
+  "(?<![A-Za-z0-9])(?!(?:example|sample|demo)-)[A-Za-z][A-Za-z0-9 ._-]{1,50}-(?:my|th|id|sg|ph|vn)-(?:sp|tt|la)\s*(?:自营|合作)?",
   "tbl[A-Za-z0-9]{8,}",
   "base/[A-Za-z0-9]{12,}",
   "wiki/[A-Za-z0-9]{12,}"
@@ -58,7 +59,11 @@ if (Test-Path -LiteralPath $privatePatternsPath) {
 }
 $forbidden = [regex]("(?i)" + ($builtInPatterns -join "|"))
 $localOnly = @("shops.json", "shops.detected.json", "shops.local.json", "shops.private.json", "shops.csv", "ziniao.local.json", ".env", ".env.local", "sensitive-patterns.local.txt")
+$localOnlyDirs = @(".upstreams", ".ziniao-ops", "reports.local")
 $trackedDenyPatterns = @(
+  "^\.upstreams/",
+  "^\.ziniao-ops/",
+  "^reports\.local/",
   "^shops\.json$",
   "^shops\.(detected|local|private)\.json$",
   "^shops\.csv$",
@@ -83,6 +88,12 @@ foreach ($name in $localOnly) {
   $p = Join-Path $Root $name
   if (Test-Path -LiteralPath $p) {
     Add-Issue "warning" "local_file_present" "Local-only file exists. It must not be committed." $p
+  }
+}
+foreach ($name in $localOnlyDirs) {
+  $p = Join-Path $Root $name
+  if (Test-Path -LiteralPath $p) {
+    Add-Issue "warning" "local_dir_present" "Local-only directory exists. It must not be committed or included in release zips." $p
   }
 }
 
@@ -181,6 +192,13 @@ $required = @(
   "scripts\new-ops-batch.ps1",
   "scripts\new-ops-report.ps1",
   "scripts\send-ops-report-lark.ps1",
+  "scripts\xinjian-erp-ad-hourly.ps1",
+  "scripts\wait-xinjian-export.ps1",
+  "scripts\open-xinjian-login.ps1",
+  "scripts\fetch-xinjian-browser-data.ps1",
+  "scripts\fetch-xinjian-cdp.mjs",
+  "scripts\xinjian-ziniao-bridge.ps1",
+  "scripts\analyze-xinjian-ad-hourly.py",
   "references\view-intents.md",
   "references\ops-workflows.md",
   "references\ops-workflows.json",
@@ -192,7 +210,8 @@ $required = @(
   "references\platform-api-roadmap.md",
   "references\upstreams.md",
   "references\upstreams.json",
-  "references\upstream-integration.md"
+  "references\upstream-integration.md",
+  "references\xinjian-erp.md"
 )
 foreach ($rel in $required) {
   if (!(Test-Path -LiteralPath (Join-Path $Root $rel))) {
@@ -206,6 +225,10 @@ if (Test-Path -LiteralPath $skillPath) {
   if (!($skill -match "(?s)^---\s+name:\s*ziniao-ops\s+description:\s+.+?\s+---")) {
     Add-Issue "error" "skill_frontmatter_invalid" "SKILL.md frontmatter is missing or invalid." $skillPath
   }
+  $descriptionMatch = [regex]::Match($skill, "(?m)^description:\s*(.+)$")
+  if ($descriptionMatch.Success -and $descriptionMatch.Groups[1].Value.Length -gt 1024) {
+    Add-Issue "error" "skill_description_too_long" "SKILL.md description exceeds 1024 characters." $skillPath
+  }
 }
 
 $openaiYamlPath = Join-Path $Root "codex-skill\ziniao-ops\agents\openai.yaml"
@@ -216,6 +239,13 @@ if (Test-Path -LiteralPath $openaiYamlPath) {
   }
   if (!($openaiYaml -match 'default_prompt:\s*".*\$ziniao-ops.*"')) {
     Add-Issue "error" "openai_yaml_prompt_invalid" "agents/openai.yaml default_prompt must mention `$ziniao-ops." $openaiYamlPath
+  }
+  $shortDescriptionMatch = [regex]::Match($openaiYaml, '(?m)^\s*short_description:\s*"([^"]+)"')
+  if ($shortDescriptionMatch.Success) {
+    $shortDescriptionLength = $shortDescriptionMatch.Groups[1].Value.Length
+    if ($shortDescriptionLength -lt 25 -or $shortDescriptionLength -gt 64) {
+      Add-Issue "error" "openai_yaml_short_description_length" "agents/openai.yaml short_description should be 25-64 characters." $openaiYamlPath
+    }
   }
 }
 

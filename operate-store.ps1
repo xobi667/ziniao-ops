@@ -12,6 +12,7 @@
   [string]$TimeRange = "",
   [int]$LoginTimeoutSeconds = 1800,
   [int]$FastOpenTimeoutSeconds = 15,
+  [switch]$AllowGuiMouse,
   [switch]$PlanOnly,
   [switch]$Json
 )
@@ -244,6 +245,7 @@ if (Test-Path -LiteralPath $taskScriptPath) {
 }
 
 $openCommand = ".\open-store.ps1 $(ConvertTo-ZiniaoOpsPowerShellLiteral $Store) -View $(ConvertTo-ZiniaoOpsPowerShellLiteral $firstView)"
+if ($AllowGuiMouse) { $openCommand += " -AllowGuiMouse" }
 $openJson = $null
 $openCode = 0
 $rawOpenOutput = $null
@@ -259,6 +261,7 @@ if (!$PlanOnly) {
     "-Json"
   )
   if ($Platform) { $openArgs += @("-Platform", $Platform) }
+  if ($AllowGuiMouse) { $openArgs += "-AllowGuiMouse" }
   $rawOpenOutput = @(& powershell @openArgs 2>&1)
   $openCode = $LASTEXITCODE
   $openJson = ConvertFrom-JsonOutput $rawOpenOutput

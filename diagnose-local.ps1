@@ -33,6 +33,19 @@ function Test-IsWindows {
 
 $isWindows = Test-IsWindows
 
+function Test-ZiniaoDesktopExe([string]$Path) {
+  if (!$Path -or !(Test-Path -LiteralPath $Path -PathType Leaf)) { return $false }
+  try {
+    $dir = Split-Path -Parent $Path
+    if ((Test-Path -LiteralPath (Join-Path $dir "resources.pak")) -or (Test-Path -LiteralPath (Join-Path $dir "resources"))) {
+      return $true
+    }
+    return ((Get-Item -LiteralPath $Path).Length -gt 10000000)
+  } catch {
+    return $false
+  }
+}
+
 function Find-ZiniaoExe {
   if (!$isWindows) { return "" }
   $candidates = New-Object System.Collections.Generic.List[string]
@@ -72,12 +85,12 @@ function Find-ZiniaoExe {
       }
   }
   foreach ($candidate in $candidates) {
-    if ($candidate -and (Test-Path -LiteralPath $candidate -PathType Leaf)) {
+    if ($candidate -and (Test-ZiniaoDesktopExe $candidate)) {
       return (Resolve-Path -LiteralPath $candidate).Path
     }
   }
   $cmd = Get-Command ziniao.exe -ErrorAction SilentlyContinue
-  if ($cmd) { return $cmd.Source }
+  if ($cmd -and (Test-ZiniaoDesktopExe $cmd.Source)) { return $cmd.Source }
   return ""
 }
 
@@ -123,6 +136,9 @@ $pywinautoOk = $false
 $canSyncZiniaoShops = $false
 $detectedZiniaoShopsCount = 0
 $ziniaoSyncError = ""
+$ziniaoSyncLoginErrorSeen = $false
+$ziniaoSyncStartMode = ""
+$ziniaoSyncRawStatus = $null
 if ($python.Count -gt 0) {
   try {
     $pythonExe = $python[0]
@@ -137,11 +153,37 @@ if ($python.Count -gt 0) {
 
 $ziniaoPath = Find-ZiniaoExe
 $port = 16851
+$webdriverUserDataDir = ""
 if (Test-Path -LiteralPath $ziniaoConfigPath) {
   try {
     $localConfig = Get-Content -LiteralPath $ziniaoConfigPath -Raw | ConvertFrom-Json
     if ($localConfig.webdriver_port) { $port = [int]$localConfig.webdriver_port }
+    foreach ($prop in @("webdriver_user_data_dir", "user_data_dir")) {
+      if (!$webdriverUserDataDir -and $localConfig.PSObject.Properties.Name -contains $prop -and $localConfig.$prop) {
+        $webdriverUserDataDir = Resolve-ZiniaoOpsRepoPath $packageRoot ([string]$localConfig.$prop)
+      }
+    }
   } catch {
+  }
+}
+if (!$webdriverUserDataDir -and $env:APPDATA) {
+  $webdriverUserDataDir = Join-Path $env:APPDATA "ziniaobrowser\instances\userdata1"
+}
+
+$webdriverUserDataInUse = $false
+if ($isWindows -and $webdriverUserDataDir) {
+  try {
+    $resolvedUserDataDir = if (Test-Path -LiteralPath $webdriverUserDataDir) { (Resolve-Path -LiteralPath $webdriverUserDataDir).Path } else { $webdriverUserDataDir }
+    $escapedUserDataDir = [regex]::Escape($resolvedUserDataDir)
+    $usingProcesses = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
+      Where-Object {
+        $_.Name -eq "ziniao.exe" -and
+        $_.CommandLine -match "--user-data-dir=.*$escapedUserDataDir" -and
+        $_.CommandLine -notmatch "--run_type=web_driver"
+      })
+    $webdriverUserDataInUse = ($usingProcesses.Count -gt 0)
+  } catch {
+    $webdriverUserDataInUse = $false
   }
 }
 
@@ -157,6 +199,10 @@ try {
 }
 
 if ($python.Count -gt 0 -and (Test-Path -LiteralPath $syncZiniaoPath)) {
+  if ($webdriverUserDataInUse -and -not $webdriverReachable) {
+    $ziniaoSyncError = "ziniao_webdriver_user_data_in_use"
+    $ziniaoSyncStartMode = "blocked_user_data_in_use"
+  } else {
   try {
     $pythonExe = $python[0]
     $pythonArgs = @()
@@ -167,16 +213,21 @@ if ($python.Count -gt 0 -and (Test-Path -LiteralPath $syncZiniaoPath)) {
       $syncReport = $syncText | ConvertFrom-Json
       $canSyncZiniaoShops = [bool]$syncReport.ok
       $detectedZiniaoShopsCount = [int]$syncReport.shops_count
+      if ($syncReport.start_mode) { $ziniaoSyncStartMode = [string]$syncReport.start_mode }
     } elseif ($syncText) {
       try {
         $syncReport = $syncText | ConvertFrom-Json
         $ziniaoSyncError = [string]$syncReport.error
+        $ziniaoSyncLoginErrorSeen = [bool]$syncReport.login_error_seen
+        if ($syncReport.start_mode) { $ziniaoSyncStartMode = [string]$syncReport.start_mode }
+        if ($syncReport.raw_status) { $ziniaoSyncRawStatus = $syncReport.raw_status }
       } catch {
         $ziniaoSyncError = $syncText
       }
     }
   } catch {
     $ziniaoSyncError = $_.Exception.Message
+  }
   }
 }
 
@@ -210,7 +261,13 @@ if (!(Test-Path -LiteralPath $shopsPath) -or $shopsCount -le 0) {
     $nextSteps += "Local shops cache is empty, but this computer can scan Ziniao. The first open-shop run will auto-generate shops.json."
   } else {
     $issues += "ziniao_shops_unavailable"
-    $nextSteps += "Run setup-ziniao.ps1. It will open/foreground Ziniao, wait for local login, then scan local store browsers into shops.json."
+    if ($ziniaoSyncLoginErrorSeen) {
+      $nextSteps += "Ziniao WebDriver is reachable but reports login-state error. Open/log in to Ziniao manually, then rerun setup-ziniao.ps1. Only use setup-ziniao.ps1 -AllowGuiMouse if foreground window/mouse control is acceptable."
+    } elseif ($webdriverUserDataInUse) {
+      $nextSteps += "普通紫鸟正在占用 WebDriver 用户目录。要走后台模式，请先退出普通紫鸟窗口/托盘，再运行 setup-ziniao.ps1；不要使用 -AllowGuiMouse。"
+    } else {
+      $nextSteps += "Run setup-ziniao.ps1 for the non-mouse WebDriver check. Only use setup-ziniao.ps1 -AllowGuiMouse if foreground window/mouse control is acceptable."
+    }
   }
 }
 if ($python.Count -eq 0) {
@@ -223,7 +280,12 @@ if ($isWindows -and !$ziniaoPath) {
 }
 if ($isWindows -and !$webdriverReachable -and !$canSyncZiniaoShops) {
   $issues += "ziniao_webdriver_not_reachable"
-  $nextSteps += "Run setup-ziniao.ps1 first. For Shopee/TikTok, local Ziniao webdriver/API must be available on the configured port after Ziniao login."
+  if ($webdriverUserDataInUse) {
+    $issues += "ziniao_webdriver_user_data_in_use"
+    $nextSteps += "The configured WebDriver user data directory is already used by normal Ziniao, so the hidden WebDriver process exits before opening the port."
+  } else {
+    $nextSteps += "For Shopee/TikTok, local Ziniao webdriver/API must be reachable on the configured port after Ziniao login. Run setup-ziniao.ps1 first; add -AllowGuiMouse only if foreground control is acceptable."
+  }
 }
 if ($isWindows -and !$pywinautoOk) {
   $issues += "pywinauto_missing_for_lazada"
@@ -268,15 +330,20 @@ $report = [ordered]@{
   codex_cli_available = [bool](Get-Command codex -ErrorAction SilentlyContinue)
   detected_ziniao_path = $ziniaoPath
   webdriver_port = $port
+  webdriver_user_data_dir = $webdriverUserDataDir
+  webdriver_user_data_in_use = $webdriverUserDataInUse
   webdriver_port_reachable = $webdriverReachable
   can_sync_ziniao_shops = $canSyncZiniaoShops
   detected_ziniao_shops_count = $detectedZiniaoShopsCount
   ziniao_sync_error = $ziniaoSyncError
+  ziniao_sync_login_error_seen = $ziniaoSyncLoginErrorSeen
+  ziniao_sync_start_mode = $ziniaoSyncStartMode
+  ziniao_sync_raw_status = $ziniaoSyncRawStatus
   issues = $issues
   next_steps = $nextSteps
   notes = @(
     "Full Ziniao automation is intended for Windows desktops with Ziniao installed.",
-    "setup-ziniao.ps1 is the first-run readiness step: launch/foreground Ziniao, wait for local login, then generate shops.json.",
+    "setup-ziniao.ps1 is the first-run readiness step. By default it uses non-mouse WebDriver/API checks; -AllowGuiMouse enables foreground GUI login handoff.",
     "shops.json is now a local cache. If it is missing, open-shop.ps1 can generate it from the local Ziniao browser list.",
     "If can_sync_ziniao_shops is false, open and log in to Ziniao, or set ziniao.local.json client_path.",
     "Lazada precise opening needs pywinauto_installed=true.",

@@ -5,6 +5,7 @@ import json
 import os
 import re
 import shutil
+import socket
 import subprocess
 import sys
 import time
@@ -90,6 +91,18 @@ def _common_ziniao_paths() -> list[Path]:
     return result
 
 
+def _is_ziniao_desktop_exe(candidate: Path) -> bool:
+    if not candidate.exists() or not candidate.is_file():
+        return False
+    parent = candidate.parent
+    if (parent / "resources.pak").exists() or (parent / "resources").is_dir():
+        return True
+    try:
+        return candidate.stat().st_size > 10_000_000
+    except OSError:
+        return False
+
+
 def _find_ziniao_exe(config: dict) -> Path | None:
     checked: set[str] = set()
     for candidate in _path_from_env_or_config(config) + _common_ziniao_paths():
@@ -97,11 +110,11 @@ def _find_ziniao_exe(config: dict) -> Path | None:
         if key in checked:
             continue
         checked.add(key)
-        if candidate.exists() and candidate.is_file():
+        if _is_ziniao_desktop_exe(candidate):
             return candidate
     for command in ("ziniao.exe", "ZiNiao.exe"):
         found = shutil.which(command)
-        if found:
+        if found and _is_ziniao_desktop_exe(Path(found)):
             return Path(found)
     return None
 
@@ -118,22 +131,113 @@ def _http_post(port: int, payload: dict, timeout: int = 30) -> dict | None:
         return None
 
 
-def _start_ziniao(config: dict, port: int) -> bool:
-    exe = _find_ziniao_exe(config)
-    if not exe:
-        return False
-    started = False
+def _hidden_startup_kwargs() -> dict:
+    kwargs: dict = {
+        "stdin": subprocess.DEVNULL,
+        "stdout": subprocess.DEVNULL,
+        "stderr": subprocess.DEVNULL,
+    }
+    if os.name == "nt":
+        flags = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+        flags |= getattr(subprocess, "CREATE_NO_WINDOW", 0)
+        kwargs["creationflags"] = flags
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = 0
+        kwargs["startupinfo"] = startupinfo
+    return kwargs
+
+
+def _webdriver_user_data_dir(config: dict) -> Path | None:
+    configured = str(
+        config.get("webdriver_user_data_dir")
+        or config.get("user_data_dir")
+        or ""
+    ).strip()
+    if configured:
+        return _resolve_repo_path(configured)
+    appdata = os.environ.get("APPDATA", "").strip()
+    if not appdata:
+        return None
+    return Path(appdata) / "ziniaobrowser" / "instances" / "userdata1"
+
+
+def _webdriver_user_data_arg(config: dict) -> list[str]:
+    user_data_dir = _webdriver_user_data_dir(config)
+    if not user_data_dir:
+        return []
     try:
-        subprocess.Popen(
-            [str(exe)],
-            cwd=str(exe.parent),
-            stdout=subprocess.DEVNULL,
+        user_data_dir.mkdir(parents=True, exist_ok=True)
+        (user_data_dir / "app-cache" / "tmp").mkdir(parents=True, exist_ok=True)
+    except OSError:
+        pass
+    return [f"--user-data-dir={user_data_dir}"]
+
+
+def _is_webdriver_user_data_in_use(config: dict) -> bool:
+    if os.name != "nt":
+        return False
+    user_data_dir = _webdriver_user_data_dir(config)
+    if not user_data_dir:
+        return False
+    env = os.environ.copy()
+    env["ZINIAO_WEBDRIVER_USER_DATA_DIR"] = str(user_data_dir)
+    script = r"""
+$dir = $env:ZINIAO_WEBDRIVER_USER_DATA_DIR
+if (!$dir) { "false"; exit }
+try {
+  $resolved = if (Test-Path -LiteralPath $dir) { (Resolve-Path -LiteralPath $dir).Path } else { $dir }
+  $escaped = [regex]::Escape($resolved)
+  $count = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
+    Where-Object {
+      $_.Name -eq "ziniao.exe" -and
+      $_.CommandLine -match "--user-data-dir=.*$escaped" -and
+      $_.CommandLine -notmatch "--run_type=web_driver"
+    }).Count
+  if ($count -gt 0) { "true" } else { "false" }
+} catch {
+  "false"
+}
+"""
+    try:
+        output = subprocess.check_output(
+            ["powershell", "-NoProfile", "-Command", script],
+            env=env,
+            text=True,
+            timeout=4,
             stderr=subprocess.DEVNULL,
         )
-        started = True
-        time.sleep(3)
     except Exception:
-        pass
+        return False
+    return output.strip().lower().startswith("true")
+
+
+def _is_tcp_port_open(port: int) -> bool:
+    try:
+        with socket.create_connection(("127.0.0.1", int(port)), timeout=0.5):
+            return True
+    except OSError:
+        return False
+
+
+def _start_ziniao(config: dict, port: int, allow_visible_client: bool = False) -> tuple[bool, str]:
+    exe = _find_ziniao_exe(config)
+    if not exe:
+        return False, "not_found"
+    started = False
+    mode = "web_driver"
+    if allow_visible_client:
+        try:
+            subprocess.Popen(
+                [str(exe)],
+                cwd=str(exe.parent),
+                **_hidden_startup_kwargs(),
+            )
+            started = True
+            mode = "visible_then_web_driver"
+            time.sleep(3)
+        except Exception:
+            pass
     try:
         subprocess.Popen(
             [
@@ -141,15 +245,16 @@ def _start_ziniao(config: dict, port: int) -> bool:
                 "--run_type=web_driver",
                 "--ipc_type=http",
                 f"--port={port}",
+                *_webdriver_user_data_arg(config),
             ],
             cwd=str(exe.parent),
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            **_hidden_startup_kwargs(),
         )
         started = True
+        mode = f"{mode}_with_user_data"
     except Exception:
         pass
-    return started
+    return started, mode if started else "failed"
 
 
 def _request_payload(action: str) -> dict:
@@ -165,33 +270,67 @@ def _get_browser_list(port: int) -> tuple[list[dict], dict | None]:
 
 
 def _wait_browser_list(
-    config: dict, port: int, timeout: int = 25, login_timeout: int = 180
-) -> tuple[list[dict], dict | None, bool, bool]:
+    config: dict,
+    port: int,
+    timeout: int = 25,
+    login_timeout: int = 180,
+    allow_visible_client: bool = False,
+) -> tuple[list[dict], dict | None, bool, bool, str]:
     deadline = time.time() + timeout
     last = None
     started = False
     login_error_seen = False
+    if _is_webdriver_user_data_in_use(config) and not _is_tcp_port_open(port):
+        user_data_dir = _webdriver_user_data_dir(config)
+        return (
+            [],
+            {
+                "error": "ziniao_webdriver_user_data_in_use",
+                "message": "普通紫鸟正在占用 WebDriver 用户目录，后台 WebDriver 不能同时复用这个登录目录。",
+                "webdriver_user_data_dir": str(user_data_dir or ""),
+            },
+            False,
+            False,
+            "blocked_user_data_in_use",
+        )
     while time.time() < deadline:
         browsers, result = _get_browser_list(port)
         last = result
         if browsers:
-            return browsers, result, started, login_error_seen
+            return browsers, result, started, login_error_seen, "already_running"
         if result and str(result.get("statusCode")) == "-10003":
             login_error_seen = True
             break
         time.sleep(1.5)
-    started = _start_ziniao(config, port)
+    start_mode = "login_error_no_restart" if login_error_seen else "not_started"
+    if not login_error_seen:
+        if _is_webdriver_user_data_in_use(config):
+            user_data_dir = _webdriver_user_data_dir(config)
+            return (
+                [],
+                {
+                    "error": "ziniao_webdriver_user_data_in_use",
+                    "message": "普通紫鸟正在占用 WebDriver 用户目录，后台 WebDriver 不能同时复用这个登录目录。",
+                    "webdriver_user_data_dir": str(user_data_dir or ""),
+                },
+                False,
+                False,
+                "blocked_user_data_in_use",
+            )
+        started, start_mode = _start_ziniao(
+            config, port, allow_visible_client=allow_visible_client
+        )
     wait_seconds = login_timeout if login_error_seen else timeout
     deadline = time.time() + wait_seconds
     while time.time() < deadline:
         browsers, result = _get_browser_list(port)
         last = result
         if browsers:
-            return browsers, result, started, login_error_seen
+            return browsers, result, started, login_error_seen, start_mode
         if result and str(result.get("statusCode")) == "-10003":
             login_error_seen = True
         time.sleep(1.5)
-    return [], last, started, login_error_seen
+    return [], last, started, login_error_seen, start_mode
 
 
 def _norm(text: str | None) -> str:
@@ -324,25 +463,32 @@ def main() -> int:
     parser.add_argument("--alias", action="append", default=[])
     parser.add_argument("--config", default="")
     parser.add_argument("--login-timeout", type=int, default=180)
+    parser.add_argument("--allow-visible-client", action="store_true", help="Allow launching the normal visible Ziniao client before WebDriver mode.")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
     config = _load_config(args.config)
     port = int(config.get("webdriver_port") or os.environ.get("ZINIAO_WEBDRIVER_PORT") or 16851)
-    browsers, raw, started_ziniao, login_error_seen = _wait_browser_list(
-        config, port, login_timeout=args.login_timeout
+    browsers, raw, started_ziniao, login_error_seen, start_mode = _wait_browser_list(
+        config,
+        port,
+        login_timeout=args.login_timeout,
+        allow_visible_client=args.allow_visible_client,
     )
     if not browsers:
+        blocked = start_mode == "blocked_user_data_in_use"
         _print_json(
             {
                 "ok": False,
                 "method": "ziniao_webdriver",
-                "message": "紫鸟 webdriver/API 未就绪，或本机紫鸟未登录/未授权。请先在员工电脑打开并登录紫鸟。",
+                "error": raw.get("error") if blocked and isinstance(raw, dict) else "ziniao_webdriver_not_ready",
+                "message": raw.get("message") if blocked and isinstance(raw, dict) else "紫鸟 webdriver/API 未就绪，或本机紫鸟未登录/未授权。请先在员工电脑打开并登录紫鸟。",
                 "raw_status": raw,
                 "started_ziniao": started_ziniao,
+                "start_mode": start_mode,
                 "login_error_seen": login_error_seen,
-                "waited_login_seconds": args.login_timeout if login_error_seen else 25,
-                "next_step": "如果紫鸟窗口已被自动打开，请在本机完成登录；脚本等待超时后才会失败。",
+                "waited_login_seconds": 0 if blocked else (args.login_timeout if login_error_seen else 25),
+                "next_step": "请先手动退出普通紫鸟窗口/托盘，再重试；这个流程不会抢鼠标。" if blocked else "默认只尝试非鼠标 WebDriver 通道。请手动打开并登录紫鸟后重试；只有确认接受前台窗口控制时，才使用 setup-ziniao.ps1 -AllowGuiMouse。",
                 "login_policy": {
                     "requires_local_ziniao": True,
                     "requires_local_store_login": True,

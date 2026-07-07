@@ -28,7 +28,7 @@
 - Python 3 可用；Lazada 还需要运行一次 `.\install-python-deps.ps1`。
 - 紫鸟里已经有员工本人负责的店铺浏览器；`shops.json` 会自动从本机紫鸟扫描生成。
 
-## 小白安装
+## 新手安装
 
 推荐从 GitHub Releases 下载 zip，解压后进入 `ziniao-ops` 文件夹，右键用 PowerShell 打开，运行：
 
@@ -36,7 +36,7 @@
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-`install.ps1` 是小白入口。它会：
+`install.ps1` 是新手入口。它会：
 
 - 检查 Windows、PowerShell、Python、Node/npm、Git、磁盘空间、紫鸟配置。
 - 询问依赖、虚拟环境、Playwright 浏览器文件要安装到哪个目录，默认是当前包内的 `.ziniao-ops`，也可以输入 D/E 盘目录。
@@ -44,7 +44,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install.ps1
 - 安装 Codex skill，并写入 Codex home 下的 `ziniao-ops.json`。
 - 默认询问是否安装紫鸟 GUI/Lazada 依赖 `pywinauto`，依赖会落到本地 Python venv，不要求塞进 C 盘。
 - 默认询问是否安装可选上游增强工具：`ziniao` CLI、`auto-ziniao`、BrowserMCP server、Vibe Seller、Playwright Chromium。
-- 自动进入一次紫鸟就绪检查：如果紫鸟没打开，会尝试打开；如果停在紫鸟登录页，会把登录窗口置顶并等待员工本人登录；登录完成后会扫描本机紫鸟店铺并生成 `shops.json` 缓存。
+- 自动进入一次紫鸟就绪检查：默认只尝试非鼠标 WebDriver/API 通道，不置顶窗口、不移动鼠标；如果紫鸟登录态无效，会提示员工手动打开并登录紫鸟。只有明确运行 `setup-ziniao.ps1 -AllowGuiMouse` 时，才允许前台登录交接。
 
 如果要同时安装 Lazada GUI 依赖：
 
@@ -97,7 +97,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\setup-ziniao.ps1
 
 首次成功准备紫鸟时，脚本会自动扫描本机紫鸟里的店铺浏览器，生成本机 `shops.json` 缓存。员工不需要手工填店铺清单。
 
-Codex 实际操作店铺时会优先走 `operate-store.ps1`：它会判断用户想做什么、打开第一个相关页面，并返回下一步操作向导。只开店铺环境时才走 `open-store.ps1`：它会先复用当前已经打开的紫鸟窗口或店铺窗口；如果紫鸟列表里已经显示目标店铺行和“启动/切换”按钮，会直接点这一行。只有快速复用失败时，才进入紫鸟就绪检查、拉起登录页并等待员工本人登录。登录完成后脚本会继续扫描店铺并打开目标店铺，不需要再对 Codex 说“继续”。如果紫鸟要求验证码或安全验证，员工必须自己完成。
+Codex 实际操作店铺时会优先走 `operate-store.ps1`：它会判断用户想做什么、打开第一个相关页面，并返回下一步操作向导。只开店铺环境时才走 `open-store.ps1`。默认路径只尝试本机紫鸟 WebDriver/API，不复用前台窗口、不点击可见店铺行；如果紫鸟登录态不可用，会提示员工手动登录后重试。只有员工明确接受前台 GUI 控制并加 `-AllowGuiMouse` 时，才会复用当前紫鸟窗口、搜索可见店铺行或点击“启动/切换”按钮。如果紫鸟要求验证码或安全验证，员工必须自己完成。
 
 如果 Windows 提示脚本来自互联网被阻止，先在解压目录运行：
 
@@ -165,7 +165,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 .\operate-store.ps1 "<店铺关键词>" "做今日巡店"
 ```
 
-`operate-store.ps1` 会先判断用户意图，生成只读任务计划，打开第一个相关页面，并返回下一步要找什么入口、读什么指标、哪些按钮不能点。面向小白员工时，Codex 应优先用这个入口。
+`operate-store.ps1` 会先判断用户意图，生成只读任务计划，打开第一个相关页面，并返回下一步要找什么入口、读什么指标、哪些按钮不能点。面向普通员工时，Codex 应优先用这个入口。
 
 只打开店铺环境时再用：
 
@@ -177,7 +177,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 .\open-store.ps1 "example lazada my" -View dashboard
 ```
 
-`open-store.ps1` 是员工的一句话入口：先复用当前已经打开的紫鸟窗口/店铺窗口；如果当前窗口不可用，再准备紫鸟、等待员工本机登录，并在登录后自动继续打开店铺。
+`open-store.ps1` 是员工的一句话入口：默认通过非鼠标 WebDriver/API 打开本机店铺环境；如果本机紫鸟登录态不可用，会停止并提示员工手动登录后重试。只有显式加 `-AllowGuiMouse` 时，才允许聚焦紫鸟窗口、GUI 搜索或前台点击。加了 `-AllowGuiMouse` 后会直接进入基础开店链路，不再先卡 `setup/sync/shops.json`。
+
+注意：基础开店和后台页面验证是两件事。脚本可能返回 `window_verified=false`，表示已经在紫鸟里点击了目标店铺的“启动/切换”，但还没确认新后台窗口出现。此时只能说“已在本机紫鸟中发起店铺打开”，不能说“已经进入后台”。只有看到 seller 后台 URL、标题或页面内容后，才算进入后台。
 
 只测试匹配，不打开：
 
@@ -191,7 +193,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 .\open-shop.ps1 -List -RefreshZiniao
 ```
 
-默认不会强制结束或重启紫鸟。只有员工确认当前紫鸟可以被重启时，才使用 `.\open-shop.ps1 "<店铺关键词>" -AllowRestart`。
+默认不会抢鼠标、置顶窗口或走 pywinauto GUI 点击。只有员工接受前台 GUI 控制时，才使用 `.\open-shop.ps1 "<店铺关键词>" -AllowGuiMouse`。默认也不会强制结束或重启紫鸟；只有员工确认当前紫鸟可以被重启时，才额外使用 `-AllowRestart`。
 
 ## 运营助理工作流
 
@@ -254,14 +256,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\diagnose-local.ps1
 
 默认不是简单打开 URL，也不是强制固定跳某个页面；默认只是精准打开员工本机对应店铺环境，然后让 Codex 视觉点击进入订单、商品、库存、广告、经营分析、财务、客服、评价、物流、售后或平台专属页面。
 
-- Shopee / TikTok：优先复用当前紫鸟窗口里已经显示的目标店铺行，直接点击同一行的启动/切换；不行再从本机紫鸟 webdriver/API 扫描店铺浏览器，匹配 `ziniao_name` / `browser_oauth` / `browser_id` 后启动对应紫鸟店铺环境。如果 API 登录态异常，会退回紫鸟 GUI 搜索，确认目标店铺行后点击启动/切换。
-- Lazada：优先复用当前紫鸟窗口里已经显示的目标店铺行；不行再走本机紫鸟 GUI 搜索 `ziniao_name`，点击启动/切换，再点“打开账号”。
+- Shopee / TikTok：默认走本机紫鸟 webdriver/API，匹配 `ziniao_name` / `browser_oauth` / `browser_id` 后启动对应紫鸟店铺环境；这条路径不需要抢鼠标。如果 API 登录态异常，默认停止并提示，只有明确加 `-AllowGuiMouse` 才退回紫鸟 GUI 搜索和点击。
+- Lazada：当前精准路径依赖本机紫鸟 GUI/pywinauto，会前台聚焦窗口并可能移动鼠标；默认停止并提示，只有明确加 `-AllowGuiMouse` 才执行。
 - 如果精准打开失败，默认不会偷偷降级成普通 URL，避免串到错误账号。
 - 只有明确加 `-UrlFallback` 才允许精准失败后退回普通链接打开。
 - 只有明确加 `-NavigateView` 才会在开店后强制跳 `views` 里的 URL。
 - 自动扫描出来的店铺如果没有视图 URL，会先打开紫鸟店铺环境，再由 Codex 视觉点击目标运营模块；手工维护的视图缺 URL 仍会失败。
-- 如果紫鸟或店铺已经打开，脚本应直接复用当前窗口；如果紫鸟未运行，脚本才会尝试自动打开紫鸟并等待员工登录。
-- 如果返回 `ziniao_login_required`，说明紫鸟已经打开但停在登录页；员工在本机完成登录后重新说同一句开店命令。
+- 如果需要复用当前紫鸟窗口里的可见店铺行，必须显式加 `-AllowGuiMouse`，因为这会使用前台窗口和鼠标点击。
+- 如果返回紫鸟登录态错误，说明 WebDriver/API 已通但当前紫鸟没有有效登录上下文；员工在本机手动打开并登录紫鸟后重新说同一句开店命令。只有员工接受前台窗口/鼠标控制时，才改用 `-AllowGuiMouse`。
 - `open_command` 默认不会执行；只有确认 `shops.json` 可信并明确加 `-AllowCommand` 才允许执行本地命令。
 
 示例：
@@ -297,20 +299,26 @@ Lazada 精准打开需要员工电脑安装可选依赖：
 .\diagnose-local.ps1
 ```
 
-准备/修复紫鸟首登和本机店铺缓存：
+准备/修复紫鸟首登和本机店铺缓存。默认不置顶窗口、不移动鼠标：
 
 ```powershell
 .\setup-ziniao.ps1
 ```
 
+如果员工明确接受前台紫鸟窗口和鼠标/焦点控制，再运行：
+
+```powershell
+.\setup-ziniao.ps1 -AllowGuiMouse
+```
+
 把诊断结果里的 `issues` 和 `next_steps` 发给负责人即可。常见判断：
 
-- `ziniao_shops_unavailable`：本机没有可用店铺缓存，并且扫描紫鸟失败。运行 `.\setup-ziniao.ps1`，它会打开/置顶紫鸟、等待本机登录并生成缓存。
-- `ziniao_login_required`：紫鸟已被打开并置顶，但还在紫鸟登录页。员工在该窗口完成登录后，重新运行 `.\setup-ziniao.ps1` 或重新让 Codex 打开店铺。
+- `ziniao_shops_unavailable`：本机没有可用店铺缓存，并且扫描紫鸟失败。先运行 `.\setup-ziniao.ps1` 做非鼠标检查；如果诊断显示登录态错误，员工手动打开并登录紫鸟后重试。
+- `ziniao_sync_login_error_seen`：WebDriver/API 可达，但紫鸟返回登录态错误。手动登录紫鸟后重试；只有接受前台控制时才用 `.\setup-ziniao.ps1 -AllowGuiMouse`。
 - `can_sync_ziniao_shops`：如果为 `true`，说明能从本机紫鸟自动生成店铺缓存。
 - `python_missing`：这台电脑没装 Python 3。
 - `ziniao_path_not_detected`：没找到紫鸟 exe，先手动打开紫鸟或填 `ziniao.local.json`。
-- `ziniao_webdriver_not_reachable`：紫鸟没登录、没打开、端口不通，Shopee/TikTok 精准开店会失败。先运行 `.\setup-ziniao.ps1`。
+- `ziniao_webdriver_not_reachable`：紫鸟没登录、没打开、端口不通，Shopee/TikTok 精准开店会失败。先运行 `.\setup-ziniao.ps1`；只有接受前台控制时才加 `-AllowGuiMouse`。
 - `pywinauto_missing_for_lazada`：Lazada 精准开店需要先运行 `install-python-deps.ps1`。
 
 只想普通浏览器打开链接时：

@@ -41,6 +41,24 @@ function Get-ToolPath([string]$Name) {
   return ""
 }
 
+function Set-ZiniaoCliLocalEnvironment {
+  $cfgPath = Join-Path $root "ziniao.local.json"
+  if (!(Test-Path -LiteralPath $cfgPath)) { return }
+  try {
+    $cfg = Get-Content -LiteralPath $cfgPath -Raw | ConvertFrom-Json
+    if (!$env:ZINIAO_CLIENT_PATH -and $cfg.client_path) {
+      $clientPath = Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.client_path)
+      if (Test-Path -LiteralPath $clientPath -PathType Leaf) {
+        $env:ZINIAO_CLIENT_PATH = $clientPath
+      }
+    }
+    if (!$env:ZINIAO_SOCKET_PORT -and $cfg.webdriver_port) {
+      $env:ZINIAO_SOCKET_PORT = [string]([int]$cfg.webdriver_port)
+    }
+  } catch {
+  }
+}
+
 function Write-Result($Object, [int]$Code = 0) {
   if ($Json) {
     $Object | ConvertTo-Json -Depth 8
@@ -63,6 +81,11 @@ if (!$cmd) {
   }) 3
 }
 
+Set-ZiniaoCliLocalEnvironment
+if ($Json -and !$env:ZINIAO_JSON) {
+  $env:ZINIAO_JSON = "1"
+}
+
 if (!$CommandArgs -or $CommandArgs.Count -eq 0) {
   $CommandArgs = @("--help")
 }
@@ -77,8 +100,12 @@ if ($joinedArgs -match "(?i)(password|passwd|pwd|secret|token|cookie|session|pri
   }) 4
 }
 
+$helpOnly = (
+  ($CommandArgs.Count -eq 1 -and $CommandArgs[0] -in @("--help", "-h", "help", "--version", "-V", "version")) -or
+  ($CommandArgs.Count -ge 2 -and $CommandArgs[-1] -in @("--help", "-h", "help"))
+)
 $longRunningCommand = ($firstArg -match "(?i)^(serve|server|daemon)$")
-if ($longRunningCommand -and !$AllowLongRunning) {
+if ($longRunningCommand -and !$helpOnly -and !$AllowLongRunning) {
   Write-Result ([ordered]@{
     ok = $false
     error = "long_running_command_refused"
@@ -87,12 +114,11 @@ if ($longRunningCommand -and !$AllowLongRunning) {
   }) 4
 }
 
-$helpOnly = ($CommandArgs.Count -eq 1 -and $CommandArgs[0] -in @("--help", "-h", "help", "--version", "-V", "version"))
 if (!$helpOnly -and !$AllowExternalCommand) {
   Write-Result ([ordered]@{
     ok = $false
     error = "external_command_confirmation_required"
-    message = "Pass -AllowExternalCommand only after the user explicitly asks to use the optional ziniao CLI route."
+    message = "Pass -AllowExternalCommand for ziniao CLI store/page commands. The ziniao-ops skill may use this by default for the CLI-first route, but the wrapper keeps this guard for direct manual calls."
     requested_args = $CommandArgs
   }) 4
 }
@@ -110,9 +136,30 @@ try {
   }) 1
 }
 
+$cliJson = $null
+$cliBusinessOk = $true
+if ($Json -and $output.Count -gt 0) {
+  $text = ($output | Out-String).Trim()
+  if ($text) {
+    try {
+      $cliJson = $text | ConvertFrom-Json
+      if ($cliJson.PSObject.Properties.Name -contains "success" -and -not [bool]$cliJson.success) {
+        $cliBusinessOk = $false
+      } elseif ($cliJson.PSObject.Properties.Name -contains "ok" -and -not [bool]$cliJson.ok) {
+        $cliBusinessOk = $false
+      }
+    } catch {
+      $cliJson = $null
+    }
+  }
+}
+
+$wrapperOk = ($exitCode -eq 0 -and $cliBusinessOk)
 Write-Result ([ordered]@{
-  ok = ($exitCode -eq 0)
+  ok = $wrapperOk
   exit_code = $exitCode
+  cli_success = if ($cliJson -and $cliJson.PSObject.Properties.Name -contains "success") { [bool]$cliJson.success } else { $null }
+  cli_error = if ($cliJson -and $cliJson.PSObject.Properties.Name -contains "error") { $cliJson.error } else { $null }
   command = "ziniao $joinedArgs"
   output = @($output | ForEach-Object { $_.ToString() })
-}) $exitCode
+}) $(if ($wrapperOk) { 0 } elseif ($exitCode -ne 0) { $exitCode } else { 1 })
