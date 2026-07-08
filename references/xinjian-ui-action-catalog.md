@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 1005
+- Actions: 989
 - Global actions: 6
 
 ### Sources
@@ -13,7 +13,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | Source | Version | Pages | Actions |
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
-| auto | 2026-07-08 | 38 | 713 |
+| auto | 2026-07-08 | 38 | 697 |
 | overlay | 2026-07-08 | 47 | 292 |
 | dialog | 2026-07-08 | 47 | 41 |
 | row-action | 2026-07-08 | 47 | 6 |
@@ -24,7 +24,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | confirmation_required_export | 8 |
 | confirmation_required_write | 170 |
-| safe_execute_allowed | 827 |
+| safe_execute_allowed | 811 |
 
 ### Locator Strategies
 
@@ -36,12 +36,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | click_trigger_selector_then_dialog_button_text | 31 |
 | click_trigger_selector_then_overlay_item_text | 108 |
 | click_visible_action_text | 50 |
-| click_visible_dom_text | 222 |
+| click_visible_dom_text | 213 |
 | click_visible_tab_text_from_list | 1 |
 | input_or_filter_placeholder | 67 |
 | input_or_filter_placeholder_list | 2 |
 | navigate_href | 43 |
-| read_table_column_header | 377 |
+| read_table_column_header | 370 |
 | row_context_required_column_header | 2 |
 | uia_locator | 9 |
 
@@ -1418,23 +1418,14 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/index/home`
 - Sources: auto, dialog, overlay, row-action
-- Actions: 48
+- Actions: 32
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
 | 保存配置 | text:保存配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 首页; requires explicit confirmation before committing changes. |
-| 本月 | text:本月 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
-| 今天 | text:今天 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
 | 切换币种 | text:切换币种 | button | safe_execute_allowed | click_visible_dom_text | auto | Change the visible view setting on 首页. |
-| 上月 | text:上月 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 首页; requires explicit confirmation before committing changes. |
-| 最近14天 | text:最近14天 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
-| 最近1年 | text:最近1年 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
-| 最近30天 | text:最近30天 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
-| 最近7天 | text:最近7天 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
-| 最近半年 | text:最近半年 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
-| 昨天 | text:昨天 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 首页. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 首页 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 首页 by 开始日期. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 首页 by 选择店铺. |
@@ -1455,17 +1446,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
 | 城市 | column:城市 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 城市 table column/metric. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 店铺 table column/metric. |
-| 二 | column:二 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 二 table column/metric. |
 | 分析 | column:分析 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 分析 table column/metric. |
 | 利润(CNY) | column:利润(CNY) | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 利润(CNY) table column/metric. |
 | 利润率 | column:利润率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 利润率 table column/metric. |
-| 六 | column:六 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 六 table column/metric. |
 | 排名 | column:排名 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 排名 table column/metric. |
-| 日 | column:日 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 日 table column/metric. |
-| 三 | column:三 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 三 table column/metric. |
-| 四 | column:四 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 四 table column/metric. |
-| 五 | column:五 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 五 table column/metric. |
-| 一 | column:一 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 一 table column/metric. |
 | 有效订单量 | column:有效订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效订单量 table column/metric. |
 | 有效订单量占比 | column:有效订单量占比 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效订单量占比 table column/metric. |
 | 有效销量 | column:有效销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效销量 table column/metric. |

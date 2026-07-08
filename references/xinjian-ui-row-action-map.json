@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_row_action_captures",
-  "generated_at": "2026-07-08T13:46:10.073Z",
+  "generated_at": "2026-07-08T13:57:23.171Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Row action map stores table headers and row action button labels only. It does not store row cell values, cookies, storage, tokens, or private-looking text.",

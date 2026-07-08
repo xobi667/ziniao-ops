@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T13:47:53.364Z",
+  "generated_at": "2026-07-08T13:57:23.790Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -10,7 +10,7 @@
   },
   "totals": {
     "pages": 49,
-    "actions": 1005,
+    "actions": 989,
     "global_actions": 6,
     "source_stats": [
       {
@@ -25,7 +25,7 @@
         "loaded": true,
         "version": "2026-07-08",
         "pages": 38,
-        "actions": 713
+        "actions": 697
       },
       {
         "source": "overlay",
@@ -51,7 +51,7 @@
     ],
     "type_counts": {
       "batch_action": 9,
-      "button": 207,
+      "button": 198,
       "button_menu": 2,
       "date_filter": 5,
       "dialog_button": 31,
@@ -68,12 +68,12 @@
       "row_operation": 1,
       "status_tab": 5,
       "tab": 46,
-      "table_column": 377
+      "table_column": 370
     },
     "safety_counts": {
       "confirmation_required_export": 8,
       "confirmation_required_write": 170,
-      "safe_execute_allowed": 827
+      "safe_execute_allowed": 811
     },
     "locator_strategy_counts": {
       "click_first_matching_row_action_in_table": 6,
@@ -82,12 +82,12 @@
       "click_trigger_selector_then_dialog_button_text": 31,
       "click_trigger_selector_then_overlay_item_text": 108,
       "click_visible_action_text": 50,
-      "click_visible_dom_text": 222,
+      "click_visible_dom_text": 213,
       "click_visible_tab_text_from_list": 1,
       "input_or_filter_placeholder": 67,
       "input_or_filter_placeholder_list": 2,
       "navigate_href": 43,
-      "read_table_column_header": 377,
+      "read_table_column_header": 370,
       "row_context_required_column_header": 2,
       "uia_locator": 9
     }
@@ -20131,44 +20131,6 @@
           }
         },
         {
-          "id": "auto.index.home.button.本月",
-          "name": "本月",
-          "context": "text:本月",
-          "aliases": [
-            "本月"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "本月"
-          }
-        },
-        {
-          "id": "auto.index.home.button.今天",
-          "name": "今天",
-          "context": "text:今天",
-          "aliases": [
-            "今天"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "今天"
-          }
-        },
-        {
           "id": "auto.index.home.button.切换币种",
           "name": "切换币种",
           "context": "text:切换币种",
@@ -20185,25 +20147,6 @@
           "locator_strategy": "click_visible_dom_text",
           "locator": {
             "dom_text": "切换币种"
-          }
-        },
-        {
-          "id": "auto.index.home.button.上月",
-          "name": "上月",
-          "context": "text:上月",
-          "aliases": [
-            "上月"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "上月"
           }
         },
         {
@@ -20242,120 +20185,6 @@
           "locator_strategy": "click_visible_dom_text",
           "locator": {
             "dom_text": "重置配置"
-          }
-        },
-        {
-          "id": "auto.index.home.button.最近14天",
-          "name": "最近14天",
-          "context": "text:最近14天",
-          "aliases": [
-            "最近14天"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "最近14天"
-          }
-        },
-        {
-          "id": "auto.index.home.button.最近1年",
-          "name": "最近1年",
-          "context": "text:最近1年",
-          "aliases": [
-            "最近1年"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "最近1年"
-          }
-        },
-        {
-          "id": "auto.index.home.button.最近30天",
-          "name": "最近30天",
-          "context": "text:最近30天",
-          "aliases": [
-            "最近30天"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "最近30天"
-          }
-        },
-        {
-          "id": "auto.index.home.button.最近7天",
-          "name": "最近7天",
-          "context": "text:最近7天",
-          "aliases": [
-            "最近7天"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "最近7天"
-          }
-        },
-        {
-          "id": "auto.index.home.button.最近半年",
-          "name": "最近半年",
-          "context": "text:最近半年",
-          "aliases": [
-            "最近半年"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "最近半年"
-          }
-        },
-        {
-          "id": "auto.index.home.button.昨天",
-          "name": "昨天",
-          "context": "text:昨天",
-          "aliases": [
-            "昨天"
-          ],
-          "type": "button",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Apply or clear filters on 首页.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "click_visible_dom_text",
-          "locator": {
-            "dom_text": "昨天"
           }
         },
         {
@@ -20776,25 +20605,6 @@
           }
         },
         {
-          "id": "auto.index.home.table.column.二",
-          "name": "二",
-          "context": "column:二",
-          "aliases": [
-            "二"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 二 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "二"
-          }
-        },
-        {
           "id": "auto.index.home.table.column.分析",
           "name": "分析",
           "context": "column:分析",
@@ -20852,25 +20662,6 @@
           }
         },
         {
-          "id": "auto.index.home.table.column.六",
-          "name": "六",
-          "context": "column:六",
-          "aliases": [
-            "六"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 六 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "六"
-          }
-        },
-        {
           "id": "auto.index.home.table.column.排名",
           "name": "排名",
           "context": "column:排名",
@@ -20887,101 +20678,6 @@
           "locator_strategy": "read_table_column_header",
           "locator": {
             "table_column": "排名"
-          }
-        },
-        {
-          "id": "auto.index.home.table.column.日",
-          "name": "日",
-          "context": "column:日",
-          "aliases": [
-            "日"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 日 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "日"
-          }
-        },
-        {
-          "id": "auto.index.home.table.column.三",
-          "name": "三",
-          "context": "column:三",
-          "aliases": [
-            "三"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 三 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "三"
-          }
-        },
-        {
-          "id": "auto.index.home.table.column.四",
-          "name": "四",
-          "context": "column:四",
-          "aliases": [
-            "四"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 四 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "四"
-          }
-        },
-        {
-          "id": "auto.index.home.table.column.五",
-          "name": "五",
-          "context": "column:五",
-          "aliases": [
-            "五"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 五 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "五"
-          }
-        },
-        {
-          "id": "auto.index.home.table.column.一",
-          "name": "一",
-          "context": "column:一",
-          "aliases": [
-            "一"
-          ],
-          "type": "table_column",
-          "safety": "read_filter",
-          "safety_mode": "safe_execute_allowed",
-          "confirmation_required": false,
-          "purpose": "Remember that 首页 has the 一 table column/metric.",
-          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
-          "source_map": "auto",
-          "locator_strategy": "read_table_column_header",
-          "locator": {
-            "table_column": "一"
           }
         },
         {

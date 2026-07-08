@@ -420,6 +420,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 ```
 
 `references\xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures. It is broad memory, not final proof of behavior. Curated `references\xinjian-ui-map.json` takes precedence when both contain the same route.
+The auto map excludes transient Element UI poppers, date-picker panels, select dropdowns, dialogs, drawers, and message boxes so dynamic controls are remembered by the overlay/dialog maps instead of being misfiled as always-visible page buttons.
 The crawler records local attempt state under `.ziniao-ops\xinjian-crawl-state.json`; pass `-RetryAttempted` only when intentionally revisiting empty, restricted, redirected, or previously failed routes.
 
 To capture dynamic dropdown/menu/select/date-panel items on a known page, use the overlay probe and regenerate the overlay map:

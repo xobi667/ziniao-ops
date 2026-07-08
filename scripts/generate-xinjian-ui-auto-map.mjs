@@ -110,6 +110,13 @@ function safeName(value, control = {}) {
   return text;
 }
 
+function isTransientOverlayControl(control = {}) {
+  const selector = String(control.selector || "");
+  const classes = Array.isArray(control.classes) ? control.classes.join(" ") : String(control.classes || "");
+  const marker = `${selector} ${classes}`;
+  return /(?:^|[ .#>])(?:el-picker-panel|el-date-picker|el-date-range-picker|el-select-dropdown|el-cascader-panel|el-dropdown-menu|el-popper|el-tooltip__popper|el-autocomplete-suggestion|el-dialog|el-drawer|el-message-box)(?:\\b|[ .#>_-])/i.test(marker);
+}
+
 function isPrivateLike(value) {
   const text = clean(value);
   if (!text) return false;
@@ -217,20 +224,20 @@ function aliasesForAction(name) {
 
 function controlNames(controls, type) {
   return unique(controls
-    .filter((item) => item.type === type)
+    .filter((item) => item.type === type && !isTransientOverlayControl(item))
     .map((item) => safeName(item.placeholder || item.name, item))
     .map((name) => type === "tab" ? normalizeTab(name) : name));
 }
 
 function tableHeaders(controls) {
   return unique(controls
-    .filter((item) => item.tag === "th" || item.type === "columnheader")
+    .filter((item) => (item.tag === "th" || item.type === "columnheader") && !isTransientOverlayControl(item))
     .map((item) => safeName(item.name, item)));
 }
 
 function visibleButtons(controls) {
   return unique(controls
-    .filter((item) => item.type === "button")
+    .filter((item) => item.type === "button" && !isTransientOverlayControl(item))
     .map((item) => safeName(item.name, item))
     .filter(Boolean)
     .map((name) => name || "未命名按钮"));
