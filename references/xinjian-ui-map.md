@@ -98,6 +98,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 ```
 
 Use the coverage report first. It compares discovered 心舰 routes with the curated map, generated auto map, and local crawl state, then lists pending routes.
+Read `pending_count`, `overlay_pending_count`, `dialog_pending_count`, `row_action_pending_count`, `pending_coverage_complete`, and `next_action` first. `route_mapping_complete` can be false when remaining routes were already attempted and proved empty, no-access, or redirected; those should not be relearned unless permissions or routing change.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-dom-pages.ps1") -Port 9342 -OnlyUnmapped -MaxPages 20 -Json

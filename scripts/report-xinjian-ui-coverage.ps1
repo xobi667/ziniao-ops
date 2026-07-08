@@ -253,6 +253,24 @@ $rowActionAttemptStatusCounts = @($knownMappedRoutes | Where-Object { $_.row_act
     [ordered]@{ status = if ($_.Name) { $_.Name } else { "unknown" }; count = $_.Count }
   })
 
+$routePendingCount = $pending.Count
+$overlayPendingCount = $overlayPending.Count
+$dialogPendingCount = $dialogPending.Count
+$rowActionPendingCount = $rowActionPending.Count
+$attemptedUnmappedCount = $attemptedUnmapped.Count
+$mappedRouteCount = @($routes | Where-Object { $_.mapped }).Count
+$routeCoverageComplete = ($routePendingCount -eq 0)
+$dynamicCoverageComplete = ($overlayPendingCount -eq 0 -and $dialogPendingCount -eq 0 -and $rowActionPendingCount -eq 0)
+$recommendedNextAction = if (!$routeCoverageComplete) {
+  "crawl_pending_routes"
+} elseif (!$dynamicCoverageComplete) {
+  "crawl_pending_dynamic_controls"
+} elseif ($attemptedUnmappedCount -gt 0) {
+  "no_pending_routes_review_attempted_unmapped_only_if_permissions_change"
+} else {
+  "no_pending_routes_found"
+}
+
 $payload = [ordered]@{
   ok = $true
   route_discovery_path = [System.IO.Path]::GetFullPath($RouteDiscoveryPath)
@@ -260,6 +278,23 @@ $payload = [ordered]@{
   overlay_state_path = [System.IO.Path]::GetFullPath($OverlayStatePath)
   dialog_state_path = [System.IO.Path]::GetFullPath($DialogStatePath)
   row_action_state_path = [System.IO.Path]::GetFullPath($RowActionStatePath)
+  route_count = @($routeMap.routes).Count
+  eligible_route_count = $routes.Count
+  mapped_route_count = $mappedRouteCount
+  attempted_unmapped_count = $attemptedUnmappedCount
+  pending_count = $routePendingCount
+  overlay_pending_count = $overlayPendingCount
+  dialog_pending_count = $dialogPendingCount
+  row_action_pending_count = $rowActionPendingCount
+  route_mapping_complete = [bool]($mappedRouteCount -eq $routes.Count)
+  pending_coverage_complete = [bool]($routeCoverageComplete -and $dynamicCoverageComplete)
+  next_action = $recommendedNextAction
+  summary = [ordered]@{
+    route_coverage = ("{0}/{1}" -f $mappedRouteCount, $routes.Count)
+    dynamic_page_coverage = ("overlay {0}/{1}; dialog {2}/{3}; row-action {4}/{5}" -f @($knownMappedRoutes | Where-Object { $_.overlay_mapped }).Count, $knownMappedRoutes.Count, @($knownMappedRoutes | Where-Object { $_.dialog_mapped }).Count, $knownMappedRoutes.Count, @($knownMappedRoutes | Where-Object { $_.row_action_mapped }).Count, $knownMappedRoutes.Count)
+    attempted_unmapped = $attemptedUnmappedCount
+    attempted_unmapped_status_counts = @($statusCounts)
+  }
   totals = [ordered]@{
     discovered_routes = @($routeMap.routes).Count
     eligible_routes = $routes.Count
