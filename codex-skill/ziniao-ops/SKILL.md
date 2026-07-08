@@ -377,7 +377,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\lear
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Intent "<用户要做什么>" -Json
 ```
 
-The current-page learner auto-selects a reachable debuggable 心舰 port. If it only sees login or restricted 心舰 pages, it stops with `manual_login_required_in_debuggable_xinjian_browser` instead of learning the wrong page.
+The current-page learner auto-selects a reachable debuggable 心舰 port and returns top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. If it only sees login or restricted 心舰 pages, it stops with `manual_login_required_in_debuggable_xinjian_browser` instead of learning the wrong page.
 
 To learn every currently debuggable 心舰 page already open in Chrome/Edge, use the batch learner. It enumerates DevTools pages, de-duplicates by route, captures each page with the safe current-page learner, then regenerates maps/catalog once:
 
@@ -394,7 +394,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 `references\xinjian-ui-action-catalog.md` is the human-readable action table. `references\xinjian-ui-action-catalog.json` is the machine-readable merged index with context, safety mode, source map, locator strategy, locator metadata, and audit lists for manual-review or map-only actions.
 
-To turn a mapped intent into a safe RPA-style action plan, use the action invoker. It dry-runs by default and reports the exact matched action, safety gate, and locator strategy. Add `-Execute` only for safe non-write actions. Add `-AllowWrite` or `-AllowExport` only after the employee explicitly confirms that exact write/export operation:
+To turn a mapped intent into a safe RPA-style action plan, use the action invoker. It dry-runs by default and reports the exact matched action, safety gate, locator strategy, and top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. Add `-Execute` only for safe non-write actions. Add `-AllowWrite` or `-AllowExport` only after the employee explicitly confirms that exact write/export operation:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Json

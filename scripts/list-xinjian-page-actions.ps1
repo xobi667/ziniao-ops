@@ -38,6 +38,12 @@ function Get-PortArgumentList {
   return $args
 }
 
+function Get-FirstExplicitPort {
+  $items = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  if ($items.Count -gt 0) { return [int]$items[0] }
+  return $null
+}
+
 function Get-RoutePath([string]$InputUrl) {
   if (!$InputUrl) { return "" }
   try {
@@ -65,10 +71,23 @@ function Get-RouteKey([string]$InputPath) {
   return $value.ToLowerInvariant()
 }
 
-function Get-ResolvedPort($Resolution) {
-  if ($Resolution -and $Resolution.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Resolution.resolved_port) {
+function Get-ResolvedPort($Resolution, [string]$InputUrl, [bool]$ExplicitUrlProvided) {
+  $explicitPort = Get-FirstExplicitPort
+  if ($explicitPort) { return [int]$explicitPort }
+
+  if ($Resolution -and $InputUrl -and $Resolution.PSObject.Properties.Match("candidates").Count -gt 0) {
+    $match = @($Resolution.candidates | Where-Object { [string]$_.url -eq $InputUrl -and $_.port } | Select-Object -First 1)
+    if ($match.Count -gt 0) { return [int]$match[0].port }
+  }
+
+  if (!$ExplicitUrlProvided -and $Resolution -and $Resolution.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Resolution.resolved_port) {
     return [int]$Resolution.resolved_port
   }
+
+  if ($ExplicitUrlProvided -and $Resolution -and $Resolution.PSObject.Properties.Match("url").Count -gt 0 -and [string]$Resolution.url -eq $InputUrl -and $Resolution.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Resolution.resolved_port) {
+    return [int]$Resolution.resolved_port
+  }
+
   return $null
 }
 
@@ -139,7 +158,7 @@ if (!(Test-Path -LiteralPath $CatalogPath)) {
 
 $requestedUrl = $Url
 $urlResolution = $null
-if (!$Url -and !$NoAutoDetectUrl) {
+if (!$NoAutoDetectUrl) {
   $resolver = Join-Path $PSScriptRoot "resolve-xinjian-current-url.ps1"
   if (Test-Path -LiteralPath $resolver) {
     $resolveArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $resolver)
@@ -148,11 +167,16 @@ if (!$Url -and !$NoAutoDetectUrl) {
     if ($Intent) { $resolveArgs += @("-Intent", $Intent) }
     $rawResolution = @(& powershell @resolveArgs 2>&1)
     $urlResolution = ConvertFrom-JsonText $rawResolution
-    if ($urlResolution -and $urlResolution.ok -and $urlResolution.url) {
+    if (!$Url -and $urlResolution -and $urlResolution.ok -and $urlResolution.url) {
       $Url = [string]$urlResolution.url
     }
   }
 }
+
+$explicitUrlProvided = [bool]$requestedUrl
+$currentTitle = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+$resolvedPort = Get-ResolvedPort -Resolution $urlResolution -InputUrl $Url -ExplicitUrlProvided $explicitUrlProvided
+$pageKind = Get-XinjianPageKind $Url
 
 if (!$Url) {
   $payload = [ordered]@{
@@ -161,7 +185,7 @@ if (!$Url) {
     requested_url = $requestedUrl
     current_url = ""
     current_title = ""
-    resolved_port = Get-ResolvedPort $urlResolution
+    resolved_port = $resolvedPort
     page_kind = "unknown"
     url_resolution = $urlResolution
     next_action = "focus_the_target_xinjian_window_or_pass_url"
@@ -178,9 +202,9 @@ if ($nonBusinessReason) {
     reason = $nonBusinessReason
     url = $Url
     current_url = $Url
-    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
-    resolved_port = Get-ResolvedPort $urlResolution
-    page_kind = Get-XinjianPageKind $Url
+    current_title = $currentTitle
+    resolved_port = $resolvedPort
+    page_kind = $pageKind
     requested_url = $requestedUrl
     url_resolution = $urlResolution
     next_action = $nonBusinessReason
@@ -203,9 +227,9 @@ if ($matches.Count -eq 0) {
     mode = "page_not_in_catalog"
     url = $Url
     current_url = $Url
-    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
-    resolved_port = Get-ResolvedPort $urlResolution
-    page_kind = Get-XinjianPageKind $Url
+    current_title = $currentTitle
+    resolved_port = $resolvedPort
+    page_kind = $pageKind
     requested_url = $requestedUrl
     url_resolution = $urlResolution
     catalog_version = $catalog.version
@@ -241,9 +265,9 @@ $payload = [ordered]@{
   mode = "page_actions"
   url = $Url
   current_url = $Url
-  current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
-  resolved_port = Get-ResolvedPort $urlResolution
-  page_kind = Get-XinjianPageKind $Url
+  current_title = $currentTitle
+  resolved_port = $resolvedPort
+  page_kind = $pageKind
   requested_url = $requestedUrl
   url_resolution = $urlResolution
   catalog_version = $catalog.version

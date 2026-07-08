@@ -136,6 +136,31 @@ function Test-XinjianLoginOrRestrictedUrl([string]$InputUrl) {
     $route -match "^/index/(noaccess|ad-no-auth)(/|$)"
 }
 
+function Get-ResolvedPort($Resolution, $FallbackPort = $null) {
+  $explicitPorts = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  if ($explicitPorts.Count -gt 0) { return [int]$explicitPorts[0] }
+  if ($FallbackPort) { return [int]$FallbackPort }
+  if ($Resolution -and $Resolution.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Resolution.resolved_port) {
+    return [int]$Resolution.resolved_port
+  }
+  return $null
+}
+
+function Get-ResolvedTitle($Resolution, [string]$InputUrl) {
+  if (!$Resolution -or !$InputUrl -or $Resolution.PSObject.Properties.Match("candidates").Count -eq 0) { return "" }
+  $match = @($Resolution.candidates | Where-Object { [string]$_.url -eq $InputUrl } | Select-Object -First 1)
+  if ($match.Count -gt 0) { return [string]$match[0].title }
+  return ""
+}
+
+function Get-XinjianPageKind([string]$InputUrl) {
+  if (!$InputUrl) { return "unknown" }
+  $route = Get-RouteKey $InputUrl
+  if ($route -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") { return "login_page" }
+  if ($route -match "^/(401|404)(/|$)" -or $route -match "^/index/(noaccess|ad-no-auth)(/|$)") { return "non_business_page" }
+  return "business_page"
+}
+
 function Resolve-CapturePort {
   param(
     [string]$TargetUrl,
@@ -296,6 +321,10 @@ if (!$Url -and !$GenerateOnly) {
     ok = $false
     mode = "current_page_unresolved"
     requested_url = $requestedUrl
+    current_url = ""
+    current_title = ""
+    resolved_port = Get-ResolvedPort $urlResolution
+    page_kind = "unknown"
     url_resolution = $urlResolution
     next_action = "focus_the_target_xinjian_window_or_pass_url"
   }
@@ -317,6 +346,10 @@ if (!$GenerateOnly -and (Test-XinjianLoginOrRestrictedUrl $Url)) {
     mode = "non_business_xinjian_page"
     requested_url = $requestedUrl
     url = $Url
+    current_url = $Url
+    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+    resolved_port = Get-ResolvedPort $urlResolution
+    page_kind = Get-XinjianPageKind $Url
     url_resolution = $urlResolution
     before_catalog = $before
     next_action = $nextAction
@@ -340,6 +373,10 @@ if (!$GenerateOnly -and !$DryRun -and !$capturePort) {
     mode = "cdp_port_unresolved"
     requested_url = $requestedUrl
     url = $Url
+    current_url = $Url
+    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+    resolved_port = Get-ResolvedPort $urlResolution
+    page_kind = Get-XinjianPageKind $Url
     url_resolution = $urlResolution
     capture_port_resolution = $capturePortResolution
     before_catalog = $before
@@ -370,6 +407,10 @@ if ($DryRun) {
     ok = $true
     mode = "dry_run"
     url = $Url
+    current_url = $Url
+    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+    resolved_port = Get-ResolvedPort $urlResolution $capturePort
+    page_kind = Get-XinjianPageKind $Url
     requested_url = $requestedUrl
     url_resolution = $urlResolution
     capture_port = $capturePort
@@ -438,6 +479,10 @@ $payload = [ordered]@{
   ok = ($failed.Count -eq 0)
   mode = if ($GenerateOnly) { "generate_only" } else { "learn_current_page" }
   url = $Url
+  current_url = $Url
+  current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+  resolved_port = Get-ResolvedPort $urlResolution $capturePort
+  page_kind = Get-XinjianPageKind $Url
   requested_url = $requestedUrl
   url_resolution = $urlResolution
   capture_port = $capturePort

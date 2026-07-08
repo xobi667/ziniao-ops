@@ -146,6 +146,15 @@ function Test-XinjianUrl([string]$Value) {
 
 function Get-XinjianNonBusinessPageReason([string]$Value) {
   if (!$Value) { return "" }
+  $routeKey = Get-XinjianRouteKey $Value
+  if (!$routeKey) { $routeKey = "/" }
+  if ($routeKey -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") { return "manual_login_required_in_debuggable_xinjian_browser" }
+  if ($routeKey -match "^/(401|404)(/|$)" -or $routeKey -match "^/index/(noaccess|ad-no-auth)(/|$)") { return "open_valid_xinjian_business_page" }
+  return ""
+}
+
+function Get-XinjianRouteKey([string]$Value) {
+  if (!$Value) { return "" }
   $path = ""
   try {
     $uri = [uri]$Value
@@ -156,10 +165,43 @@ function Get-XinjianNonBusinessPageReason([string]$Value) {
   if (!$path) { return "" }
   if (!$path.StartsWith("/")) { $path = "/" + $path }
   $routeKey = ($path -replace "/+", "/").TrimEnd("/").ToLowerInvariant()
-  if (!$routeKey) { $routeKey = "/" }
-  if ($routeKey -eq "/login") { return "manual_login_required_in_debuggable_xinjian_browser" }
-  if ($routeKey -in @("/401", "/404")) { return "open_valid_xinjian_business_page" }
+  if (!$routeKey) { return "/" }
+  return $routeKey
+}
+
+function Get-XinjianPageKind([string]$Value) {
+  if (!$Value) { return "unknown" }
+  $routeKey = Get-XinjianRouteKey $Value
+  if ($routeKey -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") { return "login_page" }
+  if ($routeKey -match "^/(401|404)(/|$)" -or $routeKey -match "^/index/(noaccess|ad-no-auth)(/|$)") { return "non_business_page" }
+  return "business_page"
+}
+
+function Get-ResolvedTitle($Detection, [string]$InputUrl) {
+  if (!$Detection -or !$InputUrl -or $Detection.PSObject.Properties.Match("candidates").Count -eq 0) { return "" }
+  $match = @($Detection.candidates | Where-Object { [string]$_.url -eq $InputUrl } | Select-Object -First 1)
+  if ($match.Count -gt 0) { return [string]$match[0].title }
   return ""
+}
+
+function Get-ResolvedPort($Detection, [string]$InputUrl, [bool]$ExplicitUrlProvided) {
+  $explicitPort = Get-FirstExplicitPort
+  if ($explicitPort) { return [int]$explicitPort }
+
+  if ($Detection -and $InputUrl -and $Detection.PSObject.Properties.Match("candidates").Count -gt 0) {
+    $match = @($Detection.candidates | Where-Object { [string]$_.url -eq $InputUrl -and $_.port } | Select-Object -First 1)
+    if ($match.Count -gt 0) { return [int]$match[0].port }
+  }
+
+  if (!$ExplicitUrlProvided -and $Detection -and $Detection.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Detection.resolved_port) {
+    return [int]$Detection.resolved_port
+  }
+
+  if ($ExplicitUrlProvided -and $Detection -and $Detection.PSObject.Properties.Match("url").Count -gt 0 -and [string]$Detection.url -eq $InputUrl -and $Detection.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Detection.resolved_port) {
+    return [int]$Detection.resolved_port
+  }
+
+  return $null
 }
 
 function Resolve-XinjianCurrentUrl([int]$CdpPort) {
@@ -310,10 +352,12 @@ if (!$Url -and !$NoAutoDetectUrl) {
   $urlDetection = Resolve-XinjianCurrentUrlByScript
 }
 
-$effectivePort = Get-FirstExplicitPort
-if (!$effectivePort -and $urlDetection -and $urlDetection.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $urlDetection.resolved_port) {
-  $effectivePort = [int]$urlDetection.resolved_port
-}
+$explicitUrlProvided = [bool]$requestedUrl
+$effectivePort = Get-ResolvedPort -Detection $urlDetection -InputUrl $Url -ExplicitUrlProvided $explicitUrlProvided
+
+$currentUrl = $Url
+$currentTitle = Get-ResolvedTitle -Detection $urlDetection -InputUrl $Url
+$currentPageKind = Get-XinjianPageKind $Url
 
 $nonBusinessReason = Get-XinjianNonBusinessPageReason $Url
 if ($nonBusinessReason) {
@@ -322,10 +366,13 @@ if ($nonBusinessReason) {
     mode = "non_business_xinjian_page"
     intent = $Intent
     url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
     requested_url = $requestedUrl
     url_detection = $urlDetection
     ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
-    resolved_port = $effectivePort
     reason = $nonBusinessReason
     next_action = $nonBusinessReason
   }
@@ -341,8 +388,18 @@ if (!$query) {
   $payload = [ordered]@{
     ok = $false
     error = "query_output_parse_failed"
+    mode = "query_output_parse_failed"
+    intent = $Intent
+    url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
+    requested_url = $requestedUrl
+    url_detection = $urlDetection
     exit_code = $queryExit
     raw_output = ($queryRaw | Out-String).Trim()
+    next_action = "repair_xinjian_action_query_output"
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host $payload.error }
   exit 2
@@ -355,6 +412,10 @@ if (!$query.ok -or $matches.Count -eq 0) {
     mode = "no_match"
     intent = $Intent
     url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
     requested_url = $requestedUrl
     url_detection = $urlDetection
     query = $query
@@ -384,6 +445,9 @@ $canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageConte
 $plan = [ordered]@{
   intent = $Intent
   url = $Url
+  current_url = $currentUrl
+  current_title = $currentTitle
+  page_kind = $currentPageKind
   requested_url = $requestedUrl
   url_detection = $urlDetection
   ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
@@ -425,6 +489,12 @@ if (!$Execute) {
   $payload = [ordered]@{
     ok = $true
     mode = "dry_run"
+    intent = $Intent
+    url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
     plan = $plan
     query_versions = [ordered]@{
       map = $query.map_version
@@ -447,6 +517,12 @@ if (!$canExecute) {
   $payload = [ordered]@{
     ok = $false
     mode = "blocked_by_safety"
+    intent = $Intent
+    url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
     plan = $plan
     next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser" } elseif ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
   }
@@ -463,6 +539,13 @@ if (!$node) {
   $payload = [ordered]@{
     ok = $false
     error = "node_missing"
+    mode = "node_missing"
+    intent = $Intent
+    url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
     message = "Node.js is required for CDP action execution."
     plan = $plan
   }
@@ -475,6 +558,13 @@ if (!(Test-Path -LiteralPath $helper)) {
   $payload = [ordered]@{
     ok = $false
     error = "invoke_helper_missing"
+    mode = "invoke_helper_missing"
+    intent = $Intent
+    url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
     path = $helper
     plan = $plan
   }
@@ -515,6 +605,12 @@ if (!$result) {
 $payload = [ordered]@{
   ok = [bool]$result.ok
   mode = "executed"
+  intent = $Intent
+  url = $Url
+  current_url = $currentUrl
+  current_title = $currentTitle
+  resolved_port = $effectivePort
+  page_kind = $currentPageKind
   plan = $plan
   result = $result
 }
