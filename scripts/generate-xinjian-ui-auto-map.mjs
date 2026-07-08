@@ -159,6 +159,7 @@ function moduleFromPath(routePath) {
 function classifySafety(name, type) {
   const text = clean(name);
   const compact = text.replace(/\s+/g, "");
+  if (type === "table_column") return "read_filter";
   if (type === "tab" || type === "filter_input" || type === "filter_dropdown") return "read_filter";
   if (type === "form_input" || type === "form_dropdown") return "form_field";
   if (/^用户菜单$/.test(text)) return "account_menu";
@@ -176,6 +177,7 @@ function classifySafety(name, type) {
 }
 
 function actionType(controlType, name, context = {}) {
+  if (controlType === "table_column") return "table_column";
   if (controlType === "input") return context.isFormPage ? "form_input" : "filter_input";
   if (controlType === "select") return context.isFormPage ? "form_dropdown" : "filter_dropdown";
   if (controlType === "tab") return "tab";
@@ -187,6 +189,7 @@ function actionType(controlType, name, context = {}) {
 
 function purposeFor(name, type, pageName) {
   const safety = classifySafety(name, type);
+  if (type === "table_column") return `Remember that ${pageName} has the ${name} table column/metric.`;
   if (type === "filter_input" || type === "filter_dropdown") return `Filter ${pageName} by ${name}.`;
   if (type === "form_input" || type === "form_dropdown") return `Fill or choose the ${name} field on ${pageName}; submitting the form still requires explicit confirmation.`;
   if (type === "tab") return `Switch ${pageName} to the ${name} tab/view.`;
@@ -281,6 +284,7 @@ function pageFromCapture(capture) {
   for (const link of links) {
     addAction(link.name, "link", { dom_text: link.name, href: link.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]") });
   }
+  for (const name of headers) addAction(name, "table_column", { table_column: name });
 
   const seenActions = new Set();
   const dedupedActions = actions.filter((action) => {

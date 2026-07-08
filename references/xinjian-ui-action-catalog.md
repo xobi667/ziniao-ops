@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 625
+- Actions: 1002
 - Global actions: 6
 
 ### Sources
@@ -13,7 +13,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | Source | Version | Pages | Actions |
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
-| auto | 2026-07-08 | 38 | 336 |
+| auto | 2026-07-08 | 38 | 713 |
 | overlay | 2026-07-08 | 26 | 289 |
 | dialog | 2026-07-08 | 9 | 41 |
 | row-action | 2026-07-08 | 2 | 6 |
@@ -24,7 +24,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | confirmation_required_export | 8 |
 | confirmation_required_write | 170 |
-| safe_execute_allowed | 447 |
+| safe_execute_allowed | 824 |
 
 ### Locator Strategies
 
@@ -41,6 +41,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | input_or_filter_placeholder | 67 |
 | input_or_filter_placeholder_list | 2 |
 | navigate_href | 43 |
+| read_table_column_header | 377 |
 | row_context_required_column_header | 2 |
 | uia_locator | 9 |
 
@@ -161,7 +162,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/bi/afterSalesOrder/index`
 - Sources: auto, dialog, overlay
-- Actions: 25
+- Actions: 41
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -190,12 +191,28 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 售后单 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 售后单 tab/view. |
 | 售后专项统计 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
 | 数据概览 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 数据概览 tab/view. |
+| 包裹信息 | column:包裹信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 包裹信息 table column/metric. |
+| 备注 | column:备注 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 备注 table column/metric. |
+| 标签 | column:标签 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 标签 table column/metric. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 操作 table column/metric. |
+| 创建人 | column:创建人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 创建人 table column/metric. |
+| 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 创建时间 table column/metric. |
+| 订单实付金额 | column:订单实付金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 订单实付金额 table column/metric. |
+| 订单信息 | column:订单信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 订单信息 table column/metric. |
+| 附件 | column:附件 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 附件 table column/metric. |
+| 换货明细 | column:换货明细 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 换货明细 table column/metric. |
+| 售后方案 | column:售后方案 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后方案 table column/metric. |
+| 售后金额 | column:售后金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后金额 table column/metric. |
+| 售后明细 | column:售后明细 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后明细 table column/metric. |
+| 售后时间 | column:售后时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后时间 table column/metric. |
+| 售后原因 | column:售后原因 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后原因 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 状态 table column/metric. |
 
 ## BI / 推送监控
 
 - Route: `/bi/monitor/pushFlowStats`
 - Sources: auto
-- Actions: 18
+- Actions: 28
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -217,12 +234,22 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 同步点落后 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 推送监控 to the 同步点落后 tab/view. |
 | 优先队列 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 推送监控 to the 优先队列 tab/view. |
 | 执行中超时 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 推送监控 to the 执行中超时 tab/view. |
+| 待处理时长 | column:待处理时长 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 待处理时长 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 店铺 table column/metric. |
+| 风险 | column:风险 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 风险 table column/metric. |
+| 含义 | column:含义 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 含义 table column/metric. |
+| 类型/重试 | column:类型/重试 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 类型/重试 table column/metric. |
+| 每秒 | column:每秒 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 每秒 table column/metric. |
+| 名称 | column:名称 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 名称 table column/metric. |
+| 平台/国家 | column:平台/国家 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 平台/国家 table column/metric. |
+| 数量 | column:数量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 数量 table column/metric. |
+| 所属租户 | column:所属租户 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 所属租户 table column/metric. |
 
 ## BI / 售后单管理
 
 - Route: `/bi/operationCenter/afterSaleOrder/index`
 - Sources: auto, dialog, overlay
-- Actions: 25
+- Actions: 41
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -251,12 +278,28 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 售后单 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 售后单 tab/view. |
 | 售后专项统计 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
 | 数据概览 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 数据概览 tab/view. |
+| 包裹信息 | column:包裹信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 包裹信息 table column/metric. |
+| 备注 | column:备注 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 备注 table column/metric. |
+| 标签 | column:标签 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 标签 table column/metric. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 操作 table column/metric. |
+| 创建人 | column:创建人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 创建人 table column/metric. |
+| 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 创建时间 table column/metric. |
+| 订单实付金额 | column:订单实付金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 订单实付金额 table column/metric. |
+| 订单信息 | column:订单信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 订单信息 table column/metric. |
+| 附件 | column:附件 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 附件 table column/metric. |
+| 换货明细 | column:换货明细 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 换货明细 table column/metric. |
+| 售后方案 | column:售后方案 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后方案 table column/metric. |
+| 售后金额 | column:售后金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后金额 table column/metric. |
+| 售后明细 | column:售后明细 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后明细 table column/metric. |
+| 售后时间 | column:售后时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后时间 table column/metric. |
+| 售后原因 | column:售后原因 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后原因 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 状态 table column/metric. |
 
 ## BI / 售后单管理
 
 - Route: `/bi/operationCenter/afterSalesOrder/index`
 - Sources: auto, dialog, overlay
-- Actions: 25
+- Actions: 41
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -285,12 +328,28 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 售后单 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 售后单 tab/view. |
 | 售后专项统计 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
 | 数据概览 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 售后单管理 to the 数据概览 tab/view. |
+| 包裹信息 | column:包裹信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 包裹信息 table column/metric. |
+| 备注 | column:备注 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 备注 table column/metric. |
+| 标签 | column:标签 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 标签 table column/metric. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 操作 table column/metric. |
+| 创建人 | column:创建人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 创建人 table column/metric. |
+| 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 创建时间 table column/metric. |
+| 订单实付金额 | column:订单实付金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 订单实付金额 table column/metric. |
+| 订单信息 | column:订单信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 订单信息 table column/metric. |
+| 附件 | column:附件 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 附件 table column/metric. |
+| 换货明细 | column:换货明细 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 换货明细 table column/metric. |
+| 售后方案 | column:售后方案 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后方案 table column/metric. |
+| 售后金额 | column:售后金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后金额 table column/metric. |
+| 售后明细 | column:售后明细 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后明细 table column/metric. |
+| 售后时间 | column:售后时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后时间 table column/metric. |
+| 售后原因 | column:售后原因 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 售后原因 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 状态 table column/metric. |
 
 ## BI / 店铺利润分析详情
 
 - Route: `/bi/profit/detail`
 - Sources: auto
-- Actions: 12
+- Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -306,12 +365,13 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 近30天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺利润分析详情 to the 近30天 tab/view. |
 | 近7天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺利润分析详情 to the 近7天 tab/view. |
 | 昨天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺利润分析详情 to the 昨天 tab/view. |
+| 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺利润分析详情 has the 日期 table column/metric. |
 
 ## BI / 商品复购分析报告详情
 
 - Route: `/user-analyze/detail`
 - Sources: auto
-- Actions: 6
+- Actions: 14
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -321,12 +381,20 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 商品复购分析报告详情 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 商品复购分析报告详情 by 开始日期. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 商品复购分析报告详情 to a related detail or analysis view. |
+| 产品规格 | column:产品规格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 产品规格 table column/metric. |
+| 订单复购率 | column:订单复购率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 订单复购率 table column/metric. |
+| 复购订单数 | column:复购订单数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 复购订单数 table column/metric. |
+| 复购用户数 | column:复购用户数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 复购用户数 table column/metric. |
+| 平均复购周期(天) | column:平均复购周期(天) | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 平均复购周期(天) table column/metric. |
+| 下单用户数 | column:下单用户数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 下单用户数 table column/metric. |
+| 用户复购率 | column:用户复购率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 用户复购率 table column/metric. |
+| 总订单数 | column:总订单数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 总订单数 table column/metric. |
 
 ## CRM / 合作单详情
 
 - Route: `/crm/coopera-detail`
 - Sources: auto
-- Actions: 4
+- Actions: 23
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -334,12 +402,31 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 合作单详情 to a related detail or analysis view. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 操作 table column/metric. |
+| 带货订单量 | column:带货订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 带货订单量 table column/metric. |
+| 带货销量 | column:带货销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 带货销量 table column/metric. |
+| 带货销售额 | column:带货销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 带货销售额 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 店铺 table column/metric. |
+| 订单量 | column:订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 订单量 table column/metric. |
+| 订单信息 | column:订单信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 订单信息 table column/metric. |
+| 合作商品 | column:合作商品 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 合作商品 table column/metric. |
+| 寄样方式 | column:寄样方式 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 寄样方式 table column/metric. |
+| 千次展示转化率 | column:千次展示转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 千次展示转化率 table column/metric. |
+| 商品价格 | column:商品价格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 商品价格 table column/metric. |
+| 商品信息 | column:商品信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 商品信息 table column/metric. |
+| 申样时间 | column:申样时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 申样时间 table column/metric. |
+| 视频播放量 | column:视频播放量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 视频播放量 table column/metric. |
+| 视频信息 | column:视频信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 视频信息 table column/metric. |
+| 销量 | column:销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 销量 table column/metric. |
+| 销售额 | column:销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 销售额 table column/metric. |
+| 样品状态 | column:样品状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 样品状态 table column/metric. |
+| 预估佣金 | column:预估佣金 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 预估佣金 table column/metric. |
 
 ## CRM / 合作单详情
 
 - Route: `/crm/cooperation-detail-simple`
 - Sources: auto
-- Actions: 8
+- Actions: 18
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -351,12 +438,22 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 视频链接 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 合作单详情 to the 视频链接 tab/view. |
 | 销售数据 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 合作单详情 to the 销售数据 tab/view. |
 | 直播链接 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 合作单详情 to the 直播链接 tab/view. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 店铺 table column/metric. |
+| 价格 | column:价格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 价格 table column/metric. |
+| 结算销量 | column:结算销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算销量 table column/metric. |
+| 结算销售额 | column:结算销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算销售额 table column/metric. |
+| 结算佣金 | column:结算佣金 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算佣金 table column/metric. |
+| 取消金额 | column:取消金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 取消金额 table column/metric. |
+| 商品信息 | column:商品信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 商品信息 table column/metric. |
+| 销量 | column:销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 销量 table column/metric. |
+| 销售额 | column:销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 销售额 table column/metric. |
+| 预估佣金 | column:预估佣金 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 预估佣金 table column/metric. |
 
 ## CRM / 合作单详情
 
 - Route: `/crm/cooperation-detail`
 - Sources: auto
-- Actions: 8
+- Actions: 18
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -368,12 +465,22 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 视频链接 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 合作单详情 to the 视频链接 tab/view. |
 | 销售数据 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 合作单详情 to the 销售数据 tab/view. |
 | 直播链接 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 合作单详情 to the 直播链接 tab/view. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 店铺 table column/metric. |
+| 价格 | column:价格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 价格 table column/metric. |
+| 结算销量 | column:结算销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算销量 table column/metric. |
+| 结算销售额 | column:结算销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算销售额 table column/metric. |
+| 结算佣金 | column:结算佣金 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算佣金 table column/metric. |
+| 取消金额 | column:取消金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 取消金额 table column/metric. |
+| 商品信息 | column:商品信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 商品信息 table column/metric. |
+| 销量 | column:销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 销量 table column/metric. |
+| 销售额 | column:销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 销售额 table column/metric. |
+| 预估佣金 | column:预估佣金 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 预估佣金 table column/metric. |
 
 ## CRM / 收藏夹详情
 
 - Route: `/crm/favorite/detail`
 - Sources: auto, overlay
-- Actions: 15
+- Actions: 21
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -392,6 +499,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 收藏夹详情. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 收藏夹详情. |
 | 邀约次数 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 邀约次数 overlay on 收藏夹详情. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 操作 table column/metric. |
+| 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 达人信息 table column/metric. |
+| 粉丝数 | column:粉丝数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 粉丝数 table column/metric. |
+| 添加时间 | column:添加时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 添加时间 table column/metric. |
+| 邀约次数 | column:邀约次数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 邀约次数 table column/metric. |
+| 总销售额 | column:总销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 总销售额 table column/metric. |
 
 ## CRM / 黑名单
 
@@ -560,7 +673,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/crm/shop-detail`
 - Sources: auto, overlay
-- Actions: 7
+- Actions: 12
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -571,6 +684,11 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 店铺详情. |
 | 店铺商品 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺详情 to the 店铺商品 tab/view. |
 | 关联达人 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺详情 to the 关联达人 tab/view. |
+| 单价 | column:单价 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 单价 table column/metric. |
+| 关联达人 | column:关联达人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 关联达人 table column/metric. |
+| 商品信息 | column:商品信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 商品信息 table column/metric. |
+| 总销量 | column:总销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 总销量 table column/metric. |
+| 总销售额 | column:总销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 总销售额 table column/metric. |
 
 ## CRM / 数据概览
 
@@ -591,7 +709,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/bpm/manager/definition`
 - Sources: auto
-- Actions: 4
+- Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -599,6 +717,15 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 流程定义; requires explicit confirmation before committing changes. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 流程定义 to a related detail or analysis view. |
+| 表单信息 | column:表单信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 表单信息 table column/metric. |
+| 部署时间 | column:部署时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 部署时间 table column/metric. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 操作 table column/metric. |
+| 定义编号 | column:定义编号 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 定义编号 table column/metric. |
+| 定义分类 | column:定义分类 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 定义分类 table column/metric. |
+| 定义描述 | column:定义描述 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 定义描述 table column/metric. |
+| 定义名称 | column:定义名称 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 定义名称 table column/metric. |
+| 流程版本 | column:流程版本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 流程版本 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 流程定义 has the 状态 table column/metric. |
 
 ## ERP / 发起 OA 请假
 
@@ -635,7 +762,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/bpm/process-instance/create`
 - Sources: auto
-- Actions: 4
+- Actions: 9
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -643,6 +770,11 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 发起流程; requires explicit confirmation before committing changes. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 发起流程 to a related detail or analysis view. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 发起流程 has the 操作 table column/metric. |
+| 流程版本 | column:流程版本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 发起流程 has the 流程版本 table column/metric. |
+| 流程分类 | column:流程分类 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 发起流程 has the 流程分类 table column/metric. |
+| 流程描述 | column:流程描述 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 发起流程 has the 流程描述 table column/metric. |
+| 流程名称 | column:流程名称 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 发起流程 has the 流程名称 table column/metric. |
 
 ## ERP / 流程详情
 
@@ -661,7 +793,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/erp/blacklist`
 - Sources: auto, dialog
-- Actions: 13
+- Actions: 17
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -678,12 +810,16 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增 dialog/drawer on 黑名单管理; do not submit changes without explicit confirmation. |
 | 请输入买家地址 | placeholder:请输入买家地址 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 黑名单管理 by 请输入买家地址. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 黑名单管理 to a related detail or analysis view. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 黑名单管理 has the 操作 table column/metric. |
+| 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 黑名单管理 has the 创建时间 table column/metric. |
+| 买家地址 | column:买家地址 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 黑名单管理 has the 买家地址 table column/metric. |
+| 原因 | column:原因 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 黑名单管理 has the 原因 table column/metric. |
 
 ## ERP / 调度日志
 
 - Route: `/job/log`
 - Sources: auto, overlay
-- Actions: 14
+- Actions: 23
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -701,12 +837,21 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 成功 | 请选择任务状态 -> 成功 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 成功 from the 请选择任务状态 overlay on 调度日志. |
 | 失败 | 请选择任务状态 -> 失败 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 失败 from the 请选择任务状态 overlay on 调度日志. |
 | 请选择任务状态 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择任务状态 overlay on 调度日志. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 操作 table column/metric. |
+| 处理器的参数 | column:处理器的参数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 处理器的参数 table column/metric. |
+| 处理器的名字 | column:处理器的名字 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 处理器的名字 table column/metric. |
+| 第几次执行 | column:第几次执行 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 第几次执行 table column/metric. |
+| 任务编号 | column:任务编号 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 任务编号 table column/metric. |
+| 任务状态 | column:任务状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 任务状态 table column/metric. |
+| 日志编号 | column:日志编号 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 日志编号 table column/metric. |
+| 执行时间 | column:执行时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 执行时间 table column/metric. |
+| 执行时长 | column:执行时长 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 执行时长 table column/metric. |
 
 ## ERP / 预警消息
 
 - Route: `/monitor/message_list`
 - Sources: auto, overlay
-- Actions: 21
+- Actions: 29
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -731,12 +876,20 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 预警消息. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 预警消息. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 预警消息. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 操作 table column/metric. |
+| 处理状态 | column:处理状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 处理状态 table column/metric. |
+| 订单信息 | column:订单信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 订单信息 table column/metric. |
+| 规则名称 | column:规则名称 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 规则名称 table column/metric. |
+| 预警类型 | column:预警类型 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 预警类型 table column/metric. |
+| 预警内容 | column:预警内容 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 预警内容 table column/metric. |
+| 预警时间 | column:预警时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 预警时间 table column/metric. |
+| 预警条件 | column:预警条件 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 预警消息 has the 预警条件 table column/metric. |
 
 ## ERP / SKU最低售价配置
 
 - Route: `/order/sku-min-price`
 - Sources: auto, dialog, overlay
-- Actions: 20
+- Actions: 24
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -760,12 +913,16 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 导入导出 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 导入导出 overlay on SKU最低售价配置. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on SKU最低售价配置. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on SKU最低售价配置. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 操作 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 店铺 table column/metric. |
+| 商品SKU | column:商品SKU | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 商品SKU table column/metric. |
+| 最低售价 | column:最低售价 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 最低售价 table column/metric. |
 
 ## ERP / 商品评论详情
 
 - Route: `/product-data/detail`
 - Sources: auto, overlay
-- Actions: 16
+- Actions: 20
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -785,12 +942,16 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 近30天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 商品评论详情 to the 近30天 tab/view. |
 | 近7天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 商品评论详情 to the 近7天 tab/view. |
 | 昨天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 商品评论详情 to the 昨天 tab/view. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 操作 table column/metric. |
+| 处理状态 | column:处理状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 处理状态 table column/metric. |
+| 评级 | column:评级 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 评级 table column/metric. |
+| 评价信息 翻译 | column:评价信息 翻译 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 评价信息 翻译 table column/metric. |
 
 ## ERP / 商品表现分析
 
 - Route: `/product-data/performance-detail`
 - Sources: auto
-- Actions: 4
+- Actions: 52
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -798,12 +959,60 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 商品表现分析; requires explicit confirmation before committing changes. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 商品表现分析 to a related detail or analysis view. |
+| 点击量 | column:点击量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 点击量 table column/metric. |
+| 点击率 | column:点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 点击率 table column/metric. |
+| 点赞量 | column:点赞量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 点赞量 table column/metric. |
+| 访客数 | column:访客数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 访客数 table column/metric. |
+| 广告订单量 | column:广告订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 广告订单量 table column/metric. |
+| 广告花费 | column:广告花费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 广告花费 table column/metric. |
+| 广告数据 | column:广告数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 广告数据 table column/metric. |
+| 广告销量 | column:广告销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 广告销量 table column/metric. |
+| 广告销售额 | column:广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 广告销售额 table column/metric. |
+| 加购访客数 | column:加购访客数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 加购访客数 table column/metric. |
+| 加购商品数 | column:加购商品数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 加购商品数 table column/metric. |
+| 加购转化率 | column:加购转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 加购转化率 table column/metric. |
+| 每次直接转化成本 | column:每次直接转化成本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 每次直接转化成本 table column/metric. |
+| 每次转化成本 | column:每次转化成本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 每次转化成本 table column/metric. |
+| 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 日期 table column/metric. |
+| 商品访问数据 | column:商品访问数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 商品访问数据 table column/metric. |
+| 商品加购数据 | column:商品加购数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 商品加购数据 table column/metric. |
+| 商品收藏数 | column:商品收藏数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 商品收藏数 table column/metric. |
+| 退款订单量 | column:退款订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 退款订单量 table column/metric. |
+| 退款率 | column:退款率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 退款率 table column/metric. |
+| 下单到已确定订单转化率 | column:下单到已确定订单转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 下单到已确定订单转化率 table column/metric. |
+| 下单金额 | column:下单金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 下单金额 table column/metric. |
+| 下单买家数 | column:下单买家数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 下单买家数 table column/metric. |
+| 下单商品数 | column:下单商品数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 下单商品数 table column/metric. |
+| 下单数据 | column:下单数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 下单数据 table column/metric. |
+| 下单转化率 | column:下单转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 下单转化率 table column/metric. |
+| 销售数据 | column:销售数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 销售数据 table column/metric. |
+| 已确定订单买家数 | column:已确定订单买家数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 已确定订单买家数 table column/metric. |
+| 已确定订单数据 | column:已确定订单数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 已确定订单数据 table column/metric. |
+| 已确定订单销售额 | column:已确定订单销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 已确定订单销售额 table column/metric. |
+| 已确定订单销售量 | column:已确定订单销售量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 已确定订单销售量 table column/metric. |
+| 已确定订单转化率 | column:已确定订单转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 已确定订单转化率 table column/metric. |
+| 有效订单量 | column:有效订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 有效订单量 table column/metric. |
+| 有效销量 | column:有效销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 有效销量 table column/metric. |
+| 有效销售额 | column:有效销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 有效销售额 table column/metric. |
+| 展现量 | column:展现量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 展现量 table column/metric. |
+| 直接销售额 | column:直接销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 直接销售额 table column/metric. |
+| 直接已售商品 | column:直接已售商品 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 直接已售商品 table column/metric. |
+| 直接转化 | column:直接转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 直接转化 table column/metric. |
+| 直接转化率 | column:直接转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 直接转化率 table column/metric. |
+| 直接CIR | column:直接CIR | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 直接CIR table column/metric. |
+| 直接ROAS | column:直接ROAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 直接ROAS table column/metric. |
+| 转化率 | column:转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the 转化率 table column/metric. |
+| ACoAS | column:ACoAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the ACoAS table column/metric. |
+| ASoAS | column:ASoAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the ASoAS table column/metric. |
+| CIR | column:CIR | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the CIR table column/metric. |
+| PV | column:PV | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the PV table column/metric. |
+| ROAS | column:ROAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品表现分析 has the ROAS table column/metric. |
 
 ## ERP / 进销存详情
 
 - Route: `/product-sku/InventoryReport_detail`
 - Sources: auto, overlay
-- Actions: 12
+- Actions: 27
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -819,6 +1028,21 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 近30天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 进销存详情 to the 近30天 tab/view. |
 | 近7天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 进销存详情 to the 近7天 tab/view. |
 | 昨天 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 进销存详情 to the 昨天 tab/view. |
+| 采购入库 | column:采购入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 采购入库 table column/metric. |
+| 出库 | column:出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 出库 table column/metric. |
+| 调拨出库 | column:调拨出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 调拨出库 table column/metric. |
+| 调拨入库 | column:调拨入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 调拨入库 table column/metric. |
+| 盘亏出库 | column:盘亏出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 盘亏出库 table column/metric. |
+| 盘盈入库 | column:盘盈入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 盘盈入库 table column/metric. |
+| 取消单入库 | column:取消单入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 取消单入库 table column/metric. |
+| 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 日期 table column/metric. |
+| 入库 | column:入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 入库 table column/metric. |
+| 三方仓同步出库 | column:三方仓同步出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 三方仓同步出库 table column/metric. |
+| 三方仓同步入库 | column:三方仓同步入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 三方仓同步入库 table column/metric. |
+| 手动出库 | column:手动出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 手动出库 table column/metric. |
+| 手动入库 | column:手动入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 手动入库 table column/metric. |
+| 退货入库 | column:退货入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 退货入库 table column/metric. |
+| 销售出库 | column:销售出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 销售出库 table column/metric. |
 
 ## ERP / 业绩利润报表
 
@@ -867,7 +1091,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/report-center/detail/shopeeGoods`
 - Sources: auto
-- Actions: 9
+- Actions: 49
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -880,12 +1104,52 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter Shopee商品数据表 by 开始日期. |
 | 请选择商品 | placeholder:请选择商品 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter Shopee商品数据表 by 请选择商品. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from Shopee商品数据表 to a related detail or analysis view. |
+| 测评金额 | column:测评金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 测评金额 table column/metric. |
+| 测评损耗 | column:测评损耗 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 测评损耗 table column/metric. |
+| 测评销量 | column:测评销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 测评销量 table column/metric. |
+| 产出 | column:产出 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 产出 table column/metric. |
+| 关联广告点击率 | column:关联广告点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 关联广告点击率 table column/metric. |
+| 关联广告费 | column:关联广告费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 关联广告费 table column/metric. |
+| 关联广告销售额 | column:关联广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 关联广告销售额 table column/metric. |
+| 关联广告转化 | column:关联广告转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 关联广告转化 table column/metric. |
+| 关联广告转化率 | column:关联广告转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 关联广告转化率 table column/metric. |
+| 关联广告ROI | column:关联广告ROI | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 关联广告ROI table column/metric. |
+| 件数 | column:件数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 件数 table column/metric. |
+| 利润 | column:利润 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 利润 table column/metric. |
+| 平均客单价 | column:平均客单价 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 平均客单价 table column/metric. |
+| 平台费用 | column:平台费用 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 平台费用 table column/metric. |
+| 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 日期 table column/metric. |
+| 商品成本 | column:商品成本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 商品成本 table column/metric. |
+| 商品访客数 | column:商品访客数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 商品访客数 table column/metric. |
+| 收入 | column:收入 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 收入 table column/metric. |
+| 搜索广告点击率 | column:搜索广告点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 搜索广告点击率 table column/metric. |
+| 搜索广告费 | column:搜索广告费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 搜索广告费 table column/metric. |
+| 搜索广告销售额 | column:搜索广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 搜索广告销售额 table column/metric. |
+| 搜索广告转化 | column:搜索广告转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 搜索广告转化 table column/metric. |
+| 搜索广告转化率 | column:搜索广告转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 搜索广告转化率 table column/metric. |
+| 搜索广告ROI | column:搜索广告ROI | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 搜索广告ROI table column/metric. |
+| 推广广告点击率 | column:推广广告点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 推广广告点击率 table column/metric. |
+| 推广广告费 | column:推广广告费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 推广广告费 table column/metric. |
+| 推广广告销售额 | column:推广广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 推广广告销售额 table column/metric. |
+| 推广广告转化 | column:推广广告转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 推广广告转化 table column/metric. |
+| 推广广告转化率 | column:推广广告转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 推广广告转化率 table column/metric. |
+| 推广广告ROI | column:推广广告ROI | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 推广广告ROI table column/metric. |
+| 退款金额 | column:退款金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 退款金额 table column/metric. |
+| 项目 | column:项目 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 项目 table column/metric. |
+| 销售 | column:销售 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 销售 table column/metric. |
+| 销售利润率 | column:销售利润率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 销售利润率 table column/metric. |
+| 有效销量 | column:有效销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 有效销量 table column/metric. |
+| 有效销售额 | column:有效销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 有效销售额 table column/metric. |
+| 预估运费 | column:预估运费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 预估运费 table column/metric. |
+| 支出 | column:支出 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 支出 table column/metric. |
+| 转化率 | column:转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 转化率 table column/metric. |
+| 总数据 | column:总数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 总数据 table column/metric. |
 
 ## ERP / Shopee店铺数据表
 
 - Route: `/report-center/detail/shopeeShop`
 - Sources: auto, overlay
-- Actions: 11
+- Actions: 53
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -900,6 +1164,48 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from Shopee店铺数据表 to a related detail or analysis view. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on Shopee店铺数据表. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on Shopee店铺数据表. |
+| 测评订单量 | column:测评订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评订单量 table column/metric. |
+| 测评金额 | column:测评金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评金额 table column/metric. |
+| 测评损耗 | column:测评损耗 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评损耗 table column/metric. |
+| 测评销量 | column:测评销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评销量 table column/metric. |
+| 产出 | column:产出 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 产出 table column/metric. |
+| 店铺转化率 | column:店铺转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 店铺转化率 table column/metric. |
+| 订单量 | column:订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 订单量 table column/metric. |
+| 访客数 | column:访客数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 访客数 table column/metric. |
+| 关联广告点击率 | column:关联广告点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 关联广告点击率 table column/metric. |
+| 关联广告费 | column:关联广告费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 关联广告费 table column/metric. |
+| 关联广告销售额 | column:关联广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 关联广告销售额 table column/metric. |
+| 关联广告转化 | column:关联广告转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 关联广告转化 table column/metric. |
+| 关联广告转化率 | column:关联广告转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 关联广告转化率 table column/metric. |
+| 关联广告ROI | column:关联广告ROI | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 关联广告ROI table column/metric. |
+| 利润 | column:利润 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 利润 table column/metric. |
+| 每个订单的销售额 | column:每个订单的销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 每个订单的销售额 table column/metric. |
+| 平台费用 | column:平台费用 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 平台费用 table column/metric. |
+| 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 日期 table column/metric. |
+| 商品成本 | column:商品成本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 商品成本 table column/metric. |
+| 收入 | column:收入 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 收入 table column/metric. |
+| 搜索广告点击率 | column:搜索广告点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 搜索广告点击率 table column/metric. |
+| 搜索广告费 | column:搜索广告费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 搜索广告费 table column/metric. |
+| 搜索广告销售额 | column:搜索广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 搜索广告销售额 table column/metric. |
+| 搜索广告转化 | column:搜索广告转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 搜索广告转化 table column/metric. |
+| 搜索广告转化率 | column:搜索广告转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 搜索广告转化率 table column/metric. |
+| 搜索广告ROI | column:搜索广告ROI | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 搜索广告ROI table column/metric. |
+| 推广广告点击率 | column:推广广告点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 推广广告点击率 table column/metric. |
+| 推广广告费 | column:推广广告费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 推广广告费 table column/metric. |
+| 推广广告销售额 | column:推广广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 推广广告销售额 table column/metric. |
+| 推广广告转化 | column:推广广告转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 推广广告转化 table column/metric. |
+| 推广广告转化率 | column:推广广告转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 推广广告转化率 table column/metric. |
+| 推广广告ROI | column:推广广告ROI | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 推广广告ROI table column/metric. |
+| 退款金额 | column:退款金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 退款金额 table column/metric. |
+| 项目 | column:项目 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 项目 table column/metric. |
+| 销售额 | column:销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 销售额 table column/metric. |
+| 销售利润率 | column:销售利润率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 销售利润率 table column/metric. |
+| 有效订单量 | column:有效订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 有效订单量 table column/metric. |
+| 有效销量 | column:有效销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 有效销量 table column/metric. |
+| 有效销售额 | column:有效销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 有效销售额 table column/metric. |
+| 预估运费 | column:预估运费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 预估运费 table column/metric. |
+| 支出 | column:支出 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 支出 table column/metric. |
+| 总数据 | column:总数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 总数据 table column/metric. |
 
 ## ERP / 店铺表现看板
 
@@ -919,7 +1225,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/shop-data/performance-detail`
 - Sources: auto
-- Actions: 4
+- Actions: 49
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -927,6 +1233,51 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 店铺表现分析; requires explicit confirmation before committing changes. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 店铺表现分析 to a related detail or analysis view. |
+| 点击量 | column:点击量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 点击量 table column/metric. |
+| 点击率 | column:点击率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 点击率 table column/metric. |
+| 点赞量 | column:点赞量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 点赞量 table column/metric. |
+| 访客数 | column:访客数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 访客数 table column/metric. |
+| 广告订单量 | column:广告订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 广告订单量 table column/metric. |
+| 广告花费 | column:广告花费 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 广告花费 table column/metric. |
+| 广告数据 | column:广告数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 广告数据 table column/metric. |
+| 广告销量 | column:广告销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 广告销量 table column/metric. |
+| 广告销售额 | column:广告销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 广告销售额 table column/metric. |
+| 加购访客数 | column:加购访客数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 加购访客数 table column/metric. |
+| 加购商品数 | column:加购商品数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 加购商品数 table column/metric. |
+| 加购转化率 | column:加购转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 加购转化率 table column/metric. |
+| 每次直接转化成本 | column:每次直接转化成本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 每次直接转化成本 table column/metric. |
+| 每次转化成本 | column:每次转化成本 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 每次转化成本 table column/metric. |
+| 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 日期 table column/metric. |
+| 商品表现 | column:商品表现 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 商品表现 table column/metric. |
+| 商品收藏数 | column:商品收藏数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 商品收藏数 table column/metric. |
+| 退款订单量 | column:退款订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 退款订单量 table column/metric. |
+| 退款率 | column:退款率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 退款率 table column/metric. |
+| 下单到已确定订单转化率 | column:下单到已确定订单转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 下单到已确定订单转化率 table column/metric. |
+| 下单金额 | column:下单金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 下单金额 table column/metric. |
+| 下单买家数 | column:下单买家数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 下单买家数 table column/metric. |
+| 下单商品数 | column:下单商品数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 下单商品数 table column/metric. |
+| 下单转化率 | column:下单转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 下单转化率 table column/metric. |
+| 销售数据 | column:销售数据 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 销售数据 table column/metric. |
+| 已确定订单买家数 | column:已确定订单买家数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 已确定订单买家数 table column/metric. |
+| 已确定订单销售额 | column:已确定订单销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 已确定订单销售额 table column/metric. |
+| 已确定订单销售量 | column:已确定订单销售量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 已确定订单销售量 table column/metric. |
+| 已确定订单转化率 | column:已确定订单转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 已确定订单转化率 table column/metric. |
+| 有效订单量 | column:有效订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 有效订单量 table column/metric. |
+| 有效销量 | column:有效销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 有效销量 table column/metric. |
+| 有效销售额 | column:有效销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 有效销售额 table column/metric. |
+| 展现量 | column:展现量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 展现量 table column/metric. |
+| 直接销售额 | column:直接销售额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 直接销售额 table column/metric. |
+| 直接已售商品 | column:直接已售商品 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 直接已售商品 table column/metric. |
+| 直接转化 | column:直接转化 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 直接转化 table column/metric. |
+| 直接转化率 | column:直接转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 直接转化率 table column/metric. |
+| 直接CIR | column:直接CIR | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 直接CIR table column/metric. |
+| 直接ROAS | column:直接ROAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 直接ROAS table column/metric. |
+| 转化率 | column:转化率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the 转化率 table column/metric. |
+| ACoAS | column:ACoAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the ACoAS table column/metric. |
+| ASoAS | column:ASoAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the ASoAS table column/metric. |
+| CIR | column:CIR | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the CIR table column/metric. |
+| PV | column:PV | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the PV table column/metric. |
+| ROAS | column:ROAS | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺表现分析 has the ROAS table column/metric. |
 
 ## ERP / 授权失败
 
@@ -960,7 +1311,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/system/costom-fee`
 - Sources: auto, dialog, overlay, row-action
-- Actions: 24
+- Actions: 30
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -988,12 +1339,18 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择月 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择月 overlay on 自定义费用. |
 | 操作编辑 | 操作 -> 编辑 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 编辑 in the 操作 column on 自定义费用. |
 | 操作删除 | 操作 -> 删除 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 删除 in the 操作 column on 自定义费用. |
+| 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 操作 table column/metric. |
+| 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 创建时间 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 店铺 table column/metric. |
+| 费用类型 | column:费用类型 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 费用类型 table column/metric. |
+| 费用月份 | column:费用月份 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 费用月份 table column/metric. |
+| 金额 | column:金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 金额 table column/metric. |
 
 ## ERP / 套餐开通记录
 
 - Route: `/system/package-open-record`
 - Sources: auto, overlay
-- Actions: 9
+- Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -1006,6 +1363,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 租户名称/联系人/手机号 | placeholder:租户名称/联系人/手机号 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 套餐开通记录 by 租户名称/联系人/手机号. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 套餐开通记录 to a related detail or analysis view. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 套餐开通记录. |
+| 开通人 | column:开通人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 开通人 table column/metric. |
+| 开通时间 | column:开通时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 开通时间 table column/metric. |
+| 套餐 | column:套餐 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 套餐 table column/metric. |
+| 租户 | column:租户 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 租户 table column/metric. |
 
 ## ERP / 单量套餐
 
@@ -1054,7 +1415,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/index/home`
 - Sources: auto, overlay
-- Actions: 31
+- Actions: 48
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -1089,6 +1450,23 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 首页. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 首页. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
+| 城市 | column:城市 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 城市 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 店铺 table column/metric. |
+| 二 | column:二 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 二 table column/metric. |
+| 分析 | column:分析 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 分析 table column/metric. |
+| 利润(CNY) | column:利润(CNY) | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 利润(CNY) table column/metric. |
+| 利润率 | column:利润率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 利润率 table column/metric. |
+| 六 | column:六 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 六 table column/metric. |
+| 排名 | column:排名 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 排名 table column/metric. |
+| 日 | column:日 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 日 table column/metric. |
+| 三 | column:三 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 三 table column/metric. |
+| 四 | column:四 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 四 table column/metric. |
+| 五 | column:五 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 五 table column/metric. |
+| 一 | column:一 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 一 table column/metric. |
+| 有效订单量 | column:有效订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效订单量 table column/metric. |
+| 有效订单量占比 | column:有效订单量占比 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效订单量占比 table column/metric. |
+| 有效销量 | column:有效销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效销量 table column/metric. |
+| 有效销售额(CNY) | column:有效销售额(CNY) | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 有效销售额(CNY) table column/metric. |
 
 ## System / 受限页面
 

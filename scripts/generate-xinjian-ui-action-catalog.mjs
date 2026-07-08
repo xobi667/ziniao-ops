@@ -60,6 +60,7 @@ function locatorStrategy(action) {
   if (Array.isArray(locator.tab_texts) && locator.tab_texts.length && Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return "click_quick_tab_text_or_placeholder_list";
   if (Array.isArray(locator.tab_texts) && locator.tab_texts.length) return "click_visible_tab_text_from_list";
   if (Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return "input_or_filter_placeholder_list";
+  if (clean(action?.type) === "table_column" && locator.table_column) return "read_table_column_header";
   if (locator.table_column) return "row_context_required_column_header";
   if (locator.uia_name) return "uia_locator";
   if (hasVisibleTextFallback(action)) return "click_visible_action_text";

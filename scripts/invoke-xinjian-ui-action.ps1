@@ -249,6 +249,7 @@ function Join-Codepoints([int[]]$Codes) {
 
 function Get-LocatorStrategy($Action) {
   $locator = $Action.locator
+  $type = [string]$Action.type
   if ($locator) {
     if ($locator.trigger_selector -and $locator.item_text) { return "click_trigger_selector_then_overlay_item_text" }
     if ($locator.trigger_selector -and $locator.button_text) { return "click_trigger_selector_then_dialog_button_text" }
@@ -260,10 +261,10 @@ function Get-LocatorStrategy($Action) {
     if ($locator.tab_texts -and $locator.dom_placeholders) { return "click_quick_tab_text_or_placeholder_list" }
     if ($locator.tab_texts) { return "click_visible_tab_text_from_list" }
     if ($locator.dom_placeholders) { return "input_or_filter_placeholder_list" }
+    if ($type -eq "table_column" -and $locator.table_column) { return "read_table_column_header" }
     if ($locator.table_column) { return "row_context_required_column_header" }
     if ($locator.uia_name) { return "map_only_uia_locator" }
   }
-  $type = [string]$Action.type
   $name = [string]$Action.name
   $genericTabNames = @(
     (Join-Codepoints @(0x5E73, 0x53F0, 0x6807, 0x7B7E))
@@ -340,7 +341,8 @@ $unknownSafety = ($safetyMode -eq "dry_run_only_unknown_safety")
 $requiresRowContext = ($locatorStrategy -like "row_context_required*")
 $requiresPageContext = !$Url
 $requiresCdpPort = !$effectivePort
-$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and !$requiresCdpPort -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+$readOnlyCatalogEntry = ($locatorStrategy -eq "read_table_column_header")
+$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and !$requiresCdpPort -and !$readOnlyCatalogEntry -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
 
 $plan = [ordered]@{
   intent = $Intent
@@ -361,6 +363,8 @@ $plan = [ordered]@{
   can_execute = [bool]$canExecute
   safety_note = if ($requiresCdpPort) {
     "No debuggable Xinjian CDP port was resolved. Dry-run only; open or log in to Xinjian in a Chrome/Edge/Ziniao window with DevTools enabled."
+  } elseif ($readOnlyCatalogEntry) {
+    "Read-only table column memory. No click is needed; use the matched page/column to locate or interpret visible data."
   } elseif ($requiresPageContext -and $requiresWrite) {
     "Write/delete/save/submit-like action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowWrite only after explicit confirmation."
   } elseif ($requiresPageContext -and $requiresExport) {
@@ -407,7 +411,7 @@ if (!$canExecute) {
     ok = $false
     mode = "blocked_by_safety"
     plan = $plan
-    next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
+    next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser" } elseif ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20

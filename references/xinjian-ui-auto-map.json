@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dom_captures",
-  "generated_at": "2026-07-08T12:47:27.749Z",
+  "generated_at": "2026-07-08T13:32:51.975Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "This generated map stores generic page controls only. It must not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -487,6 +487,230 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.订单信息",
+          "name": "订单信息",
+          "aliases": [
+            "订单信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 订单信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单信息"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.包裹信息",
+          "name": "包裹信息",
+          "aliases": [
+            "包裹信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 包裹信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "包裹信息"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.售后方案",
+          "name": "售后方案",
+          "aliases": [
+            "售后方案"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后方案 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后方案"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.状态",
+          "name": "状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.售后原因",
+          "name": "售后原因",
+          "aliases": [
+            "售后原因"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后原因 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后原因"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.标签",
+          "name": "标签",
+          "aliases": [
+            "标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 标签 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "标签"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.订单实付金额",
+          "name": "订单实付金额",
+          "aliases": [
+            "订单实付金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 订单实付金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单实付金额"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.售后明细",
+          "name": "售后明细",
+          "aliases": [
+            "售后明细"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后明细 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后明细"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.换货明细",
+          "name": "换货明细",
+          "aliases": [
+            "换货明细"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 换货明细 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "换货明细"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.售后金额",
+          "name": "售后金额",
+          "aliases": [
+            "售后金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后金额"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.创建人",
+          "name": "创建人",
+          "aliases": [
+            "创建人"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 创建人 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建人"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.附件",
+          "name": "附件",
+          "aliases": [
+            "附件"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 附件 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "附件"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.备注",
+          "name": "备注",
+          "aliases": [
+            "备注"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 备注 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "备注"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.售后时间",
+          "name": "售后时间",
+          "aliases": [
+            "售后时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后时间"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.创建时间",
+          "name": "创建时间",
+          "aliases": [
+            "创建时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 创建时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建时间"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -842,6 +1066,146 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.类型.重试",
+          "name": "类型/重试",
+          "aliases": [
+            "类型/重试"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 类型/重试 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "类型/重试"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.含义",
+          "name": "含义",
+          "aliases": [
+            "含义"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 含义 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "含义"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.数量",
+          "name": "数量",
+          "aliases": [
+            "数量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 数量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "数量"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.风险",
+          "name": "风险",
+          "aliases": [
+            "风险"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 风险 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "风险"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.所属租户",
+          "name": "所属租户",
+          "aliases": [
+            "所属租户"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 所属租户 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "所属租户"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.平台.国家",
+          "name": "平台/国家",
+          "aliases": [
+            "平台/国家"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 平台/国家 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "平台/国家"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.待处理时长",
+          "name": "待处理时长",
+          "aliases": [
+            "待处理时长"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 待处理时长 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "待处理时长"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.名称",
+          "name": "名称",
+          "aliases": [
+            "名称"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 名称 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "名称"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.table.column.每秒",
+          "name": "每秒",
+          "aliases": [
+            "每秒"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 推送监控 has the 每秒 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "每秒"
           }
         }
       ]
@@ -1214,6 +1578,230 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.订单信息",
+          "name": "订单信息",
+          "aliases": [
+            "订单信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 订单信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单信息"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.包裹信息",
+          "name": "包裹信息",
+          "aliases": [
+            "包裹信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 包裹信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "包裹信息"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.售后方案",
+          "name": "售后方案",
+          "aliases": [
+            "售后方案"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后方案 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后方案"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.状态",
+          "name": "状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.售后原因",
+          "name": "售后原因",
+          "aliases": [
+            "售后原因"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后原因 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后原因"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.标签",
+          "name": "标签",
+          "aliases": [
+            "标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 标签 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "标签"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.订单实付金额",
+          "name": "订单实付金额",
+          "aliases": [
+            "订单实付金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 订单实付金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单实付金额"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.售后明细",
+          "name": "售后明细",
+          "aliases": [
+            "售后明细"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后明细 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后明细"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.换货明细",
+          "name": "换货明细",
+          "aliases": [
+            "换货明细"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 换货明细 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "换货明细"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.售后金额",
+          "name": "售后金额",
+          "aliases": [
+            "售后金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后金额"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.创建人",
+          "name": "创建人",
+          "aliases": [
+            "创建人"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 创建人 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建人"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.附件",
+          "name": "附件",
+          "aliases": [
+            "附件"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 附件 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "附件"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.备注",
+          "name": "备注",
+          "aliases": [
+            "备注"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 备注 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "备注"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.售后时间",
+          "name": "售后时间",
+          "aliases": [
+            "售后时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后时间"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.创建时间",
+          "name": "创建时间",
+          "aliases": [
+            "创建时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 创建时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建时间"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -1585,6 +2173,230 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.订单信息",
+          "name": "订单信息",
+          "aliases": [
+            "订单信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 订单信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单信息"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.包裹信息",
+          "name": "包裹信息",
+          "aliases": [
+            "包裹信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 包裹信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "包裹信息"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.售后方案",
+          "name": "售后方案",
+          "aliases": [
+            "售后方案"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后方案 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后方案"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.状态",
+          "name": "状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.售后原因",
+          "name": "售后原因",
+          "aliases": [
+            "售后原因"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后原因 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后原因"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.标签",
+          "name": "标签",
+          "aliases": [
+            "标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 标签 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "标签"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.订单实付金额",
+          "name": "订单实付金额",
+          "aliases": [
+            "订单实付金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 订单实付金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单实付金额"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.售后明细",
+          "name": "售后明细",
+          "aliases": [
+            "售后明细"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后明细 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后明细"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.换货明细",
+          "name": "换货明细",
+          "aliases": [
+            "换货明细"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 换货明细 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "换货明细"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.售后金额",
+          "name": "售后金额",
+          "aliases": [
+            "售后金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后金额"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.创建人",
+          "name": "创建人",
+          "aliases": [
+            "创建人"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 创建人 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建人"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.附件",
+          "name": "附件",
+          "aliases": [
+            "附件"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 附件 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "附件"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.备注",
+          "name": "备注",
+          "aliases": [
+            "备注"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 备注 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "备注"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.售后时间",
+          "name": "售后时间",
+          "aliases": [
+            "售后时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 售后时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "售后时间"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.创建时间",
+          "name": "创建时间",
+          "aliases": [
+            "创建时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 创建时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建时间"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 售后单管理 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -1829,6 +2641,20 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.bi.profit.detail.table.column.日期",
+          "name": "日期",
+          "aliases": [
+            "日期"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺利润分析详情 has the 日期 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日期"
+          }
         }
       ]
     },
@@ -1991,6 +2817,118 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.产品规格",
+          "name": "产品规格",
+          "aliases": [
+            "产品规格"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 产品规格 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "产品规格"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.总订单数",
+          "name": "总订单数",
+          "aliases": [
+            "总订单数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 总订单数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "总订单数"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.复购订单数",
+          "name": "复购订单数",
+          "aliases": [
+            "复购订单数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 复购订单数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "复购订单数"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.订单复购率",
+          "name": "订单复购率",
+          "aliases": [
+            "订单复购率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 订单复购率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单复购率"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.下单用户数",
+          "name": "下单用户数",
+          "aliases": [
+            "下单用户数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 下单用户数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单用户数"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.复购用户数",
+          "name": "复购用户数",
+          "aliases": [
+            "复购用户数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 复购用户数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "复购用户数"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.用户复购率",
+          "name": "用户复购率",
+          "aliases": [
+            "用户复购率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 用户复购率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "用户复购率"
+          }
+        },
+        {
+          "id": "auto.user.analyze.detail.table.column.平均复购周期.天",
+          "name": "平均复购周期(天)",
+          "aliases": [
+            "平均复购周期(天)"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品复购分析报告详情 has the 平均复购周期(天) table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "平均复购周期(天)"
+          }
         }
       ]
     },
@@ -2140,6 +3078,272 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.商品信息",
+          "name": "商品信息",
+          "aliases": [
+            "商品信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 商品信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品信息"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.商品价格",
+          "name": "商品价格",
+          "aliases": [
+            "商品价格"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 商品价格 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品价格"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.销售额",
+          "name": "销售额",
+          "aliases": [
+            "销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售额"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.销量",
+          "name": "销量",
+          "aliases": [
+            "销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销量"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.订单量",
+          "name": "订单量",
+          "aliases": [
+            "订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单量"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.预估佣金",
+          "name": "预估佣金",
+          "aliases": [
+            "预估佣金"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 预估佣金 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预估佣金"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.订单信息",
+          "name": "订单信息",
+          "aliases": [
+            "订单信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 订单信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单信息"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.样品状态",
+          "name": "样品状态",
+          "aliases": [
+            "样品状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 样品状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "样品状态"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.申样时间",
+          "name": "申样时间",
+          "aliases": [
+            "申样时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 申样时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "申样时间"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.寄样方式",
+          "name": "寄样方式",
+          "aliases": [
+            "寄样方式"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 寄样方式 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "寄样方式"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.视频信息",
+          "name": "视频信息",
+          "aliases": [
+            "视频信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 视频信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "视频信息"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.合作商品",
+          "name": "合作商品",
+          "aliases": [
+            "合作商品"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 合作商品 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "合作商品"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.视频播放量",
+          "name": "视频播放量",
+          "aliases": [
+            "视频播放量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 视频播放量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "视频播放量"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.带货订单量",
+          "name": "带货订单量",
+          "aliases": [
+            "带货订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 带货订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "带货订单量"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.带货销量",
+          "name": "带货销量",
+          "aliases": [
+            "带货销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 带货销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "带货销量"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.带货销售额",
+          "name": "带货销售额",
+          "aliases": [
+            "带货销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 带货销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "带货销售额"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.table.column.千次展示转化率",
+          "name": "千次展示转化率",
+          "aliases": [
+            "千次展示转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 千次展示转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "千次展示转化率"
           }
         }
       ]
@@ -2339,6 +3543,146 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.商品信息",
+          "name": "商品信息",
+          "aliases": [
+            "商品信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 商品信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品信息"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.价格",
+          "name": "价格",
+          "aliases": [
+            "价格"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 价格 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "价格"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.销量",
+          "name": "销量",
+          "aliases": [
+            "销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销量"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.销售额",
+          "name": "销售额",
+          "aliases": [
+            "销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售额"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.取消金额",
+          "name": "取消金额",
+          "aliases": [
+            "取消金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 取消金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "取消金额"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.结算销量",
+          "name": "结算销量",
+          "aliases": [
+            "结算销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 结算销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "结算销量"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.结算销售额",
+          "name": "结算销售额",
+          "aliases": [
+            "结算销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 结算销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "结算销售额"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.预估佣金",
+          "name": "预估佣金",
+          "aliases": [
+            "预估佣金"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 预估佣金 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预估佣金"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.table.column.结算佣金",
+          "name": "结算佣金",
+          "aliases": [
+            "结算佣金"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 结算佣金 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "结算佣金"
+          }
         }
       ]
     },
@@ -2536,6 +3880,146 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.商品信息",
+          "name": "商品信息",
+          "aliases": [
+            "商品信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 商品信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品信息"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.价格",
+          "name": "价格",
+          "aliases": [
+            "价格"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 价格 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "价格"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.销量",
+          "name": "销量",
+          "aliases": [
+            "销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销量"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.销售额",
+          "name": "销售额",
+          "aliases": [
+            "销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售额"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.取消金额",
+          "name": "取消金额",
+          "aliases": [
+            "取消金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 取消金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "取消金额"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.结算销量",
+          "name": "结算销量",
+          "aliases": [
+            "结算销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 结算销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "结算销量"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.结算销售额",
+          "name": "结算销售额",
+          "aliases": [
+            "结算销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 结算销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "结算销售额"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.预估佣金",
+          "name": "预估佣金",
+          "aliases": [
+            "预估佣金"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 预估佣金 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预估佣金"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.table.column.结算佣金",
+          "name": "结算佣金",
+          "aliases": [
+            "结算佣金"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 合作单详情 has the 结算佣金 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "结算佣金"
           }
         }
       ]
@@ -2788,6 +4272,91 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.crm.favorite.detail.table.column.达人信息",
+          "name": "达人信息",
+          "aliases": [
+            "达人信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 收藏夹详情 has the 达人信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "达人信息"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.table.column.粉丝数",
+          "name": "粉丝数",
+          "aliases": [
+            "粉丝数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 收藏夹详情 has the 粉丝数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "粉丝数"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.table.column.总销售额",
+          "name": "总销售额",
+          "aliases": [
+            "总销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 收藏夹详情 has the 总销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "总销售额"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.table.column.邀约次数",
+          "name": "邀约次数",
+          "aliases": [
+            "邀约次数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 收藏夹详情 has the 邀约次数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "邀约次数"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.table.column.添加时间",
+          "name": "添加时间",
+          "aliases": [
+            "添加时间",
+            "时间添加"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 收藏夹详情 has the 添加时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "添加时间"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 收藏夹详情 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -2948,6 +4517,76 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.crm.shop.detail.table.column.商品信息",
+          "name": "商品信息",
+          "aliases": [
+            "商品信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺详情 has the 商品信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品信息"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.table.column.单价",
+          "name": "单价",
+          "aliases": [
+            "单价"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺详情 has the 单价 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "单价"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.table.column.总销量",
+          "name": "总销量",
+          "aliases": [
+            "总销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺详情 has the 总销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "总销量"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.table.column.总销售额",
+          "name": "总销售额",
+          "aliases": [
+            "总销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺详情 has the 总销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "总销售额"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.table.column.关联达人",
+          "name": "关联达人",
+          "aliases": [
+            "关联达人"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺详情 has the 关联达人 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联达人"
+          }
         }
       ]
     },
@@ -3077,6 +4716,132 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.定义编号",
+          "name": "定义编号",
+          "aliases": [
+            "定义编号"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 定义编号 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "定义编号"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.定义名称",
+          "name": "定义名称",
+          "aliases": [
+            "定义名称"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 定义名称 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "定义名称"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.定义分类",
+          "name": "定义分类",
+          "aliases": [
+            "定义分类"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 定义分类 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "定义分类"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.表单信息",
+          "name": "表单信息",
+          "aliases": [
+            "表单信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 表单信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "表单信息"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.流程版本",
+          "name": "流程版本",
+          "aliases": [
+            "流程版本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 流程版本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "流程版本"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.状态",
+          "name": "状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.部署时间",
+          "name": "部署时间",
+          "aliases": [
+            "部署时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 部署时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "部署时间"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.定义描述",
+          "name": "定义描述",
+          "aliases": [
+            "定义描述"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 定义描述 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "定义描述"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 流程定义 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
           }
         }
       ]
@@ -3489,6 +5254,76 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.table.column.流程名称",
+          "name": "流程名称",
+          "aliases": [
+            "流程名称"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 发起流程 has the 流程名称 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "流程名称"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.table.column.流程分类",
+          "name": "流程分类",
+          "aliases": [
+            "流程分类"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 发起流程 has the 流程分类 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "流程分类"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.table.column.流程版本",
+          "name": "流程版本",
+          "aliases": [
+            "流程版本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 发起流程 has the 流程版本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "流程版本"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.table.column.流程描述",
+          "name": "流程描述",
+          "aliases": [
+            "流程描述"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 发起流程 has the 流程描述 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "流程描述"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 发起流程 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -3797,6 +5632,62 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.erp.blacklist.table.column.买家地址",
+          "name": "买家地址",
+          "aliases": [
+            "买家地址"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 黑名单管理 has the 买家地址 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "买家地址"
+          }
+        },
+        {
+          "id": "auto.erp.blacklist.table.column.原因",
+          "name": "原因",
+          "aliases": [
+            "原因"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 黑名单管理 has the 原因 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "原因"
+          }
+        },
+        {
+          "id": "auto.erp.blacklist.table.column.创建时间",
+          "name": "创建时间",
+          "aliases": [
+            "创建时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 黑名单管理 has the 创建时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建时间"
+          }
+        },
+        {
+          "id": "auto.erp.blacklist.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 黑名单管理 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -4038,6 +5929,132 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.日志编号",
+          "name": "日志编号",
+          "aliases": [
+            "日志编号"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 日志编号 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日志编号"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.任务编号",
+          "name": "任务编号",
+          "aliases": [
+            "任务编号"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 任务编号 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "任务编号"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.处理器的名字",
+          "name": "处理器的名字",
+          "aliases": [
+            "处理器的名字"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 处理器的名字 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "处理器的名字"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.处理器的参数",
+          "name": "处理器的参数",
+          "aliases": [
+            "处理器的参数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 处理器的参数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "处理器的参数"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.第几次执行",
+          "name": "第几次执行",
+          "aliases": [
+            "第几次执行"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 第几次执行 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "第几次执行"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.执行时间",
+          "name": "执行时间",
+          "aliases": [
+            "执行时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 执行时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "执行时间"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.执行时长",
+          "name": "执行时长",
+          "aliases": [
+            "执行时长"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 执行时长 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "执行时长"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.任务状态",
+          "name": "任务状态",
+          "aliases": [
+            "任务状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 任务状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "任务状态"
+          }
+        },
+        {
+          "id": "auto.job.log.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 调度日志 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
           }
         }
       ]
@@ -4376,6 +6393,118 @@
             "dom_text": "预警消息",
             "href": "https://erp.xinjianerp.com/monitor/message_list"
           }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.订单信息",
+          "name": "订单信息",
+          "aliases": [
+            "订单信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 订单信息 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单信息"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.规则名称",
+          "name": "规则名称",
+          "aliases": [
+            "规则名称"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 规则名称 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "规则名称"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.预警类型",
+          "name": "预警类型",
+          "aliases": [
+            "预警类型"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 预警类型 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预警类型"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.预警条件",
+          "name": "预警条件",
+          "aliases": [
+            "预警条件"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 预警条件 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预警条件"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.预警内容",
+          "name": "预警内容",
+          "aliases": [
+            "预警内容"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 预警内容 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预警内容"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.处理状态",
+          "name": "处理状态",
+          "aliases": [
+            "处理状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 处理状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "处理状态"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.预警时间",
+          "name": "预警时间",
+          "aliases": [
+            "预警时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 预警时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预警时间"
+          }
+        },
+        {
+          "id": "auto.monitor.message.list.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 预警消息 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -4608,6 +6737,62 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.order.sku.min.price.table.column.商品sku",
+          "name": "商品SKU",
+          "aliases": [
+            "商品SKU"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that SKU最低售价配置 has the 商品SKU table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品SKU"
+          }
+        },
+        {
+          "id": "auto.order.sku.min.price.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that SKU最低售价配置 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.order.sku.min.price.table.column.最低售价",
+          "name": "最低售价",
+          "aliases": [
+            "最低售价"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that SKU最低售价配置 has the 最低售价 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "最低售价"
+          }
+        },
+        {
+          "id": "auto.order.sku.min.price.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that SKU最低售价配置 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
           }
         }
       ]
@@ -4878,6 +7063,63 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.product.data.detail.table.column.评价信息.翻译",
+          "name": "评价信息 翻译",
+          "aliases": [
+            "评价信息 翻译",
+            "评价信息翻译"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品评论详情 has the 评价信息 翻译 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "评价信息 翻译"
+          }
+        },
+        {
+          "id": "auto.product.data.detail.table.column.评级",
+          "name": "评级",
+          "aliases": [
+            "评级"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品评论详情 has the 评级 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "评级"
+          }
+        },
+        {
+          "id": "auto.product.data.detail.table.column.处理状态",
+          "name": "处理状态",
+          "aliases": [
+            "处理状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品评论详情 has the 处理状态 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "处理状态"
+          }
+        },
+        {
+          "id": "auto.product.data.detail.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品评论详情 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -5085,6 +7327,678 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.日期",
+          "name": "日期",
+          "aliases": [
+            "日期"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 日期 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日期"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.销售数据",
+          "name": "销售数据",
+          "aliases": [
+            "销售数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 销售数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售数据"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.商品访问数据",
+          "name": "商品访问数据",
+          "aliases": [
+            "商品访问数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 商品访问数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品访问数据"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.商品加购数据",
+          "name": "商品加购数据",
+          "aliases": [
+            "商品加购数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 商品加购数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品加购数据"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.下单数据",
+          "name": "下单数据",
+          "aliases": [
+            "下单数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 下单数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单数据"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.已确定订单数据",
+          "name": "已确定订单数据",
+          "aliases": [
+            "已确定订单数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 已确定订单数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单数据"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.广告数据",
+          "name": "广告数据",
+          "aliases": [
+            "广告数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 广告数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告数据"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.有效订单量",
+          "name": "有效订单量",
+          "aliases": [
+            "有效订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 有效订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效订单量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.有效销量",
+          "name": "有效销量",
+          "aliases": [
+            "有效销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 有效销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.有效销售额",
+          "name": "有效销售额",
+          "aliases": [
+            "有效销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 有效销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销售额"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.退款订单量",
+          "name": "退款订单量",
+          "aliases": [
+            "退款订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 退款订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退款订单量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.退款率",
+          "name": "退款率",
+          "aliases": [
+            "退款率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 退款率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退款率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.商品收藏数",
+          "name": "商品收藏数",
+          "aliases": [
+            "商品收藏数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 商品收藏数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品收藏数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.访客数",
+          "name": "访客数",
+          "aliases": [
+            "访客数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 访客数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "访客数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.pv",
+          "name": "PV",
+          "aliases": [
+            "PV"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the PV table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "PV"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.点赞量",
+          "name": "点赞量",
+          "aliases": [
+            "点赞量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 点赞量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "点赞量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.加购访客数",
+          "name": "加购访客数",
+          "aliases": [
+            "加购访客数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 加购访客数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "加购访客数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.加购商品数",
+          "name": "加购商品数",
+          "aliases": [
+            "加购商品数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 加购商品数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "加购商品数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.加购转化率",
+          "name": "加购转化率",
+          "aliases": [
+            "加购转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 加购转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "加购转化率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.下单买家数",
+          "name": "下单买家数",
+          "aliases": [
+            "下单买家数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 下单买家数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单买家数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.下单商品数",
+          "name": "下单商品数",
+          "aliases": [
+            "下单商品数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 下单商品数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单商品数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.下单金额",
+          "name": "下单金额",
+          "aliases": [
+            "下单金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 下单金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单金额"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.下单转化率",
+          "name": "下单转化率",
+          "aliases": [
+            "下单转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 下单转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单转化率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.已确定订单买家数",
+          "name": "已确定订单买家数",
+          "aliases": [
+            "已确定订单买家数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 已确定订单买家数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单买家数"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.已确定订单销售量",
+          "name": "已确定订单销售量",
+          "aliases": [
+            "已确定订单销售量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 已确定订单销售量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单销售量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.已确定订单销售额",
+          "name": "已确定订单销售额",
+          "aliases": [
+            "已确定订单销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 已确定订单销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单销售额"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.下单到已确定订单转化率",
+          "name": "下单到已确定订单转化率",
+          "aliases": [
+            "下单到已确定订单转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 下单到已确定订单转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单到已确定订单转化率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.已确定订单转化率",
+          "name": "已确定订单转化率",
+          "aliases": [
+            "已确定订单转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 已确定订单转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单转化率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.展现量",
+          "name": "展现量",
+          "aliases": [
+            "展现量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 展现量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "展现量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.点击量",
+          "name": "点击量",
+          "aliases": [
+            "点击量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 点击量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "点击量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.点击率",
+          "name": "点击率",
+          "aliases": [
+            "点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "点击率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.广告花费",
+          "name": "广告花费",
+          "aliases": [
+            "广告花费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 广告花费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告花费"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.广告销量",
+          "name": "广告销量",
+          "aliases": [
+            "广告销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 广告销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告销量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.广告销售额",
+          "name": "广告销售额",
+          "aliases": [
+            "广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告销售额"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.广告订单量",
+          "name": "广告订单量",
+          "aliases": [
+            "广告订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 广告订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告订单量"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.转化率",
+          "name": "转化率",
+          "aliases": [
+            "转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "转化率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.每次转化成本",
+          "name": "每次转化成本",
+          "aliases": [
+            "每次转化成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 每次转化成本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "每次转化成本"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.roas",
+          "name": "ROAS",
+          "aliases": [
+            "ROAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the ROAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "ROAS"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.cir",
+          "name": "CIR",
+          "aliases": [
+            "CIR"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the CIR table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "CIR"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.直接转化",
+          "name": "直接转化",
+          "aliases": [
+            "直接转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 直接转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接转化"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.直接已售商品",
+          "name": "直接已售商品",
+          "aliases": [
+            "直接已售商品"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 直接已售商品 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接已售商品"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.直接销售额",
+          "name": "直接销售额",
+          "aliases": [
+            "直接销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 直接销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接销售额"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.直接roas",
+          "name": "直接ROAS",
+          "aliases": [
+            "直接ROAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 直接ROAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接ROAS"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.直接cir",
+          "name": "直接CIR",
+          "aliases": [
+            "直接CIR"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 直接CIR table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接CIR"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.直接转化率",
+          "name": "直接转化率",
+          "aliases": [
+            "直接转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 直接转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接转化率"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.每次直接转化成本",
+          "name": "每次直接转化成本",
+          "aliases": [
+            "每次直接转化成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the 每次直接转化成本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "每次直接转化成本"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.acoas",
+          "name": "ACoAS",
+          "aliases": [
+            "ACoAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the ACoAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "ACoAS"
+          }
+        },
+        {
+          "id": "auto.product.data.performance.detail.table.column.asoas",
+          "name": "ASoAS",
+          "aliases": [
+            "ASoAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 商品表现分析 has the ASoAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "ASoAS"
           }
         }
       ]
@@ -5344,6 +8258,216 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.日期",
+          "name": "日期",
+          "aliases": [
+            "日期"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 日期 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日期"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.入库",
+          "name": "入库",
+          "aliases": [
+            "入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.出库",
+          "name": "出库",
+          "aliases": [
+            "出库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 出库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "出库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.采购入库",
+          "name": "采购入库",
+          "aliases": [
+            "采购入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 采购入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "采购入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.调拨入库",
+          "name": "调拨入库",
+          "aliases": [
+            "调拨入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 调拨入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "调拨入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.手动入库",
+          "name": "手动入库",
+          "aliases": [
+            "手动入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 手动入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "手动入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.退货入库",
+          "name": "退货入库",
+          "aliases": [
+            "退货入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 退货入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退货入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.盘盈入库",
+          "name": "盘盈入库",
+          "aliases": [
+            "盘盈入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 盘盈入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "盘盈入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.取消单入库",
+          "name": "取消单入库",
+          "aliases": [
+            "取消单入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 取消单入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "取消单入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.三方仓同步入库",
+          "name": "三方仓同步入库",
+          "aliases": [
+            "三方仓同步入库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 三方仓同步入库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "三方仓同步入库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.手动出库",
+          "name": "手动出库",
+          "aliases": [
+            "手动出库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 手动出库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "手动出库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.销售出库",
+          "name": "销售出库",
+          "aliases": [
+            "销售出库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 销售出库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售出库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.调拨出库",
+          "name": "调拨出库",
+          "aliases": [
+            "调拨出库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 调拨出库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "调拨出库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.盘亏出库",
+          "name": "盘亏出库",
+          "aliases": [
+            "盘亏出库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 盘亏出库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "盘亏出库"
+          }
+        },
+        {
+          "id": "auto.product.sku.inventoryreport.detail.table.column.三方仓同步出库",
+          "name": "三方仓同步出库",
+          "aliases": [
+            "三方仓同步出库"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 进销存详情 has the 三方仓同步出库 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "三方仓同步出库"
           }
         }
       ]
@@ -5987,6 +9111,566 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.项目",
+          "name": "项目",
+          "aliases": [
+            "项目"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 项目 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "项目"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.总数据",
+          "name": "总数据",
+          "aliases": [
+            "总数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 总数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "总数据"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.收入",
+          "name": "收入",
+          "aliases": [
+            "收入"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 收入 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "收入"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.支出",
+          "name": "支出",
+          "aliases": [
+            "支出"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 支出 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "支出"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.产出",
+          "name": "产出",
+          "aliases": [
+            "产出"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 产出 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "产出"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.日期",
+          "name": "日期",
+          "aliases": [
+            "日期"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 日期 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日期"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.商品访客数",
+          "name": "商品访客数",
+          "aliases": [
+            "商品访客数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 商品访客数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品访客数"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.件数",
+          "name": "件数",
+          "aliases": [
+            "件数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 件数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "件数"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.销售",
+          "name": "销售",
+          "aliases": [
+            "销售"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 销售 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.测评销量",
+          "name": "测评销量",
+          "aliases": [
+            "测评销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 测评销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评销量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.有效销量",
+          "name": "有效销量",
+          "aliases": [
+            "有效销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 有效销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.测评金额",
+          "name": "测评金额",
+          "aliases": [
+            "测评金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 测评金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评金额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.平均客单价",
+          "name": "平均客单价",
+          "aliases": [
+            "平均客单价"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 平均客单价 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "平均客单价"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.转化率",
+          "name": "转化率",
+          "aliases": [
+            "转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.有效销售额",
+          "name": "有效销售额",
+          "aliases": [
+            "有效销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 有效销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.搜索广告费",
+          "name": "搜索广告费",
+          "aliases": [
+            "搜索广告费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 搜索广告费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.搜索广告转化",
+          "name": "搜索广告转化",
+          "aliases": [
+            "搜索广告转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 搜索广告转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告转化"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.搜索广告销售额",
+          "name": "搜索广告销售额",
+          "aliases": [
+            "搜索广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 搜索广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.搜索广告点击率",
+          "name": "搜索广告点击率",
+          "aliases": [
+            "搜索广告点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 搜索广告点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告点击率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.搜索广告转化率",
+          "name": "搜索广告转化率",
+          "aliases": [
+            "搜索广告转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 搜索广告转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.搜索广告roi",
+          "name": "搜索广告ROI",
+          "aliases": [
+            "搜索广告ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 搜索广告ROI table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告ROI"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.关联广告费",
+          "name": "关联广告费",
+          "aliases": [
+            "关联广告费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 关联广告费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.关联广告转化",
+          "name": "关联广告转化",
+          "aliases": [
+            "关联广告转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 关联广告转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告转化"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.关联广告销售额",
+          "name": "关联广告销售额",
+          "aliases": [
+            "关联广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 关联广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.关联广告点击率",
+          "name": "关联广告点击率",
+          "aliases": [
+            "关联广告点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 关联广告点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告点击率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.关联广告转化率",
+          "name": "关联广告转化率",
+          "aliases": [
+            "关联广告转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 关联广告转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.关联广告roi",
+          "name": "关联广告ROI",
+          "aliases": [
+            "关联广告ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 关联广告ROI table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告ROI"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.推广广告费",
+          "name": "推广广告费",
+          "aliases": [
+            "推广广告费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 推广广告费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.推广广告转化",
+          "name": "推广广告转化",
+          "aliases": [
+            "推广广告转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 推广广告转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告转化"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.推广广告销售额",
+          "name": "推广广告销售额",
+          "aliases": [
+            "推广广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 推广广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.推广广告点击率",
+          "name": "推广广告点击率",
+          "aliases": [
+            "推广广告点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 推广广告点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告点击率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.推广广告转化率",
+          "name": "推广广告转化率",
+          "aliases": [
+            "推广广告转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 推广广告转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.推广广告roi",
+          "name": "推广广告ROI",
+          "aliases": [
+            "推广广告ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 推广广告ROI table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告ROI"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.测评损耗",
+          "name": "测评损耗",
+          "aliases": [
+            "测评损耗"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 测评损耗 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评损耗"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.商品成本",
+          "name": "商品成本",
+          "aliases": [
+            "商品成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 商品成本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品成本"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.平台费用",
+          "name": "平台费用",
+          "aliases": [
+            "平台费用"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 平台费用 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "平台费用"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.退款金额",
+          "name": "退款金额",
+          "aliases": [
+            "退款金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 退款金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退款金额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.预估运费",
+          "name": "预估运费",
+          "aliases": [
+            "预估运费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 预估运费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预估运费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.利润",
+          "name": "利润",
+          "aliases": [
+            "利润"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 利润 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "利润"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeegoods.table.column.销售利润率",
+          "name": "销售利润率",
+          "aliases": [
+            "销售利润率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee商品数据表 has the 销售利润率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售利润率"
+          }
         }
       ]
     },
@@ -6265,6 +9949,594 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.项目",
+          "name": "项目",
+          "aliases": [
+            "项目"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 项目 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "项目"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.总数据",
+          "name": "总数据",
+          "aliases": [
+            "总数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 总数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "总数据"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.收入",
+          "name": "收入",
+          "aliases": [
+            "收入"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 收入 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "收入"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.支出",
+          "name": "支出",
+          "aliases": [
+            "支出"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 支出 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "支出"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.产出",
+          "name": "产出",
+          "aliases": [
+            "产出"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 产出 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "产出"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.日期",
+          "name": "日期",
+          "aliases": [
+            "日期"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 日期 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日期"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.访客数",
+          "name": "访客数",
+          "aliases": [
+            "访客数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 访客数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "访客数"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.订单量",
+          "name": "订单量",
+          "aliases": [
+            "订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "订单量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.销售额",
+          "name": "销售额",
+          "aliases": [
+            "销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.测评订单量",
+          "name": "测评订单量",
+          "aliases": [
+            "测评订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 测评订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评订单量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.测评销量",
+          "name": "测评销量",
+          "aliases": [
+            "测评销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 测评销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评销量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.测评金额",
+          "name": "测评金额",
+          "aliases": [
+            "测评金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 测评金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评金额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.有效订单量",
+          "name": "有效订单量",
+          "aliases": [
+            "有效订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 有效订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效订单量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.有效销量",
+          "name": "有效销量",
+          "aliases": [
+            "有效销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 有效销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销量"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.每个订单的销售额",
+          "name": "每个订单的销售额",
+          "aliases": [
+            "每个订单的销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 每个订单的销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "每个订单的销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.店铺转化率",
+          "name": "店铺转化率",
+          "aliases": [
+            "店铺转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 店铺转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.有效销售额",
+          "name": "有效销售额",
+          "aliases": [
+            "有效销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 有效销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.搜索广告费",
+          "name": "搜索广告费",
+          "aliases": [
+            "搜索广告费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 搜索广告费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.搜索广告转化",
+          "name": "搜索广告转化",
+          "aliases": [
+            "搜索广告转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 搜索广告转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告转化"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.搜索广告销售额",
+          "name": "搜索广告销售额",
+          "aliases": [
+            "搜索广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 搜索广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.搜索广告点击率",
+          "name": "搜索广告点击率",
+          "aliases": [
+            "搜索广告点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 搜索广告点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告点击率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.搜索广告转化率",
+          "name": "搜索广告转化率",
+          "aliases": [
+            "搜索广告转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 搜索广告转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.搜索广告roi",
+          "name": "搜索广告ROI",
+          "aliases": [
+            "搜索广告ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 搜索广告ROI table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "搜索广告ROI"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.关联广告费",
+          "name": "关联广告费",
+          "aliases": [
+            "关联广告费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 关联广告费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.关联广告转化",
+          "name": "关联广告转化",
+          "aliases": [
+            "关联广告转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 关联广告转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告转化"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.关联广告销售额",
+          "name": "关联广告销售额",
+          "aliases": [
+            "关联广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 关联广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.关联广告点击率",
+          "name": "关联广告点击率",
+          "aliases": [
+            "关联广告点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 关联广告点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告点击率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.关联广告转化率",
+          "name": "关联广告转化率",
+          "aliases": [
+            "关联广告转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 关联广告转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.关联广告roi",
+          "name": "关联广告ROI",
+          "aliases": [
+            "关联广告ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 关联广告ROI table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "关联广告ROI"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.推广广告费",
+          "name": "推广广告费",
+          "aliases": [
+            "推广广告费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 推广广告费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.推广广告转化",
+          "name": "推广广告转化",
+          "aliases": [
+            "推广广告转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 推广广告转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告转化"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.推广广告销售额",
+          "name": "推广广告销售额",
+          "aliases": [
+            "推广广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 推广广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告销售额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.推广广告点击率",
+          "name": "推广广告点击率",
+          "aliases": [
+            "推广广告点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 推广广告点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告点击率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.推广广告转化率",
+          "name": "推广广告转化率",
+          "aliases": [
+            "推广广告转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 推广广告转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告转化率"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.推广广告roi",
+          "name": "推广广告ROI",
+          "aliases": [
+            "推广广告ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 推广广告ROI table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "推广广告ROI"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.测评损耗",
+          "name": "测评损耗",
+          "aliases": [
+            "测评损耗"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 测评损耗 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "测评损耗"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.退款金额",
+          "name": "退款金额",
+          "aliases": [
+            "退款金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 退款金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退款金额"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.商品成本",
+          "name": "商品成本",
+          "aliases": [
+            "商品成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 商品成本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品成本"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.平台费用",
+          "name": "平台费用",
+          "aliases": [
+            "平台费用"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 平台费用 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "平台费用"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.预估运费",
+          "name": "预估运费",
+          "aliases": [
+            "预估运费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 预估运费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "预估运费"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.利润",
+          "name": "利润",
+          "aliases": [
+            "利润"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 利润 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "利润"
+          }
+        },
+        {
+          "id": "auto.report.center.detail.shopeeshop.table.column.销售利润率",
+          "name": "销售利润率",
+          "aliases": [
+            "销售利润率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that Shopee店铺数据表 has the 销售利润率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售利润率"
           }
         }
       ]
@@ -6843,6 +11115,636 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.日期",
+          "name": "日期",
+          "aliases": [
+            "日期"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 日期 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日期"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.销售数据",
+          "name": "销售数据",
+          "aliases": [
+            "销售数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 销售数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "销售数据"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.商品表现",
+          "name": "商品表现",
+          "aliases": [
+            "商品表现"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 商品表现 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品表现"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.广告数据",
+          "name": "广告数据",
+          "aliases": [
+            "广告数据"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 广告数据 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告数据"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.有效订单量",
+          "name": "有效订单量",
+          "aliases": [
+            "有效订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 有效订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效订单量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.有效销量",
+          "name": "有效销量",
+          "aliases": [
+            "有效销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 有效销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.有效销售额",
+          "name": "有效销售额",
+          "aliases": [
+            "有效销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 有效销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销售额"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.退款订单量",
+          "name": "退款订单量",
+          "aliases": [
+            "退款订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 退款订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退款订单量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.退款率",
+          "name": "退款率",
+          "aliases": [
+            "退款率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 退款率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "退款率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.商品收藏数",
+          "name": "商品收藏数",
+          "aliases": [
+            "商品收藏数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 商品收藏数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "商品收藏数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.访客数",
+          "name": "访客数",
+          "aliases": [
+            "访客数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 访客数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "访客数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.pv",
+          "name": "PV",
+          "aliases": [
+            "PV"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the PV table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "PV"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.点赞量",
+          "name": "点赞量",
+          "aliases": [
+            "点赞量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 点赞量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "点赞量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.加购访客数",
+          "name": "加购访客数",
+          "aliases": [
+            "加购访客数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 加购访客数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "加购访客数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.加购商品数",
+          "name": "加购商品数",
+          "aliases": [
+            "加购商品数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 加购商品数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "加购商品数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.加购转化率",
+          "name": "加购转化率",
+          "aliases": [
+            "加购转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 加购转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "加购转化率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.下单买家数",
+          "name": "下单买家数",
+          "aliases": [
+            "下单买家数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 下单买家数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单买家数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.下单商品数",
+          "name": "下单商品数",
+          "aliases": [
+            "下单商品数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 下单商品数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单商品数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.下单金额",
+          "name": "下单金额",
+          "aliases": [
+            "下单金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 下单金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单金额"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.下单转化率",
+          "name": "下单转化率",
+          "aliases": [
+            "下单转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 下单转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单转化率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.已确定订单买家数",
+          "name": "已确定订单买家数",
+          "aliases": [
+            "已确定订单买家数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 已确定订单买家数 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单买家数"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.已确定订单销售量",
+          "name": "已确定订单销售量",
+          "aliases": [
+            "已确定订单销售量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 已确定订单销售量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单销售量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.已确定订单销售额",
+          "name": "已确定订单销售额",
+          "aliases": [
+            "已确定订单销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 已确定订单销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单销售额"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.下单到已确定订单转化率",
+          "name": "下单到已确定订单转化率",
+          "aliases": [
+            "下单到已确定订单转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 下单到已确定订单转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "下单到已确定订单转化率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.已确定订单转化率",
+          "name": "已确定订单转化率",
+          "aliases": [
+            "已确定订单转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 已确定订单转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "已确定订单转化率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.展现量",
+          "name": "展现量",
+          "aliases": [
+            "展现量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 展现量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "展现量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.点击量",
+          "name": "点击量",
+          "aliases": [
+            "点击量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 点击量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "点击量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.点击率",
+          "name": "点击率",
+          "aliases": [
+            "点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 点击率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "点击率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.广告花费",
+          "name": "广告花费",
+          "aliases": [
+            "广告花费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 广告花费 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告花费"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.广告销量",
+          "name": "广告销量",
+          "aliases": [
+            "广告销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 广告销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告销量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.广告销售额",
+          "name": "广告销售额",
+          "aliases": [
+            "广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 广告销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告销售额"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.广告订单量",
+          "name": "广告订单量",
+          "aliases": [
+            "广告订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 广告订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "广告订单量"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.转化率",
+          "name": "转化率",
+          "aliases": [
+            "转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "转化率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.每次转化成本",
+          "name": "每次转化成本",
+          "aliases": [
+            "每次转化成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 每次转化成本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "每次转化成本"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.roas",
+          "name": "ROAS",
+          "aliases": [
+            "ROAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the ROAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "ROAS"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.cir",
+          "name": "CIR",
+          "aliases": [
+            "CIR"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the CIR table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "CIR"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.直接转化",
+          "name": "直接转化",
+          "aliases": [
+            "直接转化"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 直接转化 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接转化"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.直接已售商品",
+          "name": "直接已售商品",
+          "aliases": [
+            "直接已售商品"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 直接已售商品 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接已售商品"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.直接销售额",
+          "name": "直接销售额",
+          "aliases": [
+            "直接销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 直接销售额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接销售额"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.直接roas",
+          "name": "直接ROAS",
+          "aliases": [
+            "直接ROAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 直接ROAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接ROAS"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.直接cir",
+          "name": "直接CIR",
+          "aliases": [
+            "直接CIR"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 直接CIR table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接CIR"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.直接转化率",
+          "name": "直接转化率",
+          "aliases": [
+            "直接转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 直接转化率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "直接转化率"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.每次直接转化成本",
+          "name": "每次直接转化成本",
+          "aliases": [
+            "每次直接转化成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the 每次直接转化成本 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "每次直接转化成本"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.acoas",
+          "name": "ACoAS",
+          "aliases": [
+            "ACoAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the ACoAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "ACoAS"
+          }
+        },
+        {
+          "id": "auto.shop.data.performance.detail.table.column.asoas",
+          "name": "ASoAS",
+          "aliases": [
+            "ASoAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 店铺表现分析 has the ASoAS table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "ASoAS"
+          }
         }
       ]
     },
@@ -7111,6 +12013,90 @@
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
           }
+        },
+        {
+          "id": "auto.system.costom.fee.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 自定义费用 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.system.costom.fee.table.column.费用月份",
+          "name": "费用月份",
+          "aliases": [
+            "费用月份"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 自定义费用 has the 费用月份 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "费用月份"
+          }
+        },
+        {
+          "id": "auto.system.costom.fee.table.column.费用类型",
+          "name": "费用类型",
+          "aliases": [
+            "费用类型"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 自定义费用 has the 费用类型 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "费用类型"
+          }
+        },
+        {
+          "id": "auto.system.costom.fee.table.column.金额",
+          "name": "金额",
+          "aliases": [
+            "金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 自定义费用 has the 金额 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "金额"
+          }
+        },
+        {
+          "id": "auto.system.costom.fee.table.column.创建时间",
+          "name": "创建时间",
+          "aliases": [
+            "创建时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 自定义费用 has the 创建时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "创建时间"
+          }
+        },
+        {
+          "id": "auto.system.costom.fee.table.column.操作",
+          "name": "操作",
+          "aliases": [
+            "操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 自定义费用 has the 操作 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "操作"
+          }
         }
       ]
     },
@@ -7297,6 +12283,62 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.system.package.open.record.table.column.租户",
+          "name": "租户",
+          "aliases": [
+            "租户"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 套餐开通记录 has the 租户 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "租户"
+          }
+        },
+        {
+          "id": "auto.system.package.open.record.table.column.套餐",
+          "name": "套餐",
+          "aliases": [
+            "套餐"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 套餐开通记录 has the 套餐 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "套餐"
+          }
+        },
+        {
+          "id": "auto.system.package.open.record.table.column.开通人",
+          "name": "开通人",
+          "aliases": [
+            "开通人"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 套餐开通记录 has the 开通人 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "开通人"
+          }
+        },
+        {
+          "id": "auto.system.package.open.record.table.column.开通时间",
+          "name": "开通时间",
+          "aliases": [
+            "开通时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 套餐开通记录 has the 开通时间 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "开通时间"
           }
         }
       ]
@@ -7773,6 +12815,244 @@
           "locator": {
             "dom_text": "首页",
             "href": "https://erp.xinjianerp.com/index/home"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.排名",
+          "name": "排名",
+          "aliases": [
+            "排名"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 排名 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "排名"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.城市",
+          "name": "城市",
+          "aliases": [
+            "城市"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 城市 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "城市"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.有效销量",
+          "name": "有效销量",
+          "aliases": [
+            "有效销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 有效销量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销量"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.有效订单量",
+          "name": "有效订单量",
+          "aliases": [
+            "有效订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 有效订单量 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效订单量"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.有效订单量占比",
+          "name": "有效订单量占比",
+          "aliases": [
+            "有效订单量占比"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 有效订单量占比 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效订单量占比"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.分析",
+          "name": "分析",
+          "aliases": [
+            "分析"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 分析 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "分析"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.店铺",
+          "name": "店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 店铺 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.有效销售额.cny",
+          "name": "有效销售额(CNY)",
+          "aliases": [
+            "有效销售额(CNY)"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 有效销售额(CNY) table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "有效销售额(CNY)"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.利润.cny",
+          "name": "利润(CNY)",
+          "aliases": [
+            "利润(CNY)"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 利润(CNY) table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "利润(CNY)"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.利润率",
+          "name": "利润率",
+          "aliases": [
+            "利润率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 利润率 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "利润率"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.日",
+          "name": "日",
+          "aliases": [
+            "日"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 日 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "日"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.一",
+          "name": "一",
+          "aliases": [
+            "一"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 一 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "一"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.二",
+          "name": "二",
+          "aliases": [
+            "二"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 二 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "二"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.三",
+          "name": "三",
+          "aliases": [
+            "三"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 三 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "三"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.四",
+          "name": "四",
+          "aliases": [
+            "四"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 四 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "四"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.五",
+          "name": "五",
+          "aliases": [
+            "五"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 五 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "五"
+          }
+        },
+        {
+          "id": "auto.index.home.table.column.六",
+          "name": "六",
+          "aliases": [
+            "六"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "purpose": "Remember that 首页 has the 六 table column/metric.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "table_column": "六"
           }
         }
       ]

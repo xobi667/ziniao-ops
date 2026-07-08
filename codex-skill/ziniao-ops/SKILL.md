@@ -401,6 +401,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 
 `-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching.
 
+Observed table metric/header entries such as `ROAS`, `广告花费`, and `转化率` are remembered as read-only `table_column` actions. They are used for query/planning and must not be clicked as buttons.
+
 If the target page is unclear and a debuggable 心舰 Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus before opening a new URL:
 
 ```powershell

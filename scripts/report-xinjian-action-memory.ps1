@@ -62,6 +62,7 @@ function Convert-PageReportForOutput($Report, [bool]$Detailed) {
       safe_actions = $Report.safe_actions
       write_actions = $Report.write_actions
       export_actions = $Report.export_actions
+      table_column_actions = $Report.table_column_actions
       gaps = $Report.gaps
       recommended_command = $Report.recommended_command
     })
@@ -138,6 +139,7 @@ foreach ($page in $pages) {
       safe_actions = [int]($safetyCounts["safe_execute_allowed"])
       write_actions = [int]($safetyCounts["confirmation_required_write"])
       export_actions = [int]($safetyCounts["confirmation_required_export"])
+      table_column_actions = [int]($typeCounts["table_column"])
       manual_review_actions = $manualReview
       map_only_locators = $mapOnly
       empty_locators = $emptyLocator
@@ -206,6 +208,7 @@ if ($Json) {
         page = $_.name
         route = $_.route
         actions = $_.actions
+        table_columns = $_.table_column_actions
         gaps = ($_.gaps -join ",")
       }
     })
