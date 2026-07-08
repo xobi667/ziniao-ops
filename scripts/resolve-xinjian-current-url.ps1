@@ -25,6 +25,31 @@ function Test-XinjianUrl([string]$Value) {
   return $text -match "^https?://erp\.xinjianerp\.com/" -and $text -notmatch "\s"
 }
 
+function Get-RouteKey([string]$InputUrl) {
+  if (!$InputUrl) { return "" }
+  $value = [string]$InputUrl
+  if ($value -match "^[A-Za-z][A-Za-z0-9+.-]*://") {
+    try {
+      $uri = [uri]$value
+      $value = $uri.AbsolutePath
+    } catch {
+    }
+  }
+  if (!$value) { return "" }
+  if (!$value.StartsWith("/")) { $value = "/" + $value }
+  $value = $value -replace "/+", "/"
+  if ($value.Length -gt 1) { $value = $value.TrimEnd("/") }
+  return $value.ToLowerInvariant()
+}
+
+function Get-XinjianPageKind([string]$InputUrl) {
+  $routeKey = Get-RouteKey $InputUrl
+  if (!$routeKey) { return "unknown" }
+  if ($routeKey -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") { return "login_page" }
+  if ($routeKey -match "^/(401|404)(/|$)" -or $routeKey -match "^/index/(noaccess|ad-no-auth)(/|$)") { return "non_business_page" }
+  return "business_page"
+}
+
 function Get-ForegroundProcessId {
   try {
     Add-Type -TypeDefinition @"
@@ -145,6 +170,8 @@ $payload = [ordered]@{
   candidate_scope = "all_detected"
   all_candidate_count = 0
   ignored_candidate_count = 0
+  business_candidate_count = 0
+  ignored_non_business_candidate_count = 0
   candidates = @()
   intent_resolution = $null
 }
@@ -200,6 +227,7 @@ function Add-Candidate {
       port = if ($CdpPort) { [int]$CdpPort } else { $null }
       title = $Title
       url = $Url
+      page_kind = Get-XinjianPageKind $Url
       is_foreground_process = ($foregroundProcessId -and $ProcessId -and [int]$ProcessId -eq $foregroundProcessId)
       reachable = [bool]$Reachable
     })
@@ -241,10 +269,19 @@ if ($explicitPorts.Count -gt 0) {
 
 $payload.all_candidate_count = $script:Candidates.Count
 $payload.candidates = @($selectionCandidates | Select-Object -First 20)
-$foreground = @($selectionCandidates | Where-Object { $_.is_foreground_process } | Select-Object -First 1)
+
+$businessCandidates = @($selectionCandidates | Where-Object { $_.page_kind -eq "business_page" })
+$choiceCandidates = $selectionCandidates
+if ($businessCandidates.Count -gt 0) {
+  $choiceCandidates = $businessCandidates
+  $payload.business_candidate_count = $businessCandidates.Count
+  $payload.ignored_non_business_candidate_count = [Math]::Max(0, $selectionCandidates.Count - $businessCandidates.Count)
+}
+
+$foreground = @($choiceCandidates | Where-Object { $_.is_foreground_process } | Select-Object -First 1)
 $intentChoice = $null
-if ($selectionCandidates.Count -gt 1 -and $Intent) {
-  $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Candidates $selectionCandidates
+if ($choiceCandidates.Count -gt 1 -and $Intent) {
+  $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Candidates $choiceCandidates
 }
 if ($intentChoice -and $intentChoice.url) {
   $payload.ok = $true
@@ -260,16 +297,16 @@ if ($intentChoice -and $intentChoice.url) {
   $payload.resolved_port = if ($foreground[0].port) { [int]$foreground[0].port } else { $null }
   $payload.source = [string]$foreground[0].source
   $payload.confidence = "foreground_window_url"
-  $payload.reason = "foreground_xinjian_window"
-} elseif ($selectionCandidates.Count -eq 1) {
+  $payload.reason = if ($businessCandidates.Count -gt 0) { "foreground_business_xinjian_window" } else { "foreground_xinjian_window" }
+} elseif ($choiceCandidates.Count -eq 1) {
   $payload.ok = $true
-  $payload.url = [string]$selectionCandidates[0].url
-  $payload.resolved_port = if ($selectionCandidates[0].port) { [int]$selectionCandidates[0].port } else { $null }
-  $payload.source = [string]$selectionCandidates[0].source
-  $payload.confidence = "single_xinjian_candidate"
-  $payload.reason = "single_xinjian_window"
-} elseif ($selectionCandidates.Count -gt 1) {
-  $payload.reason = "ambiguous_xinjian_windows"
+  $payload.url = [string]$choiceCandidates[0].url
+  $payload.resolved_port = if ($choiceCandidates[0].port) { [int]$choiceCandidates[0].port } else { $null }
+  $payload.source = [string]$choiceCandidates[0].source
+  $payload.confidence = if ($businessCandidates.Count -gt 0) { "single_business_xinjian_candidate" } else { "single_xinjian_candidate" }
+  $payload.reason = if ($businessCandidates.Count -gt 0) { "single_business_xinjian_window" } else { "single_xinjian_window" }
+} elseif ($choiceCandidates.Count -gt 1) {
+  $payload.reason = if ($businessCandidates.Count -gt 0) { "ambiguous_business_xinjian_windows" } else { "ambiguous_xinjian_windows" }
 } else {
   $payload.reason = "no_xinjian_window"
 }

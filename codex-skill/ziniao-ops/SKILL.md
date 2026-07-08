@@ -359,6 +359,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list-xinjian-page-actions.ps1") -Intent "<用户要做什么>" -Json
 ```
 
+When multiple 心舰 windows are open, URL resolution prefers logged-in business pages over login/restricted pages, even if the login page is the foreground debuggable window. Foreground and intent scoring are used only after business-page candidates are isolated. Passing `-Port` still pins diagnostics to that explicit port.
+
 These high-level 心舰 action commands scan reachable Chrome/Edge/Ziniao DevTools ports by default and return `resolved_port` when a debuggable tab is selected. Use `-Port` only when intentionally pinning diagnostics or execution to a specific browser port.
 
 Before broad learning passes, audit global action memory quality so the next crawl targets weak pages instead of repeating strong pages:
