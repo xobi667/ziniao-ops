@@ -144,6 +144,24 @@ function Test-XinjianUrl([string]$Value) {
   return $text -match "^https?://erp\.xinjianerp\.com/" -and $text -notmatch "\s"
 }
 
+function Get-XinjianNonBusinessPageReason([string]$Value) {
+  if (!$Value) { return "" }
+  $path = ""
+  try {
+    $uri = [uri]$Value
+    $path = $uri.AbsolutePath
+  } catch {
+    $path = [string]$Value
+  }
+  if (!$path) { return "" }
+  if (!$path.StartsWith("/")) { $path = "/" + $path }
+  $routeKey = ($path -replace "/+", "/").TrimEnd("/").ToLowerInvariant()
+  if (!$routeKey) { $routeKey = "/" }
+  if ($routeKey -eq "/login") { return "manual_login_required_in_debuggable_xinjian_browser" }
+  if ($routeKey -in @("/401", "/404")) { return "open_valid_xinjian_business_page" }
+  return ""
+}
+
 function Resolve-XinjianCurrentUrl([int]$CdpPort) {
   $result = [ordered]@{
     ok = $false
@@ -295,6 +313,24 @@ if (!$Url -and !$NoAutoDetectUrl) {
 $effectivePort = Get-FirstExplicitPort
 if (!$effectivePort -and $urlDetection -and $urlDetection.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $urlDetection.resolved_port) {
   $effectivePort = [int]$urlDetection.resolved_port
+}
+
+$nonBusinessReason = Get-XinjianNonBusinessPageReason $Url
+if ($nonBusinessReason) {
+  $payload = [ordered]@{
+    ok = $false
+    mode = "non_business_xinjian_page"
+    intent = $Intent
+    url = $Url
+    requested_url = $requestedUrl
+    url_detection = $urlDetection
+    ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+    resolved_port = $effectivePort
+    reason = $nonBusinessReason
+    next_action = $nonBusinessReason
+  }
+  if ($Json) { $payload | ConvertTo-Json -Depth 16 } else { Write-Host "Current Xinjian page is not a business page: $Url" }
+  exit 1
 }
 
 $queryResult = Invoke-XinjianActionQuery -QueryIntent $Intent -QueryUrl $Url

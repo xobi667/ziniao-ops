@@ -65,6 +65,21 @@ function Get-RouteKey([string]$InputPath) {
   return $value.ToLowerInvariant()
 }
 
+function Get-NonBusinessPageReason([string]$InputUrl) {
+  if (!$InputUrl) { return "" }
+  $path = ""
+  try {
+    $uri = [uri]$InputUrl
+    $path = $uri.AbsolutePath
+  } catch {
+    $path = [string]$InputUrl
+  }
+  $routeKey = Get-RouteKey $path
+  if ($routeKey -eq "/login") { return "manual_login_required_in_debuggable_xinjian_browser" }
+  if ($routeKey -in @("/401", "/404")) { return "open_valid_xinjian_business_page" }
+  return ""
+}
+
 function Get-PageMatchScore($Page, [string]$InputUrl) {
   if (!$InputUrl) { return 0 }
   $route = Get-RoutePath $InputUrl
@@ -133,6 +148,21 @@ if (!$Url) {
     next_action = "focus_the_target_xinjian_window_or_pass_url"
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 14 } else { Write-Host "No current Xinjian page URL was resolved. Pass -Url or focus the target Xinjian window." }
+  exit 1
+}
+
+$nonBusinessReason = Get-NonBusinessPageReason $Url
+if ($nonBusinessReason) {
+  $payload = [ordered]@{
+    ok = $false
+    mode = "non_business_xinjian_page"
+    reason = $nonBusinessReason
+    url = $Url
+    requested_url = $requestedUrl
+    url_resolution = $urlResolution
+    next_action = $nonBusinessReason
+  }
+  if ($Json) { $payload | ConvertTo-Json -Depth 14 } else { Write-Host "Current Xinjian page is not a business page: $Url" }
   exit 1
 }
 

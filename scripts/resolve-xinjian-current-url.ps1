@@ -142,6 +142,9 @@ $payload = [ordered]@{
   reason = ""
   ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   resolved_port = $null
+  candidate_scope = "all_detected"
+  all_candidate_count = 0
+  ignored_candidate_count = 0
   candidates = @()
   intent_resolution = $null
 }
@@ -221,11 +224,27 @@ foreach ($probePort in @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique
   }
 }
 
-$payload.candidates = @($script:Candidates | Select-Object -First 20)
-$foreground = @($script:Candidates | Where-Object { $_.is_foreground_process } | Select-Object -First 1)
+$explicitPorts = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+$selectionCandidates = @($script:Candidates)
+if ($explicitPorts.Count -gt 0) {
+  $portCandidates = @($script:Candidates | Where-Object {
+      $_.port -and ($explicitPorts -contains [int]$_.port)
+    })
+  if ($portCandidates.Count -gt 0) {
+    $selectionCandidates = $portCandidates
+    $payload.candidate_scope = "explicit_port"
+    $payload.ignored_candidate_count = [Math]::Max(0, $script:Candidates.Count - $portCandidates.Count)
+  } else {
+    $payload.candidate_scope = "all_detected_no_explicit_port_match"
+  }
+}
+
+$payload.all_candidate_count = $script:Candidates.Count
+$payload.candidates = @($selectionCandidates | Select-Object -First 20)
+$foreground = @($selectionCandidates | Where-Object { $_.is_foreground_process } | Select-Object -First 1)
 $intentChoice = $null
-if ($script:Candidates.Count -gt 1 -and $Intent) {
-  $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Candidates $script:Candidates
+if ($selectionCandidates.Count -gt 1 -and $Intent) {
+  $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Candidates $selectionCandidates
 }
 if ($intentChoice -and $intentChoice.url) {
   $payload.ok = $true
@@ -242,14 +261,14 @@ if ($intentChoice -and $intentChoice.url) {
   $payload.source = [string]$foreground[0].source
   $payload.confidence = "foreground_window_url"
   $payload.reason = "foreground_xinjian_window"
-} elseif ($script:Candidates.Count -eq 1) {
+} elseif ($selectionCandidates.Count -eq 1) {
   $payload.ok = $true
-  $payload.url = [string]$script:Candidates[0].url
-  $payload.resolved_port = if ($script:Candidates[0].port) { [int]$script:Candidates[0].port } else { $null }
-  $payload.source = [string]$script:Candidates[0].source
+  $payload.url = [string]$selectionCandidates[0].url
+  $payload.resolved_port = if ($selectionCandidates[0].port) { [int]$selectionCandidates[0].port } else { $null }
+  $payload.source = [string]$selectionCandidates[0].source
   $payload.confidence = "single_xinjian_candidate"
   $payload.reason = "single_xinjian_window"
-} elseif ($script:Candidates.Count -gt 1) {
+} elseif ($selectionCandidates.Count -gt 1) {
   $payload.reason = "ambiguous_xinjian_windows"
 } else {
   $payload.reason = "no_xinjian_window"
