@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T13:57:23.790Z",
+  "generated_at": "2026-07-08T14:04:08.729Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -8708,7 +8708,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Show creators currently cooperating.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 合作中 on 达人公海; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "click_visible_action_text",
           "locator": {
@@ -8729,7 +8729,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Show all creators in the high-seas list.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 全部 on 达人公海; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "click_visible_action_text",
           "locator": {
@@ -8750,7 +8750,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Show creators that already generated orders.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 已出单 on 达人公海; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "click_visible_action_text",
           "locator": {
@@ -8771,7 +8771,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Show creators already reached/contacted.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 已触达 on 达人公海; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "click_visible_action_text",
           "locator": {
@@ -8793,7 +8793,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Show creators already in sample request status.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 已申样 on 达人公海; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "click_visible_action_text",
           "locator": {
@@ -19829,7 +19829,7 @@
           "safety_mode": "confirmation_required_write",
           "confirmation_required": true,
           "purpose": "Save current theme/layout configuration.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 保存配置 on global 心舰 layout; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "uia_locator",
           "locator": {
@@ -19851,7 +19851,7 @@
           "safety_mode": "confirmation_required_write",
           "confirmation_required": true,
           "purpose": "Reset theme/layout configuration.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for 重置配置 on global 心舰 layout; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "uia_locator",
           "locator": {
@@ -19876,7 +19876,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Switch to the advertising module before querying product ad performance.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for ADS on global 心舰 layout; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "uia_locator",
           "locator": {
@@ -19898,7 +19898,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Switch to the BI/business intelligence module.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for BI on global 心舰 layout; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "uia_locator",
           "locator": {
@@ -19921,7 +19921,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Switch to CRM pages for creator management and outreach workflows.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for CRM on global 心舰 layout; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "uia_locator",
           "locator": {
@@ -19946,7 +19946,7 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Switch to ERP operations pages such as orders, shops, products, finance, and warnings.",
-          "function_source": "",
+          "function_source": "curated public UI map entry for ERP on global 心舰 layout; behavior inferred from label, locator, and safety gate",
           "source_map": "curated",
           "locator_strategy": "uia_locator",
           "locator": {

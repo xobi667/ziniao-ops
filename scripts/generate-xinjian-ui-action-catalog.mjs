@@ -119,6 +119,37 @@ function confirmationRequired(action) {
   return mode === "confirmation_required_write" || mode === "confirmation_required_export" || mode === "manual_review";
 }
 
+function fallbackPurpose(action, pageName, global = false) {
+  const name = clean(action?.name);
+  const type = clean(action?.type) || "action";
+  const mode = safetyMode(action);
+  const scope = global ? "global 心舰 layout" : clean(pageName) || "this page";
+  if (!name) return `Remember a ${type} action on ${scope}.`;
+  if (type === "module_switch") return `Switch 心舰 to the ${name} module.`;
+  if (type === "status_tab") return `Switch ${scope} to the ${name} status tab.`;
+  if (type === "tab") return `Switch ${scope} to the ${name} tab.`;
+  if (type === "table_column") return `Remember that ${scope} has the ${name} table column/metric.`;
+  if (type === "filter_input" || type === "form_input") return `Focus or filter ${scope} by ${name}.`;
+  if (type === "date_filter") return `Open or focus the ${name} date filter on ${scope}.`;
+  if (type === "overlay_trigger") return `Open the ${name} overlay on ${scope}.`;
+  if (type === "overlay_item") return `Choose ${name} from an overlay on ${scope}.`;
+  if (type === "dialog_opener") return `Open the ${name} dialog/drawer on ${scope}; do not submit changes without explicit confirmation.`;
+  if (type === "dialog_button") return `Use ${name} inside a dialog/drawer on ${scope}.`;
+  if (type === "row_action" || type === "row_navigation" || type === "row_operation") return `Use the row-level ${name} action on ${scope} only when the target row is clear.`;
+  if (type === "navigation") return `Navigate from ${scope} using ${name}.`;
+  if (mode === "confirmation_required_export") return `Export or download from ${scope} with ${name}; requires explicit confirmation.`;
+  if (mode === "confirmation_required_write") return `Run ${name} on ${scope}; this may change data and requires explicit confirmation.`;
+  return `Use ${name} on ${scope}.`;
+}
+
+function fallbackFunctionSource(action, source, pageName, global = false) {
+  const sourceName = clean(source?.label) || "unknown";
+  const name = clean(action?.name) || "action";
+  const scope = global ? "global 心舰 layout" : clean(pageName) || "this page";
+  if (sourceName === "curated") return `curated public UI map entry for ${name} on ${scope}; behavior inferred from label, locator, and safety gate`;
+  return `${sourceName} public UI map entry for ${name} on ${scope}; behavior inferred from sanitized capture metadata`;
+}
+
 function actionIdentity(pageKey, action, sourceId) {
   return [
     pageKey,
@@ -200,8 +231,8 @@ function addAction(pageLike, action, source, global = false) {
     safety: clean(action.safety) || "unknown",
     safety_mode: mode,
     confirmation_required: confirmationRequired(action),
-    purpose: clean(action.purpose),
-    function_source: clean(action.function_source),
+    purpose: clean(action.purpose) || fallbackPurpose(action, page.name, global),
+    function_source: clean(action.function_source) || fallbackFunctionSource(action, source, page.name, global),
     source_map: source.label,
     locator_strategy: strategy,
     locator: action.locator || {}
