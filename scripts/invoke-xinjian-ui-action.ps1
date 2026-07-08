@@ -97,11 +97,11 @@ public static class ZiniaoOpsNativeWindow {
   public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
 }
 "@ -ErrorAction SilentlyContinue | Out-Null
-    $pid = [uint32]0
+    $processIdValue = [uint32]0
     $handle = [ZiniaoOpsNativeWindow]::GetForegroundWindow()
     if ($handle -eq [IntPtr]::Zero) { return $null }
-    [void][ZiniaoOpsNativeWindow]::GetWindowThreadProcessId($handle, [ref]$pid)
-    if ($pid -gt 0) { return [int]$pid }
+    [void][ZiniaoOpsNativeWindow]::GetWindowThreadProcessId($handle, [ref]$processIdValue)
+    if ($processIdValue -gt 0) { return [int]$processIdValue }
   } catch {
   }
   return $null
@@ -251,22 +251,23 @@ $requestedUrl = $Url
 $urlDetection = $null
 if (!$Url -and !$NoAutoDetectUrl) {
   $urlDetection = Resolve-XinjianCurrentUrl -CdpPort $Port
-  if ($urlDetection.ok -and $urlDetection.url) {
-    $Url = [string]$urlDetection.url
-  } elseif ($urlDetection.reason -eq "ambiguous_xinjian_windows") {
+  $intentChoice = $null
+  if (@($urlDetection.candidates).Count -gt 1) {
     $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Detection $urlDetection
-    if ($intentChoice -and $intentChoice.url) {
-      $Url = [string]$intentChoice.url
-      $urlDetection = [pscustomobject]([ordered]@{
-          ok = $true
-          url = $Url
-          source = "intent_scored_visible_window"
-          confidence = "intent_unique_best_match"
-          reason = "ambiguous_xinjian_windows_resolved_by_intent"
-          candidates = $urlDetection.candidates
-          intent_resolution = $intentChoice
-        })
-    }
+  }
+  if ($intentChoice -and $intentChoice.url) {
+    $Url = [string]$intentChoice.url
+    $urlDetection = [pscustomobject]([ordered]@{
+        ok = $true
+        url = $Url
+        source = "intent_scored_visible_window"
+        confidence = "intent_unique_best_match"
+        reason = "ambiguous_xinjian_windows_resolved_by_intent"
+        candidates = $urlDetection.candidates
+        intent_resolution = $intentChoice
+      })
+  } elseif ($urlDetection.ok -and $urlDetection.url) {
+    $Url = [string]$urlDetection.url
   }
 }
 

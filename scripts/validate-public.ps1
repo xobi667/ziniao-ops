@@ -211,6 +211,8 @@ $required = @(
   "scripts\generate-xinjian-ui-row-action-map.mjs",
   "scripts\generate-xinjian-ui-action-catalog.ps1",
   "scripts\generate-xinjian-ui-action-catalog.mjs",
+  "scripts\resolve-xinjian-current-url.ps1",
+  "scripts\list-xinjian-page-actions.ps1",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",

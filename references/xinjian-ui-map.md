@@ -24,6 +24,14 @@ references/xinjian-ui-action-catalog.md
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\detect-ziniao-windows.ps1") -Json
 ```
 
+Before choosing an action, list what the currently open page already has in memory:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list-xinjian-page-actions.ps1") -Json
+```
+
+`list-xinjian-page-actions.ps1` resolves the current 心舰 URL from visible/debuggable windows read-only, then returns the remembered page, every mapped action on that page, each action's purpose, safety mode, and locator strategy. Pass `-Url "<当前心舰URL>"` to override detection, `-Intent "<用户要做什么>"` to disambiguate multiple open 心舰 windows, or `-SafeOnly` for safe non-write actions only.
+
 2. Query the known map before using screenshots or guessing:
 
 ```powershell

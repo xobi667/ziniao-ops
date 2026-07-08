@@ -1,0 +1,240 @@
+[CmdletBinding(PositionalBinding = $false)]
+param(
+  [int]$Port = 9342,
+  [string]$Intent = "",
+  [switch]$Json
+)
+
+$ErrorActionPreference = "Stop"
+$root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+
+function ConvertFrom-JsonText($Lines) {
+  $text = (($Lines | Out-String).Trim())
+  if (!$text) { return $null }
+  try { return $text | ConvertFrom-Json } catch {
+    $objectStart = $text.IndexOf("{")
+    $arrayStart = $text.IndexOf("[")
+    $starts = @($objectStart, $arrayStart) | Where-Object { $_ -ge 0 } | Sort-Object
+    if ($starts.Count -eq 0) { return $null }
+    try { return $text.Substring([int]$starts[0]) | ConvertFrom-Json } catch { return $null }
+  }
+}
+
+function Test-XinjianUrl([string]$Value) {
+  $text = [string]$Value
+  return $text -match "^https?://erp\.xinjianerp\.com/" -and $text -notmatch "\s"
+}
+
+function Get-ForegroundProcessId {
+  try {
+    Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public static class ZiniaoOpsCurrentUrlNativeWindow {
+  [DllImport("user32.dll")]
+  public static extern IntPtr GetForegroundWindow();
+  [DllImport("user32.dll")]
+  public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+}
+"@ -ErrorAction SilentlyContinue | Out-Null
+    $processIdValue = [uint32]0
+    $handle = [ZiniaoOpsCurrentUrlNativeWindow]::GetForegroundWindow()
+    if ($handle -eq [IntPtr]::Zero) { return $null }
+    [void][ZiniaoOpsCurrentUrlNativeWindow]::GetWindowThreadProcessId($handle, [ref]$processIdValue)
+    if ($processIdValue -gt 0) { return [int]$processIdValue }
+  } catch {
+  }
+  return $null
+}
+
+function Invoke-XinjianActionQuery {
+  param(
+    [string]$QueryIntent,
+    [string]$QueryUrl
+  )
+  $queryScript = Join-Path $PSScriptRoot "query-xinjian-ui-action.ps1"
+  if (!(Test-Path -LiteralPath $queryScript)) {
+    return [pscustomobject]@{ ok = $false; error = "query_script_missing"; parsed = $null; raw = @(); exit_code = 2 }
+  }
+  $queryArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $queryScript, "-Intent", $QueryIntent, "-Json")
+  if ($QueryUrl) { $queryArgs += @("-Url", $QueryUrl) }
+  $raw = @(& powershell @queryArgs 2>&1)
+  [pscustomobject]@{
+    ok = ($LASTEXITCODE -eq 0)
+    raw = $raw
+    exit_code = $LASTEXITCODE
+    parsed = ConvertFrom-JsonText $raw
+  }
+}
+
+function Resolve-XinjianUrlByIntent {
+  param(
+    [string]$QueryIntent,
+    [object[]]$Candidates
+  )
+  if (!$QueryIntent) { return $null }
+  $urls = @($Candidates |
+    ForEach-Object { [string]$_.url } |
+    Where-Object { Test-XinjianUrl $_ } |
+    Sort-Object -Unique)
+  if ($urls.Count -lt 2) { return $null }
+
+  $scores = @()
+  foreach ($candidateUrl in $urls) {
+    $probe = Invoke-XinjianActionQuery -QueryIntent $QueryIntent -QueryUrl $candidateUrl
+    if (!$probe.parsed -or !$probe.parsed.ok -or @($probe.parsed.matches).Count -eq 0) {
+      $scores += [pscustomobject]@{
+        url = $candidateUrl
+        ok = $false
+        score = 0
+        rank = 0
+        page_name = ""
+        action_name = ""
+      }
+      continue
+    }
+    $best = @($probe.parsed.matches)[0]
+    $scores += [pscustomobject]@{
+      url = $candidateUrl
+      ok = $true
+      score = [int]$best.score
+      rank = [int]$best.rank
+      page_name = [string]$best.page_name
+      action_name = [string]$best.action.name
+    }
+  }
+
+  $ordered = @($scores | Sort-Object @{ Expression = "score"; Descending = $true }, @{ Expression = "rank"; Descending = $true })
+  if ($ordered.Count -eq 0 -or !$ordered[0].ok -or $ordered[0].score -le 0) { return $null }
+  if ($ordered.Count -gt 1 -and $ordered[1].ok -and $ordered[1].score -eq $ordered[0].score -and $ordered[1].rank -eq $ordered[0].rank) {
+    return $null
+  }
+
+  return [pscustomobject]@{
+    url = [string]$ordered[0].url
+    score = [int]$ordered[0].score
+    rank = [int]$ordered[0].rank
+    page_name = [string]$ordered[0].page_name
+    action_name = [string]$ordered[0].action_name
+    candidates = @($ordered)
+  }
+}
+
+$payload = [ordered]@{
+  ok = $false
+  url = ""
+  source = ""
+  confidence = "none"
+  reason = ""
+  port = $Port
+  candidates = @()
+  intent_resolution = $null
+}
+
+$detector = Join-Path $PSScriptRoot "detect-ziniao-windows.ps1"
+if (!(Test-Path -LiteralPath $detector)) {
+  $payload.reason = "detector_missing"
+  if ($Json) { $payload | ConvertTo-Json -Depth 12 } else { Write-Host "Xinjian detector missing." }
+  exit 2
+}
+
+$rawDetected = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $detector -Port $Port -Json 2>&1)
+$detected = ConvertFrom-JsonText $rawDetected
+if (!$detected -or !$detected.ok) {
+  $payload.reason = "detector_failed"
+  $payload.detector_raw = ($rawDetected | Out-String).Trim()
+  if ($Json) { $payload | ConvertTo-Json -Depth 12 } else { Write-Host "Xinjian detector failed." }
+  exit 2
+}
+
+$foregroundProcessId = Get-ForegroundProcessId
+$script:CandidateUrls = @{}
+$script:Candidates = @()
+function Add-Candidate {
+  param(
+    [string]$Source,
+    [object]$ProcessId,
+    [string]$Title,
+    [string]$Url,
+    [bool]$Reachable = $false
+  )
+  if (!(Test-XinjianUrl $Url)) { return }
+  $key = ([string]$Url).ToLowerInvariant()
+  if ($script:CandidateUrls.ContainsKey($key)) {
+    $existing = $script:Candidates | Where-Object { ([string]$_.url).ToLowerInvariant() -eq $key } | Select-Object -First 1
+    if ($existing -and $foregroundProcessId -and $ProcessId -and [int]$ProcessId -eq $foregroundProcessId) {
+      $existing.is_foreground_process = $true
+    }
+    return
+  }
+  $script:CandidateUrls[$key] = $true
+  $script:Candidates += [pscustomobject]([ordered]@{
+      source = $Source
+      process_id = $ProcessId
+      title = $Title
+      url = $Url
+      is_foreground_process = ($foregroundProcessId -and $ProcessId -and [int]$ProcessId -eq $foregroundProcessId)
+      reachable = [bool]$Reachable
+    })
+}
+
+$windows = @($detected.windows | Where-Object {
+    $_.platform -eq "xinjian_erp" -and $_.page_url -and (Test-XinjianUrl ([string]$_.page_url))
+  })
+foreach ($window in @($windows | Where-Object { $_.source -in @("window_uia", "window_title") })) {
+  Add-Candidate -Source ([string]$window.source) -ProcessId $window.process_id -Title ([string]$window.page_title) -Url ([string]$window.page_url) -Reachable ([bool]$window.reachable)
+}
+
+try {
+  $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$Port/json" -TimeoutSec 5).Content
+  $parsedPages = $body | ConvertFrom-Json
+  $pages = @($parsedPages | ForEach-Object { $_ })
+  foreach ($page in @($pages | Where-Object { $_.type -eq "page" -and (Test-XinjianUrl ([string]$_.url)) })) {
+    Add-Candidate -Source "cdp_page_url" -ProcessId $null -Title ([string]$page.title) -Url ([string]$page.url) -Reachable $true
+  }
+} catch {
+}
+
+$payload.candidates = @($script:Candidates | Select-Object -First 20)
+$foreground = @($script:Candidates | Where-Object { $_.is_foreground_process } | Select-Object -First 1)
+$intentChoice = $null
+if ($script:Candidates.Count -gt 1 -and $Intent) {
+  $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Candidates $script:Candidates
+}
+if ($intentChoice -and $intentChoice.url) {
+  $payload.ok = $true
+  $payload.url = [string]$intentChoice.url
+  $payload.source = "intent_scored_candidate"
+  $payload.confidence = "intent_unique_best_match"
+  $payload.reason = "ambiguous_xinjian_windows_resolved_by_intent"
+  $payload.intent_resolution = $intentChoice
+} elseif ($foreground.Count -gt 0) {
+  $payload.ok = $true
+  $payload.url = [string]$foreground[0].url
+  $payload.source = [string]$foreground[0].source
+  $payload.confidence = "foreground_window_url"
+  $payload.reason = "foreground_xinjian_window"
+} elseif ($script:Candidates.Count -eq 1) {
+  $payload.ok = $true
+  $payload.url = [string]$script:Candidates[0].url
+  $payload.source = [string]$script:Candidates[0].source
+  $payload.confidence = "single_xinjian_candidate"
+  $payload.reason = "single_xinjian_window"
+} elseif ($script:Candidates.Count -gt 1) {
+  $payload.reason = "ambiguous_xinjian_windows"
+} else {
+  $payload.reason = "no_xinjian_window"
+}
+
+if ($Json) {
+  $payload | ConvertTo-Json -Depth 14
+} else {
+  if ($payload.ok) {
+    Write-Host ("Xinjian URL: {0} ({1})" -f $payload.url, $payload.confidence)
+  } else {
+    Write-Host ("No unique Xinjian URL resolved: {0}" -f $payload.reason)
+  }
+}
+
+if ($payload.ok) { exit 0 }
+exit 1
