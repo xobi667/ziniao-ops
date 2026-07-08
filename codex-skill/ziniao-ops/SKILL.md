@@ -497,7 +497,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\open
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\fetch-xinjian-browser-data.ps1") -Port 9339 -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
 ```
 
-When the requested DevTools port is already reachable, `open-xinjian-login.ps1` scores existing 心舰 tabs on that port and reuses the best match instead of opening a duplicate tab. Logged-in business pages score above login pages. Read `reused_existing_page`, `opened_new_tab`, `matched_page_url`, `matched_page_title`, and `matched_page_score` from JSON before telling the employee what happened.
+When the requested DevTools port is already reachable, `open-xinjian-login.ps1` scores existing 心舰 tabs on that port and reuses the best match instead of opening a duplicate tab. Logged-in business pages score above login pages. Read `reused_existing_page`, `opened_new_tab`, `matched_page_url`, `matched_page_title`, `matched_page_score`, `matched_page_kind`, and `next_action` from JSON before telling the employee what happened. `matched_page_kind=business_page` with `next_action=xinjian_business_page_ready` means the page can be used for learning/fetching; `login_page` means the employee still needs to log in manually.
 
 If the employee says to run 心舰 directly through 紫鸟, use the running 紫鸟 browser bridge first:
 

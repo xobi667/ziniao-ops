@@ -57,6 +57,32 @@ function Test-NonBusinessXinjianPath {
     $value -match "^/index/(noaccess|ad-no-auth)(/|$)"
 }
 
+function Get-XinjianPageKind {
+  param([string]$PageUrl)
+  if (!$PageUrl) { return "unknown" }
+  try {
+    $uri = [uri]$PageUrl
+  } catch {
+    return "unknown"
+  }
+  if ($uri.Host -ne "erp.xinjianerp.com") { return "unknown" }
+  $path = Normalize-UrlPath -Path $uri.AbsolutePath
+  if ($path -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") { return "login_page" }
+  if ($path -match "^/(401|404)(/|$)" -or $path -match "^/index/(noaccess|ad-no-auth)(/|$)") { return "non_business_page" }
+  return "business_page"
+}
+
+function Get-NextActionForPageKind {
+  param(
+    [bool]$PortReady,
+    [string]$PageKind
+  )
+  if (!$PortReady) { return "browser_started_but_devtools_not_ready" }
+  if ($PageKind -eq "business_page") { return "xinjian_business_page_ready" }
+  if ($PageKind -eq "non_business_page") { return "open_valid_xinjian_business_page" }
+  return "manual_login_required_in_debuggable_xinjian_browser"
+}
+
 function Get-TargetPageScore {
   param(
     [object]$Page,
@@ -153,6 +179,7 @@ if ($alreadyRunning) {
 }
 
 $portReady = Test-DevToolsPort -Port $Port
+$matchedPageKind = if ($reusedPage) { Get-XinjianPageKind -PageUrl ([string]$reusedPage.url) } else { "unknown" }
 $result = [ordered]@{
   ok = $portReady
   browser = $browser
@@ -166,7 +193,8 @@ $result = [ordered]@{
   matched_page_title = if ($reusedPage) { [string]$reusedPage.title } else { "" }
   matched_page_id = if ($reusedPage) { [string]$reusedPage.id } else { "" }
   matched_page_score = if ($null -ne $reusedPageScore) { [int]$reusedPageScore } else { $null }
-  next_action = if ($portReady) { "manual_login_then_fetch" } else { "browser_started_but_devtools_not_ready" }
+  matched_page_kind = $matchedPageKind
+  next_action = Get-NextActionForPageKind -PortReady $portReady -PageKind $matchedPageKind
   fetch_command = "powershell -ExecutionPolicy Bypass -File scripts\fetch-xinjian-browser-data.ps1 -Port $Port -StoreName `"<店铺A>,<店铺B>`" -Days 7 -Json"
 }
 
