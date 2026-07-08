@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 529
+- Actions: 532
 - Global actions: 6
 
 ### Sources
@@ -14,7 +14,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
 | auto | 2026-07-08 | 38 | 327 |
-| overlay | 2026-07-08 | 26 | 162 |
+| overlay | 2026-07-08 | 26 | 168 |
 | dialog | 2026-07-08 | 8 | 35 |
 | row-action | 2026-07-08 | 1 | 2 |
 
@@ -24,7 +24,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | confirmation_required_export | 8 |
 | confirmation_required_write | 140 |
-| safe_execute_allowed | 381 |
+| safe_execute_allowed | 384 |
 
 ### Locator Strategies
 
@@ -32,9 +32,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | click_first_matching_row_action_in_table | 2 |
 | click_quick_tab_text_or_placeholder_list | 3 |
-| click_trigger_selector | 71 |
+| click_trigger_selector | 72 |
 | click_trigger_selector_then_dialog_button_text | 26 |
-| click_trigger_selector_then_overlay_item_text | 40 |
+| click_trigger_selector_then_overlay_item_text | 42 |
 | click_visible_action_text | 50 |
 | click_visible_dom_text | 213 |
 | click_visible_tab_text_from_list | 1 |
@@ -973,7 +973,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/index/home`
 - Sources: auto, overlay
-- Actions: 16
+- Actions: 19
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -990,7 +990,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 按人员 | 请选择 -> 按人员 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按人员 from the 请选择 overlay on 首页. |
 | 店铺 | 请选择 -> 店铺 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 店铺 from the 请选择 overlay on 首页. |
 | 订单 | 请选择 -> 订单 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 订单 from the 请选择 overlay on 首页. |
+| 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 首页. |
 | 利润 | 请选择 -> 利润 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 利润 from the 请选择 overlay on 首页. |
+| 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 首页. |
+| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 首页. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 首页. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
 
