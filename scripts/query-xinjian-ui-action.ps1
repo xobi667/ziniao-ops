@@ -174,6 +174,78 @@ function Get-ActionScore($Action, [string]$Query) {
   return $score
 }
 
+function Get-SafetyMode([string]$Safety) {
+  if ($Safety -like "confirmation_required_export*") { return "confirmation_required_export" }
+  if ($Safety -like "confirmation_required*") { return "confirmation_required_write" }
+  if ($Safety -in @("read_filter", "navigation", "view_setting", "account_menu", "opens_dialog_no_submit", "form_field")) { return "safe_execute_allowed" }
+  return "dry_run_only_unknown_safety"
+}
+
+function Get-LocatorStrategy($Action) {
+  $locator = $Action.locator
+  $type = [string]$Action.type
+  if ($locator) {
+    if ($locator.row_context_required) { return "row_context_required_dialog" }
+    if ($locator.trigger_selector -and $locator.item_text) { return "click_trigger_selector_then_overlay_item_text" }
+    if ($locator.trigger_selector -and $locator.button_text) { return "click_trigger_selector_then_dialog_button_text" }
+    if ($locator.trigger_selector) { return "click_trigger_selector" }
+    if ($locator.table_selector -and $locator.row_action_text) { return "click_first_matching_row_action_in_table" }
+    if ($locator.href) { return "navigate_href" }
+    if ($locator.dom_text) { return "click_visible_dom_text" }
+    if ($locator.dom_placeholder) { return "input_or_filter_placeholder" }
+    if ($locator.tab_texts -and $locator.dom_placeholders) { return "click_quick_tab_text_or_placeholder_list" }
+    if ($locator.tab_texts) { return "click_visible_tab_text_from_list" }
+    if ($locator.dom_placeholders) { return "input_or_filter_placeholder_list" }
+    if ($type -eq "table_column" -and $locator.table_column) { return "read_table_column_header" }
+    if ($locator.table_column) { return "row_context_required_column_header" }
+    if ($locator.uia_name) { return "uia_locator" }
+  }
+  $name = [string]$Action.name
+  $genericTabNames = @(
+    (New-UnicodeText @(0x5E73, 0x53F0, 0x6807, 0x7B7E))
+  )
+  $genericRowNames = @(
+    (New-UnicodeText @(0x884C, 0x5206, 0x6790)),
+    (New-UnicodeText @(0x64CD, 0x4F5C))
+  )
+  if ($name -and ($type -in @("tab", "status_tab")) -and ($name -notin $genericTabNames)) { return "click_visible_action_text" }
+  if ($name -and $type -eq "row_navigation" -and ($name -notin $genericRowNames)) { return "click_visible_action_text" }
+  if ($name -and $type -eq "date_filter") { return "click_visible_filter_label_or_text" }
+  if (!$locator) { return "no_locator" }
+  return "best_effort_locator"
+}
+
+function Get-ActionContext($Action) {
+  $locator = $Action.locator
+  if (!$locator) { return "" }
+  if ($locator.trigger_text -and $locator.item_text) { return ("{0} -> {1}" -f $locator.trigger_text, $locator.item_text) }
+  if ($locator.trigger_text -and $locator.button_text) { return ("{0} -> {1}" -f $locator.trigger_text, $locator.button_text) }
+  if ($locator.dialog_title -and $locator.button_text) { return ("{0} -> {1}" -f $locator.dialog_title, $locator.button_text) }
+  if ($locator.column_header -and $locator.row_action_text) { return ("{0} -> {1}" -f $locator.column_header, $locator.row_action_text) }
+  if ($locator.row_action_text) { return [string]$locator.row_action_text }
+  if ($locator.table_column) { return ("column:{0}" -f $locator.table_column) }
+  if ($locator.tab_texts -and $locator.dom_placeholders) { return ("tabs:{0}; placeholders:{1}" -f ((@($locator.tab_texts) | Select-Object -Unique) -join "/"), ((@($locator.dom_placeholders) | Select-Object -Unique) -join "/")) }
+  if ($locator.tab_texts) { return ("tabs:{0}" -f ((@($locator.tab_texts) | Select-Object -Unique) -join "/")) }
+  if ($locator.dom_placeholders) { return ("placeholders:{0}" -f ((@($locator.dom_placeholders) | Select-Object -Unique) -join "/")) }
+  if ($locator.dom_placeholder) { return ("placeholder:{0}" -f $locator.dom_placeholder) }
+  if ($locator.dom_text) { return ("text:{0}" -f $locator.dom_text) }
+  if ($locator.href) { return ("href:{0}" -f $locator.href) }
+  if ($locator.uia_name) { return ("uia:{0}" -f $locator.uia_name) }
+  return ""
+}
+
+function Add-ActionMetadata($Action) {
+  $mode = Get-SafetyMode ([string]$Action.safety)
+  $strategy = Get-LocatorStrategy $Action
+  $context = Get-ActionContext $Action
+  $confirmationRequired = ($mode -eq "confirmation_required_write" -or $mode -eq "confirmation_required_export" -or $mode -eq "dry_run_only_unknown_safety")
+  $Action | Add-Member -NotePropertyName safety_mode -NotePropertyValue $mode -Force
+  $Action | Add-Member -NotePropertyName locator_strategy -NotePropertyValue $strategy -Force
+  $Action | Add-Member -NotePropertyName context -NotePropertyValue $context -Force
+  $Action | Add-Member -NotePropertyName confirmation_required -NotePropertyValue ([bool]$confirmationRequired) -Force
+  return $Action
+}
+
 $map = Get-Content -LiteralPath $MapPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $autoMap = $null
 if (!$NoAutoMap -and (Test-Path -LiteralPath $AutoMapPath)) {
@@ -318,6 +390,7 @@ $candidates = @()
 foreach ($action in @($allGlobalActions)) {
   $score = Get-ActionScore -Action $action -Query $query
   if ($score -gt 0) {
+    $action = Add-ActionMetadata $action
     $candidates += [pscustomobject]@{
       score = $score
       match_scope = "global"
@@ -330,6 +403,7 @@ foreach ($matched in @($matchedPages)) {
   foreach ($action in @($matched.page.actions)) {
     $actionScore = Get-ActionScore -Action $action -Query $query
     if ($actionScore -gt 0) {
+      $action = Add-ActionMetadata $action
       $score = $actionScore + [int]($matched.score / 5)
       $candidates += [pscustomobject]@{
         score = $score
@@ -339,6 +413,16 @@ foreach ($matched in @($matchedPages)) {
         action = $action
       }
     }
+  }
+}
+
+$suppressedGlobalMatches = 0
+if ($Url -and $urlMatchedPages.Count -gt 0) {
+  $pageCandidateCount = @($candidates | Where-Object { $_.match_scope -eq "page" }).Count
+  if ($pageCandidateCount -gt 0) {
+    $globalCandidates = @($candidates | Where-Object { $_.match_scope -eq "global" })
+    $suppressedGlobalMatches = $globalCandidates.Count
+    $candidates = @($candidates | Where-Object { $_.match_scope -ne "global" })
   }
 }
 
@@ -374,6 +458,7 @@ $payload = [ordered]@{
   route = $route
   page_match_mode = if ($Url -and $urlMatchedPages.Count -gt 0) { "current_url_scope" } elseif ($Url) { "url_no_page_match_fallback" } else { "global_or_name_scope" }
   suppressed_off_page_name_matches = if ($Url -and $urlMatchedPages.Count -gt 0) { @($nameMatchedPages | Where-Object { !$_.current_url_match }).Count } else { 0 }
+  suppressed_global_matches = $suppressedGlobalMatches
   map_version = $map.version
   auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
   overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
