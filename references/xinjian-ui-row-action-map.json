@@ -1,0 +1,110 @@
+{
+  "version": "2026-07-08",
+  "system": "xinjian_erp",
+  "source": "generated_from_sanitized_cdp_row_action_captures",
+  "generated_at": "2026-07-08T11:24:16.565Z",
+  "policy": {
+    "default_mode": "read_only_map_first",
+    "note": "Row action map stores table headers and row action button labels only. It does not store row cell values, cookies, storage, tokens, or private-looking text.",
+    "write_action_rule": "Row write/export/delete/edit actions are confirmation-required until manually verified."
+  },
+  "pages": [
+    {
+      "id": "row.system.costom.fee",
+      "name": "自定义费用",
+      "module": "ERP",
+      "route_pattern": "^/system/costom-fee\\/?$",
+      "url_contains": [
+        "/system/costom-fee"
+      ],
+      "title_aliases": [
+        "自定义费用 - 心舰",
+        "自定义费用"
+      ],
+      "purpose": "Auto-generated row-action memory for 自定义费用.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/system/costom-fee",
+        "captured_page_title": "自定义费用 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 2,
+          "sampled_rows": 19
+        },
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "店铺",
+              "费用月份",
+              "费用类型",
+              "金额",
+              "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 19,
+            "actions": [
+              {
+                "name": "编辑",
+                "column_header": "操作",
+                "disabled": false
+              },
+              {
+                "name": "删除",
+                "column_header": "操作",
+                "disabled": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "row.system.costom.fee.row_action.操作.编辑",
+          "name": "操作编辑",
+          "aliases": [
+            "编辑",
+            "操作编辑",
+            "编辑操作",
+            "行编辑",
+            "表格编辑"
+          ],
+          "type": "row_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Use row action 编辑 in the 操作 column on 自定义费用.",
+          "function_source": "auto-generated from observed table row action label; row action was not clicked and row data was not read",
+          "locator": {
+            "row_action_text": "编辑",
+            "column_header": "操作",
+            "column_class": "el-table_1_column_7",
+            "table_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.content > div.white-box:nth-of-type(1) > div.el-table.white-bg.el-table--fit"
+          }
+        },
+        {
+          "id": "row.system.costom.fee.row_action.操作.删除",
+          "name": "操作删除",
+          "aliases": [
+            "删除",
+            "操作删除",
+            "删除操作",
+            "行删除",
+            "表格删除"
+          ],
+          "type": "row_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Use row action 删除 in the 操作 column on 自定义费用.",
+          "function_source": "auto-generated from observed table row action label; row action was not clicked and row data was not read",
+          "locator": {
+            "row_action_text": "删除",
+            "column_header": "操作",
+            "column_class": "el-table_1_column_7",
+            "table_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.content > div.white-box:nth-of-type(1) > div.el-table.white-bg.el-table--fit"
+          }
+        }
+      ]
+    }
+  ]
+}

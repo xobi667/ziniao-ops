@@ -192,11 +192,14 @@ $required = @(
   "scripts\capture-xinjian-overlays-cdp.mjs",
   "scripts\capture-xinjian-dialogs.ps1",
   "scripts\capture-xinjian-dialogs-cdp.mjs",
+  "scripts\capture-xinjian-row-actions.ps1",
+  "scripts\capture-xinjian-row-actions-cdp.mjs",
   "scripts\discover-xinjian-routes.ps1",
   "scripts\discover-xinjian-routes-cdp.mjs",
   "scripts\crawl-xinjian-dom-pages.ps1",
   "scripts\crawl-xinjian-overlay-pages.ps1",
   "scripts\crawl-xinjian-dialog-pages.ps1",
+  "scripts\crawl-xinjian-row-action-pages.ps1",
   "scripts\report-xinjian-ui-coverage.ps1",
   "scripts\generate-xinjian-ui-auto-map.ps1",
   "scripts\generate-xinjian-ui-auto-map.mjs",
@@ -204,6 +207,8 @@ $required = @(
   "scripts\generate-xinjian-ui-overlay-map.mjs",
   "scripts\generate-xinjian-ui-dialog-map.ps1",
   "scripts\generate-xinjian-ui-dialog-map.mjs",
+  "scripts\generate-xinjian-ui-row-action-map.ps1",
+  "scripts\generate-xinjian-ui-row-action-map.mjs",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\install-upstream-tools.ps1",
   "scripts\sensitive-text.ps1",
@@ -239,7 +244,8 @@ $required = @(
   "references\xinjian-ui-map.json",
   "references\xinjian-ui-auto-map.json",
   "references\xinjian-ui-overlay-map.json",
-  "references\xinjian-ui-dialog-map.json"
+  "references\xinjian-ui-dialog-map.json",
+  "references\xinjian-ui-row-action-map.json"
 )
 foreach ($rel in $required) {
   if (!(Test-Path -LiteralPath (Join-Path $Root $rel))) {

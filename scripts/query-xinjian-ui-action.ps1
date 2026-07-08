@@ -7,9 +7,11 @@ param(
   [string]$AutoMapPath = "",
   [string]$OverlayMapPath = "",
   [string]$DialogMapPath = "",
+  [string]$RowActionMapPath = "",
   [switch]$NoAutoMap,
   [switch]$NoOverlayMap,
   [switch]$NoDialogMap,
+  [switch]$NoRowActionMap,
   [switch]$Json
 )
 
@@ -26,6 +28,9 @@ if (!$OverlayMapPath) {
 }
 if (!$DialogMapPath) {
   $DialogMapPath = Join-Path $root "references\xinjian-ui-dialog-map.json"
+}
+if (!$RowActionMapPath) {
+  $RowActionMapPath = Join-Path $root "references\xinjian-ui-row-action-map.json"
 }
 if (!(Test-Path -LiteralPath $MapPath)) {
   $payload = [ordered]@{
@@ -194,6 +199,14 @@ if (!$NoDialogMap -and (Test-Path -LiteralPath $DialogMapPath)) {
     $dialogMap = $null
   }
 }
+$rowActionMap = $null
+if (!$NoRowActionMap -and (Test-Path -LiteralPath $RowActionMapPath)) {
+  try {
+    $rowActionMap = Get-Content -LiteralPath $RowActionMapPath -Raw -Encoding UTF8 | ConvertFrom-Json
+  } catch {
+    $rowActionMap = $null
+  }
+}
 $allPages = @($map.pages)
 $pageKeys = @{}
 foreach ($page in @($allPages)) {
@@ -228,6 +241,11 @@ if ($dialogMap -and $dialogMap.pages) {
     $allPages += $page
   }
 }
+if ($rowActionMap -and $rowActionMap.pages) {
+  foreach ($page in @($rowActionMap.pages)) {
+    $allPages += $page
+  }
+}
 $allGlobalActions = @($map.global_actions)
 if ($autoMap -and $autoMap.global_actions) {
   $allGlobalActions += @($autoMap.global_actions)
@@ -237,6 +255,9 @@ if ($overlayMap -and $overlayMap.global_actions) {
 }
 if ($dialogMap -and $dialogMap.global_actions) {
   $allGlobalActions += @($dialogMap.global_actions)
+}
+if ($rowActionMap -and $rowActionMap.global_actions) {
+  $allGlobalActions += @($rowActionMap.global_actions)
 }
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
@@ -304,6 +325,7 @@ $candidates = @($candidates |
     if ($action.type -eq "overlay_trigger") { $rank -= 5 }
     if ($action.type -eq "dialog_button") { $rank += 14 }
     if ($action.type -eq "dialog_opener") { $rank += 4 }
+    if ($action.type -eq "row_action") { $rank += 12 }
     if ($action.safety -eq "read_filter") { $rank += 8 }
     if ([string]$action.safety -like "confirmation_required*") { $rank += 6 }
     if ($triggerText -eq $genericChooseText) { $rank -= 8 }
@@ -322,6 +344,7 @@ $payload = [ordered]@{
   auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
   overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
   dialog_map_version = if ($dialogMap) { $dialogMap.version } else { $null }
+  row_action_map_version = if ($rowActionMap) { $rowActionMap.version } else { $null }
   map_pages_total = $allPages.Count
   matched_pages = @($matchedPages | Sort-Object score -Descending | Select-Object -First 5 | ForEach-Object {
       [ordered]@{ id = $_.page.id; name = $_.page.name; score = $_.score }

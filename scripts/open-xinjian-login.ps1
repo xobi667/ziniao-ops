@@ -11,12 +11,12 @@ $ErrorActionPreference = "Stop"
 
 function Find-Browser {
   $candidates = @(
-    (Get-Command msedge.exe -ErrorAction SilentlyContinue).Source,
     (Get-Command chrome.exe -ErrorAction SilentlyContinue).Source,
-    "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
-    "C:\Program Files\Microsoft\Edge\Application\msedge.exe",
     "C:\Program Files\Google\Chrome\Application\chrome.exe",
-    "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+    "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+    (Get-Command msedge.exe -ErrorAction SilentlyContinue).Source,
+    "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+    "C:\Program Files\Microsoft\Edge\Application\msedge.exe"
   ) | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -Unique
   return ($candidates | Select-Object -First 1)
 }
