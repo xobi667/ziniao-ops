@@ -359,11 +359,13 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\disc
 To continue building broad page/button memory, crawl unmapped routes in small batches and regenerate the sanitized auto map:
 
 ```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-ui-coverage.ps1") -Port 9342 -RefreshRoutes -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-dom-pages.ps1") -Port 9342 -OnlyUnmapped -MaxPages 20 -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-auto-map.ps1") -NoMergeExisting -Json
 ```
 
 `references\xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures. It is broad memory, not final proof of behavior. Curated `references\xinjian-ui-map.json` takes precedence when both contain the same route.
+The crawler records local attempt state under `.ziniao-ops\xinjian-crawl-state.json`; pass `-RetryAttempted` only when intentionally revisiting empty, restricted, redirected, or previously failed routes.
 
 If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:
 

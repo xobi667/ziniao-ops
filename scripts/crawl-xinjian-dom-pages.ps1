@@ -8,7 +8,9 @@ param(
   [string]$IncludeRegex = ".",
   [string]$ExcludeRegex = "^/$|/login|/xtLogin|/sso|/social-login|/404|/401|/redirect|/print|/index/noaccess|/index/ad-no-auth|/setArea",
   [int]$WaitMs = 2500,
+  [string]$StatePath = "",
   [switch]$OnlyUnmapped,
+  [switch]$RetryAttempted,
   [switch]$Json
 )
 
@@ -19,6 +21,10 @@ if (!$OutputDir) {
   $OutputDir = Join-Path $root ".ziniao-ops\xinjian-dom-captures"
 }
 New-Item -ItemType Directory -Force -Path $OutputDir | Out-Null
+if (!$StatePath) {
+  $StatePath = Join-Path $root ".ziniao-ops\xinjian-crawl-state.json"
+}
+New-Item -ItemType Directory -Force -Path (Split-Path -Parent $StatePath) | Out-Null
 
 function ConvertFrom-JsonText($Lines) {
   $text = (($Lines | Out-String).Trim())
@@ -84,6 +90,72 @@ function Get-RouteKey([string]$InputPath) {
   return $value
 }
 
+function Get-CrawlState {
+  if (!(Test-Path -LiteralPath $StatePath)) {
+    return [ordered]@{
+      version = 1
+      updated_at = (Get-Date).ToUniversalTime().ToString("o")
+      attempts = @()
+    }
+  }
+  try {
+    $state = Get-Content -LiteralPath $StatePath -Raw -Encoding UTF8 | ConvertFrom-Json
+    if (!$state.PSObject.Properties.Match("attempts").Count) {
+      $state | Add-Member -NotePropertyName attempts -NotePropertyValue @()
+    }
+    return $state
+  } catch {
+    return [ordered]@{
+      version = 1
+      updated_at = (Get-Date).ToUniversalTime().ToString("o")
+      attempts = @()
+      read_error = $_.Exception.Message
+    }
+  }
+}
+
+function Save-CrawlState($State) {
+  $State.updated_at = (Get-Date).ToUniversalTime().ToString("o")
+  $State | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $StatePath -Encoding UTF8
+}
+
+function Get-AttemptMap($State) {
+  $map = @{}
+  foreach ($attempt in @($State.attempts)) {
+    if (!$attempt.route_key) { continue }
+    $map[[string]$attempt.route_key] = $attempt
+  }
+  return $map
+}
+
+function Set-CrawlAttempt {
+  param(
+    [object]$State,
+    [hashtable]$AttemptMap,
+    [string]$Route,
+    [string]$Url,
+    [string]$Status,
+    [object]$Data
+  )
+  $routeKey = (Get-RouteKey $Route).ToLowerInvariant()
+  $item = [ordered]@{
+    route_key = $routeKey
+    route = $Route
+    url = $Url
+    status = $Status
+    attempted_at = (Get-Date).ToUniversalTime().ToString("o")
+  }
+  if ($Data) {
+    foreach ($prop in $Data.PSObject.Properties) {
+      if ($prop.Name -notin @("route_key", "route", "url", "status", "attempted_at")) {
+        $item[$prop.Name] = $prop.Value
+      }
+    }
+  }
+  $AttemptMap[$routeKey] = [pscustomobject]$item
+  $State.attempts = @($AttemptMap.Values | Sort-Object route_key)
+}
+
 function Get-MappedPaths {
   $paths = @{}
   foreach ($mapPath in @(
@@ -141,6 +213,8 @@ $mappedPaths = if ($OnlyUnmapped) { Get-MappedPaths } else { $null }
 if ($OnlyUnmapped -and $null -eq $mappedPaths) {
   $mappedPaths = @{}
 }
+$crawlState = Get-CrawlState
+$attemptMap = Get-AttemptMap -State $crawlState
 $routes = @()
 foreach ($route in @($routeMap.routes)) {
   $fullPath = [string]$route.full_path
@@ -151,6 +225,7 @@ foreach ($route in @($routeMap.routes)) {
   if ($OnlyUnmapped) {
     $key = (Get-RouteKey $fullPath).ToLowerInvariant()
     if ($mappedPaths -and $mappedPaths[$key]) { continue }
+    if (!$RetryAttempted -and $attemptMap -and $attemptMap[$key]) { continue }
   }
   $routes += $route
 }
@@ -169,6 +244,10 @@ foreach ($route in $routes) {
 
   $openedPage = Open-CdpUrl -CdpPort $Port -TargetUrl $url
   if (!$openedPage) {
+    Set-CrawlAttempt -State $crawlState -AttemptMap $attemptMap -Route $path -Url $url -Status "open_failed" -Data ([pscustomobject]@{
+        error = "open_cdp_url_failed"
+      })
+    Save-CrawlState -State $crawlState
     $captures += [pscustomobject]@{
       ok = $false
       route = $path
@@ -187,6 +266,28 @@ foreach ($route in $routes) {
   }
   $capture = ConvertFrom-JsonText $captureRaw
   if ($capture -and $capture.ok) {
+    $routeKey = Get-RouteKey $path
+    $capturedKey = Get-RouteKey ([string]$capture.page.path)
+    $status = if ([int]$capture.counts.controls -le 0) {
+      "empty"
+    } elseif ($capturedKey -eq "/index/noaccess") {
+      "noaccess"
+    } elseif ($capturedKey -and $capturedKey.ToLowerInvariant() -ne $routeKey.ToLowerInvariant()) {
+      "redirected"
+    } else {
+      "captured"
+    }
+    Set-CrawlAttempt -State $crawlState -AttemptMap $attemptMap -Route $path -Url $url -Status $status -Data ([pscustomobject]@{
+        title = $capture.page.title
+        captured_path = $capture.page.path
+        controls = $capture.counts.controls
+        buttons = $capture.counts.buttons
+        inputs = $capture.counts.inputs
+        tabs = $capture.counts.tabs
+        menus = $capture.counts.menus
+        output_path = $capture.output_path
+      })
+    Save-CrawlState -State $crawlState
     $captures += [pscustomobject]@{
       ok = $true
       route = $path
@@ -198,9 +299,15 @@ foreach ($route in $routes) {
       inputs = $capture.counts.inputs
       tabs = $capture.counts.tabs
       menus = $capture.counts.menus
+      status = $status
       output_path = $capture.output_path
     }
   } else {
+    Set-CrawlAttempt -State $crawlState -AttemptMap $attemptMap -Route $path -Url $url -Status "capture_failed" -Data ([pscustomobject]@{
+        error = "capture_failed"
+        raw_output = ($captureRaw | Out-String).Trim()
+      })
+    Save-CrawlState -State $crawlState
     $captures += [pscustomobject]@{
       ok = $false
       route = $path
@@ -217,6 +324,7 @@ $payload = [ordered]@{
   port = $Port
   route_discovery_path = (Resolve-Path -LiteralPath $RouteDiscoveryPath).Path
   output_dir = (Resolve-Path -LiteralPath $OutputDir).Path
+  state_path = [System.IO.Path]::GetFullPath($StatePath)
   selected_routes = $routes.Count
   captures = @($captures)
 }

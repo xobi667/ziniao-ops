@@ -36,10 +36,16 @@ Use route discovery to choose a real 心舰 path before opening new pages. It re
 4. To expand coverage in batches, crawl unmapped routes and capture their DOM controls:
 
 ```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-ui-coverage.ps1") -Port 9342 -RefreshRoutes -Json
+```
+
+Use the coverage report first. It compares discovered 心舰 routes with the curated map, generated auto map, and local crawl state, then lists pending routes.
+
+```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-dom-pages.ps1") -Port 9342 -OnlyUnmapped -MaxPages 20 -Json
 ```
 
-The crawler opens one route at a time through CDP, captures controls, then closes the temporary tab it opened. It does not click page controls.
+The crawler opens one route at a time through CDP, captures controls, then closes the temporary tab it opened. It records local attempt state under `.ziniao-ops\xinjian-crawl-state.json`, so empty pages, restricted pages, redirects, and previous failures are not repeatedly retried unless `-RetryAttempted` is passed. It does not click page controls.
 
 5. Promote sanitized local captures into the generated auto map:
 
@@ -61,7 +67,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
 ```
 
-The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-route-discovery\`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json`.
+The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-route-discovery\`, `.ziniao-ops\xinjian-crawl-state.json`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json` or generated `references/xinjian-ui-auto-map.json`.
 
 ## Safety
 
@@ -90,6 +96,15 @@ Curated mapped pages:
 - System / 下载中心: `/download/list`
 
 Generated auto-map coverage currently includes additional BI, CRM detail, BPM/process, AI, and restricted-state pages captured from logged-in CDP DOM. Query scripts merge the curated and generated maps, with curated pages taking precedence.
+
+Coverage snapshot from the 2026-07-08 CDP crawl:
+
+- Vue Router entries discovered: 109.
+- Directly navigable eligible routes after safety exclusions: 56.
+- Eligible routes mapped in curated or auto map: 42.
+- Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
+- Pending eligible routes: 0.
+- Public map pages: 10 curated pages plus 38 generated auto-map pages.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

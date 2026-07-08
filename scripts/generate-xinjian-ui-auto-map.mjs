@@ -162,10 +162,11 @@ function classifySafety(name, type) {
   if (type === "tab" || type === "filter_input" || type === "filter_dropdown") return "read_filter";
   if (type === "form_input" || type === "form_dropdown") return "form_field";
   if (/^用户菜单$/.test(text)) return "account_menu";
+  if (type === "navigation") return "navigation";
   if (/^(搜索|查询)$/.test(compact)) return "read_filter";
   if (/^重置$/.test(compact)) return "read_filter";
   if (/导出|下载/.test(compact)) return "confirmation_required_export";
-  if (/保存|提交|删除|恢复|批量|修改|编辑|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消/.test(compact)) {
+  if (/保存|提交|删除|恢复|批量|修改|编辑|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消|标记/.test(compact)) {
     return "confirmation_required_write";
   }
   if (/详情|查看|分析|打开|进入|首页|返回/.test(compact)) return "navigation";
@@ -195,6 +196,19 @@ function purposeFor(name, type, pageName) {
   if (safety === "view_setting") return `Change the visible view setting on ${pageName}.`;
   if (safety === "account_menu") return "Open the current user/account menu.";
   return `Observed ${name} control on ${pageName}; exact behavior has not been clicked yet.`;
+}
+
+function aliasesForAction(name) {
+  const text = clean(name);
+  const compact = text.replace(/\s+/g, "");
+  const aliases = [text, compact];
+  for (const command of ["新增", "添加", "批量导入", "导入", "批量删除", "删除", "编辑", "修改", "保存", "提交", "导出", "下载", "标记已处理", "标记未处理"]) {
+    if (compact.startsWith(command) && compact.length > command.length) {
+      const subject = compact.slice(command.length);
+      aliases.push(`${subject}${command}`);
+    }
+  }
+  return unique(aliases);
 }
 
 function controlNames(controls, type) {
@@ -250,7 +264,7 @@ function pageFromCapture(capture) {
     actions.push({
       id: `${pageIdFromPath(routePath)}.${slug(type)}.${slug(cleanActionName)}`,
       name: cleanActionName,
-      aliases: unique([cleanActionName, compactActionName]),
+      aliases: aliasesForAction(cleanActionName),
       type,
       safety,
       purpose: purposeFor(cleanActionName, type, pageName),

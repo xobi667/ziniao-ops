@@ -65,6 +65,7 @@ function Get-RouteKey([string]$InputPath) {
 function Get-ActionScore($Action, [string]$Query) {
   $score = 0
   $queryCompact = Compact-Text $Query
+  $commandWords = @("搜索", "查询", "重置", "新增", "添加", "保存", "提交", "导出", "下载", "删除", "编辑", "修改", "应用", "批量", "标记")
   $fields = @()
   foreach ($name in @("name", "purpose", "type", "safety")) {
     if ($Action.PSObject.Properties.Match($name).Count -gt 0 -and $Action.$name) {
@@ -74,10 +75,19 @@ function Get-ActionScore($Action, [string]$Query) {
   foreach ($alias in @($Action.aliases)) {
     if ($alias) { $fields += [string]$alias }
   }
+  $seenFields = @{}
   foreach ($field in $fields) {
     $norm = Normalize-Text $field
     $normCompact = Compact-Text $norm
     if (!$norm) { continue }
+    if ($seenFields[$normCompact]) { continue }
+    $seenFields[$normCompact] = $true
+    foreach ($word in $commandWords) {
+      if ($queryCompact.Contains($word) -and $normCompact.Contains($word)) {
+        $score += 45
+        break
+      }
+    }
     if ($Query -eq $norm) { $score += 100 }
     elseif ($queryCompact -and $queryCompact -eq $normCompact) { $score += 95 }
     elseif ($Query.Contains($norm) -or $norm.Contains($Query) -or ($queryCompact -and ($queryCompact.Contains($normCompact) -or $normCompact.Contains($queryCompact)))) { $score += 35 }
@@ -86,6 +96,9 @@ function Get-ActionScore($Action, [string]$Query) {
         if ($norm.Contains($part)) { $score += 8 }
       }
     }
+  }
+  if ($Action.PSObject.Properties.Match("safety").Count -gt 0 -and $Action.safety -eq "read_filter" -and ($queryCompact.Contains("搜索") -or $queryCompact.Contains("查询") -or $queryCompact.Contains("重置"))) {
+    $score += 15
   }
   return $score
 }
@@ -178,7 +191,19 @@ foreach ($matched in @($matchedPages)) {
   }
 }
 
-$candidates = @($candidates | Sort-Object score -Descending | Select-Object -First 10)
+$candidates = @($candidates |
+  ForEach-Object {
+    $action = $_.action
+    $rank = 0
+    if ($action.type -eq "navigation") { $rank -= 20 }
+    if ($action.type -eq "button" -or $action.type -eq "batch_action") { $rank += 10 }
+    if ($action.safety -eq "read_filter") { $rank += 8 }
+    if ([string]$action.safety -like "confirmation_required*") { $rank += 6 }
+    $_ | Add-Member -NotePropertyName rank -NotePropertyValue $rank -Force
+    $_
+  } |
+  Sort-Object @{ Expression = "score"; Descending = $true }, @{ Expression = "rank"; Descending = $true } |
+  Select-Object -First 10)
 $payload = [ordered]@{
   ok = ($candidates.Count -gt 0)
   intent = $Intent
