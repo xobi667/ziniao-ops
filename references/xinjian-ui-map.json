@@ -1,5 +1,5 @@
 {
-  "version": "2026-07-08.1",
+  "version": "2026-07-08.2",
   "system": "xinjian_erp",
   "policy": {
     "default_mode": "read_only_map_first",
@@ -595,6 +595,413 @@
           "purpose": "Restore selected creators from blacklist. Requires selected rows and explicit confirmation.",
           "function_source": "observed button text; behavior not clicked",
           "locator": { "dom_text": "批量恢复" }
+        }
+      ]
+    },
+    {
+      "id": "ad.shop_detail",
+      "name": "店铺广告分析",
+      "module": "ADS",
+      "route_pattern": "^/ad/shop-detail$",
+      "url_contains": ["/ad/shop-detail"],
+      "title_aliases": ["店铺广告分析 - 心舰", "店铺广告分析"],
+      "purpose": "Shop-level advertising analysis page. Used to filter shops, switch platform/date windows, review ad spend/conversion metrics, and drill into ad detail pages.",
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/shop-detail",
+        "captured_page_title": "店铺广告分析 - 心舰",
+        "captured_counts": { "controls": 82, "buttons": 9, "inputs": 10, "tabs": 7, "menus": 19, "links": 1 },
+        "function_source": "observed DOM labels, placeholders, tabs, and table headers; row-level drilldown behavior not clicked"
+      },
+      "layout": {
+        "filters": ["选择店铺", "开始日期", "结束日期"],
+        "platform_tabs": ["Shopee", "Lazada", "Tiktok"],
+        "date_tabs": ["今天", "昨天", "近7天", "近30天"],
+        "table_columns": ["店铺", "分析", "广告余额预警设置", "广告花费", "展现量", "点击量", "点击率", "广告订单量", "转化率", "广告销量", "平均下单成本", "广告销售额", "ACoS", "ROAS", "操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "重置", "切换币种", "预警设置", "分页上一页", "分页下一页"],
+        "inputs": ["选择店铺", "开始日期", "结束日期", "请选择"],
+        "selects": ["请选择"],
+        "tabs": ["Shopee", "Lazada", "Tiktok", "今天", "昨天", "近7天", "近30天"],
+        "table_headers": ["店铺", "分析", "广告余额预警设置", "广告花费", "展现量", "点击量", "点击率", "广告订单量", "转化率", "广告销量", "平均下单成本", "广告销售额", "ACoS", "ROAS", "操作"]
+      },
+      "actions": [
+        {
+          "id": "ad.shop_detail.filter.shop",
+          "name": "选择店铺",
+          "aliases": ["选择店铺", "店铺筛选", "按店铺看广告", "筛广告店铺"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter shop-level advertising analysis by shop.",
+          "function_source": "observed placeholder; behavior not clicked",
+          "locator": { "dom_placeholder": "选择店铺", "dom_class": "el-input__inner" }
+        },
+        {
+          "id": "ad.shop_detail.filter.date_range",
+          "name": "日期范围",
+          "aliases": ["日期", "开始日期", "结束日期", "最近七天", "近7天", "近30天", "今天", "昨天"],
+          "type": "date_filter",
+          "safety": "read_filter",
+          "purpose": "Set the advertising analysis date range or use the visible quick tabs.",
+          "function_source": "observed date placeholders and date tabs; behavior not clicked",
+          "locator": { "dom_placeholders": ["开始日期", "结束日期"], "tab_texts": ["今天", "昨天", "近7天", "近30天"] }
+        },
+        {
+          "id": "ad.shop_detail.platform_tabs",
+          "name": "平台标签",
+          "aliases": ["Shopee", "Lazada", "Tiktok", "切平台", "平台"],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch the shop advertising analysis table between platform tabs.",
+          "function_source": "observed tab labels; behavior not clicked",
+          "locator": { "tab_texts": ["Shopee", "Lazada", "Tiktok"] }
+        },
+        {
+          "id": "ad.shop_detail.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current shop advertising analysis filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "ad.shop_detail.switch_currency",
+          "name": "切换币种",
+          "aliases": ["切换币种", "币种", "换币种"],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Switch the displayed currency for advertising metrics.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "切换币种" }
+        },
+        {
+          "id": "ad.shop_detail.warning_settings",
+          "name": "预警设置",
+          "aliases": ["预警设置", "广告余额预警", "余额预警"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open advertising balance warning settings. Requires explicit confirmation before saving changes.",
+          "function_source": "observed button/table header text; behavior not clicked",
+          "locator": { "dom_text": "预警设置" }
+        },
+        {
+          "id": "ad.shop_detail.open_detail",
+          "name": "行分析",
+          "aliases": ["行分析", "查看广告分析", "广告详情", "进入广告详情"],
+          "type": "row_navigation",
+          "safety": "navigation",
+          "purpose": "Open a row-level advertising analysis/detail page for the selected shop or ad entity.",
+          "function_source": "observed table column; exact row button text not captured yet",
+          "locator": { "table_column": "分析" }
+        }
+      ]
+    },
+    {
+      "id": "ad.group_detail",
+      "name": "广告详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/group-detail$",
+      "url_contains": ["/ad/group-detail"],
+      "title_aliases": ["广告详情 - 心舰", "广告详情"],
+      "purpose": "Ad detail page with date tabs, currency switching, and keyword/bid table.",
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/group-detail",
+        "captured_page_title": "广告详情 - 心舰",
+        "captured_counts": { "controls": 36, "buttons": 5, "inputs": 2, "tabs": 4, "menus": 19, "links": 1 },
+        "function_source": "observed DOM labels, date tabs, buttons, and table headers; edit behavior not clicked"
+      },
+      "layout": {
+        "filters": ["开始日期", "结束日期"],
+        "date_tabs": ["今天", "昨天", "近7天", "近30天"],
+        "table_columns": ["关键词", "关联版位", "点击出价"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "切换币种", "修改"],
+        "inputs": ["开始日期", "结束日期"],
+        "tabs": ["今天", "昨天", "近7天", "近30天"],
+        "table_headers": ["关键词", "关联版位", "点击出价"]
+      },
+      "actions": [
+        {
+          "id": "ad.group_detail.filter.date_range",
+          "name": "日期范围",
+          "aliases": ["日期", "开始日期", "结束日期", "最近七天", "近7天", "近30天", "今天", "昨天"],
+          "type": "date_filter",
+          "safety": "read_filter",
+          "purpose": "Set the ad detail date range or use the visible quick tabs.",
+          "function_source": "observed date placeholders and tabs; behavior not clicked",
+          "locator": { "dom_placeholders": ["开始日期", "结束日期"], "tab_texts": ["今天", "昨天", "近7天", "近30天"] }
+        },
+        {
+          "id": "ad.group_detail.switch_currency",
+          "name": "切换币种",
+          "aliases": ["切换币种", "币种", "换币种"],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Switch the displayed currency for ad detail metrics.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "切换币种" }
+        },
+        {
+          "id": "ad.group_detail.modify",
+          "name": "修改",
+          "aliases": ["修改", "编辑", "改出价"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open an edit flow for ad detail settings such as bid-related fields. Requires explicit confirmation before saving.",
+          "function_source": "observed button text and bid table header; behavior not clicked",
+          "locator": { "dom_text": "修改" }
+        }
+      ]
+    },
+    {
+      "id": "ad.originality_detail",
+      "name": "创意详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/originality-detail$",
+      "url_contains": ["/ad/originality-detail"],
+      "title_aliases": ["创意详情 - 心舰", "创意详情"],
+      "purpose": "Ad creative detail page with date tabs, creative status filter, search text, batch operation selector, and currency switching.",
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/originality-detail",
+        "captured_page_title": "创意详情 - 心舰",
+        "captured_counts": { "controls": 48, "buttons": 9, "inputs": 7, "tabs": 4, "menus": 19, "links": 1 },
+        "function_source": "observed DOM labels, placeholders, tabs, and table headers; batch operation behavior not clicked"
+      },
+      "layout": {
+        "filters": ["开始日期", "结束日期", "请选择创意状态", "请输入搜索内容"],
+        "date_tabs": ["今天", "昨天", "近7天", "近30天"],
+        "batch_controls": ["选择批量操作", "应用"],
+        "table_columns": ["操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "重置", "应用", "切换币种", "分页上一页", "分页下一页"],
+        "inputs": ["开始日期", "结束日期", "请选择创意状态", "请输入搜索内容", "选择批量操作", "请选择"],
+        "selects": ["请选择创意状态", "请选择", "选择批量操作"],
+        "tabs": ["今天", "昨天", "近7天", "近30天"],
+        "table_headers": ["操作"]
+      },
+      "actions": [
+        {
+          "id": "ad.originality_detail.filter.date_range",
+          "name": "日期范围",
+          "aliases": ["日期", "开始日期", "结束日期", "最近七天", "近7天", "近30天", "今天", "昨天"],
+          "type": "date_filter",
+          "safety": "read_filter",
+          "purpose": "Set the creative detail date range or use the visible quick tabs.",
+          "function_source": "observed date placeholders and tabs; behavior not clicked",
+          "locator": { "dom_placeholders": ["开始日期", "结束日期"], "tab_texts": ["今天", "昨天", "近7天", "近30天"] }
+        },
+        {
+          "id": "ad.originality_detail.filter.status",
+          "name": "创意状态",
+          "aliases": ["创意状态", "状态筛选", "筛创意状态"],
+          "type": "filter_dropdown",
+          "safety": "read_filter",
+          "purpose": "Filter ad creatives by creative status.",
+          "function_source": "observed placeholder; behavior not clicked",
+          "locator": { "dom_placeholder": "请选择创意状态" }
+        },
+        {
+          "id": "ad.originality_detail.search_text",
+          "name": "搜索内容",
+          "aliases": ["搜索内容", "请输入搜索内容", "搜索创意"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Search within creative detail records.",
+          "function_source": "observed placeholder; behavior not clicked",
+          "locator": { "dom_placeholder": "请输入搜索内容" }
+        },
+        {
+          "id": "ad.originality_detail.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current creative-detail filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "ad.originality_detail.batch_apply",
+          "name": "应用",
+          "aliases": ["应用", "批量操作", "选择批量操作"],
+          "type": "batch_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Apply the selected batch operation to selected creative records. Requires explicit confirmation.",
+          "function_source": "observed batch selector and button text; behavior not clicked",
+          "locator": { "dom_text": "应用", "near_placeholder": "选择批量操作" }
+        },
+        {
+          "id": "ad.originality_detail.switch_currency",
+          "name": "切换币种",
+          "aliases": ["切换币种", "币种", "换币种"],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Switch the displayed currency for creative detail metrics.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "切换币种" }
+        }
+      ]
+    },
+    {
+      "id": "erp.ads.rule_log",
+      "name": "广告规则执行日志",
+      "module": "ADS",
+      "route_pattern": "^/erp/ads/rule-log/?$",
+      "url_contains": ["/erp/ads/rule-log"],
+      "title_aliases": ["广告规则执行日志 - 心舰", "广告规则执行日志"],
+      "purpose": "Advertising automation/rule execution log page. Used to filter rule logs, inspect detail records, and export log data.",
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/erp/ads/rule-log",
+        "captured_page_title": "广告规则执行日志 - 心舰",
+        "captured_counts": { "controls": 52, "buttons": 12, "inputs": 7, "tabs": 0, "menus": 19, "links": 1 },
+        "function_source": "observed DOM labels, placeholders, buttons, and table headers; export/detail behavior not clicked"
+      },
+      "layout": {
+        "filters": ["选择店铺", "开始日期", "结束日期", "请输入搜索内容"],
+        "table_columns": ["广告信息", "规则名称", "触发条件", "执行操作", "变更", "执行结果", "执行时间", "操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "导出日志", "详情", "重置", "分页上一页", "分页下一页"],
+        "inputs": ["选择店铺", "开始日期", "结束日期", "请输入搜索内容", "请选择"],
+        "selects": ["请选择"],
+        "table_headers": ["广告信息", "规则名称", "触发条件", "执行操作", "变更", "执行结果", "执行时间", "操作"]
+      },
+      "actions": [
+        {
+          "id": "erp.ads.rule_log.filter.shop",
+          "name": "选择店铺",
+          "aliases": ["选择店铺", "店铺筛选", "筛规则日志店铺"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter advertising rule execution logs by shop.",
+          "function_source": "observed placeholder; behavior not clicked",
+          "locator": { "dom_placeholder": "选择店铺" }
+        },
+        {
+          "id": "erp.ads.rule_log.filter.date_range",
+          "name": "日期范围",
+          "aliases": ["日期", "开始日期", "结束日期", "执行时间"],
+          "type": "date_filter",
+          "safety": "read_filter",
+          "purpose": "Filter rule logs by execution date range.",
+          "function_source": "observed date placeholders and table header; behavior not clicked",
+          "locator": { "dom_placeholders": ["开始日期", "结束日期"], "table_column": "执行时间" }
+        },
+        {
+          "id": "erp.ads.rule_log.search_text",
+          "name": "搜索内容",
+          "aliases": ["搜索内容", "请输入搜索内容", "搜索日志", "搜索规则"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Search advertising rule execution logs.",
+          "function_source": "observed placeholder; behavior not clicked",
+          "locator": { "dom_placeholder": "请输入搜索内容" }
+        },
+        {
+          "id": "erp.ads.rule_log.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current rule-log filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "erp.ads.rule_log.export",
+          "name": "导出日志",
+          "aliases": ["导出日志", "导出", "下载日志"],
+          "type": "button",
+          "safety": "confirmation_required_export",
+          "purpose": "Export advertising rule execution logs. Requires explicit user request/confirmation.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "导出日志" }
+        },
+        {
+          "id": "erp.ads.rule_log.detail",
+          "name": "详情",
+          "aliases": ["详情", "查看详情", "规则日志详情"],
+          "type": "row_navigation",
+          "safety": "navigation",
+          "purpose": "Open detail for a visible advertising rule execution log row.",
+          "function_source": "observed repeated row button text; behavior not clicked",
+          "locator": { "dom_text": "详情", "table_column": "操作" }
+        }
+      ]
+    },
+    {
+      "id": "download.list",
+      "name": "下载中心",
+      "module": "System",
+      "route_pattern": "^/download/list$",
+      "url_contains": ["/download/list"],
+      "title_aliases": ["下载中心 - 心舰", "下载中心"],
+      "purpose": "Download center for generated report files, including exported advertising logs or reports.",
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/download/list",
+        "captured_page_title": "下载中心 - 心舰",
+        "captured_counts": { "controls": 51, "buttons": 7, "inputs": 5, "tabs": 0, "menus": 19, "links": 1 },
+        "function_source": "observed DOM labels, placeholders, and table headers; row operation button text not captured"
+      },
+      "layout": {
+        "filters": ["开始日期", "结束日期", "请输入报告名称"],
+        "table_columns": ["报表名称", "功能模块", "报表日期范围", "创建时间", "生成时间", "生成状态", "操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "重置", "分页上一页", "分页下一页"],
+        "inputs": ["开始日期", "结束日期", "请输入报告名称", "请选择"],
+        "selects": ["请选择"],
+        "table_headers": ["报表名称", "功能模块", "报表日期范围", "创建时间", "生成时间", "生成状态", "操作"]
+      },
+      "actions": [
+        {
+          "id": "download.list.filter.date_range",
+          "name": "日期范围",
+          "aliases": ["日期", "开始日期", "结束日期", "创建时间", "生成时间"],
+          "type": "date_filter",
+          "safety": "read_filter",
+          "purpose": "Filter download-center reports by date range.",
+          "function_source": "observed date placeholders and table headers; behavior not clicked",
+          "locator": { "dom_placeholders": ["开始日期", "结束日期"] }
+        },
+        {
+          "id": "download.list.filter.report_name",
+          "name": "报告名称",
+          "aliases": ["报告名称", "报表名称", "搜索报告", "搜索报表"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Search generated reports by report name.",
+          "function_source": "observed placeholder and table header; behavior not clicked",
+          "locator": { "dom_placeholder": "请输入报告名称", "table_column": "报表名称" }
+        },
+        {
+          "id": "download.list.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current download-center filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "download.list.row_operation",
+          "name": "操作",
+          "aliases": ["下载", "打开报表", "下载报表", "操作"],
+          "type": "row_operation",
+          "safety": "confirmation_required_export",
+          "purpose": "Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture.",
+          "function_source": "observed table operation column; row button text not captured",
+          "locator": { "table_column": "操作" }
         }
       ]
     }

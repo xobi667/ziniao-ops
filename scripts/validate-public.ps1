@@ -188,6 +188,8 @@ $required = @(
   "scripts\capture-xinjian-ui-map.ps1",
   "scripts\capture-xinjian-dom-map.ps1",
   "scripts\capture-xinjian-dom-cdp.mjs",
+  "scripts\discover-xinjian-routes.ps1",
+  "scripts\discover-xinjian-routes-cdp.mjs",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\install-upstream-tools.ps1",
   "scripts\sensitive-text.ps1",
