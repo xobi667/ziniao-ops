@@ -214,6 +214,7 @@ $required = @(
   "scripts\resolve-xinjian-current-url.ps1",
   "scripts\list-xinjian-page-actions.ps1",
   "scripts\learn-xinjian-current-page.ps1",
+  "scripts\learn-xinjian-open-pages.ps1",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",

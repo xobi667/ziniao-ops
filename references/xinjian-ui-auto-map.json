@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dom_captures",
-  "generated_at": "2026-07-08T12:17:15.563Z",
+  "generated_at": "2026-07-08T12:25:13.173Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "This generated map stores generic page controls only. It must not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -7447,11 +7447,11 @@
         "captured_page_url": "https://erp.xinjianerp.com/index/home",
         "captured_page_title": "首页 - 心舰",
         "captured_counts": {
-          "controls": 56,
-          "buttons": 4,
+          "controls": 98,
+          "buttons": 30,
           "inputs": 9,
           "tabs": 0,
-          "menus": 19,
+          "menus": 21,
           "links": 1
         },
         "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
@@ -7473,7 +7473,14 @@
           "店铺",
           "有效销售额(CNY)",
           "利润(CNY)",
-          "利润率"
+          "利润率",
+          "日",
+          "一",
+          "二",
+          "三",
+          "四",
+          "五",
+          "六"
         ]
       },
       "observed_controls": {
@@ -7481,7 +7488,16 @@
           "保存配置",
           "重置配置",
           "用户菜单",
-          "切换币种"
+          "切换币种",
+          "今天",
+          "昨天",
+          "最近7天",
+          "最近14天",
+          "最近30天",
+          "本月",
+          "上月",
+          "最近半年",
+          "最近1年"
         ],
         "inputs": [
           "选择店铺",
@@ -7508,7 +7524,14 @@
           "店铺",
           "有效销售额(CNY)",
           "利润(CNY)",
-          "利润率"
+          "利润率",
+          "日",
+          "一",
+          "二",
+          "三",
+          "四",
+          "五",
+          "六"
         ]
       },
       "actions": [
@@ -7609,6 +7632,132 @@
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "locator": {
             "dom_text": "切换币种"
+          }
+        },
+        {
+          "id": "auto.index.home.button.今天",
+          "name": "今天",
+          "aliases": [
+            "今天"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "今天"
+          }
+        },
+        {
+          "id": "auto.index.home.button.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "昨天"
+          }
+        },
+        {
+          "id": "auto.index.home.button.最近7天",
+          "name": "最近7天",
+          "aliases": [
+            "最近7天"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "最近7天"
+          }
+        },
+        {
+          "id": "auto.index.home.button.最近14天",
+          "name": "最近14天",
+          "aliases": [
+            "最近14天"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "最近14天"
+          }
+        },
+        {
+          "id": "auto.index.home.button.最近30天",
+          "name": "最近30天",
+          "aliases": [
+            "最近30天"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "最近30天"
+          }
+        },
+        {
+          "id": "auto.index.home.button.本月",
+          "name": "本月",
+          "aliases": [
+            "本月"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "本月"
+          }
+        },
+        {
+          "id": "auto.index.home.button.上月",
+          "name": "上月",
+          "aliases": [
+            "上月"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "上月"
+          }
+        },
+        {
+          "id": "auto.index.home.button.最近半年",
+          "name": "最近半年",
+          "aliases": [
+            "最近半年"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "最近半年"
+          }
+        },
+        {
+          "id": "auto.index.home.button.最近1年",
+          "name": "最近1年",
+          "aliases": [
+            "最近1年"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 首页.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "最近1年"
           }
         },
         {

@@ -364,6 +364,13 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\lear
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Intent "<用户要做什么>" -Json
 ```
 
+To learn every currently debuggable 心舰 page already open in Chrome/Edge, use the batch learner. It enumerates DevTools pages, de-duplicates by route, captures each page with the safe current-page learner, then regenerates maps/catalog once:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-open-pages.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-open-pages.ps1") -MaxPages 5 -Json
+```
+
 For a full compact audit of remembered 心舰 pages/actions, regenerate and inspect the merged action catalog:
 
 ```powershell

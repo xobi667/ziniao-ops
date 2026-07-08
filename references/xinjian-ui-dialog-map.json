@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dialog_captures",
-  "generated_at": "2026-07-08T11:57:36.596Z",
+  "generated_at": "2026-07-08T12:25:14.442Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
@@ -717,6 +717,188 @@
       ]
     },
     {
+      "id": "dialog.crm.matser.management.mymaster",
+      "name": "我的达人",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/myMaster\\/?$",
+      "url_contains": [
+        "/crm/matser/management/myMaster"
+      ],
+      "title_aliases": [
+        "我的达人 - 心舰",
+        "我的达人"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 我的达人.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
+        "captured_page_title": "我的达人 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 5,
+          "field_labels": 3
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "添加达人",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "达人建联",
+                "type": "dialog",
+                "buttons": [
+                  "关闭",
+                  "搜索",
+                  "添加",
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "达人信息",
+                  "联系方式",
+                  "备注"
+                ],
+                "placeholders": [
+                  "请输入达人ID/达人主页链接进行搜索",
+                  "请选择",
+                  "请输入内容",
+                  "请输入备注信息"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.crm.matser.management.mymaster.dialog_opener.添加达人",
+          "name": "添加达人",
+          "aliases": [
+            "添加达人",
+            "添加达人弹窗",
+            "添加达人表单",
+            "达人添加",
+            "达人添加弹窗",
+            "达人添加表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 添加达人 dialog/drawer on 我的达人; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "添加达人",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success"
+          }
+        },
+        {
+          "id": "dialog.crm.matser.management.mymaster.dialog_button.添加达人.关闭",
+          "name": "添加达人关闭",
+          "aliases": [
+            "关闭",
+            "添加达人关闭",
+            "达人建联关闭",
+            "达人添加关闭"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 关闭 inside the 添加达人 dialog/drawer on 我的达人.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "添加达人",
+            "dialog_title": "达人建联",
+            "button_text": "关闭",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success"
+          }
+        },
+        {
+          "id": "dialog.crm.matser.management.mymaster.dialog_button.添加达人.搜索",
+          "name": "添加达人搜索",
+          "aliases": [
+            "搜索",
+            "添加达人搜索",
+            "达人建联搜索",
+            "达人添加搜索"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 搜索 inside the 添加达人 dialog/drawer on 我的达人.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "添加达人",
+            "dialog_title": "达人建联",
+            "button_text": "搜索",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success"
+          }
+        },
+        {
+          "id": "dialog.crm.matser.management.mymaster.dialog_button.添加达人.添加",
+          "name": "添加达人添加",
+          "aliases": [
+            "添加",
+            "添加达人添加",
+            "达人建联添加",
+            "达人添加添加"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 添加 inside the 添加达人 dialog/drawer on 我的达人.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "添加达人",
+            "dialog_title": "达人建联",
+            "button_text": "添加",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success"
+          }
+        },
+        {
+          "id": "dialog.crm.matser.management.mymaster.dialog_button.添加达人.确定",
+          "name": "添加达人确定",
+          "aliases": [
+            "确定",
+            "添加达人确定",
+            "达人建联确定",
+            "达人添加确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 添加达人 dialog/drawer on 我的达人.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "添加达人",
+            "dialog_title": "达人建联",
+            "button_text": "确定",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success"
+          }
+        },
+        {
+          "id": "dialog.crm.matser.management.mymaster.dialog_button.添加达人.取消",
+          "name": "添加达人取消",
+          "aliases": [
+            "取消",
+            "添加达人取消",
+            "达人建联取消",
+            "达人添加取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 添加达人 dialog/drawer on 我的达人.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "添加达人",
+            "dialog_title": "达人建联",
+            "button_text": "取消",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success"
+          }
+        }
+      ]
+    },
+    {
       "id": "dialog.erp.blacklist",
       "name": "黑名单管理",
       "module": "ERP",
@@ -1080,6 +1262,195 @@
           {
             "trigger": "编辑",
             "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(6) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "新增自定义费用",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "添加自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(6) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(8) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(11) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(16) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(18) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
             "dialog_count": 1,
             "dialogs": [
               {

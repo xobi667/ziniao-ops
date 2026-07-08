@@ -92,6 +92,26 @@ function isGenericOverlayItem(value) {
     /^(按|选择|切换|批量|标记|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领)/.test(text);
 }
 
+function isDateShortcut(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /^(今天|昨天|近7天|近30天|最近7天|最近14天|最近30天|最近半年|最近1年|本月|上月)$/.test(text);
+}
+
+function isDateLikeTrigger(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /日期|时间|开始|结束|月份|选择月|月$|日$/.test(text);
+}
+
+function isStatusLikeTrigger(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /状态|处理状态|是否/.test(text);
+}
+
+function isStatusLikeItem(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|未开始|进行中|已完成|已取消|正常|异常)$/.test(text);
+}
+
 function normalizePath(value) {
   let text = clean(value);
   if (!text) return "";
@@ -171,7 +191,14 @@ function pageFromCapture(capture) {
   for (const trigger of capture.overlay_triggers || []) {
     const triggerName = clean(trigger.name || trigger.trigger_type);
     if (!triggerName || triggerName === "用户菜单") continue;
-    const items = Array.isArray(trigger.items) ? trigger.items.filter((item) => isGenericOverlayItem(item.name)) : [];
+    const items = Array.isArray(trigger.items) ? trigger.items.filter((item) => {
+      const itemName = clean(item.name);
+      if (!isGenericOverlayItem(itemName)) return false;
+      if (isDateShortcut(itemName) && !isDateLikeTrigger(triggerName)) return false;
+      if (isDateLikeTrigger(triggerName) && !isDateShortcut(itemName)) return false;
+      if (isStatusLikeTrigger(triggerName) && !isStatusLikeItem(itemName)) return false;
+      return true;
+    }) : [];
     overlays.push({
       trigger: triggerName,
       trigger_type: trigger.trigger_type,

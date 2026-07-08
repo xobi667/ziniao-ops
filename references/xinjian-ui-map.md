@@ -40,6 +40,14 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\lear
 
 `learn-xinjian-current-page.ps1` resolves the current page, captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels, then regenerates the public maps and unified action catalog. It does not read cookies, storage, tokens, input values, or table row cell values. Use `-DryRun` to preview the steps, or pass `-SkipDialogs`, `-SkipOverlays`, `-SkipRowActions`, or `-SkipDom` for narrower learning.
 
+To learn every currently debuggable 心舰 page already open in Chrome/Edge, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-open-pages.ps1") -Json
+```
+
+`learn-xinjian-open-pages.ps1` enumerates open DevTools pages on the configured port, de-duplicates by route, runs the current-page learner once per page with map generation deferred, then regenerates the public maps and unified catalog once at the end. Pass explicit `-Url` values or `-MaxPages` for a smaller batch.
+
 2. Query the known map before using screenshots or guessing:
 
 ```powershell
@@ -189,10 +197,10 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
 - Public map pages: 10 curated pages plus 38 generated auto-map pages.
-- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler, 0 pending after exclusions, 26 pages promoted to the overlay map, 168 overlay actions.
-- Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler, 0 pending after exclusions, 8 pages promoted to the dialog map, 35 dialog actions.
+- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler plus the current open-page learner, 0 pending after exclusions, 26 pages promoted to the overlay map, 204 overlay actions.
+- Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler plus the current open-page learner, 0 pending after exclusions, 9 pages promoted to the dialog map, 41 dialog actions.
 - Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler, 0 pending after exclusions, 1 page promoted to the row-action map, 2 row actions.
-- Unified action catalog: 49 pages, 532 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
+- Unified action catalog: 49 pages, 564 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 
