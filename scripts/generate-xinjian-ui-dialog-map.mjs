@@ -271,7 +271,6 @@ function compactObservedDialogs(dialogs) {
     ].join("|");
     const existing = byKey.get(key);
     if (existing) {
-      existing.occurrence_count = (existing.occurrence_count || 1) + 1;
       existing.dialog_count = Math.max(existing.dialog_count || 0, uniqueDialogs.length);
       continue;
     }

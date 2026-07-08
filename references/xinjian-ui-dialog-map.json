@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dialog_captures",
-  "generated_at": "2026-07-08T14:30:00.326Z",
+  "generated_at": "2026-07-08T14:36:12.035Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
@@ -1325,8 +1325,7 @@
                   "请输入备注信息"
                 ]
               }
-            ],
-            "occurrence_count": 5
+            ]
           }
         ]
       },
@@ -2506,8 +2505,7 @@
                   "请输入金额（正数表示支出，负数表示收入)"
                 ]
               }
-            ],
-            "occurrence_count": 4
+            ]
           },
           {
             "trigger": "编辑",
@@ -2535,8 +2533,7 @@
                 ]
               }
             ],
-            "row_context_required": true,
-            "occurrence_count": 4
+            "row_context_required": true
           }
         ]
       },

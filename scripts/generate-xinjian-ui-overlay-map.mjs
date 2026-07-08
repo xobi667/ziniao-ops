@@ -248,7 +248,6 @@ function compactObservedOverlays(overlays) {
     ].join("|");
     const existing = byKey.get(key);
     if (existing) {
-      existing.occurrence_count = (existing.occurrence_count || 1) + 1;
       existing.item_count = Math.max(existing.item_count || 0, Number(overlay.item_count) || 0);
       existing.filtered_item_count = Math.max(existing.filtered_item_count || 0, Number(overlay.filtered_item_count) || 0);
       continue;

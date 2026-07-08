@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T14:29:59.608Z",
+  "generated_at": "2026-07-08T14:36:12.059Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -77,8 +77,7 @@
             "trigger_type": "select",
             "item_count": 7,
             "filtered_item_count": 23,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -89,8 +88,7 @@
               "按视频名称",
               "按视频ID号",
               "按Tiktok账号"
-            ],
-            "occurrence_count": 4
+            ]
           },
           {
             "trigger": "选择批量操作",
@@ -100,8 +98,7 @@
             "items": [
               "添加至广告计划",
               "批量排除"
-            ],
-            "occurrence_count": 2
+            ]
           },
           {
             "trigger": "开始日期",
@@ -111,32 +108,28 @@
             "items": [
               "今天",
               "昨天"
-            ],
-            "occurrence_count": 2
+            ]
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 7,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "选择批量操作",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 7,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 0,
-            "items": [],
-            "occurrence_count": 3
+            "items": []
           }
         ]
       },
@@ -500,8 +493,7 @@
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": [],
-            "occurrence_count": 2
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -511,16 +503,14 @@
             "items": [
               "成功",
               "失败"
-            ],
-            "occurrence_count": 2
+            ]
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 6,
-            "items": [],
-            "occurrence_count": 2
+            "items": []
           },
           {
             "trigger": "开始日期",
@@ -1443,40 +1433,35 @@
             "trigger_type": "select",
             "item_count": 4,
             "filtered_item_count": 61,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "达人标签",
             "trigger_type": "cascader",
             "item_count": 4,
             "filtered_item_count": 61,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "品类",
             "trigger_type": "cascader",
             "item_count": 4,
             "filtered_item_count": 49,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 56,
-            "items": [],
-            "occurrence_count": 5
+            "items": []
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 20,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "开始日期",
@@ -1826,48 +1811,42 @@
             "trigger_type": "cascader",
             "item_count": 4,
             "filtered_item_count": 77,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "品类",
             "trigger_type": "cascader",
             "item_count": 4,
             "filtered_item_count": 77,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "全部商务",
             "trigger_type": "select",
             "item_count": 4,
             "filtered_item_count": 77,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 74,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "年龄分布",
             "trigger_type": "select",
             "item_count": 4,
             "filtered_item_count": 72,
-            "items": [],
-            "occurrence_count": 6
+            "items": []
           },
           {
             "trigger": "选择标签",
             "trigger_type": "cascader",
             "item_count": 4,
             "filtered_item_count": 72,
-            "items": [],
-            "occurrence_count": 7
+            "items": []
           },
           {
             "trigger": "批量操作",
@@ -1877,16 +1856,14 @@
             "items": [
               "批量删除",
               "信息更新"
-            ],
-            "occurrence_count": 2
+            ]
           },
           {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
             "item_count": 0,
             "filtered_item_count": 72,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -1896,8 +1873,7 @@
             "items": [
               "达人ID",
               "达人昵称"
-            ],
-            "occurrence_count": 2
+            ]
           }
         ]
       },
@@ -2113,56 +2089,49 @@
             "trigger_type": "dropdown",
             "item_count": 2,
             "filtered_item_count": 7,
-            "items": [],
-            "occurrence_count": 5
+            "items": []
           },
           {
             "trigger": "全部商务",
             "trigger_type": "select",
             "item_count": 6,
             "filtered_item_count": 78,
-            "items": [],
-            "occurrence_count": 5
+            "items": []
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 71,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "选择标签",
             "trigger_type": "cascader",
             "item_count": 6,
             "filtered_item_count": 58,
-            "items": [],
-            "occurrence_count": 5
+            "items": []
           },
           {
             "trigger": "品类",
             "trigger_type": "cascader",
             "item_count": 6,
             "filtered_item_count": 58,
-            "items": [],
-            "occurrence_count": 5
+            "items": []
           },
           {
             "trigger": "年龄分布",
             "trigger_type": "select",
             "item_count": 6,
             "filtered_item_count": 28,
-            "items": [],
-            "occurrence_count": 5
+            "items": []
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 57,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -2816,8 +2785,7 @@
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 10,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -2827,24 +2795,21 @@
             "items": [
               "按店铺",
               "按人员"
-            ],
-            "occurrence_count": 2
+            ]
           },
           {
             "trigger": "选择店铺",
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 4,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 2,
             "filtered_item_count": 4,
-            "items": [],
-            "occurrence_count": 3
+            "items": []
           }
         ]
       },
@@ -3760,24 +3725,21 @@
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 12,
-            "items": [],
-            "occurrence_count": 4
+            "items": []
           },
           {
             "trigger": "选择月",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": [],
-            "occurrence_count": 3
+            "items": []
           }
         ]
       },
@@ -4011,8 +3973,7 @@
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 18,
-            "items": [],
-            "occurrence_count": 13
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -4023,16 +3984,14 @@
               "按店铺",
               "按人员",
               "按负责人"
-            ],
-            "occurrence_count": 7
+            ]
           },
           {
             "trigger": "选择店铺",
             "trigger_type": "cascader",
             "item_count": 5,
             "filtered_item_count": 25,
-            "items": [],
-            "occurrence_count": 13
+            "items": []
           },
           {
             "trigger": "请选择",
@@ -4041,8 +4000,7 @@
             "filtered_item_count": 2,
             "items": [
               "利润"
-            ],
-            "occurrence_count": 7
+            ]
           },
           {
             "trigger": "请选择",
@@ -4051,8 +4009,7 @@
             "filtered_item_count": 1,
             "items": [
               "订单"
-            ],
-            "occurrence_count": 7
+            ]
           },
           {
             "trigger": "请选择",
@@ -4061,8 +4018,7 @@
             "filtered_item_count": 22,
             "items": [
               "店铺"
-            ],
-            "occurrence_count": 11
+            ]
           },
           {
             "trigger": "开始日期",
@@ -4072,8 +4028,7 @@
             "items": [
               "今天",
               "昨天"
-            ],
-            "occurrence_count": 9
+            ]
           },
           {
             "trigger": "请选择",
@@ -4087,8 +4042,7 @@
               "利润",
               "订单",
               "店铺"
-            ],
-            "occurrence_count": 4
+            ]
           },
           {
             "trigger": "请选择",
@@ -4099,8 +4053,7 @@
               "利润",
               "订单",
               "店铺"
-            ],
-            "occurrence_count": 4
+            ]
           },
           {
             "trigger": "请选择",
@@ -4110,16 +4063,14 @@
             "items": [
               "订单",
               "店铺"
-            ],
-            "occurrence_count": 4
+            ]
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 0,
-            "items": [],
-            "occurrence_count": 3
+            "items": []
           }
         ]
       },
