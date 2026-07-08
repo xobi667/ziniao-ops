@@ -28,7 +28,15 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\dete
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\query-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
 ```
 
-3. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
+3. For RPA-style routing, convert the mapped intent into a dry-run action plan before clicking:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
+```
+
+The invoker reports the matched page/action, safety gate, and locator strategy. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
+
+4. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\discover-xinjian-routes.ps1") -Port 9342 -Json
@@ -36,7 +44,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\disc
 
 Use route discovery to choose a real 心舰 path before opening new pages. It reads Vue Router metadata plus visible link/menu labels only.
 
-4. To expand coverage in batches, crawl unmapped routes and capture their DOM controls:
+5. To expand coverage in batches, crawl unmapped routes and capture their DOM controls:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-ui-coverage.ps1") -Port 9342 -RefreshRoutes -Json
@@ -50,7 +58,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 
 The crawler opens one route at a time through CDP, captures controls, then closes the temporary tab it opened. It records local attempt state under `.ziniao-ops\xinjian-crawl-state.json`, so empty pages, restricted pages, redirects, and previous failures are not repeatedly retried unless `-RetryAttempted` is passed. It does not click page controls.
 
-5. Promote sanitized local captures into the generated auto map:
+6. Promote sanitized local captures into the generated auto map:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-auto-map.ps1") -NoMergeExisting -Json
@@ -58,7 +66,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The generator skips pages already present in the curated map, removes empty captures, normalizes account-menu labels, skips generic/private-looking values, and marks write/export/batch/edit/save/delete actions as confirmation-required.
 
-6. To capture dynamic overlay controls such as dropdown menus, batch menus, select panels, and date shortcuts:
+7. To capture dynamic overlay controls such as dropdown menus, batch menus, select panels, and date shortcuts:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-overlays.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -76,7 +84,7 @@ The batch crawler opens a temporary CDP tab per mapped route, captures overlay t
 
 The overlay probe opens safe Element UI trigger panels (`select`, `cascader`, `dropdown`, date picker), records sanitized generic menu items, and closes the panel. It does not click overlay items. Private-looking select values are filtered at capture time.
 
-7. To capture dialog/drawer controls that only appear after a safe opener:
+8. To capture dialog/drawer controls that only appear after a safe opener:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dialogs.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -86,7 +94,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The dialog probe may click safe opener buttons such as `新增`, `编辑`, `详情`, `查看`, `设置`, or `配置`, records sanitized dialog/drawer buttons, field labels, and placeholders, then closes the dialog. It does not click submit/confirm/write buttons, does not type, and does not read input values.
 
-8. To capture table row-level operation buttons without reading row data:
+9. To capture table row-level operation buttons without reading row data:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-row-actions.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -96,13 +104,13 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The row-action probe reads table headers and row action labels only. It does not click row actions and does not read row cell values.
 
-9. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
+10. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dom-map.ps1") -Port 9342 -Json
 ```
 
-10. If the page or button is not debuggable, capture the current page through Windows UIA read-only:
+11. If the page or button is not debuggable, capture the current page through Windows UIA read-only:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
@@ -120,6 +128,7 @@ The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`,
 - Row-action capture reads table headers and row action button labels only; it must not read row cell values or click row buttons. Treat row edit/delete/export/write entries as confirmation-required.
 - Default capture excludes table row values because they can contain private business data. Use row data only for a user-requested report, not for public skill memory.
 - Any action that assigns, claims, saves, submits, deletes, exports, or batch-updates must be treated as confirmation-required unless the user explicitly asks for that exact operation.
+- `invoke-xinjian-ui-action.ps1` is dry-run by default. `-Execute` may click safe non-write actions through CDP; confirmation-required write/export actions require `-AllowWrite` or `-AllowExport`.
 - A mapped locator is a memory aid, not permission to perform a write action.
 
 ## Current Coverage

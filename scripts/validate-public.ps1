@@ -210,6 +210,8 @@ $required = @(
   "scripts\generate-xinjian-ui-row-action-map.ps1",
   "scripts\generate-xinjian-ui-row-action-map.mjs",
   "scripts\query-xinjian-ui-action.ps1",
+  "scripts\invoke-xinjian-ui-action.ps1",
+  "scripts\invoke-xinjian-ui-action-cdp.mjs",
   "scripts\install-upstream-tools.ps1",
   "scripts\sensitive-text.ps1",
   "scripts\check-external-tools.ps1",
