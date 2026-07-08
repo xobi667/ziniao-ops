@@ -17,6 +17,34 @@ $KnownPageRules = @(
   @{ platform = "xinjian_erp"; page_kind = "erp";           url_pattern = "erp\.xinjianerp\.com"; title_pattern = "\u5fc3\u8230|\u8fbe\u4eba\u516c\u6d77|[Xx]injian(?:\s*ERP)?|HighSeas.*[Xx]injian|[Xx]injian.*HighSeas" }
 )
 
+try {
+  Add-Type -AssemblyName UIAutomationClient -ErrorAction Stop
+  Add-Type -AssemblyName UIAutomationTypes -ErrorAction Stop
+  $script:UiAutomationAvailable = $true
+} catch {
+  $script:UiAutomationAvailable = $false
+}
+
+function Normalize-BrowserUrl([string]$Value) {
+  $text = ([string]$Value).Trim()
+  if (!$text) { return $null }
+  if ($text -match "^(?i)(chrome|edge|about|devtools|view-source):") { return $null }
+  if ($text -match "^(?i)https?://") { return $text }
+  if ($text -match "^[A-Za-z0-9.-]+\.[A-Za-z]{2,}(/.*)?$") {
+    return "https://$text"
+  }
+  return $null
+}
+
+function Redact-UrlForOutput([string]$Url) {
+  if (!$Url) { return $null }
+  return ([regex]::Replace(
+      $Url,
+      "(?i)([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*",
+      '${1}[redacted]'
+    ))
+}
+
 function Get-KnownPageMatch([string]$Url, [string]$Title = "") {
   foreach ($rule in $KnownPageRules) {
     if ($Url -and $Url -match $rule["url_pattern"]) {
@@ -39,6 +67,40 @@ function Get-KnownPageMatch([string]$Url, [string]$Title = "") {
   return [pscustomobject]@{ platform = "unknown"; page_kind = "unknown"; confidence = "none" }
 }
 
+function Get-AddressBarUrlFromWindow {
+  param([IntPtr]$WindowHandle)
+
+  if (!$script:UiAutomationAvailable -or !$WindowHandle -or $WindowHandle -eq [IntPtr]::Zero) {
+    return $null
+  }
+
+  try {
+    $root = [System.Windows.Automation.AutomationElement]::FromHandle($WindowHandle)
+    if (!$root) { return $null }
+    $edits = $root.FindAll(
+      [System.Windows.Automation.TreeScope]::Subtree,
+      [System.Windows.Automation.PropertyCondition]::new(
+        [System.Windows.Automation.AutomationElement]::ControlTypeProperty,
+        [System.Windows.Automation.ControlType]::Edit
+      )
+    )
+    foreach ($edit in $edits) {
+      $value = $null
+      try {
+        $pattern = $edit.GetCurrentPattern([System.Windows.Automation.ValuePattern]::Pattern)
+        $value = [string]$pattern.Current.Value
+      } catch {
+        continue
+      }
+      $url = Normalize-BrowserUrl $value
+      if ($url) { return $url }
+    }
+  } catch {
+    return $null
+  }
+  return $null
+}
+
 function Get-VisibleBrowserWindows {
   param([switch]$ZiniaoOnly)
 
@@ -52,11 +114,14 @@ function Get-VisibleBrowserWindows {
       Where-Object { $_.MainWindowHandle -ne 0 -and [string]$_.MainWindowTitle } |
       ForEach-Object {
         $processName = $_.ProcessName + ".exe"
+        $addressUrl = Get-AddressBarUrlFromWindow -WindowHandle $_.MainWindowHandle
         $rows += [pscustomobject]@{
           process_id = $_.Id
           process_name = $processName
           is_ziniao = ($processName -ieq "ziniaobrowser.exe")
           page_title = [string]$_.MainWindowTitle
+          page_url = Redact-UrlForOutput $addressUrl
+          url_source = if ($addressUrl) { "address_bar_uia" } else { $null }
         }
       }
   }
@@ -196,20 +261,27 @@ foreach ($item in $visibleBrowserWindows) {
   if ($cdpWindowKeys.Contains($key)) {
     continue
   }
-  $match = Get-KnownPageMatch -Url "" -Title ([string]$item.page_title)
+  $match = Get-KnownPageMatch -Url ([string]$item.page_url) -Title ([string]$item.page_title)
   $windows += [pscustomobject]([ordered]@{
-    source = "window_title"
+    source = if ($item.url_source) { "window_uia" } else { "window_title" }
     port = $null
     process_name = $item.process_name
     process_id = $item.process_id
     is_ziniao = $item.is_ziniao
     reachable = $null
-    page_url = $null
+    page_url = $item.page_url
     page_title = $item.page_title
+    url_source = $item.url_source
     platform = $match.platform
     page_kind = $match.page_kind
     match_confidence = $match.confidence
-    login_signal = if ($match.platform -ne "unknown") { "known_title_open" } else { "visible_browser_window_open" }
+    login_signal = if ($match.platform -eq "unknown") {
+      "visible_browser_window_open"
+    } elseif ($item.url_source) {
+      "known_address_open"
+    } else {
+      "known_title_open"
+    }
   })
 }
 
