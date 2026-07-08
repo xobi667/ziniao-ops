@@ -57,8 +57,29 @@ function locatorStrategy(action) {
   if (locator.href) return "navigate_href";
   if (locator.dom_text) return "click_visible_dom_text";
   if (locator.dom_placeholder) return "input_or_filter_placeholder";
+  if (Array.isArray(locator.tab_texts) && locator.tab_texts.length && Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return "click_quick_tab_text_or_placeholder_list";
+  if (Array.isArray(locator.tab_texts) && locator.tab_texts.length) return "click_visible_tab_text_from_list";
+  if (Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return "input_or_filter_placeholder_list";
   if (locator.uia_name) return "uia_locator";
+  if (hasVisibleTextFallback(action)) return "click_visible_action_text";
+  if (hasFilterLabelFallback(action)) return "click_visible_filter_label_or_text";
   return "map_only";
+}
+
+function hasVisibleTextFallback(action) {
+  const name = clean(action?.name);
+  const type = clean(action?.type);
+  if (!name) return false;
+  if (["tab", "status_tab"].includes(type)) return !["平台标签"].includes(name);
+  if (type === "row_navigation") return !["行分析", "操作"].includes(name);
+  return false;
+}
+
+function hasFilterLabelFallback(action) {
+  const name = clean(action?.name);
+  const type = clean(action?.type);
+  if (!name) return false;
+  return type === "date_filter";
 }
 
 function actionContext(action) {
@@ -68,6 +89,11 @@ function actionContext(action) {
   if (locator.dialog_title && locator.button_text) return `${clean(locator.dialog_title)} -> ${clean(locator.button_text)}`;
   if (locator.column_header && locator.row_action_text) return `${clean(locator.column_header)} -> ${clean(locator.row_action_text)}`;
   if (locator.row_action_text) return clean(locator.row_action_text);
+  if (Array.isArray(locator.tab_texts) && locator.tab_texts.length && Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) {
+    return `tabs:${unique(locator.tab_texts).join("/")}; placeholders:${unique(locator.dom_placeholders).join("/")}`;
+  }
+  if (Array.isArray(locator.tab_texts) && locator.tab_texts.length) return `tabs:${unique(locator.tab_texts).join("/")}`;
+  if (Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return `placeholders:${unique(locator.dom_placeholders).join("/")}`;
   if (locator.dom_placeholder) return `placeholder:${clean(locator.dom_placeholder)}`;
   if (locator.dom_text) return `text:${clean(locator.dom_text)}`;
   if (locator.href) return `href:${clean(locator.href)}`;
@@ -260,7 +286,7 @@ const payload = {
     map_only_actions: mapOnlyActions,
     empty_locator_actions: emptyLocatorActions,
     next_improvements: [
-      "Promote map_only tabs/date filters to DOM or overlay locators where possible.",
+      "Capture generic platform tabs, row navigation, and row operations with exact DOM text or row-action locators where possible.",
       "Manually classify manual_review actions before allowing execution.",
       "Keep write/export actions confirmation-required even when locators are known."
     ]

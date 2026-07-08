@@ -27,16 +27,38 @@ function Get-SafetyMode([string]$Safety) {
   return "dry_run_only_unknown_safety"
 }
 
+function Join-Codepoints([int[]]$Codes) {
+  return -join ($Codes | ForEach-Object { [char]$_ })
+}
+
 function Get-LocatorStrategy($Action) {
   $locator = $Action.locator
+  if ($locator) {
+    if ($locator.trigger_selector -and $locator.item_text) { return "click_trigger_selector_then_overlay_item_text" }
+    if ($locator.trigger_selector -and $locator.button_text) { return "click_trigger_selector_then_dialog_button_text" }
+    if ($locator.trigger_selector) { return "click_trigger_selector" }
+    if ($locator.table_selector -and $locator.row_action_text) { return "click_first_matching_row_action_in_table" }
+    if ($locator.href) { return "navigate_href" }
+    if ($locator.dom_text) { return "click_visible_dom_text" }
+    if ($locator.dom_placeholder) { return "input_or_filter_placeholder" }
+    if ($locator.tab_texts -and $locator.dom_placeholders) { return "click_quick_tab_text_or_placeholder_list" }
+    if ($locator.tab_texts) { return "click_visible_tab_text_from_list" }
+    if ($locator.dom_placeholders) { return "input_or_filter_placeholder_list" }
+    if ($locator.uia_name) { return "map_only_uia_locator" }
+  }
+  $type = [string]$Action.type
+  $name = [string]$Action.name
+  $genericTabNames = @(
+    (Join-Codepoints @(0x5E73, 0x53F0, 0x6807, 0x7B7E))
+  )
+  $genericRowNames = @(
+    (Join-Codepoints @(0x884C, 0x5206, 0x6790)),
+    (Join-Codepoints @(0x64CD, 0x4F5C))
+  )
+  if ($name -and ($type -in @("tab", "status_tab")) -and ($name -notin $genericTabNames)) { return "click_visible_action_text" }
+  if ($name -and $type -eq "row_navigation" -and ($name -notin $genericRowNames)) { return "click_visible_action_text" }
+  if ($name -and $type -eq "date_filter") { return "click_visible_filter_label_or_text" }
   if (!$locator) { return "no_locator" }
-  if ($locator.trigger_selector -and $locator.item_text) { return "click_trigger_selector_then_overlay_item_text" }
-  if ($locator.trigger_selector -and $locator.button_text) { return "click_trigger_selector_then_dialog_button_text" }
-  if ($locator.trigger_selector) { return "click_trigger_selector" }
-  if ($locator.table_selector -and $locator.row_action_text) { return "click_first_matching_row_action_in_table" }
-  if ($locator.href) { return "navigate_href" }
-  if ($locator.dom_text) { return "click_visible_dom_text" }
-  if ($locator.uia_name) { return "map_only_uia_locator" }
   return "best_effort_locator"
 }
 
@@ -170,7 +192,9 @@ if (!(Test-Path -LiteralPath $helper)) {
 $stateDir = Join-Path $root ".ziniao-ops\xinjian-action-runner"
 New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
 $actionPath = Join-Path $stateDir ("action-{0}.json" -f ([guid]::NewGuid().ToString("N")))
-$action | ConvertTo-Json -Depth 14 | Set-Content -LiteralPath $actionPath -Encoding UTF8
+$actionForRun = $action | ConvertTo-Json -Depth 14 | ConvertFrom-Json
+$actionForRun | Add-Member -NotePropertyName "runtime_intent" -NotePropertyValue $Intent -Force
+$actionForRun | ConvertTo-Json -Depth 14 | Set-Content -LiteralPath $actionPath -Encoding UTF8
 
 $argsList = @($helper, "--port", [string]$Port, "--match-url", $Url, "--action-file", $actionPath)
 if ($AllowWrite) { $argsList += "--allow-write" }

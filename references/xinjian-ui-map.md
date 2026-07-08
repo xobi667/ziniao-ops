@@ -46,6 +46,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 
 The invoker reports the matched page/action, safety gate, and locator strategy. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
 
+Locator strategy is layered. Exact selectors, row-action locators, hrefs, visible DOM text, placeholder strings, placeholder lists, and known tab-text lists are used first. For known date/platform lists, the invoker passes the user's original intent into the CDP helper so requests such as `近7天`, `最近七天`, `Shopee`, or `Lazada` can choose the matching visible tab instead of clicking a generic label. When a safe tab/status-tab has no explicit locator, the invoker may click the matching visible action text. When a date filter has no explicit placeholder, it may focus the nearest visible date/select control next to the filter label. Generic entries such as `行分析` and `操作` remain `map_only` until a capture records exact visible labels or row-action metadata.
+
 When `-Url` is provided, query and invoke scripts first scope page-level matches to the current route. Off-page name matches are suppressed unless no current-page match exists, so an intent like `首页` on `/ai/talk` resolves to the current page's 首页 action instead of the 首页 page's unrelated controls.
 
 5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:

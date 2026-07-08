@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T11:40:26.651Z",
+  "generated_at": "2026-07-08T11:48:36.581Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -77,12 +77,16 @@
     },
     "locator_strategy_counts": {
       "click_first_matching_row_action_in_table": 2,
+      "click_quick_tab_text_or_placeholder_list": 3,
       "click_trigger_selector": 71,
       "click_trigger_selector_then_dialog_button_text": 26,
       "click_trigger_selector_then_overlay_item_text": 40,
+      "click_visible_action_text": 50,
       "click_visible_dom_text": 213,
+      "click_visible_tab_text_from_list": 1,
       "input_or_filter_placeholder": 67,
-      "map_only": 58,
+      "input_or_filter_placeholder_list": 2,
+      "map_only": 2,
       "navigate_href": 43,
       "uia_locator": 9
     }
@@ -191,39 +195,6 @@
     ],
     "map_only_actions": [
       {
-        "page": "广告详情",
-        "route": "/ad/group-detail",
-        "action": "日期范围",
-        "context": "",
-        "type": "date_filter",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Set the ad detail date range or use the visible quick tabs."
-      },
-      {
-        "page": "创意详情",
-        "route": "/ad/originality-detail",
-        "action": "日期范围",
-        "context": "",
-        "type": "date_filter",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Set the creative detail date range or use the visible quick tabs."
-      },
-      {
-        "page": "店铺广告分析",
-        "route": "/ad/shop-detail",
-        "action": "日期范围",
-        "context": "",
-        "type": "date_filter",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Set the advertising analysis date range or use the visible quick tabs."
-      },
-      {
         "page": "店铺广告分析",
         "route": "/ad/shop-detail",
         "action": "行分析",
@@ -233,589 +204,6 @@
         "locator_strategy": "map_only",
         "source_map": "curated",
         "purpose": "Open a row-level advertising analysis/detail page for the selected shop or ad entity."
-      },
-      {
-        "page": "店铺广告分析",
-        "route": "/ad/shop-detail",
-        "action": "平台标签",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Switch the shop advertising analysis table between platform tabs."
-      },
-      {
-        "page": "广告规则执行日志",
-        "route": "/erp/ads/rule-log",
-        "action": "日期范围",
-        "context": "",
-        "type": "date_filter",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Filter rule logs by execution date range."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/afterSalesOrder/index",
-        "action": "商品售后统计",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/afterSalesOrder/index",
-        "action": "售后单",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 售后单 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/afterSalesOrder/index",
-        "action": "售后专项统计",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/afterSalesOrder/index",
-        "action": "数据概览",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 数据概览 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "待处理超时",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 待处理超时 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "订单同步",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 订单同步 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "拉单店铺",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 拉单店铺 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "拉单租户",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 拉单租户 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "平台推送",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 平台推送 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "普通队列",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 普通队列 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "入库店铺",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 入库店铺 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "入库租户",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 入库租户 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "同步点落后",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 同步点落后 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "优先队列",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 优先队列 tab/view."
-      },
-      {
-        "page": "推送监控",
-        "route": "/bi/monitor/pushFlowStats",
-        "action": "执行中超时",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 推送监控 to the 执行中超时 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSaleOrder/index",
-        "action": "商品售后统计",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSaleOrder/index",
-        "action": "售后单",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 售后单 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSaleOrder/index",
-        "action": "售后专项统计",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSaleOrder/index",
-        "action": "数据概览",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 数据概览 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSalesOrder/index",
-        "action": "商品售后统计",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSalesOrder/index",
-        "action": "售后单",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 售后单 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSalesOrder/index",
-        "action": "售后专项统计",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view."
-      },
-      {
-        "page": "售后单管理",
-        "route": "/bi/operationCenter/afterSalesOrder/index",
-        "action": "数据概览",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 售后单管理 to the 数据概览 tab/view."
-      },
-      {
-        "page": "店铺利润分析详情",
-        "route": "/bi/profit/detail",
-        "action": "今天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 店铺利润分析详情 to the 今天 tab/view."
-      },
-      {
-        "page": "店铺利润分析详情",
-        "route": "/bi/profit/detail",
-        "action": "近30天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 店铺利润分析详情 to the 近30天 tab/view."
-      },
-      {
-        "page": "店铺利润分析详情",
-        "route": "/bi/profit/detail",
-        "action": "近7天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 店铺利润分析详情 to the 近7天 tab/view."
-      },
-      {
-        "page": "店铺利润分析详情",
-        "route": "/bi/profit/detail",
-        "action": "昨天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 店铺利润分析详情 to the 昨天 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail-simple",
-        "action": "订单列表",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 订单列表 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail-simple",
-        "action": "视频链接",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 视频链接 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail-simple",
-        "action": "销售数据",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 销售数据 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail-simple",
-        "action": "直播链接",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 直播链接 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail",
-        "action": "订单列表",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 订单列表 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail",
-        "action": "视频链接",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 视频链接 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail",
-        "action": "销售数据",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 销售数据 tab/view."
-      },
-      {
-        "page": "合作单详情",
-        "route": "/crm/cooperation-detail",
-        "action": "直播链接",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 合作单详情 to the 直播链接 tab/view."
-      },
-      {
-        "page": "达人公海",
-        "route": "/crm/matser/management/highSeas",
-        "action": "合作中",
-        "context": "",
-        "type": "status_tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Show creators currently cooperating."
-      },
-      {
-        "page": "达人公海",
-        "route": "/crm/matser/management/highSeas",
-        "action": "全部",
-        "context": "",
-        "type": "status_tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Show all creators in the high-seas list."
-      },
-      {
-        "page": "达人公海",
-        "route": "/crm/matser/management/highSeas",
-        "action": "已出单",
-        "context": "",
-        "type": "status_tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Show creators that already generated orders."
-      },
-      {
-        "page": "达人公海",
-        "route": "/crm/matser/management/highSeas",
-        "action": "已触达",
-        "context": "",
-        "type": "status_tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Show creators already reached/contacted."
-      },
-      {
-        "page": "达人公海",
-        "route": "/crm/matser/management/highSeas",
-        "action": "已申样",
-        "context": "",
-        "type": "status_tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Show creators already in sample request status."
-      },
-      {
-        "page": "店铺详情",
-        "route": "/crm/shop-detail",
-        "action": "店铺商品",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 店铺详情 to the 店铺商品 tab/view."
-      },
-      {
-        "page": "店铺详情",
-        "route": "/crm/shop-detail",
-        "action": "关联达人",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 店铺详情 to the 关联达人 tab/view."
-      },
-      {
-        "page": "商品评论详情",
-        "route": "/product-data/detail",
-        "action": "今天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 商品评论详情 to the 今天 tab/view."
-      },
-      {
-        "page": "商品评论详情",
-        "route": "/product-data/detail",
-        "action": "近30天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 商品评论详情 to the 近30天 tab/view."
-      },
-      {
-        "page": "商品评论详情",
-        "route": "/product-data/detail",
-        "action": "近7天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 商品评论详情 to the 近7天 tab/view."
-      },
-      {
-        "page": "商品评论详情",
-        "route": "/product-data/detail",
-        "action": "昨天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 商品评论详情 to the 昨天 tab/view."
-      },
-      {
-        "page": "进销存详情",
-        "route": "/product-sku/InventoryReport_detail",
-        "action": "近30天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 进销存详情 to the 近30天 tab/view."
-      },
-      {
-        "page": "进销存详情",
-        "route": "/product-sku/InventoryReport_detail",
-        "action": "近7天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 进销存详情 to the 近7天 tab/view."
-      },
-      {
-        "page": "进销存详情",
-        "route": "/product-sku/InventoryReport_detail",
-        "action": "昨天",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 进销存详情 to the 昨天 tab/view."
-      },
-      {
-        "page": "单量套餐",
-        "route": "/user/package",
-        "action": "单量套餐",
-        "context": "",
-        "type": "tab",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "auto",
-        "purpose": "Switch 单量套餐 to the 单量套餐 tab/view."
-      },
-      {
-        "page": "下载中心",
-        "route": "/download/list",
-        "action": "日期范围",
-        "context": "",
-        "type": "date_filter",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Filter download-center reports by date range."
       },
       {
         "page": "下载中心",
@@ -831,7 +219,7 @@
     ],
     "empty_locator_actions": [],
     "next_improvements": [
-      "Promote map_only tabs/date filters to DOM or overlay locators where possible.",
+      "Capture generic platform tabs, row navigation, and row operations with exact DOM text or row-action locators where possible.",
       "Manually classify manual_review actions before allowing execution.",
       "Keep write/export actions confirmation-required even when locators are known."
     ]
@@ -900,7 +288,7 @@
         {
           "id": "ad.group_detail.filter.date_range",
           "name": "日期范围",
-          "context": "",
+          "context": "tabs:今天/昨天/近7天/近30天; placeholders:开始日期/结束日期",
           "aliases": [
             "日期",
             "开始日期",
@@ -918,7 +306,7 @@
           "purpose": "Set the ad detail date range or use the visible quick tabs.",
           "function_source": "observed date placeholders and tabs; behavior not clicked",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_quick_tab_text_or_placeholder_list",
           "locator": {
             "dom_placeholders": [
               "开始日期",
@@ -1112,7 +500,7 @@
         {
           "id": "ad.originality_detail.filter.date_range",
           "name": "日期范围",
-          "context": "",
+          "context": "tabs:今天/昨天/近7天/近30天; placeholders:开始日期/结束日期",
           "aliases": [
             "日期",
             "开始日期",
@@ -1130,7 +518,7 @@
           "purpose": "Set the creative detail date range or use the visible quick tabs.",
           "function_source": "observed date placeholders and tabs; behavior not clicked",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_quick_tab_text_or_placeholder_list",
           "locator": {
             "dom_placeholders": [
               "开始日期",
@@ -1558,7 +946,7 @@
         {
           "id": "ad.shop_detail.filter.date_range",
           "name": "日期范围",
-          "context": "",
+          "context": "tabs:今天/昨天/近7天/近30天; placeholders:开始日期/结束日期",
           "aliases": [
             "日期",
             "开始日期",
@@ -1576,7 +964,7 @@
           "purpose": "Set the advertising analysis date range or use the visible quick tabs.",
           "function_source": "observed date placeholders and date tabs; behavior not clicked",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_quick_tab_text_or_placeholder_list",
           "locator": {
             "dom_placeholders": [
               "开始日期",
@@ -1901,7 +1289,7 @@
         {
           "id": "ad.shop_detail.platform_tabs",
           "name": "平台标签",
-          "context": "",
+          "context": "tabs:Shopee/Lazada/Tiktok",
           "aliases": [
             "Shopee",
             "Lazada",
@@ -1916,7 +1304,7 @@
           "purpose": "Switch the shop advertising analysis table between platform tabs.",
           "function_source": "observed tab labels; behavior not clicked",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_tab_text_from_list",
           "locator": {
             "tab_texts": [
               "Shopee",
@@ -1989,7 +1377,7 @@
         {
           "id": "erp.ads.rule_log.filter.date_range",
           "name": "日期范围",
-          "context": "",
+          "context": "placeholders:开始日期/结束日期",
           "aliases": [
             "日期",
             "开始日期",
@@ -2003,7 +1391,7 @@
           "purpose": "Filter rule logs by execution date range.",
           "function_source": "observed date placeholders and table header; behavior not clicked",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "input_or_filter_placeholder_list",
           "locator": {
             "dom_placeholders": [
               "开始日期",
@@ -2720,7 +2108,7 @@
           "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "商品售后统计"
           }
@@ -2739,7 +2127,7 @@
           "purpose": "Switch 售后单管理 to the 售后单 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "售后单"
           }
@@ -2758,7 +2146,7 @@
           "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "售后专项统计"
           }
@@ -2777,7 +2165,7 @@
           "purpose": "Switch 售后单管理 to the 数据概览 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "数据概览"
           }
@@ -2951,7 +2339,7 @@
           "purpose": "Switch 推送监控 to the 待处理超时 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "待处理超时"
           }
@@ -2970,7 +2358,7 @@
           "purpose": "Switch 推送监控 to the 订单同步 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "订单同步"
           }
@@ -2989,7 +2377,7 @@
           "purpose": "Switch 推送监控 to the 拉单店铺 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "拉单店铺"
           }
@@ -3008,7 +2396,7 @@
           "purpose": "Switch 推送监控 to the 拉单租户 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "拉单租户"
           }
@@ -3027,7 +2415,7 @@
           "purpose": "Switch 推送监控 to the 平台推送 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "平台推送"
           }
@@ -3046,7 +2434,7 @@
           "purpose": "Switch 推送监控 to the 普通队列 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "普通队列"
           }
@@ -3065,7 +2453,7 @@
           "purpose": "Switch 推送监控 to the 入库店铺 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "入库店铺"
           }
@@ -3084,7 +2472,7 @@
           "purpose": "Switch 推送监控 to the 入库租户 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "入库租户"
           }
@@ -3103,7 +2491,7 @@
           "purpose": "Switch 推送监控 to the 同步点落后 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "同步点落后"
           }
@@ -3122,7 +2510,7 @@
           "purpose": "Switch 推送监控 to the 优先队列 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "优先队列"
           }
@@ -3141,7 +2529,7 @@
           "purpose": "Switch 推送监控 to the 执行中超时 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "执行中超时"
           }
@@ -3608,7 +2996,7 @@
           "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "商品售后统计"
           }
@@ -3627,7 +3015,7 @@
           "purpose": "Switch 售后单管理 to the 售后单 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "售后单"
           }
@@ -3646,7 +3034,7 @@
           "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "售后专项统计"
           }
@@ -3665,7 +3053,7 @@
           "purpose": "Switch 售后单管理 to the 数据概览 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "数据概览"
           }
@@ -4132,7 +3520,7 @@
           "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "商品售后统计"
           }
@@ -4151,7 +3539,7 @@
           "purpose": "Switch 售后单管理 to the 售后单 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "售后单"
           }
@@ -4170,7 +3558,7 @@
           "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "售后专项统计"
           }
@@ -4189,7 +3577,7 @@
           "purpose": "Switch 售后单管理 to the 数据概览 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "数据概览"
           }
@@ -4381,7 +3769,7 @@
           "purpose": "Switch 店铺利润分析详情 to the 今天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "今天"
           }
@@ -4400,7 +3788,7 @@
           "purpose": "Switch 店铺利润分析详情 to the 近30天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "近30天"
           }
@@ -4419,7 +3807,7 @@
           "purpose": "Switch 店铺利润分析详情 to the 近7天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "近7天"
           }
@@ -4438,7 +3826,7 @@
           "purpose": "Switch 店铺利润分析详情 to the 昨天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "昨天"
           }
@@ -4786,7 +4174,7 @@
           "purpose": "Switch 合作单详情 to the 订单列表 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "订单列表"
           }
@@ -4805,7 +4193,7 @@
           "purpose": "Switch 合作单详情 to the 视频链接 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "视频链接"
           }
@@ -4824,7 +4212,7 @@
           "purpose": "Switch 合作单详情 to the 销售数据 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "销售数据"
           }
@@ -4843,7 +4231,7 @@
           "purpose": "Switch 合作单详情 to the 直播链接 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "直播链接"
           }
@@ -4959,7 +4347,7 @@
           "purpose": "Switch 合作单详情 to the 订单列表 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "订单列表"
           }
@@ -4978,7 +4366,7 @@
           "purpose": "Switch 合作单详情 to the 视频链接 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "视频链接"
           }
@@ -4997,7 +4385,7 @@
           "purpose": "Switch 合作单详情 to the 销售数据 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "销售数据"
           }
@@ -5016,7 +4404,7 @@
           "purpose": "Switch 合作单详情 to the 直播链接 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "直播链接"
           }
@@ -6296,7 +5684,7 @@
           "purpose": "Show creators currently cooperating.",
           "function_source": "",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "uia_name_starts_with": "合作中",
             "uia_type": "TabItem"
@@ -6317,7 +5705,7 @@
           "purpose": "Show all creators in the high-seas list.",
           "function_source": "",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "uia_name_starts_with": "全部",
             "uia_type": "TabItem"
@@ -6338,7 +5726,7 @@
           "purpose": "Show creators that already generated orders.",
           "function_source": "",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "uia_name_starts_with": "已出单",
             "uia_type": "TabItem"
@@ -6359,7 +5747,7 @@
           "purpose": "Show creators already reached/contacted.",
           "function_source": "",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "uia_name_starts_with": "已触达",
             "uia_type": "TabItem"
@@ -6381,7 +5769,7 @@
           "purpose": "Show creators already in sample request status.",
           "function_source": "",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "uia_name_starts_with": "已申样",
             "uia_type": "TabItem"
@@ -6641,7 +6029,7 @@
           "purpose": "Switch 店铺详情 to the 店铺商品 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "店铺商品"
           }
@@ -6660,7 +6048,7 @@
           "purpose": "Switch 店铺详情 to the 关联达人 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "关联达人"
           }
@@ -9089,7 +8477,7 @@
           "purpose": "Switch 商品评论详情 to the 今天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "今天"
           }
@@ -9108,7 +8496,7 @@
           "purpose": "Switch 商品评论详情 to the 近30天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "近30天"
           }
@@ -9127,7 +8515,7 @@
           "purpose": "Switch 商品评论详情 to the 近7天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "近7天"
           }
@@ -9146,7 +8534,7 @@
           "purpose": "Switch 商品评论详情 to the 昨天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "昨天"
           }
@@ -9456,7 +8844,7 @@
           "purpose": "Switch 进销存详情 to the 近30天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "近30天"
           }
@@ -9475,7 +8863,7 @@
           "purpose": "Switch 进销存详情 to the 近7天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "近7天"
           }
@@ -9494,7 +8882,7 @@
           "purpose": "Switch 进销存详情 to the 昨天 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "昨天"
           }
@@ -11723,7 +11111,7 @@
           "purpose": "Switch 单量套餐 to the 单量套餐 tab/view.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "source_map": "auto",
-          "locator_strategy": "map_only",
+          "locator_strategy": "click_visible_action_text",
           "locator": {
             "tab_text": "单量套餐"
           }
@@ -11924,7 +11312,7 @@
         {
           "id": "download.list.filter.date_range",
           "name": "日期范围",
-          "context": "",
+          "context": "placeholders:开始日期/结束日期",
           "aliases": [
             "日期",
             "开始日期",
@@ -11939,7 +11327,7 @@
           "purpose": "Filter download-center reports by date range.",
           "function_source": "observed date placeholders and table headers; behavior not clicked",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "input_or_filter_placeholder_list",
           "locator": {
             "dom_placeholders": [
               "开始日期",

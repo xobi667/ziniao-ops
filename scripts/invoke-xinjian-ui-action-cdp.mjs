@@ -92,7 +92,8 @@ const expression = `(() => {
     try { return root.querySelector(selector); } catch { return null; }
   };
   const visibleCandidates = (selector, root = document) => Array.from(root.querySelectorAll(selector)).filter(isVisible);
-  const findByText = (text, root = document, selector = "button,a,[role='button'],.el-button,.el-dropdown,.el-select,.el-input__inner,[tabindex]") => {
+  const interactiveTextSelector = "button,a,[role='button'],[role='tab'],.el-button,.el-dropdown,.el-select,.el-input,.el-input__inner,.el-date-editor,.el-range-editor,.el-tabs__item,.el-radio,.el-radio-button,.el-radio-button__inner,[tabindex]";
+  const findByText = (text, root = document, selector = interactiveTextSelector) => {
     const target = clean(text);
     if (!target) return null;
     const candidates = visibleCandidates(selector, root);
@@ -103,6 +104,84 @@ const expression = `(() => {
   const visibleDialogs = () => visibleCandidates(".el-dialog,.el-drawer,.el-message-box,[role='dialog']");
   const findOverlayItem = (text) => findByText(text, document, ".el-select-dropdown__item,.el-dropdown-menu__item,.el-cascader-node,[role='option'],li,button,a,[role='button']");
   const clickDomText = () => clickElement(findByText(action.locator?.dom_text || action.name));
+  const focusElement = (el) => {
+    if (!el || !isVisible(el)) return false;
+    el.scrollIntoView({ block: "center", inline: "center" });
+    el.click();
+    if (typeof el.focus === "function") el.focus();
+    return true;
+  };
+  const clickInputByPlaceholder = (placeholder) => {
+    const target = clean(placeholder || action.locator?.dom_placeholder || action.name);
+    if (!target) return false;
+    const candidates = visibleCandidates("input[placeholder],textarea[placeholder],.el-input__inner[placeholder]");
+    const normalizedTarget = target.replace(/\\s+/g, "");
+    const input = candidates.find((el) => clean(el.getAttribute("placeholder")) === target) ||
+      candidates.find((el) => clean(el.getAttribute("placeholder")).replace(/\\s+/g, "").includes(normalizedTarget));
+    if (input) return focusElement(input);
+    return clickElement(findByText(target, document, ".el-select,.el-cascader,.el-date-editor,.el-range-editor,.el-input"));
+  };
+  const normalizeChoice = (value) => clean(value)
+    .toLowerCase()
+    .replace(/最近/g, "近")
+    .replace(/三十/g, "30")
+    .replace(/七/g, "7")
+    .replace(/[\\s\\-_/]/g, "");
+  const textMatchesIntent = (candidate) => {
+    const intent = normalizeChoice(action.runtime_intent || "");
+    const value = normalizeChoice(candidate);
+    return !!intent && !!value && (intent === value || intent.includes(value) || value.includes(intent));
+  };
+  const asTextList = (value) => Array.isArray(value) ? value.map(clean).filter(Boolean) : [];
+  const clickPreferredText = (values, clicker) => {
+    const list = asTextList(values);
+    const preferred = list.find(textMatchesIntent);
+    return preferred ? clicker(preferred) : false;
+  };
+  const clickTabTextFromList = () => clickPreferredText(action.locator?.tab_texts, (text) => clickElement(findByText(text)));
+  const clickPlaceholderFromList = () => {
+    const placeholders = asTextList(action.locator?.dom_placeholders);
+    if (!placeholders.length) return false;
+    if (clickPreferredText(placeholders, clickInputByPlaceholder)) return true;
+    return placeholders.some((placeholder) => clickInputByPlaceholder(placeholder));
+  };
+  const findControlNearText = (text) => {
+    const target = clean(text);
+    if (!target) return null;
+    const normalizedTarget = target.replace(/\\s+/g, "");
+    const labels = visibleCandidates("label,.el-form-item__label,.filter-label,.search-label,span,div")
+      .filter((el) => {
+        const value = textOf(el);
+        if (!value) return false;
+        const normalizedValue = value.replace(/\\s+/g, "");
+        return value === target || normalizedValue === normalizedTarget;
+      });
+    for (const label of labels) {
+      const forId = label.getAttribute("for");
+      if (forId) {
+        const byFor = document.getElementById(forId);
+        if (byFor && isVisible(byFor)) return byFor;
+      }
+      const containers = [
+        label.closest(".el-form-item"),
+        label.closest(".filter-item"),
+        label.closest(".search-item"),
+        label.closest(".el-col"),
+        label.parentElement
+      ].filter(Boolean);
+      for (const container of containers) {
+        const control = visibleCandidates("input,textarea,.el-input__inner,.el-select,.el-cascader,.el-date-editor,.el-range-editor,button,[role='button']", container)
+          .find((el) => el !== label && !label.contains(el));
+        if (control) return control;
+      }
+    }
+    return null;
+  };
+  const clickFilterLabelOrText = () => clickInputByPlaceholder(action.locator?.dom_placeholder) ||
+    clickPlaceholderFromList() ||
+    focusElement(findControlNearText(action.name)) ||
+    clickDomText();
+  const clickDateFilter = () => clickTabTextFromList() || clickPlaceholderFromList() || clickFilterLabelOrText();
   const clickNavigation = () => {
     const href = action.locator?.href || "";
     if (href) {
@@ -158,7 +237,12 @@ const expression = `(() => {
     if (action.type === "navigation" || action.type === "module_switch") clicked = clickNavigation();
     else if (action.type === "overlay_trigger" || action.type === "overlay_item") clicked = await clickOverlay();
     else if (action.type === "dialog_opener" || action.type === "dialog_button") clicked = await clickDialog();
+    else if (["filter_input", "filter_dropdown", "form_input"].includes(action.type) && action.locator?.dom_placeholder) clicked = clickInputByPlaceholder(action.locator.dom_placeholder);
+    else if (action.type === "date_filter") clicked = clickDateFilter();
+    else if (Array.isArray(action.locator?.tab_texts) && action.locator.tab_texts.length) clicked = clickTabTextFromList() || clickDomText();
+    else if (Array.isArray(action.locator?.dom_placeholders) && action.locator.dom_placeholders.length) clicked = clickPlaceholderFromList();
     else if (action.type === "row_action") clicked = clickRowAction();
+    else if (["tab", "status_tab", "row_navigation", "button_menu"].includes(action.type)) clicked = clickDomText();
     else clicked = clickDomText();
     if (!(action.locator?.href && (action.type === "navigation" || action.type === "module_switch"))) {
       await wait(250);
