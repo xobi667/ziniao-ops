@@ -166,7 +166,7 @@ function classifySafety(name, type) {
   if (/^(搜索|查询)$/.test(compact)) return "read_filter";
   if (/^重置$/.test(compact)) return "read_filter";
   if (/导出|下载/.test(compact)) return "confirmation_required_export";
-  if (/保存|提交|删除|恢复|批量|修改|编辑|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消|标记/.test(compact)) {
+  if (/保存|提交|删除|恢复|批量|群发|邮件|修改|编辑|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消|标记|加黑/.test(compact)) {
     return "confirmation_required_write";
   }
   if (/详情|查看|分析|打开|进入|首页|返回/.test(compact)) return "navigation";

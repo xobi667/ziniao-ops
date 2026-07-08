@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dialog_captures",
-  "generated_at": "2026-07-08T11:11:44.352Z",
+  "generated_at": "2026-07-08T11:57:36.596Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
@@ -947,7 +947,7 @@
             "新增选择"
           ],
           "type": "dialog_button",
-          "safety": "unknown_observed",
+          "safety": "opens_dialog_no_submit",
           "purpose": "Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置.",
           "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
           "locator": {

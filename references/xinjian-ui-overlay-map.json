@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T11:00:03.890Z",
+  "generated_at": "2026-07-08T11:57:36.629Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -4149,7 +4149,7 @@
             "请选择利润"
           ],
           "type": "overlay_item",
-          "safety": "unknown_observed",
+          "safety": "read_filter",
           "purpose": "Choose 利润 from the 请选择 overlay on 首页.",
           "function_source": "auto-generated from observed overlay item; item was not clicked",
           "locator": {
@@ -4181,7 +4181,7 @@
             "请选择订单"
           ],
           "type": "overlay_item",
-          "safety": "unknown_observed",
+          "safety": "read_filter",
           "purpose": "Choose 订单 from the 请选择 overlay on 首页.",
           "function_source": "auto-generated from observed overlay item; item was not clicked",
           "locator": {
@@ -4213,7 +4213,7 @@
             "请选择店铺"
           ],
           "type": "overlay_item",
-          "safety": "unknown_observed",
+          "safety": "read_filter",
           "purpose": "Choose 店铺 from the 请选择 overlay on 首页.",
           "function_source": "auto-generated from observed overlay item; item was not clicked",
           "locator": {

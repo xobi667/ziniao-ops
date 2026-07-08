@@ -156,6 +156,7 @@ function classifySafety(name, type) {
   const compact = clean(name).replace(/\s+/g, "");
   if (type === "dialog_opener") return "opens_dialog_no_submit";
   if (/^(取消|关闭|返回|Close)$/i.test(compact)) return "read_filter";
+  if (/^选择$/.test(compact)) return "opens_dialog_no_submit";
   if (/导出|下载/.test(compact)) return "confirmation_required_export";
   if (/保存|提交|确定|确认|删除|恢复|批量|修改|编辑|更新|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|标记/.test(compact)) {
     return "confirmation_required_write";

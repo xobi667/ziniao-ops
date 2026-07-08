@@ -142,6 +142,7 @@ The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`,
 - Row-action capture reads table headers and row action button labels only; it must not read row cell values or click row buttons. Treat row edit/delete/export/write entries as confirmation-required.
 - Default capture excludes table row values because they can contain private business data. Use row data only for a user-requested report, not for public skill memory.
 - Any action that assigns, claims, saves, submits, deletes, exports, or batch-updates must be treated as confirmation-required unless the user explicitly asks for that exact operation.
+- Form-field actions may focus or open the field control only. They must not type values or submit the form unless a separate explicit write/submit action is confirmed.
 - `invoke-xinjian-ui-action.ps1` is dry-run by default. `-Execute` may click safe non-write actions through CDP; confirmation-required write/export actions require `-AllowWrite` or `-AllowExport`.
 - A mapped locator is a memory aid, not permission to perform a write action.
 
@@ -175,7 +176,7 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler, 0 pending after exclusions, 26 pages promoted to the overlay map, 162 overlay actions.
 - Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler, 0 pending after exclusions, 8 pages promoted to the dialog map, 35 dialog actions.
 - Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler, 0 pending after exclusions, 1 page promoted to the row-action map, 2 row actions.
-- Unified action catalog: 49 pages, 529 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `map_only` actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
+- Unified action catalog: 49 pages, 529 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

@@ -23,9 +23,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | Safety mode | Actions |
 | --- | ---: |
 | confirmation_required_export | 8 |
-| confirmation_required_write | 138 |
-| manual_review | 9 |
-| safe_execute_allowed | 374 |
+| confirmation_required_write | 140 |
+| safe_execute_allowed | 381 |
 
 ### Locator Strategies
 
@@ -47,23 +46,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 ## Audit
 
-- Manual-review actions: 9
+- Manual-review actions: 0
 - Map-only actions: 0
 - Empty-locator actions: 0
-
-### Manual Review Actions
-
-| Page | Route | Action | Type | Strategy | Purpose |
-| --- | --- | --- | --- | --- | --- |
-| 收藏夹详情 | `/crm/favorite/detail` | 群发邮件 | button | click_visible_dom_text | Observed 群发邮件 control on 收藏夹详情; exact behavior has not been clicked yet. |
-| 发起 OA 请假 | `/bpm/oa/leave/create` | 请输入原因 | form_input | input_or_filter_placeholder | Fill or choose the 请输入原因 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
-| 发起 OA 请假 | `/bpm/oa/leave/create` | 选择结束时间 | form_input | input_or_filter_placeholder | Fill or choose the 选择结束时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
-| 发起 OA 请假 | `/bpm/oa/leave/create` | 选择开始时间 | form_input | input_or_filter_placeholder | Fill or choose the 选择开始时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
-| 黑名单管理 | `/erp/blacklist` | 自动加黑 | button | click_visible_dom_text | Observed 自动加黑 control on 黑名单管理; exact behavior has not been clicked yet. |
-| SKU最低售价配置 | `/order/sku-min-price` | 新增选择 | dialog_button | click_trigger_selector_then_dialog_button_text | Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置. |
-| 首页 | `/index/home` | 店铺 | overlay_item | click_trigger_selector_then_overlay_item_text | Choose 店铺 from the 请选择 overlay on 首页. |
-| 首页 | `/index/home` | 订单 | overlay_item | click_trigger_selector_then_overlay_item_text | Choose 订单 from the 请选择 overlay on 首页. |
-| 首页 | `/index/home` | 利润 | overlay_item | click_trigger_selector_then_overlay_item_text | Choose 利润 from the 请选择 overlay on 首页. |
 
 ## ADS / 广告详情
 
@@ -392,7 +377,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 批量操作 | text:批量操作 | batch_action | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes. |
 | 保存配置 | text:保存配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes. |
 | 去达人广场添加 | text:去达人广场添加 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes. |
-| 群发邮件 | text:群发邮件 | button | manual_review | click_visible_dom_text | auto | Observed 群发邮件 control on 收藏夹详情; exact behavior has not been clicked yet. |
+| 群发邮件 | text:群发邮件 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes. |
 | 搜索 | text:搜索 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 收藏夹详情. |
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置 | text:重置 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 收藏夹详情. |
@@ -548,9 +533,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 提 交 | text:提 交 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 发起 OA 请假; requires explicit confirmation before committing changes. |
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 发起 OA 请假; requires explicit confirmation before committing changes. |
-| 请输入原因 | placeholder:请输入原因 | form_input | manual_review | input_or_filter_placeholder | auto | Fill or choose the 请输入原因 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
-| 选择结束时间 | placeholder:选择结束时间 | form_input | manual_review | input_or_filter_placeholder | auto | Fill or choose the 选择结束时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
-| 选择开始时间 | placeholder:选择开始时间 | form_input | manual_review | input_or_filter_placeholder | auto | Fill or choose the 选择开始时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
+| 请输入原因 | placeholder:请输入原因 | form_input | safe_execute_allowed | input_or_filter_placeholder | auto | Fill or choose the 请输入原因 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
+| 选择结束时间 | placeholder:选择结束时间 | form_input | safe_execute_allowed | input_or_filter_placeholder | auto | Fill or choose the 选择结束时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
+| 选择开始时间 | placeholder:选择开始时间 | form_input | safe_execute_allowed | input_or_filter_placeholder | auto | Fill or choose the 选择开始时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 发起 OA 请假 to a related detail or analysis view. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 发起 OA 请假. |
 
@@ -607,7 +592,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置 | text:重置 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 黑名单管理. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 黑名单管理; requires explicit confirmation before committing changes. |
-| 自动加黑 | text:自动加黑 | button | manual_review | click_visible_dom_text | auto | Observed 自动加黑 control on 黑名单管理; exact behavior has not been clicked yet. |
+| 自动加黑 | text:自动加黑 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 黑名单管理; requires explicit confirmation before committing changes. |
 | 新增关闭 | 新增 -> 关闭 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 关闭 inside the 新增 dialog/drawer on 黑名单管理. |
 | 新增取消 | 新增 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增 dialog/drawer on 黑名单管理. |
 | 新增确定 | 新增 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增 dialog/drawer on 黑名单管理. |
@@ -686,7 +671,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增关闭 | 新增 -> 关闭 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 关闭 inside the 新增 dialog/drawer on SKU最低售价配置. |
 | 新增取消 | 新增 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增 dialog/drawer on SKU最低售价配置. |
 | 新增确定 | 新增 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增 dialog/drawer on SKU最低售价配置. |
-| 新增选择 | 新增 -> 选择 | dialog_button | manual_review | click_trigger_selector_then_dialog_button_text | dialog | Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置. |
+| 新增选择 | 新增 -> 选择 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置. |
 | 新增 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增 dialog/drawer on SKU最低售价配置; do not submit changes without explicit confirmation. |
 | 请输入商品SKU | placeholder:请输入商品SKU | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter SKU最低售价配置 by 请输入商品SKU. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter SKU最低售价配置 by 选择店铺. |
@@ -1003,9 +988,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 按店铺 | 请选择 -> 按店铺 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按店铺 from the 请选择 overlay on 首页. |
 | 按负责人 | 请选择 -> 按负责人 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按负责人 from the 请选择 overlay on 首页. |
 | 按人员 | 请选择 -> 按人员 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按人员 from the 请选择 overlay on 首页. |
-| 店铺 | 请选择 -> 店铺 | overlay_item | manual_review | click_trigger_selector_then_overlay_item_text | overlay | Choose 店铺 from the 请选择 overlay on 首页. |
-| 订单 | 请选择 -> 订单 | overlay_item | manual_review | click_trigger_selector_then_overlay_item_text | overlay | Choose 订单 from the 请选择 overlay on 首页. |
-| 利润 | 请选择 -> 利润 | overlay_item | manual_review | click_trigger_selector_then_overlay_item_text | overlay | Choose 利润 from the 请选择 overlay on 首页. |
+| 店铺 | 请选择 -> 店铺 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 店铺 from the 请选择 overlay on 首页. |
+| 订单 | 请选择 -> 订单 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 订单 from the 请选择 overlay on 首页. |
+| 利润 | 请选择 -> 利润 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 利润 from the 请选择 overlay on 首页. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 首页. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
 

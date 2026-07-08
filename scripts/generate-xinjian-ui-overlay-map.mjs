@@ -141,7 +141,7 @@ function classifySafety(name, type) {
   if (type === "overlay_trigger") return "view_setting";
   if (/^(搜索|查询|重置|今天|昨天|近7天|近30天)$/.test(compact)) return "read_filter";
   if (/^(按|选择|切换)/.test(compact)) return "read_filter";
-  if (/^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|已邀约|未邀约|达人ID|达人昵称|达人名称|视频ID号|视频名称|Tiktok账号|TikTok账号|店铺名称|店铺名|负责人|人员|商务)$/.test(compact)) return "read_filter";
+  if (/^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|已邀约|未邀约|达人ID|达人昵称|达人名称|视频ID号|视频名称|Tiktok账号|TikTok账号|店铺名称|店铺名|负责人|人员|商务|店铺|订单|利润)$/.test(compact)) return "read_filter";
   if (/导出|下载/.test(compact)) return "confirmation_required_export";
   if (/保存|提交|删除|恢复|批量|修改|编辑|更新|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消|标记/.test(compact)) {
     return "confirmation_required_write";

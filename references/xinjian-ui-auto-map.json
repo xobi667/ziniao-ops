@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dom_captures",
-  "generated_at": "2026-07-08T10:28:41.804Z",
+  "generated_at": "2026-07-08T11:57:36.656Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "This generated map stores generic page controls only. It must not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -2739,8 +2739,8 @@
             "群发邮件"
           ],
           "type": "button",
-          "safety": "unknown_observed",
-          "purpose": "Observed 群发邮件 control on 收藏夹详情; exact behavior has not been clicked yet.",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "locator": {
             "dom_text": "群发邮件"
@@ -3762,8 +3762,8 @@
             "自动加黑"
           ],
           "type": "button",
-          "safety": "unknown_observed",
-          "purpose": "Observed 自动加黑 control on 黑名单管理; exact behavior has not been clicked yet.",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 黑名单管理; requires explicit confirmation before committing changes.",
           "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
           "locator": {
             "dom_text": "自动加黑"

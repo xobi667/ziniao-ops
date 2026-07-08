@@ -23,7 +23,7 @@ function ConvertFrom-JsonText($Lines) {
 function Get-SafetyMode([string]$Safety) {
   if ($Safety -like "confirmation_required_export*") { return "confirmation_required_export" }
   if ($Safety -like "confirmation_required*") { return "confirmation_required_write" }
-  if ($Safety -in @("read_filter", "navigation", "view_setting", "account_menu", "opens_dialog_no_submit")) { return "safe_execute_allowed" }
+  if ($Safety -in @("read_filter", "navigation", "view_setting", "account_menu", "opens_dialog_no_submit", "form_field")) { return "safe_execute_allowed" }
   return "dry_run_only_unknown_safety"
 }
 

@@ -107,7 +107,7 @@ function safetyMode(action) {
   const safety = clean(action?.safety);
   if (safety.startsWith("confirmation_required_export")) return "confirmation_required_export";
   if (safety.startsWith("confirmation_required")) return "confirmation_required_write";
-  if (["read_filter", "navigation", "view_setting", "account_menu", "opens_dialog_no_submit"].includes(safety)) {
+  if (["read_filter", "navigation", "view_setting", "account_menu", "opens_dialog_no_submit", "form_field"].includes(safety)) {
     return "safe_execute_allowed";
   }
   return "manual_review";
