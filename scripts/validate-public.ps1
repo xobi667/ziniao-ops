@@ -216,6 +216,7 @@ $required = @(
   "scripts\report-xinjian-action-memory.ps1",
   "scripts\learn-xinjian-current-page.ps1",
   "scripts\learn-xinjian-open-pages.ps1",
+  "scripts\learn-xinjian-weak-pages.ps1",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",

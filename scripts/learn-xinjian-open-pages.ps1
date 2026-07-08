@@ -211,7 +211,13 @@ foreach ($page in $dedupedPages) {
 }
 
 $generateResult = $null
-if (!$NoGenerate) {
+$generateSkippedReason = ""
+$preGenerateFailed = @($learned | Where-Object { !$_.ok })
+if ($NoGenerate) {
+  $generateSkippedReason = "no_generate_requested"
+} elseif ($preGenerateFailed.Count -gt 0) {
+  $generateSkippedReason = "page_learning_failed"
+} else {
   $generateResult = Invoke-JsonScript -ScriptName "learn-xinjian-current-page.ps1" -Arguments @("-GenerateOnly", "-Json")
 }
 
@@ -247,6 +253,7 @@ $payload = [ordered]@{
       } else { $null }
     }
   } else { $null }
+  generate_skipped_reason = $generateSkippedReason
   failures = $failed
   next_action = if ($failed.Count -eq 0) { "inspect_catalog_or_invoke_actions" } else { "inspect_failed_page_learning_steps" }
 }

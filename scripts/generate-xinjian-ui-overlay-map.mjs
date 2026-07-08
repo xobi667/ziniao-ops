@@ -92,6 +92,27 @@ function isGenericOverlayItem(value) {
     /^(按|选择|切换|批量|标记|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领)/.test(text);
 }
 
+function isFilterLikeTrigger(triggerName, triggerType) {
+  const name = clean(triggerName).replace(/\s+/g, "");
+  const type = clean(triggerType).toLowerCase();
+  return /select|cascader|date/.test(type) || /选择|请选择|店铺|品类|商务|人员|负责人|状态|标签|年龄|日期|时间|月份/.test(name);
+}
+
+function isWriteMenuLikeItem(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /批量|删除|导入|信息更新|编辑|修改|保存|提交|新增|添加|恢复|转移|分配|认领|应用|标记/.test(text);
+}
+
+function isStaleActionMenuForFilterTrigger(triggerName, triggerType, rawItems) {
+  if (!isFilterLikeTrigger(triggerName, triggerType)) return false;
+  const names = (rawItems || [])
+    .map((item) => clean(item?.name))
+    .filter(Boolean)
+    .filter(isGenericOverlayItem);
+  if (names.length === 0) return false;
+  return names.every(isWriteMenuLikeItem);
+}
+
 function isDateShortcut(value) {
   const text = clean(value).replace(/\s+/g, "");
   return /^(今天|昨天|近7天|近30天|最近7天|最近14天|最近30天|最近半年|最近1年|本月|上月)$/.test(text);
@@ -191,14 +212,16 @@ function pageFromCapture(capture) {
   for (const trigger of capture.overlay_triggers || []) {
     const triggerName = clean(trigger.name || trigger.trigger_type);
     if (!triggerName || triggerName === "用户菜单") continue;
-    const items = Array.isArray(trigger.items) ? trigger.items.filter((item) => {
+    const rawItems = Array.isArray(trigger.items) ? trigger.items : [];
+    if (isStaleActionMenuForFilterTrigger(triggerName, trigger.trigger_type, rawItems)) continue;
+    const items = rawItems.filter((item) => {
       const itemName = clean(item.name);
       if (!isGenericOverlayItem(itemName)) return false;
       if (isDateShortcut(itemName) && !isDateLikeTrigger(triggerName)) return false;
       if (isDateLikeTrigger(triggerName) && !isDateShortcut(itemName)) return false;
       if (isStatusLikeTrigger(triggerName) && !isStatusLikeItem(itemName)) return false;
       return true;
-    }) : [];
+    });
     overlays.push({
       trigger: triggerName,
       trigger_type: trigger.trigger_type,

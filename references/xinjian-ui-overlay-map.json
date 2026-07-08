@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T12:47:29.617Z",
+  "generated_at": "2026-07-08T13:03:26.492Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -2755,15 +2755,6 @@
             ]
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 80,
-            "items": [
-              "批量删除"
-            ]
-          },
-          {
             "trigger": "选择店铺",
             "trigger_type": "cascader",
             "item_count": 0,
@@ -2966,12 +2957,16 @@
           {
             "trigger": "请选择",
             "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 5,
-            "items": [
-              "批量删除",
-              "信息更新"
-            ]
+            "item_count": 0,
+            "filtered_item_count": 50,
+            "items": []
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 7,
+            "items": []
           }
         ]
       },
@@ -3209,23 +3204,6 @@
           "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
           "locator": {
             "trigger_text": "请选择",
-            "trigger_selector": "div#scrollView > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
-          }
-        },
-        {
-          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除",
-          "name": "批量删除",
-          "aliases": [
-            "批量删除",
-            "请选择批量删除"
-          ],
-          "type": "overlay_item",
-          "safety": "confirmation_required_write",
-          "purpose": "Choose 批量删除 from the 请选择 overlay on 达人公海.",
-          "function_source": "auto-generated from observed overlay item; item was not clicked",
-          "locator": {
-            "trigger_text": "请选择",
-            "item_text": "批量删除",
             "trigger_selector": "div#scrollView > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
           }
         },
@@ -3502,7 +3480,7 @@
           }
         },
         {
-          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除.2",
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除",
           "name": "批量删除",
           "aliases": [
             "批量删除",
@@ -3873,23 +3851,6 @@
             "trigger_text": "请选择",
             "item_text": "信息更新",
             "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
-          }
-        },
-        {
-          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.信息更新.5",
-          "name": "信息更新",
-          "aliases": [
-            "信息更新",
-            "请选择信息更新"
-          ],
-          "type": "overlay_item",
-          "safety": "confirmation_required_write",
-          "purpose": "Choose 信息更新 from the 请选择 overlay on 达人公海.",
-          "function_source": "auto-generated from observed overlay item; item was not clicked",
-          "locator": {
-            "trigger_text": "请选择",
-            "item_text": "信息更新",
-            "trigger_selector": "div#scrollView > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
           }
         }
       ]

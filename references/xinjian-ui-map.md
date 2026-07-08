@@ -36,9 +36,10 @@ To audit global memory quality before deciding what to learn next:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-action-memory.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-weak-pages.ps1") -DryRun -Json
 ```
 
-`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. Use it before broad learning passes so work targets pages with low action count or missing dynamic control memory.
+`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. `learn-xinjian-weak-pages.ps1` uses that report to select the highest-risk learnable pages and run the safe current-page learner in a bounded batch. Use `-DryRun` first, then rerun without `-DryRun` for the selected batch.
 
 If the current page is missing, weakly mapped, or newly changed, learn it in one safe pass:
 
@@ -206,7 +207,7 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
 - Public map pages: 10 curated pages plus 38 generated auto-map pages.
-- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler plus the current open-page learner, 0 pending after exclusions, 26 pages promoted to the overlay map, 291 overlay actions.
+- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler plus the current open-page learner, 0 pending after exclusions, 26 pages promoted to the overlay map, 289 overlay actions.
 - Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler plus the current open-page learner, 0 pending after exclusions, 9 pages promoted to the dialog map, 41 dialog actions.
 - Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler plus targeted fixed-right operation-column learning, 0 pending after exclusions, 2 pages promoted to the row-action map, 6 row actions.
 - Unified action catalog: 49 pages, 625 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.

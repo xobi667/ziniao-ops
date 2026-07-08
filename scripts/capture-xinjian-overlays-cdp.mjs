@@ -291,7 +291,6 @@ const expression = `(async () => {
       clickTarget.click();
       await sleep(350);
       let overlays = overlayContainers().filter((overlay) => !beforeOverlays.has(overlay));
-      if (overlays.length === 0) overlays = overlayContainers();
       const rawItems = overlayItems(overlays, item.kind);
       const filteredCount = rawItems.filter((row) => row.filtered).length;
       const visibleItems = rawItems.filter((row) => !row.filtered);

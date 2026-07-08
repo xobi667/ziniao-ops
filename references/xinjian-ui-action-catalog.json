@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T12:47:33.750Z",
+  "generated_at": "2026-07-08T13:04:09.536Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -32,7 +32,7 @@
         "loaded": true,
         "version": "2026-07-08",
         "pages": 26,
-        "actions": 291
+        "actions": 289
       },
       {
         "source": "dialog",
@@ -5993,7 +5993,7 @@
           "locator": {
             "trigger_text": "请选择",
             "item_text": "批量删除",
-            "trigger_selector": "div#scrollView > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--mini"
           }
         },
         {

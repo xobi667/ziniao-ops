@@ -14,7 +14,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
 | auto | 2026-07-08 | 38 | 336 |
-| overlay | 2026-07-08 | 26 | 291 |
+| overlay | 2026-07-08 | 26 | 289 |
 | dialog | 2026-07-08 | 9 | 41 |
 | row-action | 2026-07-08 | 2 | 6 |
 
