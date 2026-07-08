@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T14:04:08.729Z",
+  "generated_at": "2026-07-08T14:10:57.927Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -78,8 +78,8 @@
     "locator_strategy_counts": {
       "click_first_matching_row_action_in_table": 6,
       "click_quick_tab_text_or_placeholder_list": 3,
-      "click_trigger_selector": 84,
-      "click_trigger_selector_then_dialog_button_text": 31,
+      "click_trigger_selector": 83,
+      "click_trigger_selector_then_dialog_button_text": 29,
       "click_trigger_selector_then_overlay_item_text": 108,
       "click_visible_action_text": 50,
       "click_visible_dom_text": 213,
@@ -89,6 +89,7 @@
       "navigate_href": 43,
       "read_table_column_header": 370,
       "row_context_required_column_header": 2,
+      "row_context_required_dialog": 3,
       "uia_locator": 9
     }
   },
@@ -18994,15 +18995,16 @@
           "safety": "read_filter",
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
-          "purpose": "Use 取消 inside the 编辑 dialog/drawer on 自定义费用.",
-          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "purpose": "Remember 取消 inside the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row.",
+          "function_source": "auto-generated from observed row-level dialog/drawer button; button was not clicked and execution requires explicit row context",
           "source_map": "dialog",
-          "locator_strategy": "click_trigger_selector_then_dialog_button_text",
+          "locator_strategy": "row_context_required_dialog",
           "locator": {
             "trigger_text": "编辑",
             "dialog_title": "编辑自定义费用",
             "button_text": "取消",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+            "row_action_text": "编辑",
+            "row_context_required": true
           }
         },
         {
@@ -19018,15 +19020,16 @@
           "safety": "confirmation_required_write",
           "safety_mode": "confirmation_required_write",
           "confirmation_required": true,
-          "purpose": "Use 确定 inside the 编辑 dialog/drawer on 自定义费用.",
-          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "purpose": "Remember 确定 inside the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row.",
+          "function_source": "auto-generated from observed row-level dialog/drawer button; button was not clicked and execution requires explicit row context",
           "source_map": "dialog",
-          "locator_strategy": "click_trigger_selector_then_dialog_button_text",
+          "locator_strategy": "row_context_required_dialog",
           "locator": {
             "trigger_text": "编辑",
             "dialog_title": "编辑自定义费用",
             "button_text": "确定",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+            "row_action_text": "编辑",
+            "row_context_required": true
           }
         },
         {
@@ -19082,7 +19085,7 @@
         {
           "id": "dialog.system.costom.fee.dialog_opener.编辑",
           "name": "编辑",
-          "context": "",
+          "context": "编辑",
           "aliases": [
             "编辑",
             "编辑弹窗",
@@ -19092,13 +19095,14 @@
           "safety": "opens_dialog_no_submit",
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
-          "purpose": "Open the 编辑 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation.",
-          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "purpose": "Remember the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row.",
+          "function_source": "auto-generated from observed row-level dialog opener; selector was row-scoped and execution requires explicit row context",
           "source_map": "dialog",
-          "locator_strategy": "click_trigger_selector",
+          "locator_strategy": "row_context_required_dialog",
           "locator": {
             "trigger_text": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+            "row_action_text": "编辑",
+            "row_context_required": true
           }
         },
         {

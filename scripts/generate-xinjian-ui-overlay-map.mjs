@@ -202,6 +202,36 @@ function aliasesForOverlay(triggerName, itemName) {
   return unique(aliases);
 }
 
+function compactObservedOverlays(overlays) {
+  const byKey = new Map();
+  for (const overlay of overlays || []) {
+    const trigger = clean(overlay.trigger);
+    if (!trigger) continue;
+    const triggerType = clean(overlay.trigger_type);
+    const items = unique(overlay.items || []);
+    const key = [
+      trigger.toLowerCase(),
+      triggerType.toLowerCase(),
+      items.map((item) => item.toLowerCase()).join("\u0001")
+    ].join("|");
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.occurrence_count = (existing.occurrence_count || 1) + 1;
+      existing.item_count = Math.max(existing.item_count || 0, Number(overlay.item_count) || 0);
+      existing.filtered_item_count = Math.max(existing.filtered_item_count || 0, Number(overlay.filtered_item_count) || 0);
+      continue;
+    }
+    byKey.set(key, {
+      trigger,
+      trigger_type: triggerType,
+      item_count: Number(overlay.item_count) || 0,
+      filtered_item_count: Number(overlay.filtered_item_count) || 0,
+      items
+    });
+  }
+  return [...byKey.values()];
+}
+
 function pageFromCapture(capture) {
   const page = capture.page || {};
   const routePath = normalizePath(page.path);
@@ -278,7 +308,7 @@ function pageFromCapture(capture) {
       coverage_result: dedupedActions.length > 0 ? "actions_promoted" : "probe_ran_no_public_overlay_actions",
       function_source: "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
     },
-    observed_controls: { overlays },
+    observed_controls: { overlays: compactObservedOverlays(overlays) },
     actions: dedupedActions
   };
 }
@@ -326,6 +356,7 @@ const pages = [...pagesById.values()].map((page) => {
     return true;
   });
   ensureUniqueActionIds(page.actions);
+  page.observed_controls.overlays = compactObservedOverlays(page.observed_controls.overlays);
   page.evidence.coverage_result = page.actions.length > 0 ? "actions_promoted" : "probe_ran_no_public_overlay_actions";
   page.evidence.captured_counts = {
     ...(page.evidence.captured_counts || {}),

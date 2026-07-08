@@ -75,6 +75,7 @@ function actionIdentity(action) {
   return [
     action.type,
     action.name,
+    locator.row_context_required ? "row_context" : "direct_context",
     locator.trigger_text || "",
     locator.dialog_title || "",
     locator.button_text || ""
@@ -200,6 +201,11 @@ function classifySafety(name, type) {
   return "unknown_observed";
 }
 
+function isRowScopedSelector(value) {
+  const text = clean(value);
+  return /(?:el-table__row|table\.el-table__body|>\s*tbody\s*>\s*tr|nth-of-type\(\d+\).*el-table__cell)/i.test(text);
+}
+
 function aliasesForDialog(triggerName, dialogTitle, buttonName) {
   const trigger = clean(triggerName).replace(/\s+/g, "");
   const title = clean(dialogTitle).replace(/\s+/g, "");
@@ -225,6 +231,62 @@ function aliasesForOpener(triggerName) {
   return unique(aliases);
 }
 
+function normalizedDialog(dialog) {
+  return {
+    title: isPublicUiText(dialog.title) ? clean(dialog.title) : "",
+    type: clean(dialog.type),
+    buttons: unique((dialog.buttons || []).map(normalizeButtonText).filter(isPublicUiText)),
+    field_labels: unique((dialog.field_labels || []).filter(isPublicUiText)),
+    placeholders: unique((dialog.placeholders || []).filter(isPublicUiText))
+  };
+}
+
+function dialogIdentity(dialog) {
+  return [
+    clean(dialog.title).toLowerCase(),
+    clean(dialog.type).toLowerCase(),
+    (dialog.buttons || []).map((item) => clean(item).toLowerCase()).join("\u0001"),
+    (dialog.field_labels || []).map((item) => clean(item).toLowerCase()).join("\u0001"),
+    (dialog.placeholders || []).map((item) => clean(item).toLowerCase()).join("\u0001")
+  ].join("|");
+}
+
+function compactObservedDialogs(dialogs) {
+  const byKey = new Map();
+  for (const entry of dialogs || []) {
+    const trigger = clean(entry.trigger);
+    if (!trigger) continue;
+    const rowContextRequired = !!entry.row_context_required;
+    const normalizedDialogs = (entry.dialogs || [])
+      .map(normalizedDialog)
+      .filter((dialog) => dialog.buttons.length || dialog.field_labels.length || dialog.placeholders.length);
+    const dialogMap = new Map();
+    for (const dialog of normalizedDialogs) dialogMap.set(dialogIdentity(dialog), dialog);
+    const uniqueDialogs = [...dialogMap.values()];
+    if (uniqueDialogs.length === 0) continue;
+    const key = [
+      trigger.toLowerCase(),
+      rowContextRequired ? "row_context" : "direct_context",
+      uniqueDialogs.map(dialogIdentity).sort().join("\u0002")
+    ].join("|");
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.occurrence_count = (existing.occurrence_count || 1) + 1;
+      existing.dialog_count = Math.max(existing.dialog_count || 0, uniqueDialogs.length);
+      continue;
+    }
+    const value = {
+      trigger,
+      trigger_selector: rowContextRequired ? "" : clean(entry.trigger_selector),
+      dialog_count: uniqueDialogs.length,
+      dialogs: uniqueDialogs
+    };
+    if (rowContextRequired) value.row_context_required = true;
+    byKey.set(key, value);
+  }
+  return [...byKey.values()];
+}
+
 function pageFromCapture(capture) {
   const page = capture.page || {};
   const routePath = routeFromCapture(capture);
@@ -239,17 +301,13 @@ function pageFromCapture(capture) {
     if (!triggerName || !isPublicUiText(triggerName)) continue;
     const triggerDialogs = Array.isArray(trigger.dialogs) ? trigger.dialogs.filter((dialog) => dialog && (dialog.buttons || dialog.field_labels || dialog.placeholders)) : [];
     if (triggerDialogs.length === 0) continue;
+    const rowContextRequired = isRowScopedSelector(trigger.trigger_selector);
     dialogs.push({
       trigger: triggerName,
-      trigger_selector: trigger.trigger_selector || "",
+      trigger_selector: rowContextRequired ? "" : trigger.trigger_selector || "",
+      row_context_required: rowContextRequired || undefined,
       dialog_count: triggerDialogs.length,
-      dialogs: triggerDialogs.map((dialog) => ({
-        title: isPublicUiText(dialog.title) ? clean(dialog.title) : "",
-        type: clean(dialog.type),
-        buttons: unique((dialog.buttons || []).map(normalizeButtonText).filter(isPublicUiText)),
-        field_labels: unique((dialog.field_labels || []).filter(isPublicUiText)),
-        placeholders: unique((dialog.placeholders || []).filter(isPublicUiText))
-      }))
+      dialogs: triggerDialogs.map(normalizedDialog)
     });
     actions.push({
       id: `${pageIdFromPath(routePath)}.dialog_opener.${slug(triggerName)}`,
@@ -257,9 +315,15 @@ function pageFromCapture(capture) {
       aliases: aliasesForOpener(triggerName),
       type: "dialog_opener",
       safety: classifySafety(triggerName, "dialog_opener"),
-      purpose: `Open the ${triggerName} dialog/drawer on ${pageName}; do not submit changes without explicit confirmation.`,
-      function_source: "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
-      locator: { trigger_text: triggerName, trigger_selector: trigger.trigger_selector || "" }
+      purpose: rowContextRequired
+        ? `Remember the row-level ${triggerName} dialog/drawer on ${pageName}; execution requires an explicit target row.`
+        : `Open the ${triggerName} dialog/drawer on ${pageName}; do not submit changes without explicit confirmation.`,
+      function_source: rowContextRequired
+        ? "auto-generated from observed row-level dialog opener; selector was row-scoped and execution requires explicit row context"
+        : "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+      locator: rowContextRequired
+        ? { trigger_text: triggerName, row_action_text: triggerName, row_context_required: true }
+        : { trigger_text: triggerName, trigger_selector: trigger.trigger_selector || "" }
     });
     for (const dialog of triggerDialogs) {
       const dialogTitle = isPublicUiText(dialog.title) ? clean(dialog.title) : "";
@@ -270,14 +334,26 @@ function pageFromCapture(capture) {
           aliases: aliasesForDialog(triggerName, dialogTitle, buttonName),
           type: "dialog_button",
           safety: classifySafety(buttonName, "dialog_button"),
-          purpose: `Use ${buttonName} inside the ${triggerName} dialog/drawer on ${pageName}.`,
-          function_source: "auto-generated from observed dialog/drawer button; button was not clicked",
-          locator: {
-            trigger_text: triggerName,
-            dialog_title: dialogTitle,
-            button_text: buttonName,
-            trigger_selector: trigger.trigger_selector || ""
-          }
+          purpose: rowContextRequired
+            ? `Remember ${buttonName} inside the row-level ${triggerName} dialog/drawer on ${pageName}; execution requires an explicit target row.`
+            : `Use ${buttonName} inside the ${triggerName} dialog/drawer on ${pageName}.`,
+          function_source: rowContextRequired
+            ? "auto-generated from observed row-level dialog/drawer button; button was not clicked and execution requires explicit row context"
+            : "auto-generated from observed dialog/drawer button; button was not clicked",
+          locator: rowContextRequired
+            ? {
+                trigger_text: triggerName,
+                dialog_title: dialogTitle,
+                button_text: buttonName,
+                row_action_text: triggerName,
+                row_context_required: true
+              }
+            : {
+                trigger_text: triggerName,
+                dialog_title: dialogTitle,
+                button_text: buttonName,
+                trigger_selector: trigger.trigger_selector || ""
+              }
         });
       }
     }
@@ -310,7 +386,7 @@ function pageFromCapture(capture) {
       coverage_result: dedupedActions.length > 0 ? "actions_promoted" : "probe_ran_no_public_dialog_actions",
       function_source: "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
     },
-    observed_controls: { dialogs },
+    observed_controls: { dialogs: compactObservedDialogs(dialogs) },
     actions: dedupedActions
   };
 }
@@ -358,6 +434,7 @@ const pages = [...pagesById.values()].map((page) => {
     return true;
   });
   ensureUniqueActionIds(page.actions);
+  page.observed_controls.dialogs = compactObservedDialogs(page.observed_controls.dialogs);
   page.evidence.coverage_result = page.actions.length > 0 ? "actions_promoted" : "probe_ran_no_public_dialog_actions";
   page.evidence.captured_counts = {
     ...(page.evidence.captured_counts || {}),

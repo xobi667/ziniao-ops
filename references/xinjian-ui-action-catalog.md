@@ -32,8 +32,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | click_first_matching_row_action_in_table | 6 |
 | click_quick_tab_text_or_placeholder_list | 3 |
-| click_trigger_selector | 84 |
-| click_trigger_selector_then_dialog_button_text | 31 |
+| click_trigger_selector | 83 |
+| click_trigger_selector_then_dialog_button_text | 29 |
 | click_trigger_selector_then_overlay_item_text | 108 |
 | click_visible_action_text | 50 |
 | click_visible_dom_text | 213 |
@@ -43,6 +43,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | navigate_href | 43 |
 | read_table_column_header | 370 |
 | row_context_required_column_header | 2 |
+| row_context_required_dialog | 3 |
 | uia_locator | 9 |
 
 ## Audit
@@ -1328,11 +1329,11 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置 | text:重置 | button | safe_execute_allowed | click_visible_dom_text | auto | Apply or clear filters on 自定义费用. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 自定义费用; requires explicit confirmation before committing changes. |
-| 编辑取消 | 编辑 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 编辑 dialog/drawer on 自定义费用. |
-| 编辑确定 | 编辑 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 编辑 dialog/drawer on 自定义费用. |
+| 编辑取消 | 编辑 -> 取消 | dialog_button | safe_execute_allowed | row_context_required_dialog | dialog | Remember 取消 inside the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row. |
+| 编辑确定 | 编辑 -> 确定 | dialog_button | confirmation_required_write | row_context_required_dialog | dialog | Remember 确定 inside the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row. |
 | 新增自定义费用取消 | 新增自定义费用 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增自定义费用 dialog/drawer on 自定义费用. |
 | 新增自定义费用确定 | 新增自定义费用 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增自定义费用 dialog/drawer on 自定义费用. |
-| 编辑 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 编辑 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation. |
+| 编辑 | 编辑 | dialog_opener | safe_execute_allowed | row_context_required_dialog | dialog | Remember the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row. |
 | 新增自定义费用 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增自定义费用 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 自定义费用 by 选择店铺. |
 | 选择月 | placeholder:选择月 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 自定义费用 by 选择月. |

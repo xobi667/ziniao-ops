@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T13:57:21.881Z",
+  "generated_at": "2026-07-08T14:10:56.044Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -64,7 +64,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 0,
-          "overlays": 19,
+          "overlays": 8,
           "overlay_actions": 22
         },
         "coverage_result": "actions_promoted",
@@ -75,9 +75,10 @@
           {
             "trigger": "请选择创意状态",
             "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 9,
-            "items": []
+            "item_count": 7,
+            "filtered_item_count": 23,
+            "items": [],
+            "occurrence_count": 5
           },
           {
             "trigger": "请选择",
@@ -88,63 +89,8 @@
               "按视频名称",
               "按视频ID号",
               "按Tiktok账号"
-            ]
-          },
-          {
-            "trigger": "选择批量操作",
-            "trigger_type": "select",
-            "item_count": 5,
-            "filtered_item_count": 11,
-            "items": [
-              "按视频名称",
-              "按视频ID号",
-              "按Tiktok账号",
-              "添加至广告计划",
-              "批量排除"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 5,
-            "filtered_item_count": 16,
-            "items": [
-              "按视频名称",
-              "按视频ID号",
-              "按Tiktok账号",
-              "添加至广告计划",
-              "批量排除"
-            ]
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 7,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择创意状态",
-            "trigger_type": "select",
-            "item_count": 7,
-            "filtered_item_count": 23,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 7,
-            "filtered_item_count": 23,
-            "items": [
-              "按视频名称",
-              "按视频ID号",
-              "按Tiktok账号",
-              "添加至广告计划",
-              "批量排除"
-            ]
+            ],
+            "occurrence_count": 3
           },
           {
             "trigger": "选择批量操作",
@@ -157,20 +103,22 @@
               "按Tiktok账号",
               "添加至广告计划",
               "批量排除"
-            ]
+            ],
+            "occurrence_count": 2
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 7,
-            "filtered_item_count": 14,
+            "filtered_item_count": 23,
             "items": [
               "按视频名称",
               "按视频ID号",
               "按Tiktok账号",
               "添加至广告计划",
               "批量排除"
-            ]
+            ],
+            "occurrence_count": 2
           },
           {
             "trigger": "开始日期",
@@ -180,74 +128,32 @@
             "items": [
               "今天",
               "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择创意状态",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 7,
-            "items": []
+            ],
+            "occurrence_count": 2
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 7,
-            "items": []
+            "items": [],
+            "occurrence_count": 3
           },
           {
             "trigger": "选择批量操作",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 7,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 9,
-            "items": [
-              "按视频名称",
-              "按视频ID号",
-              "按Tiktok账号"
-            ]
+            "items": [],
+            "occurrence_count": 3
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择创意状态",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "选择批量操作",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            "items": [],
+            "occurrence_count": 2
           }
         ]
       },
@@ -647,7 +553,7 @@
           "overlays_with_items": 4,
           "items": 12,
           "filtered_items": 29,
-          "overlays": 5,
+          "overlays": 3,
           "overlay_actions": 17
         },
         "coverage_result": "actions_promoted",
@@ -666,7 +572,7 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 3,
-            "filtered_item_count": 4,
+            "filtered_item_count": 11,
             "items": [
               "按店铺",
               "按人员",
@@ -678,28 +584,6 @@
             "trigger_type": "cascader",
             "item_count": 3,
             "filtered_item_count": 4,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 6,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 11,
             "items": [
               "按店铺",
               "按人员",
@@ -1012,7 +896,7 @@
           "overlays_with_items": 1,
           "items": 2,
           "filtered_items": 11,
-          "overlays": 9,
+          "overlays": 4,
           "overlay_actions": 9
         },
         "coverage_result": "actions_promoted",
@@ -1025,7 +909,8 @@
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": []
+            "items": [],
+            "occurrence_count": 2
           },
           {
             "trigger": "请选择",
@@ -1035,38 +920,16 @@
             "items": [
               "成功",
               "失败"
-            ]
+            ],
+            "occurrence_count": 2
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 6,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 3,
-            "items": []
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 0,
-            "items": [
-              "成功",
-              "失败"
-            ]
+            "items": [],
+            "occurrence_count": 2
           },
           {
             "trigger": "开始日期",
@@ -1077,20 +940,6 @@
               "今天",
               "昨天"
             ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 6,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 3,
-            "items": []
           }
         ]
       },
@@ -1295,7 +1144,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 63,
-          "overlays": 9,
+          "overlays": 3,
           "overlay_actions": 9
         },
         "coverage_result": "actions_promoted",
@@ -1307,7 +1156,7 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 4,
+            "filtered_item_count": 18,
             "items": []
           },
           {
@@ -1318,52 +1167,10 @@
             "items": []
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 3,
-            "items": []
-          },
-          {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
             "item_count": 0,
             "filtered_item_count": 29,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
             "items": []
           }
         ]
@@ -1561,7 +1368,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 63,
-          "overlays": 9,
+          "overlays": 3,
           "overlay_actions": 9
         },
         "coverage_result": "actions_promoted",
@@ -1573,7 +1380,7 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 4,
+            "filtered_item_count": 18,
             "items": []
           },
           {
@@ -1584,52 +1391,10 @@
             "items": []
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 3,
-            "items": []
-          },
-          {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
             "item_count": 0,
             "filtered_item_count": 29,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
             "items": []
           }
         ]
@@ -1794,7 +1559,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 63,
-          "overlays": 9,
+          "overlays": 3,
           "overlay_actions": 9
         },
         "coverage_result": "actions_promoted",
@@ -1806,7 +1571,7 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 4,
+            "filtered_item_count": 18,
             "items": []
           },
           {
@@ -1817,52 +1582,10 @@
             "items": []
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 3,
-            "items": []
-          },
-          {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
             "item_count": 0,
             "filtered_item_count": 29,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
             "items": []
           }
         ]
@@ -2060,7 +1783,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 92,
-          "overlays": 5,
+          "overlays": 4,
           "overlay_actions": 5
         },
         "coverage_result": "actions_promoted",
@@ -2080,13 +1803,6 @@
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "全部商务",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 21,
             "items": []
           },
           {
@@ -2438,7 +2154,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 0,
-          "overlays": 23,
+          "overlays": 10,
           "overlay_actions": 18
         },
         "coverage_result": "actions_promoted",
@@ -2451,77 +2167,40 @@
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 20,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "达人标签",
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 20,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "品类",
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 49,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 51,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
+            "item_count": 2,
             "filtered_item_count": 56,
-            "items": []
-          },
-          {
-            "trigger": "全部商务",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 20,
-            "items": []
-          },
-          {
-            "trigger": "达人标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 20,
-            "items": []
-          },
-          {
-            "trigger": "品类",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 20,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 20,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 20,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 36,
-            "items": []
+            "items": [],
+            "occurrence_count": 3
           },
           {
             "trigger": "全部商务",
@@ -2572,58 +2251,6 @@
               "达人ID",
               "达人昵称"
             ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 12,
-            "items": [
-              "达人ID",
-              "达人昵称"
-            ]
-          },
-          {
-            "trigger": "全部商务",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "达人标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "品类",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 29,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
           }
         ]
       },
@@ -2946,7 +2573,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 325,
-          "overlays": 7,
+          "overlays": 5,
           "overlay_actions": 7
         },
         "coverage_result": "actions_promoted",
@@ -2965,7 +2592,7 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 28,
+            "filtered_item_count": 68,
             "items": []
           },
           {
@@ -2987,20 +2614,6 @@
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 61,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 63,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 68,
             "items": []
           }
         ]
@@ -3135,7 +2748,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 0,
-          "overlays": 44,
+          "overlays": 15,
           "overlay_actions": 53
         },
         "coverage_result": "actions_promoted",
@@ -3148,145 +2761,69 @@
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "品类",
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 31,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "全部商务",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 52,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 60,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 65,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 67,
-            "items": []
-          },
-          {
-            "trigger": "年龄分布",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 72,
-            "items": []
-          },
-          {
-            "trigger": "选择标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 72,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 74,
-            "items": []
-          },
-          {
-            "trigger": "批量操作",
-            "trigger_type": "dropdown",
-            "item_count": 75,
-            "filtered_item_count": 1,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "批量删除",
-              "信息更新"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "品类",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "全部商务",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 50,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 52,
-            "items": []
+            "items": [],
+            "occurrence_count": 5
           },
           {
             "trigger": "年龄分布",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 60,
-            "items": []
+            "filtered_item_count": 72,
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "选择标签",
             "trigger_type": "cascader",
             "item_count": 0,
-            "filtered_item_count": 7,
-            "items": []
+            "filtered_item_count": 72,
+            "items": [],
+            "occurrence_count": 5
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 67,
-            "items": []
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 75,
+            "filtered_item_count": 5,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ],
+            "occurrence_count": 2
           },
           {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
             "item_count": 0,
             "filtered_item_count": 72,
-            "items": []
+            "items": [],
+            "occurrence_count": 3
           },
           {
             "trigger": "请选择",
@@ -3347,30 +2884,6 @@
             ]
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 25,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "批量删除",
-              "信息更新"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 25,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "批量删除",
-              "信息更新"
-            ]
-          },
-          {
             "trigger": "年龄分布",
             "trigger_type": "select",
             "item_count": 4,
@@ -3393,121 +2906,6 @@
               "批量删除",
               "信息更新"
             ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 10,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "批量删除",
-              "信息更新"
-            ]
-          },
-          {
-            "trigger": "批量操作",
-            "trigger_type": "dropdown",
-            "item_count": 4,
-            "filtered_item_count": 5,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "批量删除",
-              "信息更新"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 50,
-            "items": []
-          },
-          {
-            "trigger": "选择标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 7,
-            "items": []
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "品类",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "全部商务",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "年龄分布",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "选择标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "批量操作",
-            "trigger_type": "dropdown",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
           }
         ]
       },
@@ -4418,7 +3816,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 0,
-          "overlays": 31,
+          "overlays": 14,
           "overlay_actions": 48
         },
         "coverage_result": "actions_promoted",
@@ -4429,79 +3827,58 @@
           {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "全部商务",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "选择标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "品类",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 20,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 8,
-            "items": []
-          },
-          {
-            "trigger": "年龄分布",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 28,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 0,
-            "filtered_item_count": 57,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 7,
-            "items": []
-          },
-          {
-            "trigger": "批量操作",
-            "trigger_type": "dropdown",
-            "item_count": 2,
-            "filtered_item_count": 7,
-            "items": []
+            "items": [],
+            "occurrence_count": 3
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 2,
             "filtered_item_count": 71,
-            "items": []
+            "items": [],
+            "occurrence_count": 3
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": [],
+            "occurrence_count": 3
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 20,
+            "items": [],
+            "occurrence_count": 3
+          },
+          {
+            "trigger": "年龄分布",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 28,
+            "items": [],
+            "occurrence_count": 3
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 57,
+            "items": [],
+            "occurrence_count": 3
           },
           {
             "trigger": "全部商务",
@@ -4544,18 +3921,6 @@
             "trigger_type": "cascader",
             "item_count": 6,
             "filtered_item_count": 58,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "转移达人",
-              "信息更新"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 6,
-            "filtered_item_count": 50,
             "items": [
               "达人ID",
               "达人昵称",
@@ -4586,18 +3951,6 @@
             ]
           },
           {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 6,
-            "filtered_item_count": 14,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "转移达人",
-              "信息更新"
-            ]
-          },
-          {
             "trigger": "批量操作",
             "trigger_type": "dropdown",
             "item_count": 6,
@@ -4608,88 +3961,6 @@
               "转移达人",
               "信息更新"
             ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 6,
-            "filtered_item_count": 14,
-            "items": [
-              "达人ID",
-              "达人昵称",
-              "转移达人",
-              "信息更新"
-            ]
-          },
-          {
-            "trigger": "全部商务",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "选择标签",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "品类",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 8,
-            "items": []
-          },
-          {
-            "trigger": "年龄分布",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 7,
-            "items": []
-          },
-          {
-            "trigger": "批量操作",
-            "trigger_type": "dropdown",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
           }
         ]
       },
@@ -5891,7 +5162,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 0,
-          "overlays": 20,
+          "overlays": 4,
           "overlay_actions": 11
         },
         "coverage_result": "actions_promoted",
@@ -5903,88 +5174,9 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 0,
-            "items": [
-              "按店铺",
-              "按人员"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 8,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
             "filtered_item_count": 10,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
@@ -5994,56 +5186,24 @@
             "items": [
               "按店铺",
               "按人员"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            ],
+            "occurrence_count": 2
           },
           {
             "trigger": "选择店铺",
             "trigger_type": "cascader",
             "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            "filtered_item_count": 4,
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            "item_count": 2,
+            "filtered_item_count": 4,
+            "items": [],
+            "occurrence_count": 3
           }
         ]
       },
@@ -6366,7 +5526,7 @@
           "overlays_with_items": 1,
           "items": 2,
           "filtered_items": 14,
-          "overlays": 6,
+          "overlays": 2,
           "overlay_actions": 8
         },
         "coverage_result": "actions_promoted",
@@ -6378,7 +5538,7 @@
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
-            "filtered_item_count": 4,
+            "filtered_item_count": 5,
             "items": []
           },
           {
@@ -6390,34 +5550,6 @@
               "未处理",
               "已处理"
             ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 1,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
-            "items": []
           }
         ]
       },
@@ -6603,7 +5735,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 5,
-          "overlays": 2,
+          "overlays": 1,
           "overlay_actions": 2
         },
         "coverage_result": "actions_promoted",
@@ -6611,13 +5743,6 @@
       },
       "observed_controls": {
         "overlays": [
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
           {
             "trigger": "请选择",
             "trigger_type": "select",
@@ -7180,7 +6305,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 0,
-          "overlays": 11,
+          "overlays": 3,
           "overlay_actions": 4
         },
         "coverage_result": "actions_promoted",
@@ -7193,77 +6318,24 @@
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 0,
             "filtered_item_count": 12,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
-            "items": []
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
+            "items": [],
+            "occurrence_count": 4
           },
           {
             "trigger": "选择月",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "选择月",
-            "trigger_type": "date_picker",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            "items": [],
+            "occurrence_count": 3
           }
         ]
       },
@@ -7442,7 +6514,7 @@
           "overlays_with_items": 0,
           "items": 0,
           "filtered_items": 12,
-          "overlays": 3,
+          "overlays": 1,
           "overlay_actions": 3
         },
         "coverage_result": "actions_promoted",
@@ -7450,20 +6522,6 @@
       },
       "observed_controls": {
         "overlays": [
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 5,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
           {
             "trigger": "请选择",
             "trigger_type": "select",
@@ -7543,7 +6601,7 @@
           "overlays_with_items": 4,
           "items": 6,
           "filtered_items": 17,
-          "overlays": 97,
+          "overlays": 12,
           "overlay_actions": 34
         },
         "coverage_result": "actions_promoted",
@@ -7554,9 +6612,10 @@
           {
             "trigger": "请选择",
             "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
+            "item_count": 2,
+            "filtered_item_count": 18,
+            "items": [],
+            "occurrence_count": 12
           },
           {
             "trigger": "请选择",
@@ -7567,14 +6626,16 @@
               "按店铺",
               "按人员",
               "按负责人"
-            ]
+            ],
+            "occurrence_count": 7
           },
           {
             "trigger": "选择店铺",
             "trigger_type": "cascader",
             "item_count": 0,
             "filtered_item_count": 2,
-            "items": []
+            "items": [],
+            "occurrence_count": 8
           },
           {
             "trigger": "请选择",
@@ -7583,7 +6644,8 @@
             "filtered_item_count": 2,
             "items": [
               "利润"
-            ]
+            ],
+            "occurrence_count": 7
           },
           {
             "trigger": "请选择",
@@ -7592,102 +6654,29 @@
             "filtered_item_count": 1,
             "items": [
               "订单"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 4,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
+            ],
+            "occurrence_count": 7
           },
           {
             "trigger": "请选择",
             "trigger_type": "select",
             "item_count": 3,
-            "filtered_item_count": 0,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 7,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 2,
-            "items": [
-              "利润"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 1,
-            "items": [
-              "订单"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 4,
+            "filtered_item_count": 22,
             "items": [
               "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
+            ],
+            "occurrence_count": 11
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 7,
+            "item_count": 8,
+            "filtered_item_count": 31,
             "items": [
               "今天",
               "昨天"
-            ]
+            ],
+            "occurrence_count": 9
           },
           {
             "trigger": "请选择",
@@ -7701,7 +6690,8 @@
               "利润",
               "订单",
               "店铺"
-            ]
+            ],
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
@@ -7712,7 +6702,8 @@
               "利润",
               "订单",
               "店铺"
-            ]
+            ],
+            "occurrence_count": 4
           },
           {
             "trigger": "选择店铺",
@@ -7723,17 +6714,8 @@
               "利润",
               "订单",
               "店铺"
-            ]
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "今天",
-              "昨天"
-            ]
+            ],
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
@@ -7743,686 +6725,16 @@
             "items": [
               "订单",
               "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 22,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 0,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 20,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 2,
-            "items": [
-              "利润"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 1,
-            "items": [
-              "订单"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 4,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 8,
-            "filtered_item_count": 31,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 8,
-            "filtered_item_count": 27,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人",
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 5,
-            "filtered_item_count": 27,
-            "items": [
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 23,
-            "items": [
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 22,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 0,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 20,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 2,
-            "items": [
-              "利润"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 1,
-            "items": [
-              "订单"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 4,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 8,
-            "filtered_item_count": 31,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 8,
-            "filtered_item_count": 27,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人",
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 5,
-            "filtered_item_count": 27,
-            "items": [
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 23,
-            "items": [
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 22,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 0,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 20,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 2,
-            "items": [
-              "利润"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 1,
-            "items": [
-              "订单"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 4,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 8,
-            "filtered_item_count": 31,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 8,
-            "filtered_item_count": 27,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人",
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 5,
-            "filtered_item_count": 27,
-            "items": [
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "利润",
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 25,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 4,
-            "filtered_item_count": 23,
-            "items": [
-              "订单",
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 22,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 18,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 2,
-            "filtered_item_count": 14,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 3,
-            "filtered_item_count": 0,
-            "items": [
-              "按店铺",
-              "按人员",
-              "按负责人"
-            ]
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 2,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 5,
-            "filtered_item_count": 20,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 2,
-            "items": [
-              "利润"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 1,
-            "items": [
-              "订单"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 1,
-            "filtered_item_count": 4,
-            "items": [
-              "店铺"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 4,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 8,
-            "filtered_item_count": 31,
-            "items": [
-              "今天",
-              "昨天"
-            ]
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "选择店铺",
-            "trigger_type": "cascader",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            ],
+            "occurrence_count": 4
           },
           {
             "trigger": "开始日期",
             "trigger_type": "date_picker",
             "item_count": 0,
             "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "请选择",
-            "trigger_type": "select",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
-          },
-          {
-            "trigger": "开始日期",
-            "trigger_type": "date_picker",
-            "item_count": 0,
-            "filtered_item_count": 0,
-            "items": []
+            "items": [],
+            "occurrence_count": 2
           }
         ]
       },

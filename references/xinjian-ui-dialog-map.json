@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dialog_captures",
-  "generated_at": "2026-07-08T13:57:22.524Z",
+  "generated_at": "2026-07-08T14:10:56.673Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
@@ -1288,7 +1288,7 @@
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
-          "dialogs": 3,
+          "dialogs": 1,
           "dialog_buttons": 0,
           "field_labels": 0,
           "dialog_actions": 6
@@ -1325,65 +1325,8 @@
                   "请输入备注信息"
                 ]
               }
-            ]
-          },
-          {
-            "trigger": "添加达人",
-            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "达人建联",
-                "type": "dialog",
-                "buttons": [
-                  "关闭",
-                  "搜索",
-                  "添加",
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "达人信息",
-                  "联系方式",
-                  "备注"
-                ],
-                "placeholders": [
-                  "请输入达人ID/达人主页链接进行搜索",
-                  "请选择",
-                  "请输入内容",
-                  "请输入备注信息"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "添加达人",
-            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "达人建联",
-                "type": "dialog",
-                "buttons": [
-                  "关闭",
-                  "搜索",
-                  "添加",
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "达人信息",
-                  "联系方式",
-                  "备注"
-                ],
-                "placeholders": [
-                  "请输入达人ID/达人主页链接进行搜索",
-                  "请选择",
-                  "请输入内容",
-                  "请输入备注信息"
-                ]
-              }
-            ]
+            ],
+            "occurrence_count": 4
           }
         ]
       },
@@ -2528,7 +2471,7 @@
         "captured_counts": {
           "triggers": 8,
           "triggers_with_dialogs": 3,
-          "dialogs": 17,
+          "dialogs": 2,
           "dialog_buttons": 6,
           "field_labels": 12,
           "dialog_actions": 6
@@ -2563,11 +2506,12 @@
                   "请输入金额（正数表示支出，负数表示收入)"
                 ]
               }
-            ]
+            ],
+            "occurrence_count": 4
           },
           {
             "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "trigger_selector": "",
             "dialog_count": 1,
             "dialogs": [
               {
@@ -2590,412 +2534,9 @@
                   "请输入金额（正数表示支出，负数表示收入)"
                 ]
               }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(6) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "新增自定义费用",
-            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "添加自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(6) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(8) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(11) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(16) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(18) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "新增自定义费用",
-            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "添加自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(6) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(8) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(11) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(16) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
-          },
-          {
-            "trigger": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(18) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
-            "dialog_count": 1,
-            "dialogs": [
-              {
-                "title": "编辑自定义费用",
-                "type": "dialog",
-                "buttons": [
-                  "确定",
-                  "取消"
-                ],
-                "field_labels": [
-                  "店铺",
-                  "费用月份",
-                  "费用类型",
-                  "金额"
-                ],
-                "placeholders": [
-                  "选择店铺",
-                  "选择费用月份",
-                  "请选择费用类型",
-                  "请输入金额（正数表示支出，负数表示收入)"
-                ]
-              }
-            ]
+            ],
+            "row_context_required": true,
+            "occurrence_count": 4
           }
         ]
       },
@@ -3070,11 +2611,12 @@
           ],
           "type": "dialog_opener",
           "safety": "opens_dialog_no_submit",
-          "purpose": "Open the 编辑 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation.",
-          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "purpose": "Remember the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row.",
+          "function_source": "auto-generated from observed row-level dialog opener; selector was row-scoped and execution requires explicit row context",
           "locator": {
             "trigger_text": "编辑",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+            "row_action_text": "编辑",
+            "row_context_required": true
           }
         },
         {
@@ -3087,13 +2629,14 @@
           ],
           "type": "dialog_button",
           "safety": "confirmation_required_write",
-          "purpose": "Use 确定 inside the 编辑 dialog/drawer on 自定义费用.",
-          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "purpose": "Remember 确定 inside the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row.",
+          "function_source": "auto-generated from observed row-level dialog/drawer button; button was not clicked and execution requires explicit row context",
           "locator": {
             "trigger_text": "编辑",
             "dialog_title": "编辑自定义费用",
             "button_text": "确定",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+            "row_action_text": "编辑",
+            "row_context_required": true
           }
         },
         {
@@ -3106,13 +2649,14 @@
           ],
           "type": "dialog_button",
           "safety": "read_filter",
-          "purpose": "Use 取消 inside the 编辑 dialog/drawer on 自定义费用.",
-          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "purpose": "Remember 取消 inside the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row.",
+          "function_source": "auto-generated from observed row-level dialog/drawer button; button was not clicked and execution requires explicit row context",
           "locator": {
             "trigger_text": "编辑",
             "dialog_title": "编辑自定义费用",
             "button_text": "取消",
-            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+            "row_action_text": "编辑",
+            "row_context_required": true
           }
         }
       ]

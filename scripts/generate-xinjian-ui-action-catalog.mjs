@@ -50,6 +50,7 @@ function routeKey(input) {
 
 function locatorStrategy(action) {
   const locator = action?.locator || {};
+  if (locator.row_context_required) return "row_context_required_dialog";
   if (locator.trigger_selector && locator.item_text) return "click_trigger_selector_then_overlay_item_text";
   if (locator.trigger_selector && locator.button_text) return "click_trigger_selector_then_dialog_button_text";
   if (locator.trigger_selector) return "click_trigger_selector";
