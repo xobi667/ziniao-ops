@@ -4,6 +4,7 @@ param(
   [string]$Url = "https://erp.xinjianerp.com/index/home",
   [string]$UserDataDir = "",
   [switch]$NormalWindow,
+  [switch]$ForceDebuggable,
   [switch]$Json
 )
 
@@ -39,6 +40,12 @@ function Get-DevToolsPages {
   } catch {
     return @()
   }
+}
+
+function ConvertFrom-JsonText($Lines) {
+  $text = (($Lines | Out-String).Trim())
+  if (!$text) { return $null }
+  try { return $text | ConvertFrom-Json } catch { return $null }
 }
 
 function Normalize-UrlPath {
@@ -127,6 +134,88 @@ function Select-BestTargetPage {
   return $scored[0]
 }
 
+function Resolve-OpenXinjianWindow {
+  $resolver = Join-Path $PSScriptRoot "resolve-xinjian-current-url.ps1"
+  if (!(Test-Path -LiteralPath $resolver)) { return $null }
+
+  $raw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $resolver -Json 2>&1)
+  $detected = ConvertFrom-JsonText $raw
+  if (!$detected) { return $null }
+  $selectedUrl = if ($detected.PSObject.Properties.Match("url").Count -gt 0) { [string]$detected.url } else { "" }
+  if (!$selectedUrl -and $detected.PSObject.Properties.Match("candidates").Count -gt 0) {
+    $candidateUrl = @($detected.candidates | ForEach-Object { [string]$_.url } | Where-Object { $_ -match "^https?://erp\.xinjianerp\.com/" } | Select-Object -First 1)
+    if ($candidateUrl.Count -gt 0) { $selectedUrl = [string]$candidateUrl[0] }
+  }
+  if (!$selectedUrl) { return $null }
+
+  $candidate = $null
+  if ($detected.PSObject.Properties.Match("candidates").Count -gt 0) {
+    $candidate = @($detected.candidates | Where-Object { [string]$_.url -eq $selectedUrl } | Select-Object -First 1)
+    if ($candidate.Count -gt 0) { $candidate = $candidate[0] } else { $candidate = $null }
+  }
+  return [pscustomobject]@{
+    detection = $detected
+    candidate = $candidate
+    url = $selectedUrl
+    page_kind = Get-XinjianPageKind -PageUrl $selectedUrl
+  }
+}
+
+if (!$ForceDebuggable) {
+  $openXinjianWindow = Resolve-OpenXinjianWindow
+  if ($openXinjianWindow) {
+    $detected = $openXinjianWindow.detection
+    $candidate = $openXinjianWindow.candidate
+    $selectedUrl = [string]$openXinjianWindow.url
+    $pageKind = [string]$openXinjianWindow.page_kind
+    $matchedPort = $null
+    if ($detected.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $detected.resolved_port -and [string]$detected.url -eq $selectedUrl) {
+      $matchedPort = [int]$detected.resolved_port
+    } elseif ($candidate -and $candidate.PSObject.Properties.Match("port").Count -gt 0 -and $candidate.port) {
+      $matchedPort = [int]$candidate.port
+    }
+    $nextAction = if ($pageKind -eq "business_page" -and $matchedPort) {
+      "xinjian_business_page_ready"
+    } elseif ($pageKind -eq "business_page") {
+      "use_existing_xinjian_window_uia_or_rerun_with_force_debuggable"
+    } elseif ($pageKind -eq "login_page") {
+      "manual_login_required_in_existing_xinjian_window_or_rerun_with_force_debuggable"
+    } elseif ($pageKind -eq "non_business_page") {
+      "open_valid_xinjian_business_page_in_existing_window_or_rerun_with_force_debuggable"
+    } else {
+      "inspect_existing_xinjian_window_or_rerun_with_force_debuggable"
+    }
+    $result = [ordered]@{
+      ok = $true
+      browser = ""
+      port = $matchedPort
+      requested_port = $Port
+      url = $Url
+      user_data_dir = ""
+      window = "existing"
+      skipped_debuggable_open = $true
+      reused_existing_page = $true
+      opened_new_tab = $false
+      matched_page_url = $selectedUrl
+      matched_page_title = if ($candidate) { [string]$candidate.title } else { "" }
+      matched_page_id = ""
+      matched_page_score = $null
+      matched_page_kind = $pageKind
+      url_detection = $detected
+      next_action = $nextAction
+      fetch_command = if ($pageKind -eq "business_page" -and $matchedPort) { "powershell -ExecutionPolicy Bypass -File scripts\fetch-xinjian-browser-data.ps1 -Port $matchedPort -StoreName `"<店铺A>,<店铺B>`" -Days 7 -Json" } else { "" }
+    }
+    if ($Json) {
+      $result | ConvertTo-Json -Depth 10
+    } else {
+      Write-Host "XINJIAN_EXISTING_BUSINESS_WINDOW_READY"
+      Write-Host "URL: $($result.matched_page_url)"
+      Write-Host "Next: $($result.next_action)"
+    }
+    exit 0
+  }
+}
+
 if (!$UserDataDir) {
   $UserDataDir = Join-Path ([System.IO.Path]::GetTempPath()) "codex-xinjian-browser-profile-$Port"
 }
@@ -187,6 +276,8 @@ $result = [ordered]@{
   url = $Url
   user_data_dir = $UserDataDir
   window = if ($NormalWindow) { "normal" } else { "minimized" }
+  skipped_debuggable_open = $false
+  force_debuggable = [bool]$ForceDebuggable
   reused_existing_page = [bool]($alreadyRunning -and $reusedPage -and !$openedNewTab)
   opened_new_tab = [bool]$openedNewTab
   matched_page_url = if ($reusedPage) { [string]$reusedPage.url } else { "" }

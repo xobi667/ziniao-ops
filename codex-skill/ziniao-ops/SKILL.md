@@ -50,7 +50,7 @@ For lightweight current-state detection that does not move the mouse, navigate, 
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\get-runtime-status.ps1") -Json
 ```
 
-It caches results briefly by default. Use `-Refresh` after the employee says they just logged in. Use `-Full` only when a stronger WebDriver/diagnose probe is needed. Treat `seller_window_detected` or `xinjian_window_detected` as page-open signals, not proof that the backend API is authenticated. The detector uses DevTools URL/title when available and falls back to Windows UIA address-bar URL plus normal browser window titles when no DevTools port exists; title-only matches are useful for not missing an already-open window, but non-DevTools windows are not controllable until the page is reopened with a DevTools port. Default workflows should run detection and safe non-mouse recovery automatically; do not ask the employee to run these checks manually.
+It caches results briefly by default. Use `-Refresh` after the employee says they just logged in. Use `-Full` only when a stronger WebDriver/diagnose probe is needed. Treat `seller_window_detected` or `xinjian_window_detected` as page-open signals, not proof that the backend API is authenticated. The detector uses DevTools URL/title when available and falls back to Windows UIA address-bar URL plus normal browser window titles when no DevTools port exists; title-only matches are useful for not missing an already-open window. Non-DevTools windows cannot be inspected or fetched through CDP, but mapped safe non-write 心舰 controls can be invoked through Windows UI Automation when the action catalog has a matching UIA locator. Default workflows should run detection and safe non-mouse recovery automatically; do not ask the employee to run these checks manually.
 
 If the employee is setting up this package for the first time, or if Ziniao login/cache readiness is unclear, run:
 
@@ -398,7 +398,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 `references\xinjian-ui-action-catalog.md` is the human-readable action table. `references\xinjian-ui-action-catalog.json` is the machine-readable merged index with context, safety mode, source map, locator strategy, locator metadata, and audit lists for manual-review or map-only actions.
 
-To turn a mapped intent into a safe RPA-style action plan, use the action invoker. It dry-runs by default and reports the exact matched action, safety gate, locator strategy, and top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. Add `-Execute` only for safe non-write actions. Add `-AllowWrite` or `-AllowExport` only after the employee explicitly confirms that exact write/export operation:
+To turn a mapped intent into a safe RPA-style action plan, use the action invoker. It dry-runs by default and reports the exact matched action, safety gate, locator strategy, `execution_backend`, and top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. Add `-Execute` only for safe non-write actions. Add `-AllowWrite` or `-AllowExport` only after the employee explicitly confirms that exact write/export operation:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Json
@@ -406,6 +406,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 ```
 
 `-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching.
+
+If no debuggable CDP port is resolved but the matching already-open 心舰 window has a UIA-mapped safe non-write control, the invoker reports `execution_backend = "uia"` and can run it with `-Execute` through Windows UI Automation without moving the mouse or opening another browser. Write/export actions, row-context actions, read-only table-column memory, and unknown-safety actions remain blocked without explicit confirmation and a controllable route.
 
 Observed table metric/header entries such as `ROAS`, `广告花费`, and `转化率` are remembered as read-only `table_column` actions. They are used for query/planning and must not be clicked as buttons.
 
@@ -506,6 +508,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\fetc
 
 When the requested DevTools port is already reachable, `open-xinjian-login.ps1` scores existing 心舰 tabs on that port and reuses the best match instead of opening a duplicate tab. Logged-in business pages score above login pages. Read `reused_existing_page`, `opened_new_tab`, `matched_page_url`, `matched_page_title`, `matched_page_score`, `matched_page_kind`, and `next_action` from JSON before telling the employee what happened. `matched_page_kind=business_page` with `next_action=xinjian_business_page_ready` means the page can be used for learning/fetching; `login_page` means the employee still needs to log in manually.
 
+Before opening or reusing a login bridge, `open-xinjian-login.ps1` now checks visible/debuggable 心舰 windows. If any 心舰 page is already open, it returns `skipped_debuggable_open = true`, `window = "existing"`, the detected `matched_page_kind`, and a `next_action` for that existing page instead of opening another browser. Only pass `-ForceDebuggable` when the user explicitly wants a separate debuggable login/data-capture browser despite the already-open 心舰 window.
+
 If the employee says to run 心舰 directly through 紫鸟, use the running 紫鸟 browser bridge first:
 
 ```powershell
@@ -520,7 +524,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinj
 
 If it returns `manual_xinjian_login_in_ziniao_required`, 心舰 is open in a 紫鸟 browser but not logged in; the employee must manually complete 心舰 login there.
 
-If no 心舰 window is found, `xinjian-ziniao-bridge.ps1` auto-opens a controllable Edge/Chrome page by default and then continues detection. If that page is not logged in, the employee must manually complete login in the opened browser; Codex should rerun the same command after login. Use `-NoAutoOpen` only for diagnostics. If it returns `xinjian_window_detected_without_debug_port`, a likely 心舰 window was found by title, so the bridge should not open a duplicate window. That title-only window cannot be inspected or used for data extraction until it is reopened through a debuggable bridge or browser profile.
+If no 心舰 window is found, `xinjian-ziniao-bridge.ps1` auto-opens a controllable Edge/Chrome page by default and then continues detection. If that page is not logged in, the employee must manually complete login in the opened browser; Codex should rerun the same command after login. Use `-NoAutoOpen` only for diagnostics. If it returns `xinjian_window_detected_without_debug_port`, a likely 心舰 window was found by title, so the bridge should not open a duplicate window. That title-only window cannot be inspected or used for data extraction until it is reopened through a debuggable bridge or browser profile, though safe mapped visible controls may still be invoked through the UIA fallback in `invoke-xinjian-ui-action.ps1`.
 
 Use `scripts\invoke-ziniao-cli.ps1` by default for local store list/open/inspect commands when the optional `ziniao` CLI is installed. The wrapper still refuses secret-like arguments and long-running commands unless explicitly allowed. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
 

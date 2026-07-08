@@ -204,6 +204,212 @@ function Get-ResolvedPort($Detection, [string]$InputUrl, [bool]$ExplicitUrlProvi
   return $null
 }
 
+function Get-UiaWindowProcessId($Detection, [string]$InputUrl) {
+  if (!$Detection -or !$InputUrl -or $Detection.PSObject.Properties.Match("candidates").Count -eq 0) { return $null }
+  $match = @($Detection.candidates | Where-Object {
+      [string]$_.url -eq $InputUrl -and
+      $_.process_id -and
+      ([string]$_.source -in @("window_uia", "window_title"))
+    } | Select-Object -First 1)
+  if ($match.Count -gt 0) { return [int]$match[0].process_id }
+  return $null
+}
+
+function Get-UiaControlType([string]$TypeName) {
+  switch ([string]$TypeName) {
+    "Button" { return [System.Windows.Automation.ControlType]::Button }
+    "Hyperlink" { return [System.Windows.Automation.ControlType]::Hyperlink }
+    "TabItem" { return [System.Windows.Automation.ControlType]::TabItem }
+    "MenuItem" { return [System.Windows.Automation.ControlType]::MenuItem }
+    "ListItem" { return [System.Windows.Automation.ControlType]::ListItem }
+    "ComboBox" { return [System.Windows.Automation.ControlType]::ComboBox }
+    "CheckBox" { return [System.Windows.Automation.ControlType]::CheckBox }
+    "RadioButton" { return [System.Windows.Automation.ControlType]::RadioButton }
+    default { return $null }
+  }
+}
+
+function Get-UiaActionTerms($Action) {
+  $terms = New-Object System.Collections.Generic.List[string]
+  $locator = $Action.locator
+  if ($locator) {
+    foreach ($prop in @("uia_name", "dom_text")) {
+      if ($locator.PSObject.Properties.Match($prop).Count -gt 0 -and $locator.$prop) {
+        $terms.Add([string]$locator.$prop)
+      }
+    }
+  }
+  if ($Action.name) { $terms.Add([string]$Action.name) }
+  return @($terms | Where-Object { $_ } | Select-Object -Unique)
+}
+
+function Normalize-UiaElementName([string]$Value) {
+  $text = ([string]$Value) -replace "[\uE000-\uF8FF]", ""
+  $text = $text -replace "\s+", " "
+  return $text.Trim()
+}
+
+function Find-UiaActionElement {
+  param(
+    [object]$Root,
+    [object]$Action
+  )
+
+  $locator = $Action.locator
+  $terms = @(Get-UiaActionTerms $Action | ForEach-Object { Normalize-UiaElementName ([string]$_) } | Where-Object { $_ } | Select-Object -Unique)
+  $startsWith = ""
+  $expectedControlType = $null
+  if ($locator) {
+    if ($locator.PSObject.Properties.Match("uia_name_starts_with").Count -gt 0 -and $locator.uia_name_starts_with) {
+      $startsWith = Normalize-UiaElementName ([string]$locator.uia_name_starts_with)
+    }
+    if ($locator.PSObject.Properties.Match("uia_type").Count -gt 0 -and $locator.uia_type) {
+      $expectedControlType = Get-UiaControlType ([string]$locator.uia_type)
+    }
+  }
+  if ($terms.Count -eq 0 -and !$startsWith) { return $null }
+
+  $items = $Root.FindAll(
+    [System.Windows.Automation.TreeScope]::Subtree,
+    [System.Windows.Automation.Condition]::TrueCondition
+  )
+  for ($i = 0; $i -lt $items.Count; $i++) {
+    $element = $items.Item($i)
+    $name = ([string]$element.Current.Name).Trim()
+    $normalizedName = Normalize-UiaElementName $name
+    if (!$normalizedName) { continue }
+    if ($expectedControlType -and $element.Current.ControlType -ne $expectedControlType) { continue }
+    try {
+      if (!$element.Current.IsEnabled -or $element.Current.IsOffscreen) { continue }
+    } catch {
+      continue
+    }
+
+    $matched = $false
+    foreach ($term in $terms) {
+      if ($normalizedName -eq $term) {
+        $matched = $true
+        break
+      }
+    }
+    if (!$matched -and $startsWith -and $normalizedName.StartsWith($startsWith, [System.StringComparison]::OrdinalIgnoreCase)) {
+      $matched = $true
+    }
+    if (!$matched) { continue }
+    return $element
+  }
+  return $null
+}
+
+function Test-UiaActionExecutable {
+  param(
+    [object]$Action,
+    [string]$InputUrl,
+    [object]$Detection
+  )
+  if ($Action.PSObject.Properties.Match("locator").Count -eq 0 -or !$Action.locator) { return $false }
+  $processId = Get-UiaWindowProcessId -Detection $Detection -InputUrl $InputUrl
+  if (!$processId) { return $false }
+  $locator = $Action.locator
+  $eligibleByLocator = $false
+  if ($locator.PSObject.Properties.Match("uia_type").Count -gt 0 -and $locator.uia_type -and ([string]$locator.uia_type -in @("Button", "Hyperlink", "TabItem", "MenuItem", "ListItem", "RadioButton"))) {
+    $eligibleByLocator = $true
+  }
+  if ($locator.PSObject.Properties.Match("uia_name").Count -gt 0 -and $locator.uia_name -and ([string]$Action.type -in @("button", "tab", "status_tab", "navigation", "row_navigation"))) {
+    $eligibleByLocator = $true
+  }
+  if (!$eligibleByLocator) { return $false }
+
+  try {
+    Add-Type -AssemblyName UIAutomationClient -ErrorAction Stop
+    Add-Type -AssemblyName UIAutomationTypes -ErrorAction Stop
+    $process = Get-Process -Id $processId -ErrorAction Stop
+    if (!$process.MainWindowHandle -or $process.MainWindowHandle -eq [IntPtr]::Zero) { return $false }
+    $rootElement = [System.Windows.Automation.AutomationElement]::FromHandle($process.MainWindowHandle)
+    $element = Find-UiaActionElement -Root $rootElement -Action $Action
+    if (!$element) { return $false }
+    $pattern = $null
+    if ($element.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$pattern)) { return $true }
+    $pattern = $null
+    if ($element.TryGetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern, [ref]$pattern)) { return $true }
+  } catch {
+    return $false
+  }
+  return $false
+}
+
+function Invoke-XinjianUiaAction {
+  param(
+    [object]$Action,
+    [string]$InputUrl,
+    [object]$Detection
+  )
+
+  try {
+    Add-Type -AssemblyName UIAutomationClient -ErrorAction Stop
+    Add-Type -AssemblyName UIAutomationTypes -ErrorAction Stop
+  } catch {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_automation_unavailable"; message = $_.Exception.Message }
+  }
+
+  $processId = Get-UiaWindowProcessId -Detection $Detection -InputUrl $InputUrl
+  if (!$processId) {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_window_not_resolved" }
+  }
+  try {
+    $process = Get-Process -Id $processId -ErrorAction Stop
+  } catch {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_window_process_missing"; process_id = $processId }
+  }
+  if (!$process.MainWindowHandle -or $process.MainWindowHandle -eq [IntPtr]::Zero) {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_window_handle_missing"; process_id = $processId }
+  }
+
+  try {
+    $rootElement = [System.Windows.Automation.AutomationElement]::FromHandle($process.MainWindowHandle)
+    $element = Find-UiaActionElement -Root $rootElement -Action $Action
+  } catch {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_element_search_failed"; process_id = $processId; message = $_.Exception.Message }
+  }
+  if (!$element) {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_element_not_found"; process_id = $processId; action_name = [string]$Action.name }
+  }
+
+  $matchedName = [string]$element.Current.Name
+  $matchedType = ([string]$element.Current.ControlType.ProgrammaticName) -replace "^ControlType\.", ""
+  try {
+    $pattern = $null
+    if ($element.TryGetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern, [ref]$pattern)) {
+      $pattern.Invoke()
+      return [pscustomobject]@{
+        ok = $true
+        backend = "uia"
+        pattern = "InvokePattern"
+        process_id = $processId
+        window_title = [string]$process.MainWindowTitle
+        matched_name = $matchedName
+        matched_type = $matchedType
+      }
+    }
+    $pattern = $null
+    if ($element.TryGetCurrentPattern([System.Windows.Automation.SelectionItemPattern]::Pattern, [ref]$pattern)) {
+      $pattern.Select()
+      return [pscustomobject]@{
+        ok = $true
+        backend = "uia"
+        pattern = "SelectionItemPattern"
+        process_id = $processId
+        window_title = [string]$process.MainWindowTitle
+        matched_name = $matchedName
+        matched_type = $matchedType
+      }
+    }
+  } catch {
+    return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_invoke_failed"; process_id = $processId; matched_name = $matchedName; matched_type = $matchedType; message = $_.Exception.Message }
+  }
+  return [pscustomobject]@{ ok = $false; backend = "uia"; error = "uia_supported_pattern_missing"; process_id = $processId; matched_name = $matchedName; matched_type = $matchedType }
+}
+
 function Resolve-XinjianCurrentUrl([int]$CdpPort) {
   $result = [ordered]@{
     ok = $false
@@ -440,7 +646,15 @@ $requiresRowContext = ($locatorStrategy -like "row_context_required*")
 $requiresPageContext = !$Url
 $requiresCdpPort = !$effectivePort
 $readOnlyCatalogEntry = ($locatorStrategy -eq "read_table_column_header")
-$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and !$requiresCdpPort -and !$readOnlyCatalogEntry -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+$uiaCanExecute = $false
+$uiaWindowProcessId = $null
+$uiaEligible = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and !$readOnlyCatalogEntry -and !$requiresExport -and !$requiresWrite
+if ($requiresCdpPort -and $uiaEligible) {
+  $uiaWindowProcessId = Get-UiaWindowProcessId -Detection $urlDetection -InputUrl $Url
+  $uiaCanExecute = Test-UiaActionExecutable -Action $action -InputUrl $Url -Detection $urlDetection
+}
+$executionBackend = if ($effectivePort) { "cdp" } elseif ($uiaCanExecute) { "uia" } else { "none" }
+$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and (!$requiresCdpPort -or $uiaCanExecute) -and !$readOnlyCatalogEntry -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
 
 $plan = [ordered]@{
   intent = $Intent
@@ -452,6 +666,9 @@ $plan = [ordered]@{
   url_detection = $urlDetection
   ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   resolved_port = $effectivePort
+  execution_backend = $executionBackend
+  uia_fallback_available = [bool]$uiaCanExecute
+  uia_window_process_id = $uiaWindowProcessId
   candidate_index = $CandidateIndex
   page_id = $match.page_id
   page_name = $match.page_name
@@ -462,7 +679,9 @@ $plan = [ordered]@{
   locator_strategy = $locatorStrategy
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
-  safety_note = if ($requiresCdpPort) {
+  safety_note = if ($requiresCdpPort -and $uiaCanExecute) {
+    "No debuggable Xinjian CDP port was resolved, but this safe non-write action can run through Windows UI Automation on the already-open window without mouse movement."
+  } elseif ($requiresCdpPort) {
     "No debuggable Xinjian CDP port was resolved. Dry-run only; open or log in to Xinjian in a Chrome/Edge/Ziniao window with DevTools enabled."
   } elseif ($readOnlyCatalogEntry) {
     "Read-only table column memory. No click is needed; use the matched page/column to locate or interpret visible data."
@@ -495,6 +714,7 @@ if (!$Execute) {
     current_title = $currentTitle
     resolved_port = $effectivePort
     page_kind = $currentPageKind
+    execution_backend = $executionBackend
     plan = $plan
     query_versions = [ordered]@{
       map = $query.map_version
@@ -523,8 +743,9 @@ if (!$canExecute) {
     current_title = $currentTitle
     resolved_port = $effectivePort
     page_kind = $currentPageKind
+    execution_backend = $executionBackend
     plan = $plan
-    next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser" } elseif ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
+    next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } elseif ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20
@@ -532,6 +753,34 @@ if (!$canExecute) {
     Write-Host ("Blocked by safety: {0}" -f $plan.safety_note)
   }
   exit 3
+}
+
+if ($executionBackend -eq "uia") {
+  $result = Invoke-XinjianUiaAction -Action $action -InputUrl $Url -Detection $urlDetection
+  $payload = [ordered]@{
+    ok = [bool]$result.ok
+    mode = "executed"
+    execution_backend = "uia"
+    intent = $Intent
+    url = $Url
+    current_url = $currentUrl
+    current_title = $currentTitle
+    resolved_port = $effectivePort
+    page_kind = $currentPageKind
+    plan = $plan
+    result = $result
+  }
+  if ($Json) {
+    $payload | ConvertTo-Json -Depth 20
+  } else {
+    if ($result.ok) {
+      Write-Host ("Executed Xinjian action through UIA: {0}" -f $action.name)
+    } else {
+      Write-Host ("Xinjian UIA action execution failed: {0}" -f $result.error)
+    }
+  }
+  if ($result.ok) { exit 0 }
+  exit 4
 }
 
 $node = Get-Command node -ErrorAction SilentlyContinue
@@ -611,6 +860,7 @@ $payload = [ordered]@{
   current_title = $currentTitle
   resolved_port = $effectivePort
   page_kind = $currentPageKind
+  execution_backend = "cdp"
   plan = $plan
   result = $result
 }
