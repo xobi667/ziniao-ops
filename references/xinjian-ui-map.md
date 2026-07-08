@@ -14,7 +14,7 @@ references/xinjian-ui-action-catalog.json
 references/xinjian-ui-action-catalog.md
 ```
 
-`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores only table headers plus row action button labels. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing.
+`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores table headers, row action labels, and generic action words from operation columns. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing.
 
 ## Workflow
 
@@ -46,7 +46,7 @@ If the current page is missing, weakly mapped, or newly changed, learn it in one
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Json
 ```
 
-`learn-xinjian-current-page.ps1` resolves the current page, captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels, then regenerates the public maps and unified action catalog. It does not read cookies, storage, tokens, input values, or table row cell values. Use `-DryRun` to preview the steps, or pass `-SkipDialogs`, `-SkipOverlays`, `-SkipRowActions`, or `-SkipDom` for narrower learning.
+`learn-xinjian-current-page.ps1` resolves the current page, captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels/operation-column action words, then regenerates the public maps and unified action catalog. It does not read cookies, storage, tokens, input values, or table row cell values. Use `-DryRun` to preview the steps, or pass `-SkipDialogs`, `-SkipOverlays`, `-SkipRowActions`, or `-SkipDom` for narrower learning.
 
 To learn every currently debuggable 心舰 page already open in Chrome/Edge, run:
 
@@ -148,7 +148,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-row-action-map.ps1") -Json
 ```
 
-The row-action probe reads table headers and row action labels only. It does not click row actions and does not read row cell values.
+The row-action probe reads table headers and row action labels only. For operation columns, it stores recognized generic action words rather than full cell text. It may open non-mutating row menu triggers such as `更多` or `操作`, but it does not click row action menu items and does not read row cell values.
 
 11. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
 
@@ -171,7 +171,7 @@ The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`,
 - Batch crawling only navigates to frontend routes in temporary CDP tabs and closes those tabs after capture. It must not be used to submit forms or run write actions.
 - Overlay capture opens panels but does not click overlay items. Treat overlay write/export/batch/edit/delete entries as confirmation-required.
 - Dialog capture clicks only safe opener controls and never clicks submit/confirm/write buttons inside the dialog. Treat dialog submit/save/confirm/write entries as confirmation-required.
-- Row-action capture reads table headers and row action button labels only; it must not read row cell values or click row buttons. Treat row edit/delete/export/write entries as confirmation-required.
+- Row-action capture reads table headers, row action labels, and operation-column generic action words only; it must not read row cell values or click row action items. It may open non-mutating row menu triggers only to reveal menu labels. Treat row edit/delete/export/write entries as confirmation-required.
 - Default capture excludes table row values because they can contain private business data. Use row data only for a user-requested report, not for public skill memory.
 - Any action that assigns, claims, saves, submits, deletes, exports, or batch-updates must be treated as confirmation-required unless the user explicitly asks for that exact operation.
 - Form-field actions may focus or open the field control only. They must not type values or submit the form unless a separate explicit write/submit action is confirmed.
@@ -205,10 +205,10 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
 - Public map pages: 10 curated pages plus 38 generated auto-map pages.
-- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler plus the current open-page learner, 0 pending after exclusions, 26 pages promoted to the overlay map, 204 overlay actions.
+- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler plus the current open-page learner, 0 pending after exclusions, 26 pages promoted to the overlay map, 291 overlay actions.
 - Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler plus the current open-page learner, 0 pending after exclusions, 9 pages promoted to the dialog map, 41 dialog actions.
-- Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler, 0 pending after exclusions, 1 page promoted to the row-action map, 2 row actions.
-- Unified action catalog: 49 pages, 564 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
+- Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler plus targeted fixed-right operation-column learning, 0 pending after exclusions, 2 pages promoted to the row-action map, 6 row actions.
+- Unified action catalog: 49 pages, 625 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

@@ -2,13 +2,166 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_row_action_captures",
-  "generated_at": "2026-07-08T11:24:16.565Z",
+  "generated_at": "2026-07-08T12:47:33.090Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Row action map stores table headers and row action button labels only. It does not store row cell values, cookies, storage, tokens, or private-looking text.",
     "write_action_rule": "Row write/export/delete/edit actions are confirmation-required until manually verified."
   },
   "pages": [
+    {
+      "id": "row.crm.matser.management.highseas",
+      "name": "达人公海",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/highSeas\\/?$",
+      "url_contains": [
+        "/crm/matser/management/highSeas"
+      ],
+      "title_aliases": [
+        "达人公海 - 心舰",
+        "达人公海"
+      ],
+      "purpose": "Auto-generated row-action memory for 达人公海.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/highSeas",
+        "captured_page_title": "达人公海 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 4,
+          "sampled_rows": 20
+        },
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "画像 / 品类",
+              "粉丝数",
+              "GMV",
+              "Item Sold",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "交互时间",
+              "达人信息",
+              "操作"
+            ],
+            "row_count_sampled": 20,
+            "actions": [
+              {
+                "name": "详情",
+                "column_header": "操作",
+                "disabled": false
+              },
+              {
+                "name": "删除",
+                "column_header": "操作",
+                "disabled": false
+              },
+              {
+                "name": "分配",
+                "column_header": "操作",
+                "disabled": false
+              },
+              {
+                "name": "认领",
+                "column_header": "操作",
+                "disabled": false
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "row.crm.matser.management.highseas.row_action.操作.详情",
+          "name": "操作详情",
+          "aliases": [
+            "详情",
+            "操作详情",
+            "详情操作",
+            "行详情",
+            "表格详情"
+          ],
+          "type": "row_action",
+          "safety": "navigation",
+          "purpose": "Use row action 详情 in the 操作 column on 达人公海.",
+          "function_source": "auto-generated from observed table row action label; row action was not clicked and row data was not read",
+          "locator": {
+            "row_action_text": "详情",
+            "column_header": "操作",
+            "column_class": "el-table_1_column_11",
+            "table_selector": "div#myTable"
+          }
+        },
+        {
+          "id": "row.crm.matser.management.highseas.row_action.操作.删除",
+          "name": "操作删除",
+          "aliases": [
+            "删除",
+            "操作删除",
+            "删除操作",
+            "行删除",
+            "表格删除"
+          ],
+          "type": "row_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Use row action 删除 in the 操作 column on 达人公海.",
+          "function_source": "auto-generated from observed table row action label; row action was not clicked and row data was not read",
+          "locator": {
+            "row_action_text": "删除",
+            "column_header": "操作",
+            "column_class": "el-table_1_column_11",
+            "table_selector": "div#myTable"
+          }
+        },
+        {
+          "id": "row.crm.matser.management.highseas.row_action.操作.分配",
+          "name": "操作分配",
+          "aliases": [
+            "分配",
+            "操作分配",
+            "分配操作",
+            "行分配",
+            "表格分配"
+          ],
+          "type": "row_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Use row action 分配 in the 操作 column on 达人公海.",
+          "function_source": "auto-generated from observed table row action label; row action was not clicked and row data was not read",
+          "locator": {
+            "row_action_text": "分配",
+            "column_header": "操作",
+            "column_class": "el-table_1_column_11",
+            "table_selector": "div#myTable"
+          }
+        },
+        {
+          "id": "row.crm.matser.management.highseas.row_action.操作.认领",
+          "name": "操作认领",
+          "aliases": [
+            "认领",
+            "操作认领",
+            "认领操作",
+            "行认领",
+            "表格认领"
+          ],
+          "type": "row_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Use row action 认领 in the 操作 column on 达人公海.",
+          "function_source": "auto-generated from observed table row action label; row action was not clicked and row data was not read",
+          "locator": {
+            "row_action_text": "认领",
+            "column_header": "操作",
+            "column_class": "el-table_1_column_11",
+            "table_selector": "div#myTable"
+          }
+        }
+      ]
+    },
     {
       "id": "row.system.costom.fee",
       "name": "自定义费用",

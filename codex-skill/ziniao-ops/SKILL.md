@@ -363,7 +363,7 @@ Before broad learning passes, audit global action memory quality so the next cra
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-action-memory.ps1") -Json
 ```
 
-If the current page is missing from memory or looks weakly mapped, learn it in one safe pass before guessing. This captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels, then regenerates the public maps and unified action catalog:
+If the current page is missing from memory or looks weakly mapped, learn it in one safe pass before guessing. This captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels/operation-column action words, then regenerates the public maps and unified action catalog:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Json
@@ -437,7 +437,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 `references\xinjian-ui-dialog-map.json` supplements static and overlay maps with dialog/drawer openers, dialog buttons, field labels, and placeholders. It does not store input values or private-looking text. Dialog submit/save/confirm/delete/write buttons are confirmation-required.
 
-To capture table row-level operation buttons such as `详情`, `编辑`, `删除`, `恢复`, `设置`, or `预警设置`, use the row-action probe. It reads only table headers and row action button labels; it must not read row cell values or click row buttons:
+To capture table row-level operation buttons such as `详情`, `编辑`, `删除`, `恢复`, `设置`, or `预警设置`, use the row-action probe. It reads only table headers, row action labels, and generic action words from operation columns. It may open non-mutating row menu triggers such as `更多` or `操作`, but it must not read row cell values or click row action menu items:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-row-actions.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -445,7 +445,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-row-action-map.ps1") -Json
 ```
 
-`references\xinjian-ui-row-action-map.json` supplements static, overlay, and dialog maps with table row action labels. Row edit/delete/export/write actions are confirmation-required.
+`references\xinjian-ui-row-action-map.json` supplements static, overlay, and dialog maps with table row action labels and operation-column action words. Row edit/delete/export/write actions are confirmation-required.
 
 If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:
 

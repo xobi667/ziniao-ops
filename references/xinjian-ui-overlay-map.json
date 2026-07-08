@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T12:25:13.820Z",
+  "generated_at": "2026-07-08T12:47:29.617Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -134,6 +134,48 @@
               "按Tiktok账号",
               "添加至广告计划",
               "批量排除"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择创意状态",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": []
+          },
+          {
+            "trigger": "选择批量操作",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 9,
+            "items": [
+              "按视频名称",
+              "按视频ID号",
+              "按Tiktok账号"
             ]
           }
         ]
@@ -2064,6 +2106,66 @@
             "item_count": 2,
             "filtered_item_count": 36,
             "items": []
+          },
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 61,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          },
+          {
+            "trigger": "达人标签",
+            "trigger_type": "cascader",
+            "item_count": 4,
+            "filtered_item_count": 61,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 4,
+            "filtered_item_count": 41,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 4,
+            "filtered_item_count": 41,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 12,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 12,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
           }
         ]
       },
@@ -2156,6 +2258,210 @@
           "locator": {
             "trigger_text": "开始日期",
             "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.全部商务.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "全部商务达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 全部商务 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.全部商务.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "全部商务达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 全部商务 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.达人标签.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "达人标签达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 达人标签 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "达人标签",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.tag-filter-cascader.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.达人标签.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "达人标签达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 达人标签 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "达人标签",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.tag-filter-cascader.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.品类.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "品类达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 品类 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.品类.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "品类达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 品类 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.请选择.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.请选择.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.请选择.达人id.2",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.app-container > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.请选择.达人昵称.2",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.app-container > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
           }
         }
       ]
@@ -2536,6 +2842,136 @@
               "达人ID",
               "达人昵称"
             ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 4,
+            "filtered_item_count": 77,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 4,
+            "filtered_item_count": 77,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 77,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 75,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 25,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 25,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "年龄分布",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 17,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 4,
+            "filtered_item_count": 10,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 10,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 4,
+            "filtered_item_count": 5,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "批量删除",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 5,
+            "items": [
+              "批量删除",
+              "信息更新"
+            ]
           }
         ]
       },
@@ -2826,6 +3262,635 @@
             "item_text": "达人昵称",
             "trigger_selector": "div#scrollView > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
           }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择店铺.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "选择店铺达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 选择店铺 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择店铺.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "选择店铺达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 选择店铺 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择店铺.批量删除",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "选择店铺批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 选择店铺 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择店铺.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "选择店铺信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 选择店铺 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.品类.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "品类达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 品类 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.品类.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "品类达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 品类 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.品类.批量删除",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "品类批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 品类 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.品类.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "品类信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 品类 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.全部商务.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "全部商务达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 全部商务 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.全部商务.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "全部商务达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 全部商务 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.全部商务.批量删除",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "全部商务批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 全部商务 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.全部商务.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "全部商务信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 全部商务 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人id.2",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人昵称.2",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除.2",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "请选择批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人id.2",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人昵称.2",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除.2",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "请选择批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.信息更新.2",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人id.3",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人昵称.3",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除.3",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "请选择批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.信息更新.3",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.年龄分布.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "年龄分布达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 年龄分布 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.年龄分布.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "年龄分布达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 年龄分布 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.年龄分布.批量删除",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "年龄分布批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 年龄分布 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.年龄分布.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "年龄分布信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 年龄分布 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择标签.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "选择标签达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 选择标签 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.crmCascader.w160.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择标签.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "选择标签达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 选择标签 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.crmCascader.w160.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择标签.批量删除",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "选择标签批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 选择标签 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.crmCascader.w160.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.选择标签.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "选择标签信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 选择标签 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.crmCascader.w160.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人id.4",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人昵称.4",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.批量删除.4",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "请选择批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "批量删除",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.信息更新.4",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.信息更新.5",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div#scrollView > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
         }
       ]
     },
@@ -2932,6 +3997,124 @@
             "item_count": 2,
             "filtered_item_count": 71,
             "items": []
+          },
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 6,
+            "filtered_item_count": 78,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 6,
+            "filtered_item_count": 78,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 6,
+            "filtered_item_count": 58,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 6,
+            "filtered_item_count": 58,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 6,
+            "filtered_item_count": 50,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "年龄分布",
+            "trigger_type": "select",
+            "item_count": 6,
+            "filtered_item_count": 21,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 6,
+            "filtered_item_count": 21,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 6,
+            "filtered_item_count": 14,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 6,
+            "filtered_item_count": 14,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 6,
+            "filtered_item_count": 14,
+            "items": [
+              "达人ID",
+              "达人昵称",
+              "转移达人",
+              "信息更新"
+            ]
           }
         ]
       },
@@ -3083,6 +4266,656 @@
           "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
           "locator": {
             "trigger_text": "请选择",
+            "trigger_selector": "div.container > div.page-down:nth-of-type(2) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.全部商务.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "全部商务达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 全部商务 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.filterable-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.全部商务.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "全部商务达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 全部商务 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.filterable-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.全部商务.转移达人",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "全部商务转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 全部商务 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.filterable-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.全部商务.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "全部商务信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 全部商务 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.filterable-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.转移达人",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "请选择转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.选择标签.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "选择标签达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 选择标签 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.my-master-filter-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.my-master-tag-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.选择标签.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "选择标签达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 选择标签 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.my-master-filter-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.my-master-tag-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.选择标签.转移达人",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "选择标签转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 选择标签 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.my-master-filter-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.my-master-tag-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.选择标签.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "选择标签信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 选择标签 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.my-master-filter-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.my-master-tag-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.品类.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "品类达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 品类 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.my-master-filter-item:nth-of-type(4) > div.el-form-item__content > div.crmCascader.my-master-category-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.品类.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "品类达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 品类 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.my-master-filter-item:nth-of-type(4) > div.el-form-item__content > div.crmCascader.my-master-category-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.品类.转移达人",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "品类转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 品类 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.my-master-filter-item:nth-of-type(4) > div.el-form-item__content > div.crmCascader.my-master-category-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.品类.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "品类信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 品类 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.my-master-filter-item:nth-of-type(4) > div.el-form-item__content > div.crmCascader.my-master-category-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人id.2",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人昵称.2",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.转移达人.2",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "请选择转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.信息更新.2",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.年龄分布.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "年龄分布达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 年龄分布 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.follower-age-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.年龄分布.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "年龄分布达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 年龄分布 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.follower-age-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.年龄分布.转移达人",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "年龄分布转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 年龄分布 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.follower-age-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.年龄分布.信息更新",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "年龄分布信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 年龄分布 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.follower-age-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人id.3",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人昵称.3",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.转移达人.3",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "请选择转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "转移达人",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.信息更新.3",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.批量操作.达人id",
+          "name": "批量达人ID",
+          "aliases": [
+            "达人ID",
+            "批量操作达人ID",
+            "批量达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 达人ID from the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "达人ID",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.批量操作.达人昵称",
+          "name": "批量达人昵称",
+          "aliases": [
+            "达人昵称",
+            "批量操作达人昵称",
+            "批量达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 达人昵称 from the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "达人昵称",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.批量操作.转移达人",
+          "name": "批量转移达人",
+          "aliases": [
+            "转移达人",
+            "批量操作转移达人",
+            "批量转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "转移达人",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.批量操作.信息更新",
+          "name": "批量信息更新",
+          "aliases": [
+            "信息更新",
+            "批量操作信息更新",
+            "批量信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "信息更新",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人id.4",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.container > div.page-down:nth-of-type(2) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人昵称.4",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.container > div.page-down:nth-of-type(2) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.转移达人.4",
+          "name": "转移达人",
+          "aliases": [
+            "转移达人",
+            "请选择转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "转移达人",
+            "trigger_selector": "div.container > div.page-down:nth-of-type(2) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.信息更新.4",
+          "name": "信息更新",
+          "aliases": [
+            "信息更新",
+            "请选择信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "信息更新",
             "trigger_selector": "div.container > div.page-down:nth-of-type(2) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
           }
         }
@@ -4850,6 +6683,589 @@
             "trigger_type": "date_picker",
             "item_count": 2,
             "filtered_item_count": 14,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 0,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 20,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 2,
+            "items": [
+              "利润"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 1,
+            "items": [
+              "订单"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 4,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 8,
+            "filtered_item_count": 31,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 8,
+            "filtered_item_count": 27,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人",
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 5,
+            "filtered_item_count": 27,
+            "items": [
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 5,
+            "filtered_item_count": 25,
+            "items": [
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 25,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 23,
+            "items": [
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 22,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 14,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 14,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 0,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 20,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 2,
+            "items": [
+              "利润"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 1,
+            "items": [
+              "订单"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 4,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 8,
+            "filtered_item_count": 31,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 8,
+            "filtered_item_count": 27,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人",
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 5,
+            "filtered_item_count": 27,
+            "items": [
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 5,
+            "filtered_item_count": 25,
+            "items": [
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 25,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 23,
+            "items": [
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 22,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 14,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 14,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 0,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 20,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 2,
+            "items": [
+              "利润"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 1,
+            "items": [
+              "订单"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 4,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 8,
+            "filtered_item_count": 31,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 8,
+            "filtered_item_count": 27,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人",
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 5,
+            "filtered_item_count": 27,
+            "items": [
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 5,
+            "filtered_item_count": 25,
+            "items": [
+              "利润",
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 25,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 4,
+            "filtered_item_count": 23,
+            "items": [
+              "订单",
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 22,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 14,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 14,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 0,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 5,
+            "filtered_item_count": 20,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 2,
+            "items": [
+              "利润"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 1,
+            "items": [
+              "订单"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 1,
+            "filtered_item_count": 4,
+            "items": [
+              "店铺"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 8,
+            "filtered_item_count": 31,
             "items": [
               "今天",
               "昨天"

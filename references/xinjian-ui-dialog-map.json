@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dialog_captures",
-  "generated_at": "2026-07-08T12:25:14.442Z",
+  "generated_at": "2026-07-08T12:47:31.228Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
@@ -744,6 +744,35 @@
       },
       "observed_controls": {
         "dialogs": [
+          {
+            "trigger": "添加达人",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "达人建联",
+                "type": "dialog",
+                "buttons": [
+                  "关闭",
+                  "搜索",
+                  "添加",
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "达人信息",
+                  "联系方式",
+                  "备注"
+                ],
+                "placeholders": [
+                  "请输入达人ID/达人主页链接进行搜索",
+                  "请选择",
+                  "请输入内容",
+                  "请输入备注信息"
+                ]
+              }
+            ]
+          },
           {
             "trigger": "添加达人",
             "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > button.el-button.noGlobal.el-button--success",

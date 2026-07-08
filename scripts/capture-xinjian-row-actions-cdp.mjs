@@ -111,7 +111,7 @@ if (!page?.webSocketDebuggerUrl) {
   throw new Error(`No debuggable page was found on port ${port}.`);
 }
 
-const expression = `(() => {
+const expression = `(async () => {
   const maxTables = ${JSON.stringify(Number.isFinite(maxTables) && maxTables > 0 ? maxTables : 12)};
   const maxRowsPerTable = ${JSON.stringify(Number.isFinite(maxRowsPerTable) && maxRowsPerTable > 0 ? maxRowsPerTable : 20)};
   const clean = (value) => String(value || "")
@@ -124,6 +124,8 @@ const expression = `(() => {
   );
   const isVisible = (el) => {
     if (!el || el.nodeType !== 1) return false;
+    if (el.classList && el.classList.contains("is-hidden")) return false;
+    if (el.closest && el.closest(".is-hidden")) return false;
     const style = window.getComputedStyle(el);
     const rect = el.getBoundingClientRect();
     return style && style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
@@ -148,6 +150,32 @@ const expression = `(() => {
     if (/^(搜索|查询|重置|取消|确定|关闭|上一页|下一页|跳至|更多)$/.test(text)) return false;
     return /详情|查看|编辑|修改|删除|恢复|设置|配置|预警|打开|进入|下载|导出|复制|更新|转移|分配|认领|加入|移除|拉黑|黑名单|关注|取消关注|审核|审批|作废|同步|启用|禁用|重新|执行|日志|授权|续费|开通/.test(text);
   };
+  const actionWords = [
+    "取消关注", "预警设置", "重新执行", "黑名单", "详情", "查看", "编辑", "修改", "删除", "恢复",
+    "设置", "配置", "预警", "打开", "进入", "下载", "导出", "复制", "更新", "转移",
+    "分配", "认领", "加入", "移除", "拉黑", "关注", "审核", "审批", "作废", "同步",
+    "启用", "禁用", "执行", "日志", "授权", "续费", "开通"
+  ];
+  const actionWordsFromOperationCell = (value) => {
+    const compact = clean(value).replace(/\\s+/g, "");
+    if (!compact || compact.length > 80 || isPrivateLike(compact)) return [];
+    const result = [];
+    for (const word of actionWords) {
+      if (compact.includes(word) && isActionText(word) && !result.includes(word)) result.push(word);
+    }
+    return result;
+  };
+  const isRowMenuTrigger = (el, columnHeader) => {
+    const text = clean(controlName(el)).replace(/\\s+/g, "");
+    const cls = String(el.className || "");
+    const aria = clean(el.getAttribute("aria-haspopup") || el.getAttribute("aria-controls") || "");
+    const column = clean(columnHeader).replace(/\\s+/g, "");
+    if (/^(更多|操作|更多操作|\\.\\.\\.|…)$/.test(text)) return true;
+    if (/el-dropdown|dropdown|more/i.test(cls) && (!text || /更多|操作/.test(text) || /操作/.test(column))) return true;
+    if (aria && /menu|listbox|dropdown/i.test(aria) && /操作/.test(column)) return true;
+    return false;
+  };
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const cssPath = (el) => {
     const parts = [];
     let cur = el;
@@ -202,6 +230,20 @@ const expression = `(() => {
     const byIndex = headers[cellIndex];
     return byIndex?.name || "";
   };
+  const visibleMenuItems = () => {
+    const selectors = [
+      ".el-dropdown-menu:not([style*='display: none']) .el-dropdown-menu__item",
+      ".el-popper:not([style*='display: none']) .el-dropdown-menu__item",
+      ".el-popper:not([style*='display: none']) [role='menuitem']",
+      "[role='menu']:not([style*='display: none']) [role='menuitem']"
+    ];
+    return Array.from(document.querySelectorAll(selectors.join(","))).filter(isVisible);
+  };
+  const closeMenus = async () => {
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", code: "Escape", bubbles: true }));
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", code: "Escape", bubbles: true }));
+    await wait(50);
+  };
   const tables = Array.from(document.querySelectorAll(".el-table, table"))
     .filter((item) => item.matches(".el-table") || !item.closest(".el-table"))
     .filter(isVisible)
@@ -210,7 +252,20 @@ const expression = `(() => {
   for (let tableIndex = 0; tableIndex < tables.length; tableIndex += 1) {
     const table = tables[tableIndex];
     const headers = tableHeaders(table);
-    const rows = Array.from(table.querySelectorAll("tbody tr")).filter(isVisible).slice(0, maxRowsPerTable);
+    const operationColumnClasses = headers
+      .filter((item) => /操作|动作|功能/.test(clean(item.name).replace(/\\s+/g, "")))
+      .map((item) => item.column_class)
+      .filter(Boolean);
+    const allRows = Array.from(table.querySelectorAll("tbody tr")).filter(isVisible);
+    const rowsWithOperationCells = allRows.filter((row) => {
+      const visibleCells = Array.from(row.querySelectorAll("td")).filter(isVisible);
+      return visibleCells.some((cell) => operationColumnClasses.includes(columnClass(cell)));
+    });
+    const rowsWithControls = allRows.filter((row) =>
+      Array.from(row.querySelectorAll("button, a[href], [role='button'], .el-button, .el-dropdown, .el-dropdown-link, .el-dropdown-selfdefine, [aria-haspopup]")).some(isVisible)
+    );
+    const rowPool = rowsWithOperationCells.length ? rowsWithOperationCells : (rowsWithControls.length ? rowsWithControls : allRows);
+    const rows = rowPool.slice(0, maxRowsPerTable);
     const actions = [];
     for (let rowIndex = 0; rowIndex < rows.length; rowIndex += 1) {
       const row = rows[rowIndex];
@@ -218,7 +273,7 @@ const expression = `(() => {
       for (let cellIndex = 0; cellIndex < cells.length; cellIndex += 1) {
         const cell = cells[cellIndex];
         const columnHeader = headerForCell(cell, headers, cellIndex);
-        const controls = Array.from(cell.querySelectorAll("button, a[href], [role='button'], .el-button")).filter(isVisible);
+        const controls = Array.from(cell.querySelectorAll("button, a[href], [role='button'], .el-button, .el-dropdown, .el-dropdown-link, .el-dropdown-selfdefine, [aria-haspopup]")).filter(isVisible);
         for (const control of controls) {
           const name = controlName(control);
           if (!isActionText(name)) continue;
@@ -230,6 +285,44 @@ const expression = `(() => {
             selector: cssPath(control),
             disabled: !!control.disabled || control.getAttribute("aria-disabled") === "true"
           });
+        }
+        if (/操作|动作|功能/.test(clean(columnHeader).replace(/\\s+/g, ""))) {
+          for (const name of actionWordsFromOperationCell(cell.innerText || cell.textContent || "")) {
+            actions.push({
+              name,
+              column_header: isPublicUiText(columnHeader, 40) ? columnHeader : "",
+              column_class: columnClass(cell),
+              row_index: rowIndex,
+              selector: cssPath(cell),
+              disabled: false,
+              source: "operation_cell_text"
+            });
+          }
+        }
+        for (const control of controls) {
+          if (!isRowMenuTrigger(control, columnHeader)) continue;
+          if (control.disabled || control.getAttribute("aria-disabled") === "true") continue;
+          await closeMenus();
+          try {
+            control.click();
+            await wait(180);
+            for (const item of visibleMenuItems()) {
+              const name = controlName(item);
+              if (!isActionText(name)) continue;
+              actions.push({
+                name,
+                column_header: isPublicUiText(columnHeader, 40) ? columnHeader : "",
+                column_class: columnClass(cell),
+                row_index: rowIndex,
+                selector: cssPath(item),
+                disabled: item.getAttribute("aria-disabled") === "true" || /is-disabled/.test(String(item.className || "")),
+                source: "row_menu"
+              });
+            }
+          } catch {
+          } finally {
+            await closeMenus();
+          }
         }
       }
     }
@@ -276,7 +369,7 @@ const expression = `(() => {
       sampled_rows: results.reduce((sum, table) => sum + (table.row_count_sampled || 0), 0)
     },
     tables: results,
-    note: "CDP row-action probe reads table headers and row action button labels only. It does not click row actions, read row cell values, type, submit forms, read cookies, read storage, or read tokens."
+    note: "CDP row-action probe reads table headers and row action labels only. For operation columns, it stores recognized generic action words rather than full cell text. It may open non-mutating row menu triggers such as More/Actions, but does not click row action menu items, read row cell values, type, submit forms, read cookies, read storage, or read tokens."
   };
 })()`;
 
@@ -294,7 +387,7 @@ const value = await new Promise((resolve, reject) => {
     return id;
   };
   ws.onopen = () => {
-    evaluateId = send("Runtime.evaluate", { expression, returnByValue: true });
+    evaluateId = send("Runtime.evaluate", { expression, returnByValue: true, awaitPromise: true });
   };
   ws.onmessage = (event) => {
     const message = JSON.parse(event.data);

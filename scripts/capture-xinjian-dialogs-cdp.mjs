@@ -24,6 +24,14 @@ function comparablePath(value) {
   return String(value || "").replace(/\/+$/g, "") || "/";
 }
 
+function isTargetPage(item) {
+  const currentUrl = parseUrl(item?.url || "");
+  const targetUrl = parseUrl(matchUrl);
+  if (!targetUrl) return true;
+  if (!currentUrl) return false;
+  return currentUrl.origin === targetUrl.origin && comparablePath(currentUrl.pathname) === comparablePath(targetUrl.pathname);
+}
+
 function pageScore(item) {
   const url = String(item.url || "");
   const title = String(item.title || "");
@@ -45,10 +53,57 @@ function pageScore(item) {
   return score;
 }
 
-const pages = await (await fetch(`http://127.0.0.1:${port}/json`, { signal: AbortSignal.timeout(8000) })).json();
-const page = pages
+async function listPages() {
+  return await (await fetch(`http://127.0.0.1:${port}/json`, { signal: AbortSignal.timeout(8000) })).json();
+}
+
+async function openTargetPage(url) {
+  if (!url) return null;
+  const encoded = encodeURIComponent(url);
+  for (const endpoint of [
+    `http://127.0.0.1:${port}/json/new?${encoded}`,
+    `http://127.0.0.1:${port}/json/new?url=${encoded}`
+  ]) {
+    for (const method of ["PUT", "GET"]) {
+      try {
+        const response = await fetch(endpoint, { method, signal: AbortSignal.timeout(5000) });
+        if (response.ok) return await response.json();
+      } catch {
+      }
+    }
+  }
+  return null;
+}
+
+async function closePage(id) {
+  if (!id) return;
+  try {
+    await fetch(`http://127.0.0.1:${port}/json/close/${encodeURIComponent(id)}`, { signal: AbortSignal.timeout(3000) });
+  } catch {
+  }
+}
+
+async function sleep(ms) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+let openedByHelper = null;
+let pages = await listPages();
+let page = pages
   .filter((item) => item.webSocketDebuggerUrl && item.type === "page")
   .sort((a, b) => pageScore(b) - pageScore(a))[0];
+
+if (matchUrl && !isTargetPage(page)) {
+  openedByHelper = await openTargetPage(matchUrl);
+  if (openedByHelper?.id) {
+    await sleep(8000);
+    pages = await listPages();
+    page = pages
+      .filter((item) => item.webSocketDebuggerUrl && item.type === "page")
+      .filter(isTargetPage)
+      .sort((a, b) => pageScore(b) - pageScore(a))[0] || openedByHelper;
+  }
+}
 
 if (!page?.webSocketDebuggerUrl) {
   throw new Error(`No debuggable page was found on port ${port}.`);
@@ -311,7 +366,8 @@ const payload = {
   matched_page: {
     url: page.url,
     title: page.title,
-    score: pageScore(page)
+    score: pageScore(page),
+    opened_by_helper: !!openedByHelper
   },
   output_path: path.resolve(out),
   ...value
@@ -319,4 +375,5 @@ const payload = {
 
 await fs.mkdir(path.dirname(out), { recursive: true });
 await fs.writeFile(out, JSON.stringify(payload, null, 2), "utf8");
+if (openedByHelper?.id) await closePage(openedByHelper.id);
 process.stdout.write(JSON.stringify(payload, null, 2));

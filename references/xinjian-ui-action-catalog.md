@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 564
+- Actions: 625
 - Global actions: 6
 
 ### Sources
@@ -14,27 +14,27 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
 | auto | 2026-07-08 | 38 | 336 |
-| overlay | 2026-07-08 | 26 | 204 |
+| overlay | 2026-07-08 | 26 | 291 |
 | dialog | 2026-07-08 | 9 | 41 |
-| row-action | 2026-07-08 | 1 | 2 |
+| row-action | 2026-07-08 | 2 | 6 |
 
 ### Safety
 
 | Safety mode | Actions |
 | --- | ---: |
 | confirmation_required_export | 8 |
-| confirmation_required_write | 142 |
-| safe_execute_allowed | 414 |
+| confirmation_required_write | 170 |
+| safe_execute_allowed | 447 |
 
 ### Locator Strategies
 
 | Locator strategy | Actions |
 | --- | ---: |
-| click_first_matching_row_action_in_table | 2 |
+| click_first_matching_row_action_in_table | 6 |
 | click_quick_tab_text_or_placeholder_list | 3 |
 | click_trigger_selector | 83 |
 | click_trigger_selector_then_dialog_button_text | 31 |
-| click_trigger_selector_then_overlay_item_text | 49 |
+| click_trigger_selector_then_overlay_item_text | 106 |
 | click_visible_action_text | 50 |
 | click_visible_dom_text | 222 |
 | click_visible_tab_text_from_list | 1 |
@@ -397,13 +397,23 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/crm/matser/management/blacklist`
 - Sources: curated, overlay
-- Actions: 8
+- Actions: 18
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
 | 批量恢复 | text:批量恢复 | button | confirmation_required_write | click_visible_dom_text | curated | Restore selected creators from blacklist. Requires selected rows and explicit confirmation. |
 | 搜索 | text:搜索 | button | safe_execute_allowed | click_visible_dom_text | curated | Apply current blacklist filters. |
 | 重置 | text:重置 | button | safe_execute_allowed | click_visible_dom_text | curated | Clear current blacklist filters. |
+| 达人昵称 | 达人标签 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 达人标签 overlay on 黑名单. |
+| 达人昵称 | 品类 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 品类 overlay on 黑名单. |
+| 达人昵称 | 请选择 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 请选择 overlay on 黑名单. |
+| 达人昵称 | 全部商务 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 全部商务 overlay on 黑名单. |
+| 达人ID | 达人标签 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 达人标签 overlay on 黑名单. |
+| 达人ID | 品类 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 品类 overlay on 黑名单. |
+| 达人ID | 请选择 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 请选择 overlay on 黑名单. |
+| 达人ID | 全部商务 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 全部商务 overlay on 黑名单. |
+| 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 黑名单. |
+| 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 黑名单. |
 | 达人标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 达人标签 overlay on 黑名单. |
 | 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 黑名单. |
 | 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 黑名单. |
@@ -430,8 +440,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 达人公海
 
 - Route: `/crm/matser/management/highSeas`
-- Sources: curated, overlay
-- Actions: 33
+- Sources: curated, overlay, row-action
+- Actions: 58
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -449,13 +459,34 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 品类 | placeholder:品类 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Filter creators by product/category fit. |
 | 选择标签 | placeholder:选择标签 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Filter creators by tag. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Filter creators by shop. |
+| 达人昵称 | 年龄分布 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 年龄分布 overlay on 达人公海. |
+| 达人昵称 | 品类 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 品类 overlay on 达人公海. |
 | 达人昵称 | 请选择 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 请选择 overlay on 达人公海. |
+| 达人昵称 | 全部商务 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 全部商务 overlay on 达人公海. |
+| 达人昵称 | 选择标签 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 选择标签 overlay on 达人公海. |
+| 达人昵称 | 选择店铺 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 选择店铺 overlay on 达人公海. |
+| 达人ID | 年龄分布 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 年龄分布 overlay on 达人公海. |
+| 达人ID | 品类 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 品类 overlay on 达人公海. |
 | 达人ID | 请选择 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 请选择 overlay on 达人公海. |
+| 达人ID | 全部商务 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 全部商务 overlay on 达人公海. |
+| 达人ID | 选择标签 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 选择标签 overlay on 达人公海. |
+| 达人ID | 选择店铺 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 选择店铺 overlay on 达人公海. |
 | 批量达人昵称 | 批量操作 -> 达人昵称 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 批量操作 overlay on 达人公海. |
 | 批量达人ID | 批量操作 -> 达人ID | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 批量操作 overlay on 达人公海. |
+| 批量删除 | 年龄分布 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 年龄分布 overlay on 达人公海. |
 | 批量删除 | 批量操作 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 批量操作 overlay on 达人公海. |
+| 批量删除 | 品类 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 品类 overlay on 达人公海. |
 | 批量删除 | 请选择 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 请选择 overlay on 达人公海. |
+| 批量删除 | 全部商务 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 全部商务 overlay on 达人公海. |
+| 批量删除 | 选择标签 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 选择标签 overlay on 达人公海. |
+| 批量删除 | 选择店铺 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 选择店铺 overlay on 达人公海. |
 | 批量信息更新 | 批量操作 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 批量操作 overlay on 达人公海. |
+| 信息更新 | 年龄分布 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 年龄分布 overlay on 达人公海. |
+| 信息更新 | 品类 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 品类 overlay on 达人公海. |
+| 信息更新 | 请选择 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 请选择 overlay on 达人公海. |
+| 信息更新 | 全部商务 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 全部商务 overlay on 达人公海. |
+| 信息更新 | 选择标签 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 选择标签 overlay on 达人公海. |
+| 信息更新 | 选择店铺 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 选择店铺 overlay on 达人公海. |
 | 年龄分布 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 年龄分布 overlay on 达人公海. |
 | 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 达人公海. |
 | 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 达人公海. |
@@ -463,6 +494,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 达人公海. |
 | 选择标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 达人公海. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 达人公海. |
+| 操作分配 | 操作 -> 分配 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 分配 in the 操作 column on 达人公海. |
+| 操作认领 | 操作 -> 认领 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 认领 in the 操作 column on 达人公海. |
+| 操作删除 | 操作 -> 删除 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 删除 in the 操作 column on 达人公海. |
+| 操作详情 | 操作 -> 详情 | row_action | safe_execute_allowed | click_first_matching_row_action_in_table | row-action | Use row action 详情 in the 操作 column on 达人公海. |
 | 合作中 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators currently cooperating. |
 | 全部 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show all creators in the high-seas list. |
 | 已出单 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators that already generated orders. |
@@ -473,7 +508,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/crm/matser/management/myMaster`
 - Sources: curated, dialog, overlay
-- Actions: 17
+- Actions: 43
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -487,6 +522,32 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 添加达人搜索 | 添加达人 -> 搜索 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 搜索 inside the 添加达人 dialog/drawer on 我的达人. |
 | 添加达人添加 | 添加达人 -> 添加 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 添加 inside the 添加达人 dialog/drawer on 我的达人. |
 | 添加达人 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 添加达人 dialog/drawer on 我的达人; do not submit changes without explicit confirmation. |
+| 达人昵称 | 年龄分布 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 年龄分布 overlay on 我的达人. |
+| 达人昵称 | 品类 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 品类 overlay on 我的达人. |
+| 达人昵称 | 请选择 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 请选择 overlay on 我的达人. |
+| 达人昵称 | 全部商务 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 全部商务 overlay on 我的达人. |
+| 达人昵称 | 选择标签 -> 达人昵称 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 选择标签 overlay on 我的达人. |
+| 达人ID | 年龄分布 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 年龄分布 overlay on 我的达人. |
+| 达人ID | 品类 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 品类 overlay on 我的达人. |
+| 达人ID | 请选择 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 请选择 overlay on 我的达人. |
+| 达人ID | 全部商务 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 全部商务 overlay on 我的达人. |
+| 达人ID | 选择标签 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 选择标签 overlay on 我的达人. |
+| 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 我的达人. |
+| 批量达人昵称 | 批量操作 -> 达人昵称 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人昵称 from the 批量操作 overlay on 我的达人. |
+| 批量达人ID | 批量操作 -> 达人ID | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 批量操作 overlay on 我的达人. |
+| 批量信息更新 | 批量操作 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 批量操作 overlay on 我的达人. |
+| 批量转移达人 | 批量操作 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 批量操作 overlay on 我的达人. |
+| 信息更新 | 年龄分布 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 年龄分布 overlay on 我的达人. |
+| 信息更新 | 品类 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 品类 overlay on 我的达人. |
+| 信息更新 | 请选择 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 请选择 overlay on 我的达人. |
+| 信息更新 | 全部商务 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 全部商务 overlay on 我的达人. |
+| 信息更新 | 选择标签 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 选择标签 overlay on 我的达人. |
+| 转移达人 | 年龄分布 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 年龄分布 overlay on 我的达人. |
+| 转移达人 | 品类 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 品类 overlay on 我的达人. |
+| 转移达人 | 请选择 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 请选择 overlay on 我的达人. |
+| 转移达人 | 全部商务 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 全部商务 overlay on 我的达人. |
+| 转移达人 | 选择标签 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 选择标签 overlay on 我的达人. |
+| 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 我的达人. |
 | 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 我的达人. |
 | 年龄分布 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 年龄分布 overlay on 我的达人. |
 | 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 我的达人. |

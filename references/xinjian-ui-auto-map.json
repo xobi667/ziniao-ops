@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dom_captures",
-  "generated_at": "2026-07-08T12:25:13.173Z",
+  "generated_at": "2026-07-08T12:47:27.749Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "This generated map stores generic page controls only. It must not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -7447,11 +7447,11 @@
         "captured_page_url": "https://erp.xinjianerp.com/index/home",
         "captured_page_title": "首页 - 心舰",
         "captured_counts": {
-          "controls": 98,
+          "controls": 96,
           "buttons": 30,
           "inputs": 9,
           "tabs": 0,
-          "menus": 21,
+          "menus": 19,
           "links": 1
         },
         "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
