@@ -10,9 +10,11 @@ references/xinjian-ui-auto-map.json
 references/xinjian-ui-overlay-map.json
 references/xinjian-ui-dialog-map.json
 references/xinjian-ui-row-action-map.json
+references/xinjian-ui-action-catalog.json
+references/xinjian-ui-action-catalog.md
 ```
 
-`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores only table headers plus row action button labels.
+`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores only table headers plus row action button labels. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing.
 
 ## Workflow
 
@@ -28,7 +30,15 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\dete
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\query-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
 ```
 
-3. For RPA-style routing, convert the mapped intent into a dry-run action plan before clicking:
+3. To inspect the full remembered button/action catalog:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-action-catalog.ps1") -Json
+```
+
+The generated `references/xinjian-ui-action-catalog.md` is a human-readable page/action table. The JSON version includes action context, safety mode, source map, locator strategy, and raw locator.
+
+4. For RPA-style routing, convert the mapped intent into a dry-run action plan before clicking:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
@@ -38,7 +48,7 @@ The invoker reports the matched page/action, safety gate, and locator strategy. 
 
 When `-Url` is provided, query and invoke scripts first scope page-level matches to the current route. Off-page name matches are suppressed unless no current-page match exists, so an intent like `首页` on `/ai/talk` resolves to the current page's 首页 action instead of the 首页 page's unrelated controls.
 
-4. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
+5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\discover-xinjian-routes.ps1") -Port 9342 -Json
@@ -46,7 +56,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\disc
 
 Use route discovery to choose a real 心舰 path before opening new pages. It reads Vue Router metadata plus visible link/menu labels only.
 
-5. To expand coverage in batches, crawl unmapped routes and capture their DOM controls:
+6. To expand coverage in batches, crawl unmapped routes and capture their DOM controls:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-ui-coverage.ps1") -Port 9342 -RefreshRoutes -Json
@@ -60,7 +70,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 
 The crawler opens one route at a time through CDP, captures controls, then closes the temporary tab it opened. It records local attempt state under `.ziniao-ops\xinjian-crawl-state.json`, so empty pages, restricted pages, redirects, and previous failures are not repeatedly retried unless `-RetryAttempted` is passed. It does not click page controls.
 
-6. Promote sanitized local captures into the generated auto map:
+7. Promote sanitized local captures into the generated auto map:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-auto-map.ps1") -NoMergeExisting -Json
@@ -68,7 +78,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The generator skips pages already present in the curated map, removes empty captures, normalizes account-menu labels, skips generic/private-looking values, and marks write/export/batch/edit/save/delete actions as confirmation-required.
 
-7. To capture dynamic overlay controls such as dropdown menus, batch menus, select panels, and date shortcuts:
+8. To capture dynamic overlay controls such as dropdown menus, batch menus, select panels, and date shortcuts:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-overlays.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -86,7 +96,7 @@ The batch crawler opens a temporary CDP tab per mapped route, captures overlay t
 
 The overlay probe opens safe Element UI trigger panels (`select`, `cascader`, `dropdown`, date picker), records sanitized generic menu items, and closes the panel. It does not click overlay items. Private-looking select values are filtered at capture time.
 
-8. To capture dialog/drawer controls that only appear after a safe opener:
+9. To capture dialog/drawer controls that only appear after a safe opener:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dialogs.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -96,7 +106,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The dialog probe may click safe opener buttons such as `新增`, `编辑`, `详情`, `查看`, `设置`, or `配置`, records sanitized dialog/drawer buttons, field labels, and placeholders, then closes the dialog. It does not click submit/confirm/write buttons, does not type, and does not read input values.
 
-9. To capture table row-level operation buttons without reading row data:
+10. To capture table row-level operation buttons without reading row data:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-row-actions.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
@@ -106,19 +116,19 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The row-action probe reads table headers and row action labels only. It does not click row actions and does not read row cell values.
 
-10. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
+11. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dom-map.ps1") -Port 9342 -Json
 ```
 
-11. If the page or button is not debuggable, capture the current page through Windows UIA read-only:
+12. If the page or button is not debuggable, capture the current page through Windows UIA read-only:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
 ```
 
-The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-overlay-captures\`, `.ziniao-ops\xinjian-dialog-captures\`, `.ziniao-ops\xinjian-row-action-captures\`, `.ziniao-ops\xinjian-route-discovery\`, `.ziniao-ops\xinjian-crawl-state.json`, `.ziniao-ops\xinjian-overlay-crawl-state.json`, `.ziniao-ops\xinjian-dialog-crawl-state.json`, `.ziniao-ops\xinjian-row-action-crawl-state.json`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json`, generated `references/xinjian-ui-auto-map.json`, generated `references/xinjian-ui-overlay-map.json`, generated `references/xinjian-ui-dialog-map.json`, or generated `references/xinjian-ui-row-action-map.json`.
+The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-overlay-captures\`, `.ziniao-ops\xinjian-dialog-captures\`, `.ziniao-ops\xinjian-row-action-captures\`, `.ziniao-ops\xinjian-route-discovery\`, `.ziniao-ops\xinjian-crawl-state.json`, `.ziniao-ops\xinjian-overlay-crawl-state.json`, `.ziniao-ops\xinjian-dialog-crawl-state.json`, `.ziniao-ops\xinjian-row-action-crawl-state.json`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json`, generated `references/xinjian-ui-auto-map.json`, generated `references/xinjian-ui-overlay-map.json`, generated `references/xinjian-ui-dialog-map.json`, generated `references/xinjian-ui-row-action-map.json`, or the generated catalog.
 
 ## Safety
 
@@ -163,6 +173,7 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler, 0 pending after exclusions, 26 pages promoted to the overlay map, 162 overlay actions.
 - Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler, 0 pending after exclusions, 8 pages promoted to the dialog map, 35 dialog actions.
 - Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler, 0 pending after exclusions, 1 page promoted to the row-action map, 2 row actions.
+- Unified action catalog: 49 pages, 529 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

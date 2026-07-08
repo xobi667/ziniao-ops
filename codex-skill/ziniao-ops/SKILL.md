@@ -350,6 +350,14 @@ Then query the known map before taking screenshots or guessing:
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\query-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
 ```
 
+For a full compact audit of remembered 心舰 pages/actions, regenerate and inspect the merged action catalog:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-action-catalog.ps1") -Json
+```
+
+`references\xinjian-ui-action-catalog.md` is the human-readable action table. `references\xinjian-ui-action-catalog.json` is the machine-readable merged index with context, safety mode, source map, locator strategy, and locator metadata.
+
 To turn a mapped intent into a safe RPA-style action plan, use the action invoker. It dry-runs by default and reports the exact matched action, safety gate, and locator strategy. Add `-Execute` only for safe non-write actions. Add `-AllowWrite` or `-AllowExport` only after the employee explicitly confirms that exact write/export operation:
 
 ```powershell

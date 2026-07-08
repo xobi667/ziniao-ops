@@ -209,6 +209,8 @@ $required = @(
   "scripts\generate-xinjian-ui-dialog-map.mjs",
   "scripts\generate-xinjian-ui-row-action-map.ps1",
   "scripts\generate-xinjian-ui-row-action-map.mjs",
+  "scripts\generate-xinjian-ui-action-catalog.ps1",
+  "scripts\generate-xinjian-ui-action-catalog.mjs",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",
@@ -247,7 +249,9 @@ $required = @(
   "references\xinjian-ui-auto-map.json",
   "references\xinjian-ui-overlay-map.json",
   "references\xinjian-ui-dialog-map.json",
-  "references\xinjian-ui-row-action-map.json"
+  "references\xinjian-ui-row-action-map.json",
+  "references\xinjian-ui-action-catalog.json",
+  "references\xinjian-ui-action-catalog.md"
 )
 foreach ($rel in $required) {
   if (!(Test-Path -LiteralPath (Join-Path $Root $rel))) {
