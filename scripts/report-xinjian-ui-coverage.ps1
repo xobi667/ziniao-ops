@@ -5,6 +5,8 @@ param(
   [string]$StatePath = "",
   [string]$CuratedMapPath = "",
   [string]$AutoMapPath = "",
+  [string]$OverlayMapPath = "",
+  [string]$OverlayStatePath = "",
   [string]$IncludeRegex = ".",
   [string]$ExcludeRegex = "^/$|/login|/xtLogin|/sso|/social-login|/404|/401|/redirect|/print|/index/noaccess|/index/ad-no-auth|/setArea",
   [int]$MaxPending = 50,
@@ -17,7 +19,9 @@ $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 
 if (!$CuratedMapPath) { $CuratedMapPath = Join-Path $root "references\xinjian-ui-map.json" }
 if (!$AutoMapPath) { $AutoMapPath = Join-Path $root "references\xinjian-ui-auto-map.json" }
+if (!$OverlayMapPath) { $OverlayMapPath = Join-Path $root "references\xinjian-ui-overlay-map.json" }
 if (!$StatePath) { $StatePath = Join-Path $root ".ziniao-ops\xinjian-crawl-state.json" }
+if (!$OverlayStatePath) { $OverlayStatePath = Join-Path $root ".ziniao-ops\xinjian-overlay-crawl-state.json" }
 
 function Get-RouteKey([string]$InputPath) {
   if (!$InputPath) { return "" }
@@ -81,7 +85,9 @@ if (!$routeMap) {
 
 $curated = Read-JsonFile $CuratedMapPath
 $auto = Read-JsonFile $AutoMapPath
+$overlay = Read-JsonFile $OverlayMapPath
 $state = Read-JsonFile $StatePath
+$overlayState = Read-JsonFile $OverlayStatePath
 
 $mapped = @{}
 foreach ($source in @(
@@ -108,6 +114,23 @@ $attempted = @{}
 foreach ($attempt in @($state.attempts)) {
   if (!$attempt.route_key) { continue }
   $attempted[[string]$attempt.route_key] = $attempt
+}
+
+$overlayMapped = @{}
+$overlayActionCount = 0
+foreach ($page in @($overlay.pages)) {
+  $overlayActionCount += @($page.actions).Count
+  foreach ($needle in @($page.url_contains)) {
+    if (!$needle) { continue }
+    $key = Get-RouteKey $needle
+    if ($key) { $overlayMapped[$key] = $page }
+  }
+}
+
+$overlayAttempted = @{}
+foreach ($attempt in @($overlayState.attempts)) {
+  if (!$attempt.route_key) { continue }
+  $overlayAttempted[[string]$attempt.route_key] = $attempt
 }
 
 $routes = @()
@@ -146,10 +169,35 @@ $mappedCounts = @($routes | Where-Object { $_.mapped } | Group-Object map_source
     [ordered]@{ source = if ($_.Name) { $_.Name } else { "unknown" }; count = $_.Count }
   })
 
+$knownMappedRoutes = @()
+foreach ($entry in $mapped.GetEnumerator()) {
+  $key = [string]$entry.Key
+  if (!$key) { continue }
+  if ($key -notmatch $IncludeRegex) { continue }
+  if ($key -match $ExcludeRegex) { continue }
+  $info = $entry.Value
+  $knownMappedRoutes += [pscustomobject]@{
+    route_key = $key
+    path = $key
+    map_source = $info.source
+    page_id = $info.page_id
+    page_name = $info.page_name
+    overlay_mapped = [bool]$overlayMapped[$key]
+    overlay_attempted = [bool]$overlayAttempted[$key]
+    overlay_attempt_status = if ($overlayAttempted[$key]) { $overlayAttempted[$key].status } else { $null }
+  }
+}
+$knownMappedRoutes = @($knownMappedRoutes | Sort-Object path -Unique)
+$overlayPending = @($knownMappedRoutes | Where-Object { !$_.overlay_mapped -and !$_.overlay_attempted })
+$overlayAttemptStatusCounts = @($knownMappedRoutes | Where-Object { $_.overlay_attempted } | Group-Object overlay_attempt_status | ForEach-Object {
+    [ordered]@{ status = if ($_.Name) { $_.Name } else { "unknown" }; count = $_.Count }
+  })
+
 $payload = [ordered]@{
   ok = $true
   route_discovery_path = [System.IO.Path]::GetFullPath($RouteDiscoveryPath)
   state_path = [System.IO.Path]::GetFullPath($StatePath)
+  overlay_state_path = [System.IO.Path]::GetFullPath($OverlayStatePath)
   totals = [ordered]@{
     discovered_routes = @($routeMap.routes).Count
     eligible_routes = $routes.Count
@@ -158,17 +206,29 @@ $payload = [ordered]@{
     pending_routes = $pending.Count
     curated_pages = @($curated.pages).Count
     auto_pages = @($auto.pages).Count
+    overlay_pages = @($overlay.pages).Count
+    overlay_actions = $overlayActionCount
+  }
+  overlay_totals = [ordered]@{
+    known_mapped_pages = $knownMappedRoutes.Count
+    overlay_mapped_pages = @($knownMappedRoutes | Where-Object { $_.overlay_mapped }).Count
+    overlay_attempted_pages = @($knownMappedRoutes | Where-Object { $_.overlay_attempted }).Count
+    overlay_pending_pages = $overlayPending.Count
+    overlay_actions = $overlayActionCount
   }
   mapped_counts = @($mappedCounts)
   attempted_unmapped_status_counts = @($statusCounts)
+  overlay_attempt_status_counts = @($overlayAttemptStatusCounts)
   pending_routes = @($pending | Select-Object -First $MaxPending)
   attempted_unmapped_routes = @($attemptedUnmapped | Select-Object -First $MaxPending)
+  overlay_pending_known_pages = @($overlayPending | Select-Object -First $MaxPending)
 }
 
 if ($Json) {
   $payload | ConvertTo-Json -Depth 12
 } else {
   Write-Host ("Xinjian UI coverage: {0}/{1} eligible routes mapped, {2} attempted-unmapped, {3} pending." -f $payload.totals.mapped_routes, $payload.totals.eligible_routes, $payload.totals.attempted_unmapped_routes, $payload.totals.pending_routes)
+  Write-Host ("Xinjian overlay coverage: {0}/{1} known mapped pages in overlay map, {2} attempted, {3} pending, {4} overlay actions." -f $payload.overlay_totals.overlay_mapped_pages, $payload.overlay_totals.known_mapped_pages, $payload.overlay_totals.overlay_attempted_pages, $payload.overlay_totals.overlay_pending_pages, $payload.overlay_totals.overlay_actions)
   if ($pending.Count -gt 0) {
     Write-Host "Next pending routes:"
     foreach ($route in @($pending | Select-Object -First $MaxPending)) {

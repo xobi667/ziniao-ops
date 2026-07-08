@@ -63,6 +63,35 @@ function unique(values) {
   return result;
 }
 
+function ensureUniqueActionIds(actions) {
+  const seen = new Map();
+  for (const action of actions) {
+    const base = clean(action.id) || "overlay.action";
+    const count = seen.get(base) || 0;
+    seen.set(base, count + 1);
+    if (count > 0) action.id = `${base}.${count + 1}`;
+  }
+  return actions;
+}
+
+function isPrivateLike(value) {
+  const text = clean(value);
+  if (!text) return false;
+  return (
+    /@/.test(text) ||
+    /\b\d{7,}\b/.test(text) ||
+    /[A-Za-z][A-Za-z0-9 ._-]{1,50}-(?:my|th|id|sg|ph|vn)-(?:sp|tt|la)\b/i.test(text) ||
+    /(?:token|secret|password|passwd|cookie|session|auth)\s*[:=]/i.test(text)
+  );
+}
+
+function isGenericOverlayItem(value) {
+  const text = clean(value);
+  if (!text || text.length > 40 || isPrivateLike(text)) return false;
+  return /^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|今天|昨天|近7天|近30天|Shopee|Lazada|Tiktok|TikTok|视频|直播|商品|店铺|订单|利润|费用|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领|标记已处理|标记未处理|批量删除|批量导入|信息更新|应用|重置|搜索|详情|查看|达人ID|达人昵称|达人名称|视频ID号|视频名称|Tiktok账号|TikTok账号|店铺名称|店铺名|负责人|人员|商务)$/i.test(text) ||
+    /^(按|选择|切换|批量|标记|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领)/.test(text);
+}
+
 function normalizePath(value) {
   let text = clean(value);
   if (!text) return "";
@@ -111,8 +140,10 @@ function classifySafety(name, type) {
   const compact = clean(name).replace(/\s+/g, "");
   if (type === "overlay_trigger") return "view_setting";
   if (/^(搜索|查询|重置|今天|昨天|近7天|近30天)$/.test(compact)) return "read_filter";
+  if (/^(按|选择|切换)/.test(compact)) return "read_filter";
+  if (/^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|已邀约|未邀约|达人ID|达人昵称|达人名称|视频ID号|视频名称|Tiktok账号|TikTok账号|店铺名称|店铺名|负责人|人员|商务)$/.test(compact)) return "read_filter";
   if (/导出|下载/.test(compact)) return "confirmation_required_export";
-  if (/保存|提交|删除|恢复|批量|修改|编辑|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消|标记/.test(compact)) {
+  if (/保存|提交|删除|恢复|批量|修改|编辑|更新|应用|设置|配置|分配|认领|转移|添加|新增|创建|上传|导入|启用|禁用|授权|同步|清除|移除|审核|审批|发货|作废|取消|标记/.test(compact)) {
     return "confirmation_required_write";
   }
   if (/详情|查看|分析|打开|进入|首页|返回/.test(compact)) return "navigation";
@@ -140,7 +171,7 @@ function pageFromCapture(capture) {
   for (const trigger of capture.overlay_triggers || []) {
     const triggerName = clean(trigger.name || trigger.trigger_type);
     if (!triggerName || triggerName === "用户菜单") continue;
-    const items = Array.isArray(trigger.items) ? trigger.items.filter((item) => clean(item.name)) : [];
+    const items = Array.isArray(trigger.items) ? trigger.items.filter((item) => isGenericOverlayItem(item.name)) : [];
     overlays.push({
       trigger: triggerName,
       trigger_type: trigger.trigger_type,
@@ -181,6 +212,7 @@ function pageFromCapture(capture) {
     seen.add(key);
     return true;
   });
+  ensureUniqueActionIds(dedupedActions);
   return {
     id: pageIdFromPath(routePath),
     name: pageName,
@@ -243,6 +275,7 @@ const pages = [...pagesById.values()].map((page) => {
     seenActions.add(key);
     return true;
   });
+  ensureUniqueActionIds(page.actions);
   return page;
 }).sort((a, b) => `${a.module}.${a.id}`.localeCompare(`${b.module}.${b.id}`));
 

@@ -193,6 +193,7 @@ $required = @(
   "scripts\discover-xinjian-routes.ps1",
   "scripts\discover-xinjian-routes-cdp.mjs",
   "scripts\crawl-xinjian-dom-pages.ps1",
+  "scripts\crawl-xinjian-overlay-pages.ps1",
   "scripts\report-xinjian-ui-coverage.ps1",
   "scripts\generate-xinjian-ui-auto-map.ps1",
   "scripts\generate-xinjian-ui-auto-map.mjs",

@@ -374,6 +374,13 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-overlay-map.ps1") -Json
 ```
 
+To expand dynamic overlay memory across known pages, crawl mapped pages in small batches. Use `-OnlyMissing` for normal progress and `-RetryAttempted` only when intentionally revisiting pages already probed:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-overlay-pages.ps1") -Port 9342 -OnlyMissing -IncludeSelects -MaxPages 10 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-overlay-map.ps1") -Json
+```
+
 `references\xinjian-ui-overlay-map.json` supplements both curated and auto maps. The overlay probe opens panels and closes them, but must never click overlay items or submit forms. Private-looking select values are filtered at capture time.
 
 If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:

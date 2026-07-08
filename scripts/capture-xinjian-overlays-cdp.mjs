@@ -88,7 +88,7 @@ const expression = `(async () => {
   const isGenericOption = (value) => {
     const text = clean(value);
     if (!text || text.length > 40 || isPrivateLike(text)) return false;
-    return /^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|今天|昨天|近7天|近30天|Shopee|Lazada|Tiktok|TikTok|视频|直播|商品|店铺|订单|利润|费用|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领|标记已处理|标记未处理|批量删除|批量导入|应用|重置|搜索|详情|查看)$/i.test(text) ||
+    return /^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|今天|昨天|近7天|近30天|Shopee|Lazada|Tiktok|TikTok|视频|直播|商品|店铺|订单|利润|费用|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领|标记已处理|标记未处理|批量删除|批量导入|信息更新|应用|重置|搜索|详情|查看|达人ID|达人昵称|达人名称|视频ID号|视频名称|Tiktok账号|TikTok账号|店铺名称|店铺名|负责人|人员|商务)$/i.test(text) ||
       /^(按|选择|切换|批量|标记|导出|下载|删除|编辑|修改|新增|添加|恢复|转移|分配|认领)/.test(text);
   };
   const cssPath = (el) => {
@@ -168,8 +168,8 @@ const expression = `(async () => {
         if (!name) continue;
         const generic = isGenericOption(name);
         const privateLike = isPrivateLike(name);
-        if (!generic && (privateLike || kind === "select" || kind === "cascader")) {
-          rows.push({ filtered: true, reason: privateLike ? "private_like" : "non_generic_select_option" });
+        if (!generic) {
+          rows.push({ filtered: true, reason: privateLike ? "private_like" : "non_generic_overlay_option" });
           continue;
         }
         if (privateLike) {
@@ -225,6 +225,7 @@ const expression = `(async () => {
     try {
       item.el.scrollIntoView({ block: "center", inline: "center" });
       await sleep(80);
+      const beforeOverlays = new Set(overlayContainers());
       const clickTarget = item.el.querySelector(".el-dropdown-selfdefine, .el-input, input, button") || item.el;
       if (item.kind === "dropdown") {
         clickTarget.dispatchEvent(new MouseEvent("mouseenter", { bubbles: true, cancelable: true, view: window }));
@@ -234,7 +235,8 @@ const expression = `(async () => {
       }
       clickTarget.click();
       await sleep(350);
-      const overlays = overlayContainers();
+      let overlays = overlayContainers().filter((overlay) => !beforeOverlays.has(overlay));
+      if (overlays.length === 0) overlays = overlayContainers();
       const rawItems = overlayItems(overlays, item.kind);
       const filteredCount = rawItems.filter((row) => row.filtered).length;
       const visibleItems = rawItems.filter((row) => !row.filtered);

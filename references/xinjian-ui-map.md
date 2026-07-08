@@ -63,6 +63,15 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-overlay-map.ps1") -Json
 ```
 
+For broad progress across already known pages, crawl mapped routes in batches:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-overlay-pages.ps1") -Port 9342 -OnlyMissing -IncludeSelects -MaxPages 10 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-overlay-map.ps1") -Json
+```
+
+The batch crawler opens a temporary CDP tab per mapped route, captures overlay triggers/items, closes the tab, and records local attempt state under `.ziniao-ops\xinjian-overlay-crawl-state.json`.
+
 The overlay probe opens safe Element UI trigger panels (`select`, `cascader`, `dropdown`, date picker), records sanitized generic menu items, and closes the panel. It does not click overlay items. Private-looking select values are filtered at capture time.
 
 7. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
@@ -77,7 +86,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
 ```
 
-The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-overlay-captures\`, `.ziniao-ops\xinjian-route-discovery\`, `.ziniao-ops\xinjian-crawl-state.json`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json`, generated `references/xinjian-ui-auto-map.json`, or generated `references/xinjian-ui-overlay-map.json`.
+The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-overlay-captures\`, `.ziniao-ops\xinjian-route-discovery\`, `.ziniao-ops\xinjian-crawl-state.json`, `.ziniao-ops\xinjian-overlay-crawl-state.json`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json`, generated `references/xinjian-ui-auto-map.json`, or generated `references/xinjian-ui-overlay-map.json`.
 
 ## Safety
 
@@ -115,7 +124,8 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Eligible routes mapped in curated or auto map: 42.
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
-- Public map pages: 10 curated pages plus 38 generated auto-map pages; overlay map coverage is generated separately as dynamic-menu captures are added.
+- Public map pages: 10 curated pages plus 38 generated auto-map pages.
+- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler, 0 pending after exclusions, 26 pages promoted to the overlay map, 162 overlay actions.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 
