@@ -32,6 +32,14 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list
 
 `list-xinjian-page-actions.ps1` resolves the current 心舰 URL from visible/debuggable windows read-only, then returns the remembered page, every mapped action on that page, each action's purpose, safety mode, and locator strategy. Pass `-Url "<当前心舰URL>"` to override detection, `-Intent "<用户要做什么>"` to disambiguate multiple open 心舰 windows, or `-SafeOnly` for safe non-write actions only.
 
+To audit global memory quality before deciding what to learn next:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-action-memory.ps1") -Json
+```
+
+`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. Use it before broad learning passes so work targets pages with low action count or missing dynamic control memory.
+
 If the current page is missing, weakly mapped, or newly changed, learn it in one safe pass:
 
 ```powershell

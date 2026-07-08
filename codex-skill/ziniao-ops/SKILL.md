@@ -357,6 +357,12 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list-xinjian-page-actions.ps1") -Intent "<用户要做什么>" -Json
 ```
 
+Before broad learning passes, audit global action memory quality so the next crawl targets weak pages instead of repeating strong pages:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-action-memory.ps1") -Json
+```
+
 If the current page is missing from memory or looks weakly mapped, learn it in one safe pass before guessing. This captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels, then regenerates the public maps and unified action catalog:
 
 ```powershell
