@@ -8,6 +8,7 @@ param(
   [string]$Url = "https://erp.xinjianerp.com/index/home",
   [switch]$ZiniaoOnly,
   [switch]$NoAutoOpen,
+  [switch]$ForceOpen,
   [switch]$Json
 )
 
@@ -363,7 +364,10 @@ foreach ($candidate in $detectedPages) {
   }
 }
 
-$fallbackOpenPorts = if ($Port -and $Port.Count -gt 0) {
+$skipFallbackOpenDueExistingWindow = (!$ForceOpen -and $runtimeXinjianWindows.Count -gt 0)
+$fallbackOpenPorts = if ($skipFallbackOpenDueExistingWindow) {
+  @()
+} elseif ($Port -and $Port.Count -gt 0) {
   $reachablePorts
 } else {
   @($reachablePorts | Where-Object { $_.is_ziniao })
@@ -443,6 +447,8 @@ $payload = [ordered]@{
     xinjian_windows = @($runtimeXinjianWindows | Select-Object source, process_name, process_id, port, page_title, page_url, match_confidence, login_signal)
   }
   auto_open = $autoOpen
+  skipped_fallback_open_due_existing_window = [bool]$skipFallbackOpenDueExistingWindow
+  force_open = [bool]$ForceOpen
   attempts = @($attempts)
   login_state = if ($lastResult) { $lastResult.login_state } else { $null }
   stores_matched = if ($lastResult) { @($lastResult.stores_matched) } else { @() }
@@ -458,7 +464,7 @@ if ($Json) {
   if ($autoOpen -and $autoOpen.ok -and ($nextAction -eq "manual_login_required" -or $nextAction -eq "manual_xinjian_login_in_ziniao_required")) {
     Write-Host "Opened a controllable Xinjian browser window. Complete login there, then run the same command again."
   } elseif ($nextAction -eq "xinjian_window_detected_without_debug_port") {
-    Write-Host "A Xinjian window was detected by title, but it has no reachable DevTools port. Reopen it through the Ziniao/CDP bridge or a browser started with remote debugging."
+    Write-Host "A Xinjian window is already open, so no duplicate browser or tab was opened. Use the existing window or rerun with -ForceOpen only if a separate debuggable page is required."
   } elseif (!$debugPorts -or $debugPorts.Count -eq 0) {
     Write-Host "No running browser debug port was found. Open a Ziniao browser window first."
   } elseif (!$detectedPages -or $detectedPages.Count -eq 0) {
