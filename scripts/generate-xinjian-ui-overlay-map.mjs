@@ -63,6 +63,31 @@ function unique(values) {
   return result;
 }
 
+function normalizeForGeneratedMetadataCompare(value) {
+  if (!value || typeof value !== "object") return value;
+  if (Array.isArray(value)) return value.map(normalizeForGeneratedMetadataCompare);
+  const result = {};
+  for (const key of Object.keys(value).sort()) {
+    if (key === "captured_counts" || key === "generated_at" || key === "version") continue;
+    result[key] = normalizeForGeneratedMetadataCompare(value[key]);
+  }
+  return result;
+}
+
+async function preserveGeneratedMetadataIfUnchanged(payload, outputPath) {
+  try {
+    const existing = JSON.parse(await fs.readFile(outputPath, "utf8"));
+    const existingComparable = JSON.stringify(normalizeForGeneratedMetadataCompare(existing));
+    const nextComparable = JSON.stringify(normalizeForGeneratedMetadataCompare(payload));
+    if (existingComparable === nextComparable) {
+      return existing;
+    }
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+  }
+  return payload;
+}
+
 function ensureUniqueActionIds(actions) {
   const seen = new Map();
   for (const action of actions) {
@@ -418,7 +443,10 @@ const payload = {
 };
 
 await fs.mkdir(path.dirname(out), { recursive: true });
-if (!dryRun) await fs.writeFile(out, JSON.stringify(payload, null, 2) + "\n", "utf8");
+if (!dryRun) {
+  const stablePayload = await preserveGeneratedMetadataIfUnchanged(payload, out);
+  await fs.writeFile(out, JSON.stringify(stablePayload, null, 2) + "\n", "utf8");
+}
 
 process.stdout.write(JSON.stringify({
   ok: true,
