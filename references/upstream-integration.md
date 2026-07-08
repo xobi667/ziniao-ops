@@ -26,6 +26,9 @@ This is deliberate. Some upstreams are full products or have licenses that do no
 | Optional `ziniao` CLI/MCP route | `tianyehedashu/ziniao-mcp` / PyPI `ziniao` | Optional wrapper through `scripts/invoke-ziniao-cli.ps1` |
 | Optional `auto-ziniao` flow route | `WW-AI-Lab/auto-ziniao` | Optional wrapper through `scripts/invoke-auto-ziniao.ps1`; external install required |
 | BrowserMCP existing-profile concept | `BrowserMCP/mcp` | Optional external MCP server; Chrome extension and MCP client config still required |
+| Existing browser/CDP endpoint connection | `ChromeDevTools/chrome-devtools-mcp`, `microsoft/playwright-mcp`, `Rainmen-xia/chrome-debug-mcp` | Built into 心舰 bridge through CDP page discovery; external MCP routes remain optional |
+| Structured low-token page snapshots | `microsoft/playwright-mcp`, `echo-lumen/cdp-browser-mcp`, `Silbercue/public-browser` | Reference only for future page-reading improvements; current 心舰 workflow fetches data endpoints directly |
+| Multi-tab target matching | Chrome DevTools MCP/Public Browser/CDP MCP patterns | Built into `scripts\xinjian-ziniao-bridge.ps1`: score all debuggable tabs by requested URL before opening a new tab |
 | Vibe Seller full web service / agents | `zpoint/vibe-seller` | Optional local install under `.ziniao-ops\tools`; not started by default, because this package must remain a simple Codex skill |
 | auto-ziniao WebAdmin / self-heal internals | `WW-AI-Lab/auto-ziniao` | Sync-only/reference; license is personal/internal-use |
 
@@ -35,6 +38,12 @@ Install or refresh optional upstream commands on the current computer:
 
 ```powershell
 .\scripts\install-upstream-tools.ps1
+```
+
+Install the generic browser MCP routes too:
+
+```powershell
+.\scripts\install-upstream-tools.ps1 -InstallGenericBrowserMcps
 ```
 
 Check upstream remote commits:
@@ -62,6 +71,7 @@ Current optional installer targets:
 - `@browsermcp/mcp` from npm.
 - `vibe-seller` from PyPI, installed into local `.ziniao-ops\tools\vibe-seller-venv`.
 - Playwright Chromium for Vibe Seller, installed into local `.ziniao-ops\tools\playwright-browsers`.
+- Browser-control MCPs such as `chrome-devtools-mcp`, `@playwright/mcp`, `cdp-browser-mcp`, and `public-browser` are tracked as GitHub references. Install them only when the user explicitly asks for a generic MCP route; the 心舰 data workflow should first use the purpose-built CDP bridge.
 
 Call optional `ziniao` CLI route after the user explicitly asks for it:
 
@@ -79,6 +89,7 @@ Call optional `auto-ziniao` route:
 ```
 
 Use BrowserMCP only after the MCP server command and Chrome extension are configured outside this repo.
+Use Chrome DevTools MCP or Playwright MCP only as optional external routes. Prefer `--browser-url` / `--cdp-endpoint` against an already-running local browser profile when the user wants manual login state reused, and keep the same no-secret boundary.
 Use Vibe Seller only after the user explicitly asks for the full service route and provides its required local configuration; do not start its long-running server as part of normal `ziniao-ops` open-store work.
 
 Create a standard report:

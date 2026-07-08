@@ -8,6 +8,8 @@ param(
   [string]$OutputPath = "",
   [string]$ExcelOutputPath = "",
   [string]$Endpoint = "https://erp.xinjianerp.com/prod-api/erp/ad/data/summary-by-date_v2",
+  [string]$PageUrl = "",
+  [string]$WebSocketUrl = "",
   [switch]$Json
 )
 
@@ -28,15 +30,48 @@ if (!$StartDate) {
   $StartDate = (Get-Date).Date.AddDays(-1 * ([Math]::Max($Days, 1) - 1)).ToString("yyyy-MM-dd")
 }
 
+function Get-PageScore {
+  param(
+    [object]$Page,
+    [string]$MatchUrl = ""
+  )
+  $url = [string]$Page.url
+  $title = [string]$Page.title
+  $score = 0
+  if ($Page.type -eq "page") { $score += 10 }
+  if ($url -match "erp\.xinjianerp\.com") { $score += 30 }
+  if ($title -match "心舰") { $score += 40 }
+  if ($title -match "首页|home") { $score += 10 }
+  if ($url -match "^chrome-extension://") { $score -= 100 }
+
+  if ($MatchUrl) {
+    try {
+      $target = [Uri]$MatchUrl
+      $current = [Uri]$url
+      if ($current.Host -eq $target.Host) { $score += 60 }
+      if ($current.AbsoluteUri -eq $target.AbsoluteUri) { $score += 80 }
+      $targetPath = $target.AbsolutePath.TrimEnd("/")
+      $currentPath = $current.AbsolutePath.TrimEnd("/")
+      if ($targetPath -and $currentPath -and ($currentPath.StartsWith($targetPath) -or $targetPath.StartsWith($currentPath))) {
+        $score += 25
+      }
+    } catch {
+      if ($url -like "*$MatchUrl*") { $score += 30 }
+    }
+  }
+  return $score
+}
+
 function Get-DevToolsPage {
-  param([int]$Port)
+  param(
+    [int]$Port,
+    [string]$MatchUrl = ""
+  )
   $pages = @(Invoke-RestMethod -Uri "http://127.0.0.1:$Port/json" -TimeoutSec 5)
   $page = $pages |
-    Where-Object { $_.webSocketDebuggerUrl -and $_.type -eq "page" -and $_.url -match "erp\.xinjianerp\.com" } |
+    Where-Object { $_.webSocketDebuggerUrl -and $_.type -eq "page" } |
+    Sort-Object @{ Expression = { Get-PageScore -Page $_ -MatchUrl $MatchUrl }; Descending = $true } |
     Select-Object -First 1
-  if (!$page) {
-    $page = $pages | Where-Object { $_.webSocketDebuggerUrl -and $_.type -eq "page" } | Select-Object -First 1
-  }
   if (!$page) {
     throw "No debuggable browser page was found on port $Port."
   }
@@ -143,19 +178,32 @@ if ($node -and (Test-Path -LiteralPath $nodeHelper)) {
   $bodyB64ForNode = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($bodyJsonForNode))
   $storesJsonForNode = $StoreName | ConvertTo-Json -Depth 4 -Compress
   $storesB64ForNode = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($storesJsonForNode))
-  $nodeOutput = @(& node $nodeHelper `
-    --port ([string]$Port) `
-    --endpoint $Endpoint `
-    --body-b64 $bodyB64ForNode `
-    --stores-b64 $storesB64ForNode `
-    --out $responsePath 2>&1)
+  $nodeArgs = @(
+    $nodeHelper,
+    "--port", ([string]$Port),
+    "--endpoint", $Endpoint,
+    "--body-b64", $bodyB64ForNode,
+    "--stores-b64", $storesB64ForNode,
+    "--out", $responsePath
+  )
+  if ($PageUrl) { $nodeArgs += @("--match-url", $PageUrl) }
+  if ($WebSocketUrl) { $nodeArgs += @("--websocket-url", $WebSocketUrl) }
+  $nodeOutput = @(& node @nodeArgs 2>&1)
   if ($LASTEXITCODE -eq 0) {
     $fetchMeta = ($nodeOutput | Out-String | ConvertFrom-Json)
   } else {
     throw ("Node CDP fetch failed: " + ($nodeOutput | Out-String))
   }
 } else {
-  $page = Get-DevToolsPage -Port $Port
+  if ($WebSocketUrl) {
+    $page = [pscustomobject]@{
+      webSocketDebuggerUrl = $WebSocketUrl
+      url = $PageUrl
+      title = ""
+    }
+  } else {
+    $page = Get-DevToolsPage -Port $Port -MatchUrl $PageUrl
+  }
   $endpointJs = $Endpoint | ConvertTo-Json -Compress
   $bodyJs = $body | ConvertTo-Json -Depth 8 -Compress
   $expression = @"
@@ -239,6 +287,7 @@ $result = [ordered]@{
   login_state = $loginState
   fetch_method = if ($fetchMeta) { $fetchMeta.method } else { $null }
   page_url = $fetchMeta.page_url
+  page_match_url = if ($fetchMeta -and $fetchMeta.PSObject.Properties.Match("page_match_url").Count -gt 0) { $fetchMeta.page_match_url } else { $PageUrl }
   page_title = if ($fetchMeta) { $fetchMeta.page_title } else { $null }
   has_password_input = if ($fetchMeta) { $fetchMeta.has_password_input } else { $null }
   http_status = $fetchMeta.http_status

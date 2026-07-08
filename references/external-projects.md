@@ -64,15 +64,29 @@ Do not make the current skill depend on this route:
 
 References:
 
+- https://github.com/ChromeDevTools/chrome-devtools-mcp
+- https://github.com/microsoft/playwright-mcp
+- https://github.com/Rainmen-xia/chrome-debug-mcp
+- https://github.com/echo-lumen/cdp-browser-mcp
+- https://github.com/Silbercue/public-browser
 - https://github.com/ComposioHQ/awesome-codex-skills
 - https://github.com/clawdbot-ai/awesome-openclaw-skills-zh
 
 Useful ideas to keep:
 
+- Connect to an already-running local browser through an explicit CDP endpoint or browser URL when manual login state matters.
+- Enumerate and score all debuggable tabs before opening a new tab; user-provided URLs should be treated as target-window evidence, not ignored.
+- Prefer accessibility/DOM snapshots and stable element references over screenshot-only reading when extracting tables and KPIs.
 - Keep the skill small and route large details into references.
 - Use deterministic scripts for fragile local setup, matching, diagnosis and shop opening.
 - Use generic browser/visual automation only after the store is opened in the right local profile.
 - Always separate safe navigation/reporting from destructive actions like publish, submit, spend, refund, delete, or settings changes.
+
+Adoption boundaries:
+
+- ChromeDevTools MCP, Playwright MCP, Vibe Seller, and the MIT CDP browser MCP projects can be used as compatible references after license review.
+- auto-ziniao is not permissively licensed; keep it as architecture reference only.
+- 心舰 ERP has no public dedicated MCP/CLI discovered in the GitHub checks, so the local 心舰 workflow remains a purpose-built bridge plus export analyzer.
 
 ## Product direction
 

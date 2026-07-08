@@ -137,6 +137,10 @@ $playwrightBrowsers = Join-Path $localStateRoot "tools\playwright-browsers"
 $ziniao = Get-ToolCommand -Names @("ziniao") -ExtraPaths (@($ziniaoCliVenvScripts, $localBin) + $pythonScriptDirs)
 $autoZiniao = Get-ToolCommand -Names @("auto-ziniao") -ExtraPaths @($npmPrefix)
 $browserMcp = Get-ToolCommand -Names @("mcp-server-browsermcp") -ExtraPaths @($npmPrefix)
+$chromeDevToolsMcp = Get-ToolCommand -Names @("chrome-devtools-mcp", "chrome-devtools") -ExtraPaths @($npmPrefix)
+$playwrightMcp = Get-ToolCommand -Names @("playwright-mcp") -ExtraPaths @($npmPrefix)
+$cdpBrowserMcp = Get-ToolCommand -Names @("cdp-browser-mcp") -ExtraPaths @($npmPrefix)
+$publicBrowser = Get-ToolCommand -Names @("public-browser") -ExtraPaths @($npmPrefix)
 $vibeSeller = Get-ToolCommand -Names @("vibe-seller") -ExtraPaths @($localBin, $vibeSellerVenvScripts)
 $runtimePython = Get-ToolCommand -Names @("python") -ExtraPaths @($runtimeVenvScripts)
 $node = Get-ToolCommand -Names @("node")
@@ -186,6 +190,38 @@ $features = @(
     notes = "MCP server command is installed when available; actual browser control still requires BrowserMCP Chrome extension and MCP client config."
   },
   [ordered]@{
+    id = "chrome_devtools_mcp"
+    name = "Chrome DevTools MCP route"
+    available = [bool]$chromeDevToolsMcp
+    mode = "optional_external"
+    command = $chromeDevToolsMcp
+    notes = "Official Chrome DevTools MCP. Prefer --browser-url against an already-running local browser when explicitly using this route."
+  },
+  [ordered]@{
+    id = "playwright_mcp"
+    name = "Playwright MCP route"
+    available = [bool]$playwrightMcp
+    mode = "optional_external"
+    command = $playwrightMcp
+    notes = "Official Playwright MCP. Can use --cdp-endpoint for existing browser sessions; keep optional."
+  },
+  [ordered]@{
+    id = "cdp_browser_mcp"
+    name = "Compact CDP Browser MCP route"
+    available = [bool]$cdpBrowserMcp
+    mode = "optional_external"
+    command = $cdpBrowserMcp
+    notes = "MIT CDP MCP focused on compact accessibility snapshots."
+  },
+  [ordered]@{
+    id = "public_browser"
+    name = "Public Browser direct CDP route"
+    available = [bool]$publicBrowser
+    mode = "optional_external"
+    command = $publicBrowser
+    notes = "MIT direct CDP MCP with multi-tab and stable reference ideas."
+  },
+  [ordered]@{
     id = "vibe_seller"
     name = "Vibe Seller local service route"
     available = [bool]$vibeSeller
@@ -219,6 +255,10 @@ $report = [ordered]@{
     ziniao = $ziniao
     auto_ziniao = $autoZiniao
     browser_mcp = $browserMcp
+    chrome_devtools_mcp = $chromeDevToolsMcp
+    playwright_mcp = $playwrightMcp
+    cdp_browser_mcp = $cdpBrowserMcp
+    public_browser = $publicBrowser
     vibe_seller = $vibeSeller
     node = $node
     npm = $npm
@@ -239,6 +279,11 @@ $report = [ordered]@{
     vibe_seller = Test-Mirror "zpoint__vibe-seller"
     auto_ziniao = Test-Mirror "WW-AI-Lab__auto-ziniao"
     browser_mcp = Test-Mirror "BrowserMCP__mcp"
+    chrome_devtools_mcp = Test-Mirror "ChromeDevTools__chrome-devtools-mcp"
+    playwright_mcp = Test-Mirror "microsoft__playwright-mcp"
+    chrome_debug_mcp = Test-Mirror "Rainmen-xia__chrome-debug-mcp"
+    cdp_browser_mcp = Test-Mirror "echo-lumen__cdp-browser-mcp"
+    public_browser = Test-Mirror "Silbercue__public-browser"
     codex_skills = Test-Mirror "ComposioHQ__awesome-codex-skills"
     openclaw_skills_zh = Test-Mirror "clawdbot-ai__awesome-openclaw-skills-zh"
   }

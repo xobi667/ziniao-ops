@@ -48,9 +48,15 @@ If the user explicitly says to run 心舰 through 紫鸟, first try the running 
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-ziniao-bridge.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -Json
 ```
 
+If the user provides a 心舰 URL, pass it through `-Url`. The bridge must first enumerate already-running debuggable browser tabs, score them against that URL, and try the best matching existing tab before opening a new tab:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-ziniao-bridge.ps1") -Url "https://erp.xinjianerp.com/index/home" -StoreName "<店铺A>,<店铺B>" -Days 7 -Json
+```
+
 If the result is `manual_xinjian_login_in_ziniao_required`, 心舰 is not logged in inside that 紫鸟 browser. The user must complete 心舰 login in the opened 紫鸟 browser window; do not enter credentials or verification for them.
 
-The bridge reports `login_state`. `app_authenticated` means the opened 心舰 page is logged in and the frontend request module was able to call the advertising endpoint. If the result is `target_stores_not_found_in_xinjian`, do not ask the user to log in again; the current 心舰 account is authenticated but the requested store names were not found in the available shop list. Use `store_suggestions` to show nearby matches, but do not substitute a different region/store without user confirmation.
+The bridge reports `detected_pages`, `attempts`, `page_url`, and `login_state`. `app_authenticated` means the opened 心舰 page is logged in and the frontend request module was able to call the advertising endpoint. If the result is `target_browser_window_not_detected`, ask the user to open the 心舰 page in 紫鸟/Chrome with a debug port rather than guessing another window. If the result is `target_stores_not_found_in_xinjian`, do not ask the user to log in again; the current 心舰 account is authenticated but the requested store names were not found in the available shop list. Use `store_suggestions` to show nearby matches, but do not substitute a different region/store without user confirmation.
 
 The script reads `.xlsx`, `.csv`, and `.json` exports, then groups data by store and hour. Legacy `.xls` files are not treated as supported input unless the local Python environment has a reliable reader added later. It computes ROAS, CTR, CR, CPC, ad spend, ad revenue, orders, clicks, and impressions. The best time period is selected primarily by ROAS, with orders, revenue, clicks, and CPC used as tie breakers.
 

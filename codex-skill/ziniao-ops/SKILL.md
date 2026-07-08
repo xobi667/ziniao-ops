@@ -356,6 +356,12 @@ If the employee says to run 心舰 directly through 紫鸟, use the running 紫�
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-ziniao-bridge.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
 ```
 
+If the employee provides a 心舰 URL, pass it with `-Url`. The bridge should enumerate existing debuggable tabs and try the best URL match before it opens any new page:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-ziniao-bridge.ps1") -Url "https://erp.xinjianerp.com/index/home" -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
+```
+
 If it returns `manual_xinjian_login_in_ziniao_required`, 心舰 is open in a 紫鸟 browser but not logged in; the employee must manually complete 心舰 login there.
 
 Use `scripts\invoke-ziniao-cli.ps1` by default for local store list/open/inspect commands when the optional `ziniao` CLI is installed. The wrapper still refuses secret-like arguments and long-running commands unless explicitly allowed. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.

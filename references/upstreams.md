@@ -46,6 +46,7 @@ The script checks GitHub remotes with `git ls-remote` and reports the latest com
 - Read each upstream license before copying code. `WW-AI-Lab/auto-ziniao` is recorded as architecture reference only because its license is personal/internal-use, not a permissive open-source license.
 - Keep `ziniao-ops` default install simple: no required LLM key, no required `ZCLAW_API_KEY`, no long-running WebAdmin service, no credential storage.
 - Bring in only small, compatible ideas that strengthen the employee-local workflow: store matching, local browser isolation, diagnostics, report shape, safer popup handling, optional CLI/MCP adapters.
+- Prefer mature Apache/MIT browser-control ideas before writing new generic browser code: existing CDP endpoints, page/tab discovery, accessibility snapshots, stable element references, and explicit sensitive-data warnings.
 - Update `references/external-projects.md` when adopting a concept, and run `scripts/validate-public.ps1` before publishing.
 - For exact adapter status and command examples, read [upstream-integration.md](upstream-integration.md).
 
@@ -58,6 +59,11 @@ The script checks GitHub remotes with `git ls-remote` and reports the latest com
 | `zpoint/vibe-seller` | `main` | Local-first seller browser automation, store isolation, CDP/browser control, task reports | Borrow concepts; keep `ziniao-ops` lightweight |
 | `WW-AI-Lab/auto-ziniao` | `develop` | ZClaw bridge boundary, flow validation, WebAdmin/self-heal concepts | Architecture reference only unless permission is granted |
 | `BrowserMCP/mcp` | `main` | Generic local browser MCP control using an existing profile | Optional browser/MCP route only |
+| `ChromeDevTools/chrome-devtools-mcp` | `main` | Official Chrome DevTools MCP, `--browser-url`, `--autoConnect`, debugging/performance inspection | Borrow existing-browser connection patterns and warnings |
+| `microsoft/playwright-mcp` | `main` | Official Playwright MCP, structured accessibility snapshots, `--cdp-endpoint`, Codex config examples | Borrow snapshot/CDP endpoint ideas; keep dependency optional |
+| `Rainmen-xia/chrome-debug-mcp` | `main` | MIT Chrome debug-port MCP for persistent logged-in sessions | Borrow debug-port discovery/session ideas after security review |
+| `echo-lumen/cdp-browser-mcp` | `main` | MIT compact accessibility-tree snapshots and indexed refs | Borrow token-efficient snapshot/report ideas |
+| `Silbercue/public-browser` | `master` | MIT direct CDP multi-tab control and stable refs | Borrow multi-tab/stable-reference ideas |
 | `ComposioHQ/awesome-codex-skills` | `master` | Codex skill packaging and ecosystem patterns | Track packaging ideas only |
 | `clawdbot-ai/awesome-openclaw-skills-zh` | manual | Chinese skill wording and browser/MCP skill categories | Manual review only; current Git URL is not reliably accessible |
 | Ziniao Open Platform docs | manual | Official Ziniao platform/assistant docs | Prefer official docs for future ZClaw support |

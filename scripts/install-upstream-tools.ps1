@@ -3,6 +3,7 @@
   [switch]$SkipNodePackages,
   [switch]$SkipVibeSeller,
   [switch]$SkipPlaywright,
+  [switch]$InstallGenericBrowserMcps,
   [switch]$NoPathUpdate,
   [string]$NpmPrefix = "",
   [string]$LocalStateRoot = "",
@@ -204,7 +205,11 @@ if (!$SkipNodePackages) {
   $env:npm_config_prefix = $resolvedNpmPrefix
   $env:npm_config_cache = Join-Path $localState "npm-cache"
   Ensure-Directory $env:npm_config_cache
-  Invoke-Checked -FilePath "npm" -Arguments @("install", "-g", "--prefix", $resolvedNpmPrefix, "@ww-ai-lab/auto-ziniao", "@browsermcp/mcp")
+  $nodePackages = @("@ww-ai-lab/auto-ziniao", "@browsermcp/mcp")
+  if ($InstallGenericBrowserMcps) {
+    $nodePackages += @("chrome-devtools-mcp", "@playwright/mcp", "cdp-browser-mcp", "public-browser")
+  }
+  Invoke-Checked -FilePath "npm" -Arguments (@("install", "-g", "--prefix", $resolvedNpmPrefix) + $nodePackages)
   Add-UserPathEntry $resolvedNpmPrefix
 }
 
@@ -261,4 +266,5 @@ Write-Host "Finished optional upstream tool installation."
 Write-Host "Notes:"
 Write-Host "- auto-ziniao real flows still require ZCLAW_API_KEY and user-approved flow definitions."
 Write-Host "- BrowserMCP still requires its Chrome extension and MCP client config."
+Write-Host "- Generic browser MCPs are installed only when -InstallGenericBrowserMcps is passed."
 Write-Host "- Vibe Seller is installed locally, but the long-running service is not started by this script."

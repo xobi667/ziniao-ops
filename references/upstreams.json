@@ -62,6 +62,61 @@
       "adoption_policy": "Use for future optional generic browser/MCP integration notes only."
     },
     {
+      "name": "ChromeDevTools/chrome-devtools-mcp",
+      "type": "official-chrome-devtools-mcp",
+      "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "git_url": "https://github.com/ChromeDevTools/chrome-devtools-mcp.git",
+      "branch": "main",
+      "license": "Apache-2.0",
+      "sync_mode": "mirror",
+      "watch": "Official Chrome DevTools MCP, --browser-url, --autoConnect, debugging/performance inspection",
+      "adoption_policy": "Use as the primary reference for connecting to already-running Chrome/Edge CDP endpoints; keep sensitive-page warnings and opt-in external MCP setup."
+    },
+    {
+      "name": "microsoft/playwright-mcp",
+      "type": "official-playwright-mcp",
+      "url": "https://github.com/microsoft/playwright-mcp",
+      "git_url": "https://github.com/microsoft/playwright-mcp.git",
+      "branch": "main",
+      "license": "Apache-2.0",
+      "sync_mode": "mirror",
+      "watch": "Accessibility snapshots, deterministic actions, --cdp-endpoint support, Codex MCP setup examples",
+      "adoption_policy": "Borrow design ideas for structured page snapshots and existing CDP connection options; do not make Playwright a required dependency for the lightweight skill."
+    },
+    {
+      "name": "Rainmen-xia/chrome-debug-mcp",
+      "type": "chrome-debug-port-mcp",
+      "url": "https://github.com/Rainmen-xia/chrome-debug-mcp",
+      "git_url": "https://github.com/Rainmen-xia/chrome-debug-mcp.git",
+      "branch": "main",
+      "license": "MIT",
+      "sync_mode": "mirror",
+      "watch": "Persistent logged-in Chrome sessions through remote debugging ports",
+      "adoption_policy": "Borrow existing-debug-port discovery and session-persistence ideas only after security review."
+    },
+    {
+      "name": "echo-lumen/cdp-browser-mcp",
+      "type": "compact-cdp-browser-mcp",
+      "url": "https://github.com/echo-lumen/cdp-browser-mcp",
+      "git_url": "https://github.com/echo-lumen/cdp-browser-mcp.git",
+      "branch": "main",
+      "license": "MIT",
+      "sync_mode": "mirror",
+      "watch": "Compact accessibility-tree snapshots and indexed page references",
+      "adoption_policy": "Borrow token-efficient snapshot/report-shape concepts; do not replace purpose-built shop/ERP scripts with a generic agent loop."
+    },
+    {
+      "name": "Silbercue/public-browser",
+      "type": "direct-cdp-browser-mcp",
+      "url": "https://github.com/Silbercue/public-browser",
+      "git_url": "https://github.com/Silbercue/public-browser.git",
+      "branch": "master",
+      "license": "MIT",
+      "sync_mode": "mirror",
+      "watch": "Direct CDP multi-tab support, stable accessibility refs, cached reference maps",
+      "adoption_policy": "Borrow multi-tab and stable-reference ideas if they stay compatible with local-only/no-secret boundaries."
+    },
+    {
       "name": "ComposioHQ/awesome-codex-skills",
       "type": "codex-skill-catalog",
       "url": "https://github.com/ComposioHQ/awesome-codex-skills",

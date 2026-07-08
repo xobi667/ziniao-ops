@@ -55,6 +55,7 @@ const out = argValue("--out");
 const navigateUrl = argValue("--navigate-url", "");
 const navigateWaitMs = Number(argValue("--navigate-wait-ms", "10000"));
 const websocketUrl = argValue("--websocket-url", "");
+const matchUrl = argValue("--match-url", "");
 
 if (!Number.isFinite(port) || port <= 0) {
   throw new Error("Invalid --port.");
@@ -67,9 +68,23 @@ if (!out) {
 }
 
 const pages = websocketUrl ? [] : await (await fetch(`http://127.0.0.1:${port}/json`)).json();
+function parseUrl(value) {
+  try {
+    return new URL(String(value || ""));
+  } catch {
+    return null;
+  }
+}
+
+function comparablePath(value) {
+  return String(value || "").replace(/\/+$/g, "") || "/";
+}
+
+const targetUrl = parseUrl(matchUrl);
 function pageScore(item) {
   const url = String(item.url || "");
   const title = String(item.title || "");
+  const currentUrl = parseUrl(url);
   let score = 0;
   if (item.type === "page") score += 10;
   if (url.includes("erp.xinjianerp.com")) score += 20;
@@ -77,6 +92,18 @@ function pageScore(item) {
   if (title.includes("首页")) score += 20;
   if (title === "erp.xinjianerp.com/index/home") score -= 30;
   if (url.startsWith("chrome-extension://")) score -= 100;
+  if (targetUrl && currentUrl) {
+    if (currentUrl.href === targetUrl.href) score += 120;
+    if (currentUrl.origin === targetUrl.origin) score += 80;
+    if (currentUrl.hostname === targetUrl.hostname) score += 60;
+    const currentPath = comparablePath(currentUrl.pathname);
+    const targetPath = comparablePath(targetUrl.pathname);
+    if (currentPath === targetPath) score += 50;
+    else if (currentPath.startsWith(targetPath) || targetPath.startsWith(currentPath)) score += 25;
+    if (targetUrl.search && currentUrl.search === targetUrl.search) score += 10;
+  } else if (matchUrl && url.includes(matchUrl)) {
+    score += 30;
+  }
   return score;
 }
 
@@ -439,6 +466,7 @@ process.stdout.write(
       method: value.method,
       login_state: loginState,
       page_url: value.pageState?.href || page.url || null,
+      page_match_url: matchUrl || null,
       page_title: value.pageState?.title || page.title || null,
       has_password_input: !!value.pageState?.hasPasswordInput,
       has_login_button_text: !!value.pageState?.hasLoginButtonText,
