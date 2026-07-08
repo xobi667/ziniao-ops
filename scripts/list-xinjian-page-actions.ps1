@@ -65,18 +65,33 @@ function Get-RouteKey([string]$InputPath) {
   return $value.ToLowerInvariant()
 }
 
+function Get-ResolvedPort($Resolution) {
+  if ($Resolution -and $Resolution.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $Resolution.resolved_port) {
+    return [int]$Resolution.resolved_port
+  }
+  return $null
+}
+
+function Get-ResolvedTitle($Resolution, [string]$InputUrl) {
+  if (!$Resolution -or !$InputUrl -or $Resolution.PSObject.Properties.Match("candidates").Count -eq 0) { return "" }
+  $match = @($Resolution.candidates | Where-Object { [string]$_.url -eq $InputUrl } | Select-Object -First 1)
+  if ($match.Count -gt 0) { return [string]$match[0].title }
+  return ""
+}
+
+function Get-XinjianPageKind([string]$InputUrl) {
+  if (!$InputUrl) { return "unknown" }
+  $routeKey = Get-RouteKey $InputUrl
+  if ($routeKey -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") { return "login_page" }
+  if ($routeKey -match "^/(401|404)(/|$)" -or $routeKey -match "^/index/(noaccess|ad-no-auth)(/|$)") { return "non_business_page" }
+  return "business_page"
+}
+
 function Get-NonBusinessPageReason([string]$InputUrl) {
   if (!$InputUrl) { return "" }
-  $path = ""
-  try {
-    $uri = [uri]$InputUrl
-    $path = $uri.AbsolutePath
-  } catch {
-    $path = [string]$InputUrl
-  }
-  $routeKey = Get-RouteKey $path
-  if ($routeKey -eq "/login") { return "manual_login_required_in_debuggable_xinjian_browser" }
-  if ($routeKey -in @("/401", "/404")) { return "open_valid_xinjian_business_page" }
+  $pageKind = Get-XinjianPageKind $InputUrl
+  if ($pageKind -eq "login_page") { return "manual_login_required_in_debuggable_xinjian_browser" }
+  if ($pageKind -eq "non_business_page") { return "open_valid_xinjian_business_page" }
   return ""
 }
 
@@ -144,6 +159,10 @@ if (!$Url) {
     ok = $false
     mode = "current_page_unresolved"
     requested_url = $requestedUrl
+    current_url = ""
+    current_title = ""
+    resolved_port = Get-ResolvedPort $urlResolution
+    page_kind = "unknown"
     url_resolution = $urlResolution
     next_action = "focus_the_target_xinjian_window_or_pass_url"
   }
@@ -158,6 +177,10 @@ if ($nonBusinessReason) {
     mode = "non_business_xinjian_page"
     reason = $nonBusinessReason
     url = $Url
+    current_url = $Url
+    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+    resolved_port = Get-ResolvedPort $urlResolution
+    page_kind = Get-XinjianPageKind $Url
     requested_url = $requestedUrl
     url_resolution = $urlResolution
     next_action = $nonBusinessReason
@@ -179,6 +202,10 @@ if ($matches.Count -eq 0) {
     ok = $false
     mode = "page_not_in_catalog"
     url = $Url
+    current_url = $Url
+    current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+    resolved_port = Get-ResolvedPort $urlResolution
+    page_kind = Get-XinjianPageKind $Url
     requested_url = $requestedUrl
     url_resolution = $urlResolution
     catalog_version = $catalog.version
@@ -213,6 +240,10 @@ $payload = [ordered]@{
   ok = $true
   mode = "page_actions"
   url = $Url
+  current_url = $Url
+  current_title = Get-ResolvedTitle -Resolution $urlResolution -InputUrl $Url
+  resolved_port = Get-ResolvedPort $urlResolution
+  page_kind = Get-XinjianPageKind $Url
   requested_url = $requestedUrl
   url_resolution = $urlResolution
   catalog_version = $catalog.version

@@ -30,7 +30,7 @@ Before choosing an action, list what the currently open page already has in memo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list-xinjian-page-actions.ps1") -Json
 ```
 
-`list-xinjian-page-actions.ps1` resolves the current 心舰 URL from visible/debuggable windows read-only, then returns the remembered page, every mapped action on that page, each action's purpose, safety mode, and locator strategy. By default it scans all reachable Chrome/Edge/Ziniao DevTools ports and returns `resolved_port` when a debuggable tab is selected; pass `-Port` only to pin diagnostics to a specific port. Pass `-Url "<当前心舰URL>"` to override detection, `-Intent "<用户要做什么>"` to disambiguate multiple open 心舰 windows, or `-SafeOnly` for safe non-write actions only.
+`list-xinjian-page-actions.ps1` resolves the current 心舰 URL from visible/debuggable windows read-only, then returns the remembered page, every mapped action on that page, each action's purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed. By default it scans all reachable Chrome/Edge/Ziniao DevTools ports and returns `resolved_port` when a debuggable tab is selected; pass `-Port` only to pin diagnostics to a specific port. Pass `-Url "<当前心舰URL>"` to override detection, `-Intent "<用户要做什么>"` to disambiguate multiple open 心舰 windows, or `-SafeOnly` for safe non-write actions only.
 
 To audit global memory quality before deciding what to learn next:
 
