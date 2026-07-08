@@ -58,7 +58,7 @@ if (Test-Path -LiteralPath $privatePatternsPath) {
   }
 }
 $forbidden = [regex]("(?i)" + ($builtInPatterns -join "|"))
-$localOnly = @("shops.json", "shops.detected.json", "shops.local.json", "shops.private.json", "shops.csv", "ziniao.local.json", ".env", ".env.local", "sensitive-patterns.local.txt")
+$localOnly = @("shops.json", "shops.detected.json", "shops.local.json", "shops.private.json", "shops.csv", "ziniao.local.json", "ziniao.auth.local.json", ".env", ".env.local", "sensitive-patterns.local.txt")
 $localOnlyDirs = @(".upstreams", ".ziniao-ops", "reports.local")
 $trackedDenyPatterns = @(
   "^\.upstreams/",
@@ -69,6 +69,7 @@ $trackedDenyPatterns = @(
   "^shops\.csv$",
   "^shops\..+\.csv$",
   "^ziniao\.local\.json$",
+  "^ziniao\.auth\.local\.json$",
   "^ziniao\..+\.local\.json$",
   "^\.env(\..+)?$",
   "^.+\.env(\..+)?$",

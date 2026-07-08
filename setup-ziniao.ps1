@@ -1,6 +1,7 @@
 ﻿param(
   [int]$LoginTimeoutSeconds = 600,
   [switch]$AllowGuiMouse,
+  [switch]$ResetStaleWebDriver,
   [switch]$DryRun,
   [switch]$Json,
   [string]$Out = ""
@@ -76,11 +77,152 @@ function Test-WebDriverUserDataInUse {
       Where-Object {
         $_.Name -eq "ziniao.exe" -and
         $_.CommandLine -match "--user-data-dir=.*$escaped" -and
-        $_.CommandLine -notmatch "--run_type=web_driver"
+        $_.CommandLine -notmatch "--run_type=web_driver" -and
+        $_.CommandLine -notmatch "--type="
       })
     return ($procs.Count -gt 0)
   } catch {
     return $false
+  }
+}
+
+function Get-WebDriverPort {
+  $configPath = Join-Path $root "ziniao.local.json"
+  if (Test-Path -LiteralPath $configPath) {
+    try {
+      $cfg = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
+      if ($cfg.webdriver_port) { return [int]$cfg.webdriver_port }
+    } catch {
+    }
+  }
+  return 16851
+}
+
+function Get-WebDriverAuthStatus {
+  $fields = [ordered]@{
+    company = $false
+    username = $false
+    password = $false
+  }
+  $sources = @()
+  $configuredPaths = @()
+  $candidatePaths = New-Object System.Collections.Generic.List[string]
+  $configPath = Join-Path $root "ziniao.local.json"
+
+  if (Test-Path -LiteralPath $configPath) {
+    try {
+      $cfg = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
+      foreach ($prop in @("webdriver_auth_config", "auth_config_path", "webdriver_auth_path")) {
+        if ($cfg.PSObject.Properties.Name -contains $prop -and $cfg.$prop) {
+          $candidatePaths.Add((Resolve-ZiniaoOpsRepoPath $root ([string]$cfg.$prop)))
+        }
+      }
+    } catch {
+    }
+  }
+  $candidatePaths.Add((Join-Path $root "ziniao.auth.local.json"))
+
+  $seen = @{}
+  foreach ($path in @($candidatePaths)) {
+    if (!$path) { continue }
+    $key = $path.ToLowerInvariant()
+    if ($seen.ContainsKey($key)) { continue }
+    $seen[$key] = $true
+    if (!(Test-Path -LiteralPath $path)) { continue }
+    $configuredPaths += $path
+    try {
+      $payload = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json
+      $node = $payload
+      foreach ($nested in @("webdriver_auth", "auth", "ziniao_webdriver")) {
+        if ($payload.PSObject.Properties.Name -contains $nested -and $payload.$nested) {
+          $node = $payload.$nested
+          break
+        }
+      }
+      $fileFields = @()
+      foreach ($field in @("company", "username", "password")) {
+        if ($node.PSObject.Properties.Name -contains $field -and ([string]$node.$field).Trim()) {
+          $fields[$field] = $true
+          $fileFields += $field
+        }
+      }
+      if ($fileFields.Count -gt 0) {
+        $sources += "auth_config_file"
+        break
+      }
+    } catch {
+    }
+  }
+
+  $envMap = [ordered]@{
+    company = "ZINIAO_WEBDRIVER_COMPANY"
+    username = "ZINIAO_WEBDRIVER_USERNAME"
+    password = "ZINIAO_WEBDRIVER_PASSWORD"
+  }
+  $envFields = @()
+  foreach ($field in $envMap.Keys) {
+    $value = [Environment]::GetEnvironmentVariable($envMap[$field])
+    if ($value -and $value.Trim()) {
+      $fields[$field] = $true
+      $envFields += $field
+    }
+  }
+  if ($envFields.Count -gt 0) {
+    $sources += "environment"
+  }
+
+  $missing = @()
+  foreach ($field in @("company", "username", "password")) {
+    if (!$fields[$field]) { $missing += $field }
+  }
+
+  return [pscustomobject]@{
+    complete = ($missing.Count -eq 0)
+    fields_present = $fields
+    missing_fields = $missing
+    sources = @($sources)
+    configured_paths = @($configuredPaths)
+    env_var_names = @($envMap.Values)
+  }
+}
+
+function Stop-StaleWebDriver {
+  param([int]$Port)
+
+  $all = @(Get-CimInstance Win32_Process -ErrorAction SilentlyContinue)
+  $roots = @($all | Where-Object {
+      $_.Name -eq "ziniao.exe" -and
+      [string]$_.CommandLine -match "--run_type=web_driver" -and
+      [string]$_.CommandLine -match "(^|\s)--port=$Port(\s|$)"
+    })
+  $ids = New-Object System.Collections.Generic.HashSet[int]
+  foreach ($proc in $roots) { [void]$ids.Add([int]$proc.ProcessId) }
+
+  $changed = $true
+  while ($changed) {
+    $changed = $false
+    foreach ($proc in $all) {
+      if ($ids.Contains([int]$proc.ParentProcessId) -and !$ids.Contains([int]$proc.ProcessId)) {
+        [void]$ids.Add([int]$proc.ProcessId)
+        $changed = $true
+      }
+    }
+  }
+
+  $stopped = @()
+  foreach ($id in @($ids)) {
+    try {
+      Stop-Process -Id $id -Force -ErrorAction Stop
+      $stopped += $id
+    } catch {
+    }
+  }
+
+  return [ordered]@{
+    port = $Port
+    root_process_ids = @($roots | ForEach-Object { [int]$_.ProcessId })
+    stopped_process_ids = @($stopped)
+    stopped_count = @($stopped).Count
   }
 }
 
@@ -111,6 +253,7 @@ if ($python.Count -eq 0) {
 $pythonExe = $python[0]
 $pythonArgs = @()
 if ($python.Count -gt 1) { $pythonArgs = @($python[1..($python.Count - 1)]) }
+$webdriverAuth = Get-WebDriverAuthStatus
 
 $guiScript = Join-Path $root "scripts\ziniao-gui-open.py"
 $syncScript = Join-Path $root "scripts\sync-ziniao-shops.py"
@@ -209,9 +352,29 @@ if ($AllowGuiMouse) {
   $syncArgs += "--allow-visible-client"
 }
 
-$syncOutput = @(& $pythonExe @pythonArgs @syncArgs 2>&1)
-$syncCode = $LASTEXITCODE
-$syncJson = ConvertFrom-JsonLines $syncOutput
+$resetResult = $null
+function Invoke-ShopSync {
+  $output = @(& $pythonExe @pythonArgs @syncArgs 2>&1)
+  return [pscustomobject]@{
+    Code = $LASTEXITCODE
+    Output = $output
+    Json = ConvertFrom-JsonLines $output
+  }
+}
+
+$syncRun = Invoke-ShopSync
+$syncOutput = $syncRun.Output
+$syncCode = $syncRun.Code
+$syncJson = $syncRun.Json
+
+if ($syncCode -ne 0 -and $ResetStaleWebDriver -and $syncJson -and $syncJson.error -eq "ziniao_webdriver_invalid_session") {
+  $resetResult = Stop-StaleWebDriver -Port (Get-WebDriverPort)
+  Start-Sleep -Seconds 2
+  $syncRun = Invoke-ShopSync
+  $syncOutput = $syncRun.Output
+  $syncCode = $syncRun.Code
+  $syncJson = $syncRun.Json
+}
 if ($syncCode -ne 0) {
   $message = if ($syncJson -and $syncJson.message) {
     [string]$syncJson.message
@@ -221,6 +384,8 @@ if ($syncCode -ne 0) {
   $userDataInUse = Test-WebDriverUserDataInUse
   $nextStep = if (!$AllowGuiMouse -and $userDataInUse) {
     "普通紫鸟正在占用 WebDriver 用户目录。请先退出普通紫鸟窗口/托盘，再运行 .\setup-ziniao.ps1；这个流程仍然不会抢鼠标。"
+  } elseif ($syncJson -and $syncJson.error -eq "ziniao_webdriver_auth_fields_missing") {
+    "这个紫鸟 WebDriver 版本需要本机 company/username/password 字段。请在本机创建 .\ziniao.auth.local.json 或设置 ZINIAO_WEBDRIVER_* 环境变量，不要把值发到聊天或提交到 Git；然后运行 .\setup-ziniao.ps1 -ResetStaleWebDriver。"
   } elseif ($AllowGuiMouse) {
     "Confirm this Ziniao account can see store browsers. If login just completed, restart Ziniao and run .\setup-ziniao.ps1 -AllowGuiMouse again."
   } else {
@@ -233,8 +398,10 @@ if ($syncCode -ne 0) {
     message = $message
     login_check = $loginJson
     sync = $syncJson
+    reset_stale_webdriver = $resetResult
     webdriver_user_data_dir = Get-WebDriverUserDataDir
     webdriver_user_data_in_use = [bool]$userDataInUse
+    webdriver_auth = $webdriverAuth
     raw_output = if ($syncJson) { $null } else { $syncOutput }
     next_step = $nextStep
   }) $syncCode
@@ -250,6 +417,8 @@ Write-SetupResult ([ordered]@{
   dry_run = [bool]$DryRun
   login_check = $loginJson
   sync = $syncJson
+  reset_stale_webdriver = $resetResult
+  webdriver_auth = $webdriverAuth
   allow_gui_mouse = [bool]$AllowGuiMouse
   next_step = "Restart Codex, then say: open <store keyword> operations/overview/orders/ads data."
 }) 0

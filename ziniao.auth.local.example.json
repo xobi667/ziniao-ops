@@ -1,0 +1,6 @@
+{
+  "company": "",
+  "username": "",
+  "password": "",
+  "note": "Copy this to ziniao.auth.local.json only on the employee computer if this Ziniao WebDriver build requires local auth fields. Never commit the copied file or share the values in chat."
+}

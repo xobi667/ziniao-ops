@@ -17,7 +17,14 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "ziniao.local.json"
+DEFAULT_AUTH_CONFIG = ROOT / "ziniao.auth.local.json"
 DEFAULT_OUT = ROOT / "shops.json"
+AUTH_FIELDS = ("company", "username", "password")
+AUTH_ENV_VARS = {
+    "company": "ZINIAO_WEBDRIVER_COMPANY",
+    "username": "ZINIAO_WEBDRIVER_USERNAME",
+    "password": "ZINIAO_WEBDRIVER_PASSWORD",
+}
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -49,6 +56,80 @@ def _load_config(path: str | None) -> dict:
         return json.loads(target.read_text(encoding="utf-8-sig"))
     except Exception:
         return {}
+
+
+def _candidate_auth_paths(config: dict) -> list[Path]:
+    candidates: list[Path] = []
+    for key in ("webdriver_auth_config", "auth_config_path", "webdriver_auth_path"):
+        value = str(config.get(key) or "").strip()
+        if value:
+            candidates.append(_resolve_repo_path(value))
+    candidates.append(DEFAULT_AUTH_CONFIG)
+
+    result: list[Path] = []
+    seen: set[str] = set()
+    for candidate in candidates:
+        key = str(candidate).lower()
+        if key not in seen:
+            seen.add(key)
+            result.append(candidate)
+    return result
+
+
+def _auth_node(payload: dict) -> dict:
+    for key in ("webdriver_auth", "auth", "ziniao_webdriver"):
+        nested = payload.get(key)
+        if isinstance(nested, dict):
+            return nested
+    return payload
+
+
+def _load_webdriver_auth(config: dict) -> tuple[dict[str, str], dict]:
+    values: dict[str, str] = {}
+    sources: list[str] = []
+    configured_paths: list[str] = []
+
+    for path in _candidate_auth_paths(config):
+        if not path.exists():
+            continue
+        configured_paths.append(str(path))
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8-sig"))
+        except Exception:
+            continue
+        if not isinstance(payload, dict):
+            continue
+        node = _auth_node(payload)
+        file_fields = []
+        for field in AUTH_FIELDS:
+            value = str(node.get(field) or "").strip()
+            if value:
+                values[field] = value
+                file_fields.append(field)
+        if file_fields:
+            sources.append("auth_config_file")
+            break
+
+    env_fields = []
+    for field, env_name in AUTH_ENV_VARS.items():
+        value = os.environ.get(env_name, "").strip()
+        if value:
+            values[field] = value
+            env_fields.append(field)
+    if env_fields:
+        sources.append("environment")
+
+    fields_present = {field: bool(values.get(field)) for field in AUTH_FIELDS}
+    missing_fields = [field for field in AUTH_FIELDS if not fields_present[field]]
+    info = {
+        "complete": not missing_fields,
+        "fields_present": fields_present,
+        "missing_fields": missing_fields,
+        "sources": sources,
+        "configured_paths": configured_paths,
+        "env_var_names": list(AUTH_ENV_VARS.values()),
+    }
+    return values, info
 
 
 def _path_from_env_or_config(config: dict) -> list[Path]:
@@ -193,7 +274,8 @@ try {
     Where-Object {
       $_.Name -eq "ziniao.exe" -and
       $_.CommandLine -match "--user-data-dir=.*$escaped" -and
-      $_.CommandLine -notmatch "--run_type=web_driver"
+      $_.CommandLine -notmatch "--run_type=web_driver" -and
+      $_.CommandLine -notmatch "--type="
     }).Count
   if ($count -gt 0) { "true" } else { "false" }
 } catch {
@@ -258,15 +340,68 @@ def _start_ziniao(config: dict, port: int, allow_visible_client: bool = False) -
     return started, mode if started else "failed"
 
 
-def _request_payload(action: str) -> dict:
-    return {"action": action, "requestId": str(uuid.uuid4())}
+def _request_payload(action: str, config: dict) -> dict:
+    payload = {"action": action, "requestId": str(uuid.uuid4())}
+    auth_values, _ = _load_webdriver_auth(config)
+    payload.update(auth_values)
+    return payload
 
 
-def _get_browser_list(port: int) -> tuple[list[dict], dict | None]:
-    result = _http_post(port, _request_payload("getBrowserList"), timeout=30)
+def _get_browser_list(port: int, config: dict) -> tuple[list[dict], dict | None]:
+    result = _http_post(port, _request_payload("getBrowserList", config), timeout=30)
     if result and str(result.get("statusCode")) == "0":
         return list(result.get("browserList") or []), result
     return [], result
+
+
+def _status_text(result: dict | None) -> str:
+    if not isinstance(result, dict):
+        return ""
+    values = [
+        result.get("err"),
+        result.get("msg"),
+        result.get("message"),
+        result.get("error"),
+    ]
+    return " ".join(str(item or "") for item in values if item)
+
+
+def _classify_empty_browser_list(
+    result: dict | None,
+    start_mode: str,
+    auth_info: dict,
+) -> dict:
+    status_code = str(result.get("statusCode")) if isinstance(result, dict) else ""
+    text = _status_text(result)
+    if status_code == "-10003":
+        if "参数不能为空" in text:
+            if not auth_info.get("complete"):
+                return {
+                    "error": "ziniao_webdriver_auth_fields_missing",
+                    "message": "紫鸟 WebDriver 返回“参数不能为空”，且本机未配置完整的 company/username/password 字段。这个版本的紫鸟 WebDriver 需要这些本机字段才能读取店铺列表。",
+                    "next_step": "在本机创建 .\\ziniao.auth.local.json（已被 .gitignore 忽略）或设置 ZINIAO_WEBDRIVER_COMPANY / ZINIAO_WEBDRIVER_USERNAME / ZINIAO_WEBDRIVER_PASSWORD 环境变量；不要把字段值发到聊天或提交到 Git。配置后运行 .\\setup-ziniao.ps1 -ResetStaleWebDriver。",
+                }
+            return {
+                "error": "ziniao_webdriver_invalid_session",
+                "message": "紫鸟 WebDriver 返回“参数不能为空”。这通常不是等待登录能解决的问题，而是当前后台 WebDriver 会话/profile 不可用或接口参数不匹配。",
+                "next_step": "先运行 .\\setup-ziniao.ps1 查看是否 WebDriver 用户目录被普通紫鸟占用；如果被占用，退出普通紫鸟/托盘后重试。只有接受前台窗口控制时才用 -AllowGuiMouse。",
+            }
+        return {
+            "error": "ziniao_webdriver_login_state_error",
+            "message": "紫鸟 WebDriver 返回登录态错误。后台模式没有登录入口，默认不会自动弹窗或抢鼠标。",
+            "next_step": "请先手动打开并登录紫鸟，再运行 .\\setup-ziniao.ps1；只有接受前台窗口控制时才用 -AllowGuiMouse。",
+        }
+    if start_mode == "blocked_user_data_in_use":
+        return {
+            "error": "ziniao_webdriver_user_data_in_use",
+            "message": "普通紫鸟正在占用 WebDriver 用户目录，后台 WebDriver 不能同时复用这个登录目录。",
+            "next_step": "请先手动退出普通紫鸟窗口/托盘，再重试；这个流程不会抢鼠标。",
+        }
+    return {
+        "error": "ziniao_browser_list_empty",
+        "message": "没有从本机紫鸟读取到店铺浏览器列表。请先打开并登录紫鸟，再重试。",
+        "next_step": "默认只尝试非鼠标 WebDriver 通道。请手动打开并登录紫鸟后重试；只有确认接受前台窗口控制时，才使用 setup-ziniao.ps1 -AllowGuiMouse。",
+    }
 
 
 def _wait_browser_list(
@@ -280,6 +415,7 @@ def _wait_browser_list(
     last = None
     started = False
     login_error_seen = False
+    _, auth_info = _load_webdriver_auth(config)
     if _is_webdriver_user_data_in_use(config) and not _is_tcp_port_open(port):
         user_data_dir = _webdriver_user_data_dir(config)
         return (
@@ -294,12 +430,14 @@ def _wait_browser_list(
             "blocked_user_data_in_use",
         )
     while time.time() < deadline:
-        browsers, result = _get_browser_list(port)
+        browsers, result = _get_browser_list(port, config)
         last = result
         if browsers:
             return browsers, result, started, login_error_seen, "already_running"
         if result and str(result.get("statusCode")) == "-10003":
             login_error_seen = True
+            if not allow_visible_client:
+                return [], result, started, login_error_seen, "existing_webdriver_login_error_no_visible_login"
             break
         time.sleep(1.5)
 
@@ -324,7 +462,7 @@ def _wait_browser_list(
     wait_seconds = login_timeout if login_error_seen else timeout
     deadline = time.time() + wait_seconds
     while time.time() < deadline:
-        browsers, result = _get_browser_list(port)
+        browsers, result = _get_browser_list(port, config)
         last = result
         if browsers:
             return browsers, result, started, login_error_seen, start_mode
@@ -536,6 +674,7 @@ def main() -> int:
 
     config = _load_config(args.config)
     port = int(config.get("webdriver_port") or os.environ.get("ZINIAO_WEBDRIVER_PORT") or 16851)
+    _, auth_info = _load_webdriver_auth(config)
     raw_status = None
     started_ziniao = False
     if args.input_json:
@@ -553,17 +692,22 @@ def main() -> int:
 
     if not browsers:
         blocked = start_mode == "blocked_user_data_in_use"
+        failure = _classify_empty_browser_list(raw_status, start_mode, auth_info)
+        waited_seconds = 0 if (
+            blocked or start_mode == "existing_webdriver_login_error_no_visible_login"
+        ) else (args.login_timeout if login_error_seen else args.timeout)
         _print_json(
             {
                 "ok": False,
-                "error": raw_status.get("error") if blocked and isinstance(raw_status, dict) else "ziniao_browser_list_empty",
-                "message": raw_status.get("message") if blocked and isinstance(raw_status, dict) else "没有从本机紫鸟读取到店铺浏览器列表。请先打开并登录紫鸟，再重试。",
+                "error": raw_status.get("error") if blocked and isinstance(raw_status, dict) else failure["error"],
+                "message": raw_status.get("message") if blocked and isinstance(raw_status, dict) else failure["message"],
                 "webdriver_port": port,
                 "started_ziniao": started_ziniao,
                 "start_mode": start_mode,
                 "login_error_seen": login_error_seen,
-                "waited_login_seconds": 0 if blocked else (args.login_timeout if login_error_seen else args.timeout),
-                "next_step": "请先手动退出普通紫鸟窗口/托盘，再重试；这个流程不会抢鼠标。" if blocked else "默认只尝试非鼠标 WebDriver 通道。请手动打开并登录紫鸟后重试；只有确认接受前台窗口控制时，才使用 setup-ziniao.ps1 -AllowGuiMouse。",
+                "waited_login_seconds": waited_seconds,
+                "webdriver_auth": auth_info,
+                "next_step": "请先手动退出普通紫鸟窗口/托盘，再重试；这个流程不会抢鼠标。" if blocked else failure["next_step"],
                 "raw_status": raw_status,
             },
             1,
@@ -605,6 +749,7 @@ def main() -> int:
             "webdriver_port": port,
             "started_ziniao": started_ziniao,
             "start_mode": start_mode,
+            "webdriver_auth": auth_info,
             "shops_count": len(shops),
             "platform_counts": {
                 platform: len([shop for shop in shops if shop.get("platform") == platform])

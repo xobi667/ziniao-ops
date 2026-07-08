@@ -94,6 +94,93 @@ function Find-ZiniaoExe {
   return ""
 }
 
+function Get-ZiniaoWebDriverAuthStatus {
+  $fields = [ordered]@{
+    company = $false
+    username = $false
+    password = $false
+  }
+  $sources = @()
+  $configuredPaths = @()
+  $candidatePaths = New-Object System.Collections.Generic.List[string]
+
+  if (Test-Path -LiteralPath $ziniaoConfigPath) {
+    try {
+      $cfg = Get-Content -LiteralPath $ziniaoConfigPath -Raw | ConvertFrom-Json
+      foreach ($prop in @("webdriver_auth_config", "auth_config_path", "webdriver_auth_path")) {
+        if ($cfg.PSObject.Properties.Name -contains $prop -and $cfg.$prop) {
+          $candidatePaths.Add((Resolve-ZiniaoOpsRepoPath $packageRoot ([string]$cfg.$prop)))
+        }
+      }
+    } catch {
+    }
+  }
+  $candidatePaths.Add((Join-Path $packageRoot "ziniao.auth.local.json"))
+
+  $seen = @{}
+  foreach ($path in @($candidatePaths)) {
+    if (!$path) { continue }
+    $key = $path.ToLowerInvariant()
+    if ($seen.ContainsKey($key)) { continue }
+    $seen[$key] = $true
+    if (!(Test-Path -LiteralPath $path)) { continue }
+    $configuredPaths += $path
+    try {
+      $payload = Get-Content -LiteralPath $path -Raw | ConvertFrom-Json
+      $node = $payload
+      foreach ($nested in @("webdriver_auth", "auth", "ziniao_webdriver")) {
+        if ($payload.PSObject.Properties.Name -contains $nested -and $payload.$nested) {
+          $node = $payload.$nested
+          break
+        }
+      }
+      $fileFields = @()
+      foreach ($field in @("company", "username", "password")) {
+        if ($node.PSObject.Properties.Name -contains $field -and ([string]$node.$field).Trim()) {
+          $fields[$field] = $true
+          $fileFields += $field
+        }
+      }
+      if ($fileFields.Count -gt 0) {
+        $sources += "auth_config_file"
+        break
+      }
+    } catch {
+    }
+  }
+
+  $envMap = [ordered]@{
+    company = "ZINIAO_WEBDRIVER_COMPANY"
+    username = "ZINIAO_WEBDRIVER_USERNAME"
+    password = "ZINIAO_WEBDRIVER_PASSWORD"
+  }
+  $envFields = @()
+  foreach ($field in $envMap.Keys) {
+    $value = [Environment]::GetEnvironmentVariable($envMap[$field])
+    if ($value -and $value.Trim()) {
+      $fields[$field] = $true
+      $envFields += $field
+    }
+  }
+  if ($envFields.Count -gt 0) {
+    $sources += "environment"
+  }
+
+  $missing = @()
+  foreach ($field in @("company", "username", "password")) {
+    if (!$fields[$field]) { $missing += $field }
+  }
+
+  return [pscustomobject]@{
+    complete = ($missing.Count -eq 0)
+    fields_present = $fields
+    missing_fields = $missing
+    sources = @($sources)
+    configured_paths = @($configuredPaths)
+    env_var_names = @($envMap.Values)
+  }
+}
+
 function Get-PythonCommand {
   if (Test-Path -LiteralPath $ziniaoConfigPath) {
     try {
@@ -137,6 +224,7 @@ $canSyncZiniaoShops = $false
 $detectedZiniaoShopsCount = 0
 $ziniaoSyncError = ""
 $ziniaoSyncLoginErrorSeen = $false
+$ziniaoSyncParameterErrorSeen = $false
 $ziniaoSyncStartMode = ""
 $ziniaoSyncRawStatus = $null
 if ($python.Count -gt 0) {
@@ -152,6 +240,7 @@ if ($python.Count -gt 0) {
 }
 
 $ziniaoPath = Find-ZiniaoExe
+$webdriverAuth = Get-ZiniaoWebDriverAuthStatus
 $port = 16851
 $webdriverUserDataDir = ""
 if (Test-Path -LiteralPath $ziniaoConfigPath) {
@@ -179,7 +268,8 @@ if ($isWindows -and $webdriverUserDataDir) {
       Where-Object {
         $_.Name -eq "ziniao.exe" -and
         $_.CommandLine -match "--user-data-dir=.*$escapedUserDataDir" -and
-        $_.CommandLine -notmatch "--run_type=web_driver"
+        $_.CommandLine -notmatch "--run_type=web_driver" -and
+        $_.CommandLine -notmatch "--type="
       })
     $webdriverUserDataInUse = ($usingProcesses.Count -gt 0)
   } catch {
@@ -221,6 +311,15 @@ if ($python.Count -gt 0 -and (Test-Path -LiteralPath $syncZiniaoPath)) {
         $ziniaoSyncLoginErrorSeen = [bool]$syncReport.login_error_seen
         if ($syncReport.start_mode) { $ziniaoSyncStartMode = [string]$syncReport.start_mode }
         if ($syncReport.raw_status) { $ziniaoSyncRawStatus = $syncReport.raw_status }
+        $rawText = ""
+        if ($syncReport.raw_status) {
+          foreach ($prop in @("err", "msg", "message", "error")) {
+            if ($syncReport.raw_status.PSObject.Properties.Name -contains $prop -and $syncReport.raw_status.$prop) {
+              $rawText += " " + [string]$syncReport.raw_status.$prop
+            }
+          }
+        }
+        if ($rawText -match "参数不能为空") { $ziniaoSyncParameterErrorSeen = $true }
       } catch {
         $ziniaoSyncError = $syncText
       }
@@ -261,8 +360,14 @@ if (!(Test-Path -LiteralPath $shopsPath) -or $shopsCount -le 0) {
     $nextSteps += "Local shops cache is empty, but this computer can scan Ziniao. The first open-shop run will auto-generate shops.json."
   } else {
     $issues += "ziniao_shops_unavailable"
-    if ($ziniaoSyncLoginErrorSeen) {
-      $nextSteps += "Ziniao WebDriver is reachable but reports login-state error. Open/log in to Ziniao manually, then rerun setup-ziniao.ps1. Only use setup-ziniao.ps1 -AllowGuiMouse if foreground window/mouse control is acceptable."
+    if ($ziniaoSyncError -eq "ziniao_webdriver_auth_fields_missing") {
+      $issues += "ziniao_webdriver_auth_fields_missing"
+      $nextSteps += "This Ziniao WebDriver build requires local company/username/password fields. Set them on this computer through ziniao.auth.local.json or ZINIAO_WEBDRIVER_* environment variables; do not paste values into chat or commit them. Then run setup-ziniao.ps1 -ResetStaleWebDriver."
+    } elseif ($ziniaoSyncParameterErrorSeen -or $ziniaoSyncError -eq "ziniao_webdriver_invalid_session") {
+      $issues += "ziniao_webdriver_invalid_session"
+      $nextSteps += 'Ziniao WebDriver is reachable but returns "参数不能为空". This is usually an invalid/stale WebDriver session or unusable isolated profile, not a normal wait-for-login state. Run setup-ziniao.ps1; if it reports user-data in use, exit the normal Ziniao window/tray before retrying. Use -AllowGuiMouse only when foreground control is acceptable.'
+    } elseif ($ziniaoSyncLoginErrorSeen) {
+      $nextSteps += "Ziniao WebDriver is reachable but reports login-state error. Background mode has no login UI, so waiting alone will not fix it. Open/log in to Ziniao manually, then rerun setup-ziniao.ps1. Only use setup-ziniao.ps1 -AllowGuiMouse if foreground window/mouse control is acceptable."
     } elseif ($webdriverUserDataInUse) {
       $nextSteps += "普通紫鸟正在占用 WebDriver 用户目录。要走后台模式，请先退出普通紫鸟窗口/托盘，再运行 setup-ziniao.ps1；不要使用 -AllowGuiMouse。"
     } else {
@@ -332,11 +437,18 @@ $report = [ordered]@{
   webdriver_port = $port
   webdriver_user_data_dir = $webdriverUserDataDir
   webdriver_user_data_in_use = $webdriverUserDataInUse
+  webdriver_auth_complete = [bool]$webdriverAuth.complete
+  webdriver_auth_fields_present = $webdriverAuth.fields_present
+  webdriver_auth_missing_fields = $webdriverAuth.missing_fields
+  webdriver_auth_sources = $webdriverAuth.sources
+  webdriver_auth_configured_paths = $webdriverAuth.configured_paths
+  webdriver_auth_env_var_names = $webdriverAuth.env_var_names
   webdriver_port_reachable = $webdriverReachable
   can_sync_ziniao_shops = $canSyncZiniaoShops
   detected_ziniao_shops_count = $detectedZiniaoShopsCount
   ziniao_sync_error = $ziniaoSyncError
   ziniao_sync_login_error_seen = $ziniaoSyncLoginErrorSeen
+  ziniao_sync_parameter_error_seen = $ziniaoSyncParameterErrorSeen
   ziniao_sync_start_mode = $ziniaoSyncStartMode
   ziniao_sync_raw_status = $ziniaoSyncRawStatus
   issues = $issues

@@ -68,6 +68,8 @@ Interpret `diagnose-local.ps1` results directly:
 - `python_missing`: install Python 3 first.
 - `ziniao_path_not_detected`: open Ziniao manually or fill `ziniao.local.json` `client_path`.
 - `ziniao_webdriver_not_reachable`: Shopee/TikTok precision opening and local store scanning will fail until local Ziniao is open/logged in and the webdriver/API port is reachable. Run `setup-ziniao.ps1` first; add `-AllowGuiMouse` only after the employee accepts foreground control.
+- `ziniao_webdriver_auth_fields_missing`: Ziniao WebDriver is reachable but this local build requires company/username/password fields for WebDriver calls. Do not ask the employee to paste values into chat. Tell them to configure `ziniao.auth.local.json` on this computer from `ziniao.auth.local.example.json`, or set `ZINIAO_WEBDRIVER_COMPANY`, `ZINIAO_WEBDRIVER_USERNAME`, and `ZINIAO_WEBDRIVER_PASSWORD`; diagnostics may only report field presence.
+- `ziniao_webdriver_invalid_session`: Ziniao WebDriver is reachable but returns errors such as `参数不能为空` even after required local auth fields are present. Treat this as an invalid/stale WebDriver session or unusable isolated profile, not a normal wait-for-login state. Run `setup-ziniao.ps1 -ResetStaleWebDriver`; if it reports the WebDriver user data directory is in use, exit the normal Ziniao window/tray before retrying. Use `-AllowGuiMouse` only when the employee accepts foreground control.
 - `pywinauto_missing_for_lazada`: run `install-python-deps.ps1` before Lazada precision opening.
 - If `ready_for_shopee_tiktok=true`, Shopee/TikTok store matching should work; backend access still depends on local seller login state.
 - If `ready_for_lazada=true`, Lazada GUI automation prerequisites are present; visual/window differences can still require manual help.
@@ -87,6 +89,7 @@ Hard rules:
 - The employee computer must already be logged in to the target seller account.
 - Precision opening requires a Windows desktop with Ziniao installed and logged in.
 - Never attempt to bypass login, reuse owner credentials, copy browser session data, store passwords, handle verification codes, or automate 2FA.
+- Some local Ziniao WebDriver builds require employee-owned auth fields on every local WebDriver request. Codex must never receive, print, or edit those values. The employee may configure them locally through ignored files or environment variables; Codex may only check whether the fields are present.
 - `open-shop.ps1` only starts the local store-opening flow through Ziniao or an explicit URL mode. It cannot prove the backend was entered.
 - If the browser lands on a login page, stop and tell the employee to log in manually on this computer, then rerun the same command.
 - Do not claim “the store backend is opened successfully” unless the user confirms the page is inside the seller backend. Prefer: “已在本机发起店铺打开；如果跳到登录页，请本机手动登录后重试。”
@@ -408,6 +411,8 @@ Never store or print passwords, verification codes, browser session data, or tok
 - Ziniao not running or not logged in during a real open request: first try CLI `list-stores`; if that fails, try the built-in non-mouse webdriver/API route. Do not launch setup/login handoff or GUI fallback by default because it can focus Ziniao and interfere with the employee's mouse. Ask whether foreground GUI/mouse control is acceptable; only then rerun with `-AllowGuiMouse`.
 - Do not forcibly restart or kill Ziniao during normal opening. Only pass `open-shop.ps1 -AllowRestart` or `ziniao-gui-open.py --allow-restart` when the user explicitly confirms the current Ziniao process may be restarted.
 - Ziniao API login-state error after waiting: use the GUI fallback path only after the user explicitly accepts foreground GUI/mouse control with `-AllowGuiMouse`.
+- Ziniao WebDriver returns `ziniao_webdriver_auth_fields_missing`: do not keep waiting and do not ask for the values. Tell the employee to create ignored local `ziniao.auth.local.json` from `ziniao.auth.local.example.json`, or set the three `ZINIAO_WEBDRIVER_*` environment variables on this computer, then rerun `setup-ziniao.ps1 -ResetStaleWebDriver`.
+- Ziniao WebDriver returns `参数不能为空` / `ziniao_webdriver_invalid_session`: do not keep waiting or tell the employee that login alone will fix it. This is usually a stale WebDriver process, missing API parameter, or isolated profile problem. Run `setup-ziniao.ps1 -ResetStaleWebDriver`; if it reports user-data in use, ask the employee to exit normal Ziniao/tray and retry, or use `-AllowGuiMouse` only with explicit foreground-control acceptance.
 - Ziniao login-state errors: WebDriver/API may be reachable while the local client has no valid login context. Do not click login or handle credentials. Ask the employee to complete login locally and rerun the same command; use `-AllowGuiMouse` only after explicit acceptance of foreground GUI/mouse control.
 - Browser opens login page: this means the employee computer is not logged in for that store. Do not assist with credentials; tell the employee to log in manually, then run the same command again.
 - Precision open fails: do not silently open a normal URL. Ask whether to use `-UrlFallback`.
