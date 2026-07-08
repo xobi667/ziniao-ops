@@ -1,7 +1,7 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
   [string]$Url = "",
-  [int]$Port = 9342,
+  [int[]]$Port = @(),
   [string]$Intent = "",
   [switch]$NoAutoDetectUrl,
   [switch]$SkipDom,
@@ -68,6 +68,16 @@ function Invoke-JsonScript {
   }
 }
 
+function Get-PortArgumentList {
+  param([int[]]$Ports)
+  $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  $args = @()
+  foreach ($item in $items) {
+    $args += @("-Port", [string]$item)
+  }
+  return $args
+}
+
 function Get-CatalogSummary {
   if (!(Test-Path -LiteralPath $catalogPath)) {
     return [ordered]@{
@@ -116,6 +126,85 @@ function Get-RouteKey([string]$InputUrl) {
     if (!$text.StartsWith("/")) { $text = "/" + $text }
     if ($text.Length -gt 1) { $text = $text.TrimEnd("/") }
     return $text.ToLowerInvariant()
+  }
+}
+
+function Test-XinjianLoginOrRestrictedUrl([string]$InputUrl) {
+  $route = Get-RouteKey $InputUrl
+  if (!$route) { return $true }
+  return $route -match "^/(login|xtlogin|sso|social-login|401|404|redirect)(/|$)" -or
+    $route -match "^/index/(noaccess|ad-no-auth)(/|$)"
+}
+
+function Resolve-CapturePort {
+  param(
+    [string]$TargetUrl,
+    [object]$UrlResolution
+  )
+
+  $explicit = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  if ($explicit.Count -gt 0) {
+    return [pscustomobject]@{
+      ok = $true
+      port = [int]$explicit[0]
+      reason = "explicit_port"
+      candidates = @()
+    }
+  }
+
+  if ($UrlResolution -and $UrlResolution.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $UrlResolution.resolved_port) {
+    return [pscustomobject]@{
+      ok = $true
+      port = [int]$UrlResolution.resolved_port
+      reason = "resolved_current_url_port"
+      candidates = @($UrlResolution.candidates)
+    }
+  }
+
+  $detector = Join-Path $PSScriptRoot "detect-ziniao-windows.ps1"
+  if (!(Test-Path -LiteralPath $detector)) {
+    return [pscustomobject]@{ ok = $false; port = $null; reason = "detector_missing"; candidates = @() }
+  }
+
+  $raw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $detector -Json 2>&1)
+  $detected = ConvertFrom-JsonText $raw
+  if (!$detected -or !$detected.ok) {
+    return [pscustomobject]@{ ok = $false; port = $null; reason = "detector_failed"; raw_output = ($raw | Out-String).Trim(); candidates = @() }
+  }
+
+  $targetRoute = Get-RouteKey $TargetUrl
+  $candidates = @($detected.windows | Where-Object {
+      $_.source -eq "cdp" -and
+      $_.platform -eq "xinjian_erp" -and
+      $_.reachable -and
+      $_.port -and
+      $_.page_url
+    } | Select-Object source, port, process_name, process_id, page_title, page_url, login_signal)
+
+  if ($candidates.Count -eq 0) {
+    return [pscustomobject]@{ ok = $false; port = $null; reason = "no_debuggable_xinjian_page"; candidates = @() }
+  }
+
+  $exact = @($candidates | Where-Object {
+      (Get-RouteKey ([string]$_.page_url)) -eq $targetRoute -and
+      !(Test-XinjianLoginOrRestrictedUrl ([string]$_.page_url))
+    } | Select-Object -First 1)
+  if ($exact.Count -gt 0) {
+    return [pscustomobject]@{ ok = $true; port = [int]$exact[0].port; reason = "matched_target_route"; candidates = @($candidates) }
+  }
+
+  $loggedIn = @($candidates | Where-Object {
+      !(Test-XinjianLoginOrRestrictedUrl ([string]$_.page_url))
+    } | Select-Object -First 1)
+  if ($loggedIn.Count -gt 0) {
+    return [pscustomobject]@{ ok = $true; port = [int]$loggedIn[0].port; reason = "reuse_logged_in_xinjian_port"; candidates = @($candidates) }
+  }
+
+  return [pscustomobject]@{
+    ok = $false
+    port = $null
+    reason = "xinjian_cdp_pages_are_login_or_restricted"
+    candidates = @($candidates)
   }
 }
 
@@ -192,7 +281,8 @@ function Add-CaptureRouteValidation {
 $requestedUrl = $Url
 $urlResolution = $null
 if (!$Url -and !$NoAutoDetectUrl -and !$GenerateOnly) {
-  $resolveArgs = @("-Port", [string]$Port, "-Json")
+  $resolveArgs = @(Get-PortArgumentList -Ports $Port)
+  $resolveArgs += "-Json"
   if ($Intent) { $resolveArgs += @("-Intent", $Intent) }
   $resolveResult = Invoke-JsonScript -ScriptName "resolve-xinjian-current-url.ps1" -Arguments $resolveArgs
   $urlResolution = $resolveResult.parsed
@@ -213,7 +303,36 @@ if (!$Url -and !$GenerateOnly) {
   exit 1
 }
 
+$capturePortResolution = $null
+$capturePort = $null
+if (!$GenerateOnly) {
+  $capturePortResolution = Resolve-CapturePort -TargetUrl $Url -UrlResolution $urlResolution
+  if ($capturePortResolution.ok -and $capturePortResolution.port) {
+    $capturePort = [int]$capturePortResolution.port
+  }
+}
+
 $before = Get-CatalogSummary
+
+if (!$GenerateOnly -and !$DryRun -and !$capturePort) {
+  $payload = [ordered]@{
+    ok = $false
+    mode = "cdp_port_unresolved"
+    requested_url = $requestedUrl
+    url = $Url
+    url_resolution = $urlResolution
+    capture_port_resolution = $capturePortResolution
+    before_catalog = $before
+    next_action = if ($capturePortResolution -and $capturePortResolution.reason -eq "xinjian_cdp_pages_are_login_or_restricted") {
+      "manual_login_required_in_debuggable_xinjian_browser"
+    } else {
+      "open_or_focus_a_debuggable_xinjian_browser"
+    }
+  }
+  if ($Json) { $payload | ConvertTo-Json -Depth 14 } else { Write-Host ("No usable Xinjian CDP port was resolved: {0}" -f $capturePortResolution.reason) }
+  exit 1
+}
+
 $planned = @()
 if (!$GenerateOnly) {
   if (!$SkipDom) { $planned += "capture_dom_controls" }
@@ -233,6 +352,8 @@ if ($DryRun) {
     url = $Url
     requested_url = $requestedUrl
     url_resolution = $urlResolution
+    capture_port = $capturePort
+    capture_port_resolution = $capturePortResolution
     before_catalog = $before
     planned_steps = $planned
     safety = [ordered]@{
@@ -249,16 +370,16 @@ if ($DryRun) {
 $captures = @()
 if (!$GenerateOnly) {
   if (!$SkipDom) {
-    $captures += New-StepSummary -Name "capture_dom_controls" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-dom-map.ps1" -Arguments @("-Port", [string]$Port, "-Url", $Url, "-Json"))
+    $captures += New-StepSummary -Name "capture_dom_controls" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-dom-map.ps1" -Arguments @("-Port", [string]$capturePort, "-Url", $Url, "-Json"))
   }
   if (!$SkipOverlays) {
-    $captures += New-StepSummary -Name "capture_overlay_dropdowns" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-overlays.ps1" -Arguments @("-Port", [string]$Port, "-Url", $Url, "-MaxTriggers", [string]$MaxOverlayTriggers, "-IncludeSelects", "-IncludeDatePickers", "-Json"))
+    $captures += New-StepSummary -Name "capture_overlay_dropdowns" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-overlays.ps1" -Arguments @("-Port", [string]$capturePort, "-Url", $Url, "-MaxTriggers", [string]$MaxOverlayTriggers, "-IncludeSelects", "-IncludeDatePickers", "-Json"))
   }
   if (!$SkipDialogs) {
-    $captures += New-StepSummary -Name "capture_safe_dialog_controls" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-dialogs.ps1" -Arguments @("-Port", [string]$Port, "-Url", $Url, "-MaxTriggers", [string]$MaxDialogTriggers, "-Json"))
+    $captures += New-StepSummary -Name "capture_safe_dialog_controls" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-dialogs.ps1" -Arguments @("-Port", [string]$capturePort, "-Url", $Url, "-MaxTriggers", [string]$MaxDialogTriggers, "-Json"))
   }
   if (!$SkipRowActions) {
-    $captures += New-StepSummary -Name "capture_table_row_actions" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-row-actions.ps1" -Arguments @("-Port", [string]$Port, "-Url", $Url, "-MaxTables", [string]$MaxTables, "-Json"))
+    $captures += New-StepSummary -Name "capture_table_row_actions" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-row-actions.ps1" -Arguments @("-Port", [string]$capturePort, "-Url", $Url, "-MaxTables", [string]$MaxTables, "-Json"))
   }
   $captures = @(Add-CaptureRouteValidation -Steps $captures -TargetUrl $Url)
 }
@@ -299,6 +420,8 @@ $payload = [ordered]@{
   url = $Url
   requested_url = $requestedUrl
   url_resolution = $urlResolution
+  capture_port = $capturePort
+  capture_port_resolution = $capturePortResolution
   before_catalog = $before
   after_catalog = $after
   delta = [ordered]@{

@@ -357,6 +357,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list-xinjian-page-actions.ps1") -Intent "<用户要做什么>" -Json
 ```
 
+These high-level 心舰 action commands scan reachable Chrome/Edge/Ziniao DevTools ports by default and return `resolved_port` when a debuggable tab is selected. Use `-Port` only when intentionally pinning diagnostics or execution to a specific browser port.
+
 Before broad learning passes, audit global action memory quality so the next crawl targets weak pages instead of repeating strong pages:
 
 ```powershell
@@ -372,6 +374,8 @@ If the current page is missing from memory or looks weakly mapped, learn it in o
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Intent "<用户要做什么>" -Json
 ```
+
+The current-page learner auto-selects a reachable debuggable 心舰 port. If it only sees login or restricted 心舰 pages, it stops with `manual_login_required_in_debuggable_xinjian_browser` instead of learning the wrong page.
 
 To learn every currently debuggable 心舰 page already open in Chrome/Edge, use the batch learner. It enumerates DevTools pages, de-duplicates by route, captures each page with the safe current-page learner, then regenerates maps/catalog once:
 

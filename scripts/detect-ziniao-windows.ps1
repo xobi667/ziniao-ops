@@ -184,7 +184,9 @@ function Test-CdpPort([int]$CdpPort) {
 
 function Get-CdpPages([int]$CdpPort) {
   try {
-    return @(Invoke-RestMethod -Uri "http://127.0.0.1:$CdpPort/json" -TimeoutSec 5)
+    $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$CdpPort/json" -TimeoutSec 5).Content
+    $parsed = $body | ConvertFrom-Json
+    return @($parsed | ForEach-Object { $_ })
   } catch {
     return @()
   }

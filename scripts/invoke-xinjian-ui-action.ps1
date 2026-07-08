@@ -3,7 +3,7 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$Intent,
   [string]$Url = "",
-  [int]$Port = 9342,
+  [int[]]$Port = @(),
   [switch]$Execute,
   [switch]$AllowWrite,
   [switch]$AllowExport,
@@ -19,6 +19,38 @@ function ConvertFrom-JsonText($Lines) {
   $text = (($Lines | Out-String).Trim())
   if (!$text) { return $null }
   try { return $text | ConvertFrom-Json } catch { return $null }
+}
+
+function Get-PortArgumentList {
+  param([int[]]$Ports)
+  $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  $args = @()
+  foreach ($item in $items) {
+    $args += @("-Port", [string]$item)
+  }
+  return $args
+}
+
+function Get-FirstExplicitPort {
+  $items = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  if ($items.Count -gt 0) { return [int]$items[0] }
+  return $null
+}
+
+function Resolve-XinjianCurrentUrlByScript {
+  param([string]$QueryIntent = "")
+  $resolver = Join-Path $PSScriptRoot "resolve-xinjian-current-url.ps1"
+  if (!(Test-Path -LiteralPath $resolver)) {
+    return [pscustomobject]@{ ok = $false; reason = "resolver_missing"; candidates = @() }
+  }
+  $args = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $resolver)
+  $args += Get-PortArgumentList -Ports $Port
+  if ($QueryIntent) { $args += @("-Intent", $QueryIntent) }
+  $args += "-Json"
+  $raw = @(& powershell @args 2>&1)
+  $parsed = ConvertFrom-JsonText $raw
+  if ($parsed) { return $parsed }
+  return [pscustomobject]@{ ok = $false; reason = "resolver_output_parse_failed"; raw_output = ($raw | Out-String).Trim(); candidates = @() }
 }
 
 function Invoke-XinjianActionQuery {
@@ -250,25 +282,17 @@ function Get-LocatorStrategy($Action) {
 $requestedUrl = $Url
 $urlDetection = $null
 if (!$Url -and !$NoAutoDetectUrl) {
-  $urlDetection = Resolve-XinjianCurrentUrl -CdpPort $Port
-  $intentChoice = $null
-  if (@($urlDetection.candidates).Count -gt 1) {
-    $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Detection $urlDetection
-  }
-  if ($intentChoice -and $intentChoice.url) {
-    $Url = [string]$intentChoice.url
-    $urlDetection = [pscustomobject]([ordered]@{
-        ok = $true
-        url = $Url
-        source = "intent_scored_visible_window"
-        confidence = "intent_unique_best_match"
-        reason = "ambiguous_xinjian_windows_resolved_by_intent"
-        candidates = $urlDetection.candidates
-        intent_resolution = $intentChoice
-      })
-  } elseif ($urlDetection.ok -and $urlDetection.url) {
+  $urlDetection = Resolve-XinjianCurrentUrlByScript -QueryIntent $Intent
+  if ($urlDetection.ok -and $urlDetection.url) {
     $Url = [string]$urlDetection.url
   }
+} elseif ($Url) {
+  $urlDetection = Resolve-XinjianCurrentUrlByScript
+}
+
+$effectivePort = Get-FirstExplicitPort
+if (!$effectivePort -and $urlDetection -and $urlDetection.PSObject.Properties.Match("resolved_port").Count -gt 0 -and $urlDetection.resolved_port) {
+  $effectivePort = [int]$urlDetection.resolved_port
 }
 
 $queryResult = Invoke-XinjianActionQuery -QueryIntent $Intent -QueryUrl $Url
@@ -315,14 +339,16 @@ $requiresWrite = ($safetyMode -eq "confirmation_required_write")
 $unknownSafety = ($safetyMode -eq "dry_run_only_unknown_safety")
 $requiresRowContext = ($locatorStrategy -like "row_context_required*")
 $requiresPageContext = !$Url
-$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+$requiresCdpPort = !$effectivePort
+$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and !$requiresCdpPort -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
 
 $plan = [ordered]@{
   intent = $Intent
   url = $Url
   requested_url = $requestedUrl
   url_detection = $urlDetection
-  port = $Port
+  ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  resolved_port = $effectivePort
   candidate_index = $CandidateIndex
   page_id = $match.page_id
   page_name = $match.page_name
@@ -333,7 +359,9 @@ $plan = [ordered]@{
   locator_strategy = $locatorStrategy
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
-  safety_note = if ($requiresPageContext -and $requiresWrite) {
+  safety_note = if ($requiresCdpPort) {
+    "No debuggable Xinjian CDP port was resolved. Dry-run only; open or log in to Xinjian in a Chrome/Edge/Ziniao window with DevTools enabled."
+  } elseif ($requiresPageContext -and $requiresWrite) {
     "Write/delete/save/submit-like action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowWrite only after explicit confirmation."
   } elseif ($requiresPageContext -and $requiresExport) {
     "Export/download action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowExport only after explicit confirmation."
@@ -379,7 +407,7 @@ if (!$canExecute) {
     ok = $false
     mode = "blocked_by_safety"
     plan = $plan
-    next_action = if ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
+    next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20
@@ -420,7 +448,7 @@ $actionForRun = $action | ConvertTo-Json -Depth 14 | ConvertFrom-Json
 $actionForRun | Add-Member -NotePropertyName "runtime_intent" -NotePropertyValue $Intent -Force
 $actionForRun | ConvertTo-Json -Depth 14 | Set-Content -LiteralPath $actionPath -Encoding UTF8
 
-$argsList = @($helper, "--port", [string]$Port, "--action-file", $actionPath)
+$argsList = @($helper, "--port", [string]$effectivePort, "--action-file", $actionPath)
 if ($Url) { $argsList += @("--match-url", $Url) }
 if ($AllowWrite) { $argsList += "--allow-write" }
 if ($AllowExport) { $argsList += "--allow-export" }

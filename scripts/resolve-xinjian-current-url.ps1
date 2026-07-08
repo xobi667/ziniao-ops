@@ -1,6 +1,6 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
-  [int]$Port = 9342,
+  [int[]]$Port = @(),
   [string]$Intent = "",
   [switch]$Json
 )
@@ -67,6 +67,16 @@ function Invoke-XinjianActionQuery {
   }
 }
 
+function Get-PortArgumentList {
+  param([int[]]$Ports)
+  $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  $args = @()
+  foreach ($item in $items) {
+    $args += @("-Port", [string]$item)
+  }
+  return $args
+}
+
 function Resolve-XinjianUrlByIntent {
   param(
     [string]$QueryIntent,
@@ -81,10 +91,12 @@ function Resolve-XinjianUrlByIntent {
 
   $scores = @()
   foreach ($candidateUrl in $urls) {
+    $matchingCandidate = @($Candidates | Where-Object { [string]$_.url -eq $candidateUrl } | Select-Object -First 1)
     $probe = Invoke-XinjianActionQuery -QueryIntent $QueryIntent -QueryUrl $candidateUrl
     if (!$probe.parsed -or !$probe.parsed.ok -or @($probe.parsed.matches).Count -eq 0) {
       $scores += [pscustomobject]@{
         url = $candidateUrl
+        port = if ($matchingCandidate.Count -gt 0) { $matchingCandidate[0].port } else { $null }
         ok = $false
         score = 0
         rank = 0
@@ -96,6 +108,7 @@ function Resolve-XinjianUrlByIntent {
     $best = @($probe.parsed.matches)[0]
     $scores += [pscustomobject]@{
       url = $candidateUrl
+      port = if ($matchingCandidate.Count -gt 0) { $matchingCandidate[0].port } else { $null }
       ok = $true
       score = [int]$best.score
       rank = [int]$best.rank
@@ -112,6 +125,7 @@ function Resolve-XinjianUrlByIntent {
 
   return [pscustomobject]@{
     url = [string]$ordered[0].url
+    port = $ordered[0].port
     score = [int]$ordered[0].score
     rank = [int]$ordered[0].rank
     page_name = [string]$ordered[0].page_name
@@ -126,7 +140,8 @@ $payload = [ordered]@{
   source = ""
   confidence = "none"
   reason = ""
-  port = $Port
+  ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  resolved_port = $null
   candidates = @()
   intent_resolution = $null
 }
@@ -138,7 +153,10 @@ if (!(Test-Path -LiteralPath $detector)) {
   exit 2
 }
 
-$rawDetected = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $detector -Port $Port -Json 2>&1)
+$detectArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $detector)
+$detectArgs += Get-PortArgumentList -Ports $Port
+$detectArgs += "-Json"
+$rawDetected = @(& powershell @detectArgs 2>&1)
 $detected = ConvertFrom-JsonText $rawDetected
 if (!$detected -or !$detected.ok) {
   $payload.reason = "detector_failed"
@@ -156,7 +174,8 @@ function Add-Candidate {
     [object]$ProcessId,
     [string]$Title,
     [string]$Url,
-    [bool]$Reachable = $false
+    [bool]$Reachable = $false,
+    [object]$CdpPort = $null
   )
   if (!(Test-XinjianUrl $Url)) { return }
   $key = ([string]$Url).ToLowerInvariant()
@@ -165,12 +184,17 @@ function Add-Candidate {
     if ($existing -and $foregroundProcessId -and $ProcessId -and [int]$ProcessId -eq $foregroundProcessId) {
       $existing.is_foreground_process = $true
     }
+    if ($existing -and $CdpPort -and !$existing.port) {
+      $existing.port = [int]$CdpPort
+      $existing.reachable = [bool]$Reachable
+    }
     return
   }
   $script:CandidateUrls[$key] = $true
   $script:Candidates += [pscustomobject]([ordered]@{
       source = $Source
       process_id = $ProcessId
+      port = if ($CdpPort) { [int]$CdpPort } else { $null }
       title = $Title
       url = $Url
       is_foreground_process = ($foregroundProcessId -and $ProcessId -and [int]$ProcessId -eq $foregroundProcessId)
@@ -181,18 +205,20 @@ function Add-Candidate {
 $windows = @($detected.windows | Where-Object {
     $_.platform -eq "xinjian_erp" -and $_.page_url -and (Test-XinjianUrl ([string]$_.page_url))
   })
-foreach ($window in @($windows | Where-Object { $_.source -in @("window_uia", "window_title") })) {
-  Add-Candidate -Source ([string]$window.source) -ProcessId $window.process_id -Title ([string]$window.page_title) -Url ([string]$window.page_url) -Reachable ([bool]$window.reachable)
+foreach ($window in @($windows | Where-Object { $_.source -in @("cdp", "window_uia", "window_title") })) {
+  Add-Candidate -Source ([string]$window.source) -ProcessId $window.process_id -Title ([string]$window.page_title) -Url ([string]$window.page_url) -Reachable ([bool]$window.reachable) -CdpPort $window.port
 }
 
-try {
-  $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$Port/json" -TimeoutSec 5).Content
-  $parsedPages = $body | ConvertFrom-Json
-  $pages = @($parsedPages | ForEach-Object { $_ })
-  foreach ($page in @($pages | Where-Object { $_.type -eq "page" -and (Test-XinjianUrl ([string]$_.url)) })) {
-    Add-Candidate -Source "cdp_page_url" -ProcessId $null -Title ([string]$page.title) -Url ([string]$page.url) -Reachable $true
+foreach ($probePort in @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)) {
+  try {
+    $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$probePort/json" -TimeoutSec 5).Content
+    $parsedPages = $body | ConvertFrom-Json
+    $pages = @($parsedPages | ForEach-Object { $_ })
+    foreach ($page in @($pages | Where-Object { $_.type -eq "page" -and (Test-XinjianUrl ([string]$_.url)) })) {
+      Add-Candidate -Source "cdp_page_url" -ProcessId $null -Title ([string]$page.title) -Url ([string]$page.url) -Reachable $true -CdpPort $probePort
+    }
+  } catch {
   }
-} catch {
 }
 
 $payload.candidates = @($script:Candidates | Select-Object -First 20)
@@ -204,6 +230,7 @@ if ($script:Candidates.Count -gt 1 -and $Intent) {
 if ($intentChoice -and $intentChoice.url) {
   $payload.ok = $true
   $payload.url = [string]$intentChoice.url
+  $payload.resolved_port = if ($intentChoice.port) { [int]$intentChoice.port } else { $null }
   $payload.source = "intent_scored_candidate"
   $payload.confidence = "intent_unique_best_match"
   $payload.reason = "ambiguous_xinjian_windows_resolved_by_intent"
@@ -211,12 +238,14 @@ if ($intentChoice -and $intentChoice.url) {
 } elseif ($foreground.Count -gt 0) {
   $payload.ok = $true
   $payload.url = [string]$foreground[0].url
+  $payload.resolved_port = if ($foreground[0].port) { [int]$foreground[0].port } else { $null }
   $payload.source = [string]$foreground[0].source
   $payload.confidence = "foreground_window_url"
   $payload.reason = "foreground_xinjian_window"
 } elseif ($script:Candidates.Count -eq 1) {
   $payload.ok = $true
   $payload.url = [string]$script:Candidates[0].url
+  $payload.resolved_port = if ($script:Candidates[0].port) { [int]$script:Candidates[0].port } else { $null }
   $payload.source = [string]$script:Candidates[0].source
   $payload.confidence = "single_xinjian_candidate"
   $payload.reason = "single_xinjian_window"

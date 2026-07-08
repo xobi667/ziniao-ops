@@ -1,7 +1,7 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
   [string]$Url = "",
-  [int]$Port = 9342,
+  [int[]]$Port = @(),
   [string]$Intent = "",
   [string]$CatalogPath = "",
   [switch]$NoAutoDetectUrl,
@@ -26,6 +26,16 @@ function ConvertFrom-JsonText($Lines) {
     if ($starts.Count -eq 0) { return $null }
     try { return $text.Substring([int]$starts[0]) | ConvertFrom-Json } catch { return $null }
   }
+}
+
+function Get-PortArgumentList {
+  param([int[]]$Ports)
+  $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  $args = @()
+  foreach ($item in $items) {
+    $args += @("-Port", [string]$item)
+  }
+  return $args
 }
 
 function Get-RoutePath([string]$InputUrl) {
@@ -102,7 +112,9 @@ $urlResolution = $null
 if (!$Url -and !$NoAutoDetectUrl) {
   $resolver = Join-Path $PSScriptRoot "resolve-xinjian-current-url.ps1"
   if (Test-Path -LiteralPath $resolver) {
-    $resolveArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $resolver, "-Port", [string]$Port, "-Json")
+    $resolveArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $resolver)
+    $resolveArgs += Get-PortArgumentList -Ports $Port
+    $resolveArgs += "-Json"
     if ($Intent) { $resolveArgs += @("-Intent", $Intent) }
     $rawResolution = @(& powershell @resolveArgs 2>&1)
     $urlResolution = ConvertFrom-JsonText $rawResolution

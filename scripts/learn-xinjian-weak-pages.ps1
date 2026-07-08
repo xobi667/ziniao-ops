@@ -1,6 +1,6 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
-  [int]$Port = 9342,
+  [int[]]$Port = @(),
   [int]$MaxPages = 5,
   [int]$MinActions = 5,
   [int]$MinRiskScore = 1,
@@ -68,6 +68,16 @@ function Invoke-JsonScript {
     parsed = $parsed
     raw_output = ($raw | Out-String).Trim()
   }
+}
+
+function Get-PortArgumentList {
+  param([int[]]$Ports)
+  $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  $args = @()
+  foreach ($item in $items) {
+    $args += @("-Port", [string]$item)
+  }
+  return $args
 }
 
 function Get-RouteUrl([string]$Route) {
@@ -271,7 +281,7 @@ if ($DryRun -or $selectedUrls.Count -eq 0) {
   $payload = [ordered]@{
     ok = ($selectedUrls.Count -gt 0)
     mode = "dry_run"
-    port = $Port
+    ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
     filters = [ordered]@{
       max_pages = $MaxPages
       min_actions = $MinActions
@@ -307,7 +317,8 @@ if ($DryRun -or $selectedUrls.Count -eq 0) {
 
 $learned = @()
 foreach ($page in $selected) {
-  $args = @("-Port", [string]$Port, "-Url", [string]$page.url, "-NoGenerate", "-Json")
+  $args = @(Get-PortArgumentList -Ports $Port)
+  $args += @("-Url", [string]$page.url, "-NoGenerate", "-Json")
   if ($SkipDom) { $args += "-SkipDom" }
   if ($SkipOverlays) { $args += "-SkipOverlays" }
   if ($SkipDialogs) { $args += "-SkipDialogs" }
@@ -366,7 +377,7 @@ $updatedState = Write-LearnState -ExistingState $learnState -LearnedPages $learn
 $payload = [ordered]@{
   ok = ($failed.Count -eq 0)
   mode = "learn_weak_pages"
-  port = $Port
+  ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   filters = [ordered]@{
     max_pages = $MaxPages
     min_actions = $MinActions
