@@ -27,6 +27,103 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | manual_review | 9 |
 | safe_execute_allowed | 374 |
 
+### Locator Strategies
+
+| Locator strategy | Actions |
+| --- | ---: |
+| click_first_matching_row_action_in_table | 2 |
+| click_trigger_selector | 71 |
+| click_trigger_selector_then_dialog_button_text | 26 |
+| click_trigger_selector_then_overlay_item_text | 40 |
+| click_visible_dom_text | 213 |
+| input_or_filter_placeholder | 67 |
+| map_only | 58 |
+| navigate_href | 43 |
+| uia_locator | 9 |
+
+## Audit
+
+- Manual-review actions: 9
+- Map-only actions: 58
+- Empty-locator actions: 0
+
+### Manual Review Actions
+
+| Page | Route | Action | Type | Strategy | Purpose |
+| --- | --- | --- | --- | --- | --- |
+| 收藏夹详情 | `/crm/favorite/detail` | 群发邮件 | button | click_visible_dom_text | Observed 群发邮件 control on 收藏夹详情; exact behavior has not been clicked yet. |
+| 发起 OA 请假 | `/bpm/oa/leave/create` | 请输入原因 | form_input | input_or_filter_placeholder | Fill or choose the 请输入原因 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
+| 发起 OA 请假 | `/bpm/oa/leave/create` | 选择结束时间 | form_input | input_or_filter_placeholder | Fill or choose the 选择结束时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
+| 发起 OA 请假 | `/bpm/oa/leave/create` | 选择开始时间 | form_input | input_or_filter_placeholder | Fill or choose the 选择开始时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
+| 黑名单管理 | `/erp/blacklist` | 自动加黑 | button | click_visible_dom_text | Observed 自动加黑 control on 黑名单管理; exact behavior has not been clicked yet. |
+| SKU最低售价配置 | `/order/sku-min-price` | 新增选择 | dialog_button | click_trigger_selector_then_dialog_button_text | Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置. |
+| 首页 | `/index/home` | 店铺 | overlay_item | click_trigger_selector_then_overlay_item_text | Choose 店铺 from the 请选择 overlay on 首页. |
+| 首页 | `/index/home` | 订单 | overlay_item | click_trigger_selector_then_overlay_item_text | Choose 订单 from the 请选择 overlay on 首页. |
+| 首页 | `/index/home` | 利润 | overlay_item | click_trigger_selector_then_overlay_item_text | Choose 利润 from the 请选择 overlay on 首页. |
+
+### Map-Only Actions
+
+| Page | Route | Action | Type | Safety | Purpose |
+| --- | --- | --- | --- | --- | --- |
+| 广告详情 | `/ad/group-detail` | 日期范围 | date_filter | safe_execute_allowed | Set the ad detail date range or use the visible quick tabs. |
+| 创意详情 | `/ad/originality-detail` | 日期范围 | date_filter | safe_execute_allowed | Set the creative detail date range or use the visible quick tabs. |
+| 店铺广告分析 | `/ad/shop-detail` | 日期范围 | date_filter | safe_execute_allowed | Set the advertising analysis date range or use the visible quick tabs. |
+| 店铺广告分析 | `/ad/shop-detail` | 行分析 | row_navigation | safe_execute_allowed | Open a row-level advertising analysis/detail page for the selected shop or ad entity. |
+| 店铺广告分析 | `/ad/shop-detail` | 平台标签 | tab | safe_execute_allowed | Switch the shop advertising analysis table between platform tabs. |
+| 广告规则执行日志 | `/erp/ads/rule-log` | 日期范围 | date_filter | safe_execute_allowed | Filter rule logs by execution date range. |
+| 售后单管理 | `/bi/afterSalesOrder/index` | 商品售后统计 | tab | safe_execute_allowed | Switch 售后单管理 to the 商品售后统计 tab/view. |
+| 售后单管理 | `/bi/afterSalesOrder/index` | 售后单 | tab | safe_execute_allowed | Switch 售后单管理 to the 售后单 tab/view. |
+| 售后单管理 | `/bi/afterSalesOrder/index` | 售后专项统计 | tab | safe_execute_allowed | Switch 售后单管理 to the 售后专项统计 tab/view. |
+| 售后单管理 | `/bi/afterSalesOrder/index` | 数据概览 | tab | safe_execute_allowed | Switch 售后单管理 to the 数据概览 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 待处理超时 | tab | safe_execute_allowed | Switch 推送监控 to the 待处理超时 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 订单同步 | tab | safe_execute_allowed | Switch 推送监控 to the 订单同步 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 拉单店铺 | tab | safe_execute_allowed | Switch 推送监控 to the 拉单店铺 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 拉单租户 | tab | safe_execute_allowed | Switch 推送监控 to the 拉单租户 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 平台推送 | tab | safe_execute_allowed | Switch 推送监控 to the 平台推送 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 普通队列 | tab | safe_execute_allowed | Switch 推送监控 to the 普通队列 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 入库店铺 | tab | safe_execute_allowed | Switch 推送监控 to the 入库店铺 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 入库租户 | tab | safe_execute_allowed | Switch 推送监控 to the 入库租户 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 同步点落后 | tab | safe_execute_allowed | Switch 推送监控 to the 同步点落后 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 优先队列 | tab | safe_execute_allowed | Switch 推送监控 to the 优先队列 tab/view. |
+| 推送监控 | `/bi/monitor/pushFlowStats` | 执行中超时 | tab | safe_execute_allowed | Switch 推送监控 to the 执行中超时 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSaleOrder/index` | 商品售后统计 | tab | safe_execute_allowed | Switch 售后单管理 to the 商品售后统计 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSaleOrder/index` | 售后单 | tab | safe_execute_allowed | Switch 售后单管理 to the 售后单 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSaleOrder/index` | 售后专项统计 | tab | safe_execute_allowed | Switch 售后单管理 to the 售后专项统计 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSaleOrder/index` | 数据概览 | tab | safe_execute_allowed | Switch 售后单管理 to the 数据概览 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSalesOrder/index` | 商品售后统计 | tab | safe_execute_allowed | Switch 售后单管理 to the 商品售后统计 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSalesOrder/index` | 售后单 | tab | safe_execute_allowed | Switch 售后单管理 to the 售后单 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSalesOrder/index` | 售后专项统计 | tab | safe_execute_allowed | Switch 售后单管理 to the 售后专项统计 tab/view. |
+| 售后单管理 | `/bi/operationCenter/afterSalesOrder/index` | 数据概览 | tab | safe_execute_allowed | Switch 售后单管理 to the 数据概览 tab/view. |
+| 店铺利润分析详情 | `/bi/profit/detail` | 今天 | tab | safe_execute_allowed | Switch 店铺利润分析详情 to the 今天 tab/view. |
+| 店铺利润分析详情 | `/bi/profit/detail` | 近30天 | tab | safe_execute_allowed | Switch 店铺利润分析详情 to the 近30天 tab/view. |
+| 店铺利润分析详情 | `/bi/profit/detail` | 近7天 | tab | safe_execute_allowed | Switch 店铺利润分析详情 to the 近7天 tab/view. |
+| 店铺利润分析详情 | `/bi/profit/detail` | 昨天 | tab | safe_execute_allowed | Switch 店铺利润分析详情 to the 昨天 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail-simple` | 订单列表 | tab | safe_execute_allowed | Switch 合作单详情 to the 订单列表 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail-simple` | 视频链接 | tab | safe_execute_allowed | Switch 合作单详情 to the 视频链接 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail-simple` | 销售数据 | tab | safe_execute_allowed | Switch 合作单详情 to the 销售数据 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail-simple` | 直播链接 | tab | safe_execute_allowed | Switch 合作单详情 to the 直播链接 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail` | 订单列表 | tab | safe_execute_allowed | Switch 合作单详情 to the 订单列表 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail` | 视频链接 | tab | safe_execute_allowed | Switch 合作单详情 to the 视频链接 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail` | 销售数据 | tab | safe_execute_allowed | Switch 合作单详情 to the 销售数据 tab/view. |
+| 合作单详情 | `/crm/cooperation-detail` | 直播链接 | tab | safe_execute_allowed | Switch 合作单详情 to the 直播链接 tab/view. |
+| 达人公海 | `/crm/matser/management/highSeas` | 合作中 | status_tab | safe_execute_allowed | Show creators currently cooperating. |
+| 达人公海 | `/crm/matser/management/highSeas` | 全部 | status_tab | safe_execute_allowed | Show all creators in the high-seas list. |
+| 达人公海 | `/crm/matser/management/highSeas` | 已出单 | status_tab | safe_execute_allowed | Show creators that already generated orders. |
+| 达人公海 | `/crm/matser/management/highSeas` | 已触达 | status_tab | safe_execute_allowed | Show creators already reached/contacted. |
+| 达人公海 | `/crm/matser/management/highSeas` | 已申样 | status_tab | safe_execute_allowed | Show creators already in sample request status. |
+| 店铺详情 | `/crm/shop-detail` | 店铺商品 | tab | safe_execute_allowed | Switch 店铺详情 to the 店铺商品 tab/view. |
+| 店铺详情 | `/crm/shop-detail` | 关联达人 | tab | safe_execute_allowed | Switch 店铺详情 to the 关联达人 tab/view. |
+| 商品评论详情 | `/product-data/detail` | 今天 | tab | safe_execute_allowed | Switch 商品评论详情 to the 今天 tab/view. |
+| 商品评论详情 | `/product-data/detail` | 近30天 | tab | safe_execute_allowed | Switch 商品评论详情 to the 近30天 tab/view. |
+| 商品评论详情 | `/product-data/detail` | 近7天 | tab | safe_execute_allowed | Switch 商品评论详情 to the 近7天 tab/view. |
+| 商品评论详情 | `/product-data/detail` | 昨天 | tab | safe_execute_allowed | Switch 商品评论详情 to the 昨天 tab/view. |
+| 进销存详情 | `/product-sku/InventoryReport_detail` | 近30天 | tab | safe_execute_allowed | Switch 进销存详情 to the 近30天 tab/view. |
+| 进销存详情 | `/product-sku/InventoryReport_detail` | 近7天 | tab | safe_execute_allowed | Switch 进销存详情 to the 近7天 tab/view. |
+| 进销存详情 | `/product-sku/InventoryReport_detail` | 昨天 | tab | safe_execute_allowed | Switch 进销存详情 to the 昨天 tab/view. |
+| 单量套餐 | `/user/package` | 单量套餐 | tab | safe_execute_allowed | Switch 单量套餐 to the 单量套餐 tab/view. |
+| 下载中心 | `/download/list` | 日期范围 | date_filter | safe_execute_allowed | Filter download-center reports by date range. |
+| 下载中心 | `/download/list` | 操作 | row_operation | confirmation_required_export | Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture. |
+
 ## ADS / 广告详情
 
 - Route: `/ad/group-detail`

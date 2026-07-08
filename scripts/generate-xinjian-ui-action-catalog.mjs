@@ -122,6 +122,7 @@ const actionSeen = new Set();
 const sourceStats = [];
 const typeCounts = {};
 const safetyCounts = {};
+const locatorStrategyCounts = {};
 let globalActionCount = 0;
 
 function ensurePage(pageLike, source) {
@@ -156,8 +157,10 @@ function addAction(pageLike, action, source, global = false) {
   if (actionSeen.has(identity)) return;
   actionSeen.add(identity);
   const mode = safetyMode(action);
+  const strategy = locatorStrategy(action);
   typeCounts[clean(action.type) || "unknown"] = (typeCounts[clean(action.type) || "unknown"] || 0) + 1;
   safetyCounts[mode] = (safetyCounts[mode] || 0) + 1;
+  locatorStrategyCounts[strategy] = (locatorStrategyCounts[strategy] || 0) + 1;
   if (global) globalActionCount += 1;
   page.actions.push({
     id: clean(action.id),
@@ -171,7 +174,7 @@ function addAction(pageLike, action, source, global = false) {
     purpose: clean(action.purpose),
     function_source: clean(action.function_source),
     source_map: source.label,
-    locator_strategy: locatorStrategy(action),
+    locator_strategy: strategy,
     locator: action.locator || {}
   });
 }
@@ -212,6 +215,27 @@ const catalogPages = [...pages.values()]
   .sort((a, b) => `${a.module}.${a.route || a.id}.${a.name}`.localeCompare(`${b.module}.${b.route || b.id}.${b.name}`));
 
 const actionCount = catalogPages.reduce((sum, page) => sum + page.actions.length, 0);
+const manualReviewActions = [];
+const mapOnlyActions = [];
+const emptyLocatorActions = [];
+for (const page of catalogPages) {
+  for (const action of page.actions) {
+    const row = {
+      page: page.name,
+      route: page.route,
+      action: action.name,
+      context: action.context,
+      type: action.type,
+      safety_mode: action.safety_mode,
+      locator_strategy: action.locator_strategy,
+      source_map: action.source_map,
+      purpose: action.purpose
+    };
+    if (action.safety_mode === "manual_review") manualReviewActions.push(row);
+    if (action.locator_strategy === "map_only") mapOnlyActions.push(row);
+    if (!action.locator || Object.keys(action.locator).length === 0) emptyLocatorActions.push(row);
+  }
+}
 const payload = {
   version: new Date().toISOString().slice(0, 10),
   system: "xinjian_erp",
@@ -228,7 +252,18 @@ const payload = {
     global_actions: globalActionCount,
     source_stats: sourceStats,
     type_counts: Object.fromEntries(Object.entries(typeCounts).sort()),
-    safety_counts: Object.fromEntries(Object.entries(safetyCounts).sort())
+    safety_counts: Object.fromEntries(Object.entries(safetyCounts).sort()),
+    locator_strategy_counts: Object.fromEntries(Object.entries(locatorStrategyCounts).sort())
+  },
+  audit: {
+    manual_review_actions: manualReviewActions,
+    map_only_actions: mapOnlyActions,
+    empty_locator_actions: emptyLocatorActions,
+    next_improvements: [
+      "Promote map_only tabs/date filters to DOM or overlay locators where possible.",
+      "Manually classify manual_review actions before allowing execution.",
+      "Keep write/export actions confirmation-required even when locators are known."
+    ]
   },
   pages: catalogPages
 };
@@ -265,6 +300,40 @@ function renderMarkdown(catalog) {
     lines.push(`| ${mdEscape(mode)} | ${count} |`);
   }
   lines.push("");
+  lines.push("### Locator Strategies");
+  lines.push("");
+  lines.push("| Locator strategy | Actions |");
+  lines.push("| --- | ---: |");
+  for (const [strategy, count] of Object.entries(catalog.totals.locator_strategy_counts)) {
+    lines.push(`| ${mdEscape(strategy)} | ${count} |`);
+  }
+  lines.push("");
+  lines.push("## Audit");
+  lines.push("");
+  lines.push(`- Manual-review actions: ${catalog.audit.manual_review_actions.length}`);
+  lines.push(`- Map-only actions: ${catalog.audit.map_only_actions.length}`);
+  lines.push(`- Empty-locator actions: ${catalog.audit.empty_locator_actions.length}`);
+  lines.push("");
+  if (catalog.audit.manual_review_actions.length) {
+    lines.push("### Manual Review Actions");
+    lines.push("");
+    lines.push("| Page | Route | Action | Type | Strategy | Purpose |");
+    lines.push("| --- | --- | --- | --- | --- | --- |");
+    for (const action of catalog.audit.manual_review_actions) {
+      lines.push(`| ${mdEscape(action.page)} | \`${mdEscape(action.route)}\` | ${mdEscape(action.action)} | ${mdEscape(action.type)} | ${mdEscape(action.locator_strategy)} | ${mdEscape(action.purpose)} |`);
+    }
+    lines.push("");
+  }
+  if (catalog.audit.map_only_actions.length) {
+    lines.push("### Map-Only Actions");
+    lines.push("");
+    lines.push("| Page | Route | Action | Type | Safety | Purpose |");
+    lines.push("| --- | --- | --- | --- | --- | --- |");
+    for (const action of catalog.audit.map_only_actions) {
+      lines.push(`| ${mdEscape(action.page)} | \`${mdEscape(action.route)}\` | ${mdEscape(action.action)} | ${mdEscape(action.type)} | ${mdEscape(action.safety_mode)} | ${mdEscape(action.purpose)} |`);
+    }
+    lines.push("");
+  }
   for (const page of catalog.pages) {
     lines.push(`## ${page.module} / ${page.name}`);
     lines.push("");
@@ -296,5 +365,11 @@ process.stdout.write(JSON.stringify({
   pages: payload.totals.pages,
   actions: payload.totals.actions,
   source_stats: payload.totals.source_stats,
-  safety_counts: payload.totals.safety_counts
+  safety_counts: payload.totals.safety_counts,
+  locator_strategy_counts: payload.totals.locator_strategy_counts,
+  audit: {
+    manual_review_actions: payload.audit.manual_review_actions.length,
+    map_only_actions: payload.audit.map_only_actions.length,
+    empty_locator_actions: payload.audit.empty_locator_actions.length
+  }
 }, null, 2));

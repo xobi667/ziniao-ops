@@ -36,7 +36,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\quer
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-action-catalog.ps1") -Json
 ```
 
-The generated `references/xinjian-ui-action-catalog.md` is a human-readable page/action table. The JSON version includes action context, safety mode, source map, locator strategy, and raw locator.
+The generated `references/xinjian-ui-action-catalog.md` is a human-readable page/action table. The JSON version includes action context, safety mode, source map, locator strategy, raw locator, and an audit section for `manual_review`, `map_only`, and empty-locator actions.
 
 4. For RPA-style routing, convert the mapped intent into a dry-run action plan before clicking:
 
