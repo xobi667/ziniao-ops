@@ -364,7 +364,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-weak-pages.ps1") -DryRun -Json
 ```
 
-Use `learn-xinjian-weak-pages.ps1` to automatically select and learn a bounded batch of high-risk pages from the audit report. Keep `-DryRun` for planning, then rerun without it when the selected pages are acceptable.
+Use `learn-xinjian-weak-pages.ps1` to automatically select and learn a bounded batch of high-risk pages from the audit report. It records local attempt state under `.ziniao-ops\xinjian-weak-page-learn-state.json` and skips recently attempted pages by default so learning keeps moving forward; pass `-RetryAttempted` to revisit them. Keep `-DryRun` for planning, then rerun without it when the selected pages are acceptable.
 
 If the current page is missing from memory or looks weakly mapped, learn it in one safe pass before guessing. This captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels/operation-column action words, then regenerates the public maps and unified action catalog. The learner validates that every capture's `matched_page.url` route matches the target route; if a capture lands on a different page, generation is skipped so wrong-page controls are not promoted:
 

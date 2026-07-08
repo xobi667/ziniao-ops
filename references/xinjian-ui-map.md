@@ -39,7 +39,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-weak-pages.ps1") -DryRun -Json
 ```
 
-`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. `learn-xinjian-weak-pages.ps1` uses that report to select the highest-risk learnable pages and run the safe current-page learner in a bounded batch. Use `-DryRun` first, then rerun without `-DryRun` for the selected batch.
+`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. `learn-xinjian-weak-pages.ps1` uses that report to select the highest-risk learnable pages and run the safe current-page learner in a bounded batch. It records local attempt state under `.ziniao-ops\xinjian-weak-page-learn-state.json` and skips recently attempted pages by default so learning keeps moving forward; pass `-RetryAttempted` to revisit them. Use `-DryRun` first, then rerun without `-DryRun` for the selected batch.
 
 If the current page is missing, weakly mapped, or newly changed, learn it in one safe pass:
 

@@ -5,7 +5,10 @@ param(
   [int]$MinActions = 5,
   [int]$MinRiskScore = 1,
   [string[]]$IncludeGap = @(),
+  [string]$StatePath = "",
+  [int]$RetryAfterHours = 168,
   [switch]$IncludeRestricted,
+  [switch]$RetryAttempted,
   [switch]$SkipDom,
   [switch]$SkipOverlays,
   [switch]$SkipDialogs,
@@ -17,6 +20,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+if (!$StatePath) {
+  $StatePath = Join-Path $root ".ziniao-ops\xinjian-weak-page-learn-state.json"
+}
 
 function ConvertFrom-JsonText($Lines) {
   $text = (($Lines | Out-String).Trim())
@@ -118,6 +124,89 @@ function New-ReportSummary($Report) {
   }
 }
 
+function Read-LearnState {
+  if (!(Test-Path -LiteralPath $StatePath)) {
+    return [pscustomobject]@{ version = "2026-07-08"; attempts = @() }
+  }
+  try {
+    $state = Get-Content -LiteralPath $StatePath -Raw -Encoding UTF8 | ConvertFrom-Json
+    if (!$state.PSObject.Properties.Match("attempts").Count) {
+      $state | Add-Member -MemberType NoteProperty -Name attempts -Value @()
+    }
+    return $state
+  } catch {
+    return [pscustomobject]@{ version = "2026-07-08"; attempts = @(); read_error = $_.Exception.Message }
+  }
+}
+
+function New-AttemptMap($State) {
+  $map = @{}
+  foreach ($attempt in @($State.attempts)) {
+    $key = [string]$attempt.route_key
+    if (!$key) { $key = Get-RouteKey ([string]$attempt.route) }
+    if ($key) { $map[$key] = $attempt }
+  }
+  return $map
+}
+
+function Test-RecentAttempt($Attempt) {
+  if (!$Attempt -or $RetryAttempted -or $RetryAfterHours -le 0) { return $false }
+  try {
+    $last = ([datetime]::Parse([string]$Attempt.last_attempted_at)).ToUniversalTime()
+    $ageHours = ((Get-Date).ToUniversalTime() - $last).TotalHours
+    return $ageHours -lt $RetryAfterHours
+  } catch {
+    return $false
+  }
+}
+
+function Write-LearnState {
+  param(
+    [object]$ExistingState,
+    [object[]]$LearnedPages,
+    [string]$GenerateSkippedReason,
+    [object]$BeforeReport,
+    [object]$AfterReport
+  )
+  $attempts = New-AttemptMap $ExistingState
+  $now = (Get-Date).ToUniversalTime().ToString("o")
+  $beforeActions = if ($BeforeReport) { [int]$BeforeReport.totals.actions } else { $null }
+  $afterActions = if ($AfterReport) { [int]$AfterReport.totals.actions } else { $null }
+  $batchDelta = if ($BeforeReport -and $AfterReport) { $afterActions - $beforeActions } else { $null }
+
+  foreach ($item in @($LearnedPages)) {
+    $routeKey = Get-RouteKey ([string]$item.route)
+    if (!$routeKey) { $routeKey = Get-RouteKey ([string]$item.url) }
+    if (!$routeKey) { continue }
+    $attempts[$routeKey] = [pscustomobject]([ordered]@{
+        route_key = $routeKey
+        route = [string]$item.route
+        url = [string]$item.url
+        name = [string]$item.name
+        risk_score = [int]$item.risk_score
+        last_attempted_at = $now
+        ok = [bool]$item.ok
+        error = [string]$item.error
+        exit_code = [int]$item.exit_code
+        capture_count = @($item.captures).Count
+        failed_capture_count = @($item.captures | Where-Object { !$_.ok }).Count
+        generate_skipped_reason = $GenerateSkippedReason
+        batch_delta_actions = $batchDelta
+      })
+  }
+
+  $payload = [ordered]@{
+    version = "2026-07-08"
+    updated_at = $now
+    retry_after_hours = $RetryAfterHours
+    attempts = @($attempts.Values | Sort-Object route_key)
+  }
+  $dir = Split-Path -Parent $StatePath
+  if ($dir) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
+  $payload | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $StatePath -Encoding UTF8
+  return $payload
+}
+
 $reportResult = Invoke-JsonScript -ScriptName "report-xinjian-action-memory.ps1" -Arguments @(
   "-MinActions", [string]$MinActions,
   "-MaxWeakPages", "0",
@@ -136,8 +225,11 @@ if (!$reportResult.ok -or !$reportResult.parsed) {
 }
 
 $beforeReport = $reportResult.parsed
+$learnState = Read-LearnState
+$attemptByRoute = New-AttemptMap $learnState
 $seen = @{}
 $selected = @()
+$skippedAttempted = @()
 foreach ($page in @($beforeReport.weak_pages)) {
   if ([int]$page.risk_score -lt $MinRiskScore) { continue }
   if (!(Test-IncludeGaps $page)) { continue }
@@ -146,6 +238,20 @@ foreach ($page in @($beforeReport.weak_pages)) {
   if (!$url) { continue }
   $key = Get-RouteKey $url
   if ($seen.ContainsKey($key)) { continue }
+  $previousAttempt = $attemptByRoute[$key]
+  if (Test-RecentAttempt $previousAttempt) {
+    $skippedAttempted += [pscustomobject]([ordered]@{
+        risk_score = [int]$page.risk_score
+        module = [string]$page.module
+        name = [string]$page.name
+        route = [string]$page.route
+        url = $url
+        last_attempted_at = [string]$previousAttempt.last_attempted_at
+        previous_ok = [bool]$previousAttempt.ok
+        previous_error = [string]$previousAttempt.error
+      })
+    continue
+  }
   $seen[$key] = $true
   $selected += [pscustomobject]([ordered]@{
       risk_score = [int]$page.risk_score
@@ -172,10 +278,18 @@ if ($DryRun -or $selectedUrls.Count -eq 0) {
       min_risk_score = $MinRiskScore
       include_gap = @($IncludeGap)
       include_restricted = [bool]$IncludeRestricted
+      retry_attempted = [bool]$RetryAttempted
+      retry_after_hours = $RetryAfterHours
+    }
+    attempt_state = [ordered]@{
+      path = $StatePath
+      attempts = @($attemptByRoute.Keys).Count
+      skipped_recent_count = @($skippedAttempted).Count
     }
     before_report = New-ReportSummary $beforeReport
     selected_pages_count = $selectedUrls.Count
     selected_pages = $selected
+    skipped_recent_pages = $skippedAttempted
     planned_command = if ($selectedUrls.Count -gt 0) {
       "powershell -ExecutionPolicy Bypass -File (Join-Path `$ZiniaoOpsHome `"scripts\learn-xinjian-weak-pages.ps1`") -MaxPages $MaxPages -Json"
     } else {
@@ -247,6 +361,8 @@ if ($failed.Count -eq 0 -and !$NoGenerate) {
   if ($afterReportResult.ok) { $afterReport = $afterReportResult.parsed }
 }
 
+$updatedState = Write-LearnState -ExistingState $learnState -LearnedPages $learned -GenerateSkippedReason $generateSkippedReason -BeforeReport $beforeReport -AfterReport $afterReport
+
 $payload = [ordered]@{
   ok = ($failed.Count -eq 0)
   mode = "learn_weak_pages"
@@ -257,9 +373,17 @@ $payload = [ordered]@{
     min_risk_score = $MinRiskScore
     include_gap = @($IncludeGap)
     include_restricted = [bool]$IncludeRestricted
+    retry_attempted = [bool]$RetryAttempted
+    retry_after_hours = $RetryAfterHours
+  }
+  attempt_state = [ordered]@{
+    path = $StatePath
+    attempts = @($updatedState.attempts).Count
+    skipped_recent_count = @($skippedAttempted).Count
   }
   selected_pages_count = $selectedUrls.Count
   selected_pages = $selected
+  skipped_recent_pages = $skippedAttempted
   before_report = New-ReportSummary $beforeReport
   after_report = New-ReportSummary $afterReport
   learn = [ordered]@{
