@@ -31,6 +31,51 @@ function Test-DevToolsPort {
   }
 }
 
+function Get-DevToolsPages {
+  param([int]$Port)
+  try {
+    $pages = Invoke-RestMethod -Uri "http://127.0.0.1:$Port/json/list" -TimeoutSec 2
+    return @($pages | Where-Object { $_.type -eq "page" -and $_.url })
+  } catch {
+    return @()
+  }
+}
+
+function Normalize-UrlPath {
+  param([string]$Path)
+  $value = [string]$Path
+  if (!$value.StartsWith("/")) { $value = "/$value" }
+  $value = $value -replace "/+", "/"
+  if ($value.Length -gt 1) { $value = $value.TrimEnd("/") }
+  return $value
+}
+
+function Test-TargetPageMatch {
+  param(
+    [object]$Page,
+    [string]$TargetUrl
+  )
+  if (!$Page -or !$Page.url) { return $false }
+  try {
+    $pageUri = [uri]([string]$Page.url)
+    $targetUri = [uri]$TargetUrl
+  } catch {
+    return $false
+  }
+  if ($pageUri.Host -ne $targetUri.Host) { return $false }
+
+  $pagePath = Normalize-UrlPath -Path $pageUri.AbsolutePath
+  $targetPath = Normalize-UrlPath -Path $targetUri.AbsolutePath
+  if ($pagePath -eq $targetPath) { return $true }
+  if ($pagePath -eq "/login") {
+    $decodedQuery = [uri]::UnescapeDataString($pageUri.Query)
+    if ($decodedQuery -like "*redirect=$targetPath*") { return $true }
+  }
+
+  # Any page on the same Xinjian host is a usable manual-login handoff target.
+  return $true
+}
+
 if (!$UserDataDir) {
   $UserDataDir = Join-Path ([System.IO.Path]::GetTempPath()) "codex-xinjian-browser-profile-$Port"
 }
@@ -42,12 +87,18 @@ if (!$browser) {
 }
 
 $alreadyRunning = Test-DevToolsPort -Port $Port
+$reusedPage = $null
+$openedNewTab = $false
 if ($alreadyRunning) {
-  try {
-    $encoded = [uri]::EscapeDataString($Url)
-    Invoke-RestMethod -Method Put -Uri "http://127.0.0.1:$Port/json/new?$encoded" -TimeoutSec 3 | Out-Null
-  } catch {
-    # The existing debug browser is still usable; the user can navigate manually if new-tab fails.
+  $reusedPage = Get-DevToolsPages -Port $Port | Where-Object { Test-TargetPageMatch -Page $_ -TargetUrl $Url } | Select-Object -First 1
+  if (!$reusedPage) {
+    try {
+      $encoded = [uri]::EscapeDataString($Url)
+      $reusedPage = Invoke-RestMethod -Method Put -Uri "http://127.0.0.1:$Port/json/new?$encoded" -TimeoutSec 3
+      $openedNewTab = $true
+    } catch {
+      # The existing debug browser is still usable; the user can navigate manually if new-tab fails.
+    }
   }
 } else {
   $args = @(
@@ -62,6 +113,8 @@ if ($alreadyRunning) {
   $windowStyle = if ($NormalWindow) { "Normal" } else { "Minimized" }
   Start-Process -FilePath $browser -ArgumentList $args -WindowStyle $windowStyle | Out-Null
   Start-Sleep -Seconds 2
+  $openedNewTab = $true
+  $reusedPage = Get-DevToolsPages -Port $Port | Where-Object { Test-TargetPageMatch -Page $_ -TargetUrl $Url } | Select-Object -First 1
 }
 
 $portReady = Test-DevToolsPort -Port $Port
@@ -72,6 +125,11 @@ $result = [ordered]@{
   url = $Url
   user_data_dir = $UserDataDir
   window = if ($NormalWindow) { "normal" } else { "minimized" }
+  reused_existing_page = [bool]($alreadyRunning -and $reusedPage -and !$openedNewTab)
+  opened_new_tab = [bool]$openedNewTab
+  matched_page_url = if ($reusedPage) { [string]$reusedPage.url } else { "" }
+  matched_page_title = if ($reusedPage) { [string]$reusedPage.title } else { "" }
+  matched_page_id = if ($reusedPage) { [string]$reusedPage.id } else { "" }
   next_action = if ($portReady) { "manual_login_then_fetch" } else { "browser_started_but_devtools_not_ready" }
   fetch_command = "powershell -ExecutionPolicy Bypass -File scripts\fetch-xinjian-browser-data.ps1 -Port $Port -StoreName `"<店铺A>,<店铺B>`" -Days 7 -Json"
 }

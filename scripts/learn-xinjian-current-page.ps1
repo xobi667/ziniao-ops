@@ -303,6 +303,28 @@ if (!$Url -and !$GenerateOnly) {
   exit 1
 }
 
+$before = Get-CatalogSummary
+
+if (!$GenerateOnly -and (Test-XinjianLoginOrRestrictedUrl $Url)) {
+  $route = Get-RouteKey $Url
+  $nextAction = if ($route -match "^/(login|xtlogin|sso|social-login|redirect)(/|$)") {
+    "manual_login_required_in_debuggable_xinjian_browser"
+  } else {
+    "open_valid_xinjian_business_page"
+  }
+  $payload = [ordered]@{
+    ok = $false
+    mode = "non_business_xinjian_page"
+    requested_url = $requestedUrl
+    url = $Url
+    url_resolution = $urlResolution
+    before_catalog = $before
+    next_action = $nextAction
+  }
+  if ($Json) { $payload | ConvertTo-Json -Depth 12 } else { Write-Host ("Current Xinjian page is not learnable: {0}" -f $Url) }
+  exit 1
+}
+
 $capturePortResolution = $null
 $capturePort = $null
 if (!$GenerateOnly) {
@@ -311,8 +333,6 @@ if (!$GenerateOnly) {
     $capturePort = [int]$capturePortResolution.port
   }
 }
-
-$before = Get-CatalogSummary
 
 if (!$GenerateOnly -and !$DryRun -and !$capturePort) {
   $payload = [ordered]@{

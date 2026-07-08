@@ -36,6 +36,8 @@ If the user explicitly asks to solve login and the in-app browser is unavailable
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\open-xinjian-login.ps1") -Json
 ```
 
+If the requested DevTools port is already reachable, `open-xinjian-login.ps1` first reuses an existing 心舰 tab on that port instead of opening a duplicate tab. Its JSON output reports `reused_existing_page`, `opened_new_tab`, `matched_page_url`, `matched_page_title`, and `matched_page_id` so Codex can tell whether it reused or opened a page.
+
 After the user confirms login is complete in that browser window, fetch the hourly endpoint through the logged-in page context and run the Excel analyzer:
 
 ```powershell
