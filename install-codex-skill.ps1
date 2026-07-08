@@ -95,6 +95,24 @@ function Install-SkillTarget {
   }
 }
 
+function Install-SkillReferences {
+  $referenceSource = Join-Path $packageRoot "references"
+  if (!(Test-Path -LiteralPath $referenceSource -PathType Container)) { return "missing" }
+
+  $referenceTarget = Join-Path $target "references"
+  if (Test-Path -LiteralPath $referenceTarget) {
+    $resolvedTarget = (Resolve-Path -LiteralPath $target).Path
+    $resolvedReferenceTarget = (Resolve-Path -LiteralPath $referenceTarget).Path
+    if (!$resolvedReferenceTarget.StartsWith($resolvedTarget, [System.StringComparison]::OrdinalIgnoreCase)) {
+      throw "Refusing to remove unexpected references target outside installed skill: $resolvedReferenceTarget"
+    }
+    Remove-Item -LiteralPath $resolvedReferenceTarget -Recurse -Force
+  }
+
+  Copy-Item -LiteralPath $referenceSource -Destination $referenceTarget -Recurse
+  return "copy"
+}
+
 function Find-ZiniaoExe {
   if (!(Test-IsWindows)) { return "" }
   $candidates = New-Object System.Collections.Generic.List[string]
@@ -163,11 +181,13 @@ if (Test-Path $target) {
 }
 
 $installMode = Install-SkillTarget
+$referenceInstallMode = Install-SkillReferences
 $config = [ordered]@{
   package_root = $packageRoot
   installed_at = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
   skill_name = $skillName
   install_mode = $installMode
+  references_install_mode = $referenceInstallMode
   previous_names = $legacySkillNames
 }
 $config | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $configPath -Encoding UTF8
@@ -204,6 +224,7 @@ if (!(Test-Path -LiteralPath $shopsPath)) {
 }
 
 Write-Host "Installed Codex skill: $target"
+Write-Host "Installed skill references: $referenceInstallMode"
 Write-Host "Wrote package config: $configPath"
 Write-Host "Package root: $packageRoot"
 Write-Host "Restart Codex and ask: 打开 <店铺关键词> 操作一下 / 全部数据 / 订单数据 / 广告数据"
