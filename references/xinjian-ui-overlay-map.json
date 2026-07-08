@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T14:16:06.534Z",
+  "generated_at": "2026-07-08T14:29:59.608Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -78,7 +78,7 @@
             "item_count": 7,
             "filtered_item_count": 23,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "请选择",
@@ -120,7 +120,7 @@
             "item_count": 2,
             "filtered_item_count": 7,
             "items": [],
-            "occurrence_count": 3
+            "occurrence_count": 4
           },
           {
             "trigger": "选择批量操作",
@@ -128,7 +128,7 @@
             "item_count": 2,
             "filtered_item_count": 7,
             "items": [],
-            "occurrence_count": 3
+            "occurrence_count": 4
           },
           {
             "trigger": "开始日期",
@@ -136,7 +136,7 @@
             "item_count": 0,
             "filtered_item_count": 0,
             "items": [],
-            "occurrence_count": 2
+            "occurrence_count": 3
           }
         ]
       },
@@ -1444,7 +1444,7 @@
             "item_count": 4,
             "filtered_item_count": 61,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "达人标签",
@@ -1452,7 +1452,7 @@
             "item_count": 4,
             "filtered_item_count": 61,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "品类",
@@ -1460,7 +1460,7 @@
             "item_count": 4,
             "filtered_item_count": 49,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "请选择",
@@ -1468,7 +1468,7 @@
             "item_count": 2,
             "filtered_item_count": 56,
             "items": [],
-            "occurrence_count": 4
+            "occurrence_count": 5
           },
           {
             "trigger": "开始日期",
@@ -1476,7 +1476,7 @@
             "item_count": 0,
             "filtered_item_count": 20,
             "items": [],
-            "occurrence_count": 3
+            "occurrence_count": 4
           },
           {
             "trigger": "开始日期",
@@ -1827,7 +1827,7 @@
             "item_count": 4,
             "filtered_item_count": 77,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "品类",
@@ -1835,7 +1835,7 @@
             "item_count": 4,
             "filtered_item_count": 77,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "全部商务",
@@ -1843,7 +1843,7 @@
             "item_count": 4,
             "filtered_item_count": 77,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "请选择",
@@ -1851,7 +1851,7 @@
             "item_count": 0,
             "filtered_item_count": 74,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "年龄分布",
@@ -1859,7 +1859,7 @@
             "item_count": 4,
             "filtered_item_count": 72,
             "items": [],
-            "occurrence_count": 5
+            "occurrence_count": 6
           },
           {
             "trigger": "选择标签",
@@ -1867,7 +1867,7 @@
             "item_count": 4,
             "filtered_item_count": 72,
             "items": [],
-            "occurrence_count": 6
+            "occurrence_count": 7
           },
           {
             "trigger": "批量操作",
@@ -1886,7 +1886,7 @@
             "item_count": 0,
             "filtered_item_count": 72,
             "items": [],
-            "occurrence_count": 3
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
@@ -2114,7 +2114,7 @@
             "item_count": 2,
             "filtered_item_count": 7,
             "items": [],
-            "occurrence_count": 4
+            "occurrence_count": 5
           },
           {
             "trigger": "全部商务",
@@ -2122,7 +2122,7 @@
             "item_count": 6,
             "filtered_item_count": 78,
             "items": [],
-            "occurrence_count": 4
+            "occurrence_count": 5
           },
           {
             "trigger": "请选择",
@@ -2130,7 +2130,7 @@
             "item_count": 2,
             "filtered_item_count": 71,
             "items": [],
-            "occurrence_count": 3
+            "occurrence_count": 4
           },
           {
             "trigger": "选择标签",
@@ -2138,7 +2138,7 @@
             "item_count": 6,
             "filtered_item_count": 58,
             "items": [],
-            "occurrence_count": 4
+            "occurrence_count": 5
           },
           {
             "trigger": "品类",
@@ -2146,7 +2146,7 @@
             "item_count": 6,
             "filtered_item_count": 58,
             "items": [],
-            "occurrence_count": 4
+            "occurrence_count": 5
           },
           {
             "trigger": "年龄分布",
@@ -2154,7 +2154,7 @@
             "item_count": 6,
             "filtered_item_count": 28,
             "items": [],
-            "occurrence_count": 4
+            "occurrence_count": 5
           },
           {
             "trigger": "开始日期",
@@ -2162,7 +2162,7 @@
             "item_count": 0,
             "filtered_item_count": 57,
             "items": [],
-            "occurrence_count": 3
+            "occurrence_count": 4
           },
           {
             "trigger": "请选择",
@@ -4012,7 +4012,7 @@
             "item_count": 2,
             "filtered_item_count": 18,
             "items": [],
-            "occurrence_count": 12
+            "occurrence_count": 13
           },
           {
             "trigger": "请选择",
@@ -4032,7 +4032,7 @@
             "item_count": 5,
             "filtered_item_count": 25,
             "items": [],
-            "occurrence_count": 12
+            "occurrence_count": 13
           },
           {
             "trigger": "请选择",
@@ -4119,7 +4119,7 @@
             "item_count": 0,
             "filtered_item_count": 0,
             "items": [],
-            "occurrence_count": 2
+            "occurrence_count": 3
           }
         ]
       },

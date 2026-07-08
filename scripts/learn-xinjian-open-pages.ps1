@@ -156,6 +156,14 @@ if ($DryRun) {
     port = $Port
     pages = @($dedupedPages)
     pages_count = $dedupedPages.Count
+    planned_pages = @($dedupedPages | ForEach-Object {
+        [ordered]@{
+          url = [string]$_.url
+          title = [string]$_.title
+          source = [string]$_.source
+          route = Get-RouteKey ([string]$_.url)
+        }
+      })
     before_catalog = $before
     per_page_steps = $capturePlan
     final_generate = !$NoGenerate
@@ -224,11 +232,26 @@ if ($NoGenerate) {
 $after = Get-CatalogSummary
 $failed = @($learned | Where-Object { !$_.ok })
 if ($generateResult -and !$generateResult.ok) { $failed += [ordered]@{ ok = $false; url = ""; title = "generate"; error = "generate_failed"; exit_code = $generateResult.exit_code } }
+$successful = @($learned | Where-Object { $_.ok })
 $payload = [ordered]@{
   ok = ($failed.Count -eq 0)
   mode = "learn_open_pages"
   port = $Port
   pages_count = $dedupedPages.Count
+  success_count = $successful.Count
+  failed_count = $failed.Count
+  learned_pages = @($learned | ForEach-Object {
+      [ordered]@{
+        ok = [bool]$_.ok
+        url = [string]$_.url
+        title = [string]$_.title
+        source = [string]$_.source
+        route = Get-RouteKey ([string]$_.url)
+        exit_code = [int]$_.exit_code
+        capture_steps = @($_.captures).Count
+        error = [string]$_.error
+      }
+    })
   before_catalog = $before
   after_catalog = $after
   delta = [ordered]@{
