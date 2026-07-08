@@ -6,8 +6,10 @@ param(
   [string]$MapPath = "",
   [string]$AutoMapPath = "",
   [string]$OverlayMapPath = "",
+  [string]$DialogMapPath = "",
   [switch]$NoAutoMap,
   [switch]$NoOverlayMap,
+  [switch]$NoDialogMap,
   [switch]$Json
 )
 
@@ -21,6 +23,9 @@ if (!$AutoMapPath) {
 }
 if (!$OverlayMapPath) {
   $OverlayMapPath = Join-Path $root "references\xinjian-ui-overlay-map.json"
+}
+if (!$DialogMapPath) {
+  $DialogMapPath = Join-Path $root "references\xinjian-ui-dialog-map.json"
 }
 if (!(Test-Path -LiteralPath $MapPath)) {
   $payload = [ordered]@{
@@ -132,6 +137,35 @@ function Get-ActionScore($Action, [string]$Query) {
   if ($Action.PSObject.Properties.Match("safety").Count -gt 0 -and $Action.safety -eq "read_filter" -and $hasReadIntentWord) {
     $score += 15
   }
+  if ($Action.PSObject.Properties.Match("type").Count -gt 0 -and ($Action.type -eq "dialog_button" -or $Action.type -eq "dialog_opener")) {
+    $dialogButtonWords = @(
+      (New-UnicodeText @(0x786E, 0x5B9A)),
+      (New-UnicodeText @(0x53D6, 0x6D88)),
+      (New-UnicodeText @(0x4FDD, 0x5B58)),
+      (New-UnicodeText @(0x63D0, 0x4EA4)),
+      (New-UnicodeText @(0x5173, 0x95ED))
+    )
+    $hasDialogButtonIntent = $false
+    foreach ($word in $dialogButtonWords) {
+      if ($queryCompact.Contains($word)) {
+        $hasDialogButtonIntent = $true
+        break
+      }
+    }
+    if ($Action.type -eq "dialog_button") {
+      $buttonText = ""
+      if ($Action.PSObject.Properties.Match("locator").Count -gt 0 -and $Action.locator -and $Action.locator.PSObject.Properties.Match("button_text").Count -gt 0) {
+        $buttonText = Compact-Text ([string]$Action.locator.button_text)
+      }
+      if ($buttonText -and $queryCompact.Contains($buttonText)) {
+        $score += 140
+      } elseif ($hasDialogButtonIntent) {
+        $score += 40
+      }
+    } elseif ($Action.type -eq "dialog_opener" -and $hasDialogButtonIntent) {
+      $score -= 120
+    }
+  }
   return $score
 }
 
@@ -150,6 +184,14 @@ if (!$NoOverlayMap -and (Test-Path -LiteralPath $OverlayMapPath)) {
     $overlayMap = Get-Content -LiteralPath $OverlayMapPath -Raw -Encoding UTF8 | ConvertFrom-Json
   } catch {
     $overlayMap = $null
+  }
+}
+$dialogMap = $null
+if (!$NoDialogMap -and (Test-Path -LiteralPath $DialogMapPath)) {
+  try {
+    $dialogMap = Get-Content -LiteralPath $DialogMapPath -Raw -Encoding UTF8 | ConvertFrom-Json
+  } catch {
+    $dialogMap = $null
   }
 }
 $allPages = @($map.pages)
@@ -181,12 +223,20 @@ if ($overlayMap -and $overlayMap.pages) {
     $allPages += $page
   }
 }
+if ($dialogMap -and $dialogMap.pages) {
+  foreach ($page in @($dialogMap.pages)) {
+    $allPages += $page
+  }
+}
 $allGlobalActions = @($map.global_actions)
 if ($autoMap -and $autoMap.global_actions) {
   $allGlobalActions += @($autoMap.global_actions)
 }
 if ($overlayMap -and $overlayMap.global_actions) {
   $allGlobalActions += @($overlayMap.global_actions)
+}
+if ($dialogMap -and $dialogMap.global_actions) {
+  $allGlobalActions += @($dialogMap.global_actions)
 }
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
@@ -252,6 +302,8 @@ $candidates = @($candidates |
     if ($action.type -eq "button" -or $action.type -eq "batch_action") { $rank += 10 }
     if ($action.type -eq "overlay_item") { $rank += 12 }
     if ($action.type -eq "overlay_trigger") { $rank -= 5 }
+    if ($action.type -eq "dialog_button") { $rank += 14 }
+    if ($action.type -eq "dialog_opener") { $rank += 4 }
     if ($action.safety -eq "read_filter") { $rank += 8 }
     if ([string]$action.safety -like "confirmation_required*") { $rank += 6 }
     if ($triggerText -eq $genericChooseText) { $rank -= 8 }
@@ -269,6 +321,7 @@ $payload = [ordered]@{
   map_version = $map.version
   auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
   overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
+  dialog_map_version = if ($dialogMap) { $dialogMap.version } else { $null }
   map_pages_total = $allPages.Count
   matched_pages = @($matchedPages | Sort-Object score -Descending | Select-Object -First 5 | ForEach-Object {
       [ordered]@{ id = $_.page.id; name = $_.page.name; score = $_.score }

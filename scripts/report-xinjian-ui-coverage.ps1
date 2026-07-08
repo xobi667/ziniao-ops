@@ -6,7 +6,9 @@ param(
   [string]$CuratedMapPath = "",
   [string]$AutoMapPath = "",
   [string]$OverlayMapPath = "",
+  [string]$DialogMapPath = "",
   [string]$OverlayStatePath = "",
+  [string]$DialogStatePath = "",
   [string]$IncludeRegex = ".",
   [string]$ExcludeRegex = "^/$|/login|/xtLogin|/sso|/social-login|/404|/401|/redirect|/print|/index/noaccess|/index/ad-no-auth|/setArea",
   [int]$MaxPending = 50,
@@ -20,8 +22,10 @@ $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 if (!$CuratedMapPath) { $CuratedMapPath = Join-Path $root "references\xinjian-ui-map.json" }
 if (!$AutoMapPath) { $AutoMapPath = Join-Path $root "references\xinjian-ui-auto-map.json" }
 if (!$OverlayMapPath) { $OverlayMapPath = Join-Path $root "references\xinjian-ui-overlay-map.json" }
+if (!$DialogMapPath) { $DialogMapPath = Join-Path $root "references\xinjian-ui-dialog-map.json" }
 if (!$StatePath) { $StatePath = Join-Path $root ".ziniao-ops\xinjian-crawl-state.json" }
 if (!$OverlayStatePath) { $OverlayStatePath = Join-Path $root ".ziniao-ops\xinjian-overlay-crawl-state.json" }
+if (!$DialogStatePath) { $DialogStatePath = Join-Path $root ".ziniao-ops\xinjian-dialog-crawl-state.json" }
 
 function Get-RouteKey([string]$InputPath) {
   if (!$InputPath) { return "" }
@@ -86,8 +90,10 @@ if (!$routeMap) {
 $curated = Read-JsonFile $CuratedMapPath
 $auto = Read-JsonFile $AutoMapPath
 $overlay = Read-JsonFile $OverlayMapPath
+$dialog = Read-JsonFile $DialogMapPath
 $state = Read-JsonFile $StatePath
 $overlayState = Read-JsonFile $OverlayStatePath
+$dialogState = Read-JsonFile $DialogStatePath
 
 $mapped = @{}
 foreach ($source in @(
@@ -131,6 +137,23 @@ $overlayAttempted = @{}
 foreach ($attempt in @($overlayState.attempts)) {
   if (!$attempt.route_key) { continue }
   $overlayAttempted[[string]$attempt.route_key] = $attempt
+}
+
+$dialogMapped = @{}
+$dialogActionCount = 0
+foreach ($page in @($dialog.pages)) {
+  $dialogActionCount += @($page.actions).Count
+  foreach ($needle in @($page.url_contains)) {
+    if (!$needle) { continue }
+    $key = Get-RouteKey $needle
+    if ($key) { $dialogMapped[$key] = $page }
+  }
+}
+
+$dialogAttempted = @{}
+foreach ($attempt in @($dialogState.attempts)) {
+  if (!$attempt.route_key) { continue }
+  $dialogAttempted[[string]$attempt.route_key] = $attempt
 }
 
 $routes = @()
@@ -185,11 +208,18 @@ foreach ($entry in $mapped.GetEnumerator()) {
     overlay_mapped = [bool]$overlayMapped[$key]
     overlay_attempted = [bool]$overlayAttempted[$key]
     overlay_attempt_status = if ($overlayAttempted[$key]) { $overlayAttempted[$key].status } else { $null }
+    dialog_mapped = [bool]$dialogMapped[$key]
+    dialog_attempted = [bool]$dialogAttempted[$key]
+    dialog_attempt_status = if ($dialogAttempted[$key]) { $dialogAttempted[$key].status } else { $null }
   }
 }
 $knownMappedRoutes = @($knownMappedRoutes | Sort-Object path -Unique)
 $overlayPending = @($knownMappedRoutes | Where-Object { !$_.overlay_mapped -and !$_.overlay_attempted })
 $overlayAttemptStatusCounts = @($knownMappedRoutes | Where-Object { $_.overlay_attempted } | Group-Object overlay_attempt_status | ForEach-Object {
+    [ordered]@{ status = if ($_.Name) { $_.Name } else { "unknown" }; count = $_.Count }
+  })
+$dialogPending = @($knownMappedRoutes | Where-Object { !$_.dialog_mapped -and !$_.dialog_attempted })
+$dialogAttemptStatusCounts = @($knownMappedRoutes | Where-Object { $_.dialog_attempted } | Group-Object dialog_attempt_status | ForEach-Object {
     [ordered]@{ status = if ($_.Name) { $_.Name } else { "unknown" }; count = $_.Count }
   })
 
@@ -198,6 +228,7 @@ $payload = [ordered]@{
   route_discovery_path = [System.IO.Path]::GetFullPath($RouteDiscoveryPath)
   state_path = [System.IO.Path]::GetFullPath($StatePath)
   overlay_state_path = [System.IO.Path]::GetFullPath($OverlayStatePath)
+  dialog_state_path = [System.IO.Path]::GetFullPath($DialogStatePath)
   totals = [ordered]@{
     discovered_routes = @($routeMap.routes).Count
     eligible_routes = $routes.Count
@@ -208,6 +239,8 @@ $payload = [ordered]@{
     auto_pages = @($auto.pages).Count
     overlay_pages = @($overlay.pages).Count
     overlay_actions = $overlayActionCount
+    dialog_pages = @($dialog.pages).Count
+    dialog_actions = $dialogActionCount
   }
   overlay_totals = [ordered]@{
     known_mapped_pages = $knownMappedRoutes.Count
@@ -216,12 +249,21 @@ $payload = [ordered]@{
     overlay_pending_pages = $overlayPending.Count
     overlay_actions = $overlayActionCount
   }
+  dialog_totals = [ordered]@{
+    known_mapped_pages = $knownMappedRoutes.Count
+    dialog_mapped_pages = @($knownMappedRoutes | Where-Object { $_.dialog_mapped }).Count
+    dialog_attempted_pages = @($knownMappedRoutes | Where-Object { $_.dialog_attempted }).Count
+    dialog_pending_pages = $dialogPending.Count
+    dialog_actions = $dialogActionCount
+  }
   mapped_counts = @($mappedCounts)
   attempted_unmapped_status_counts = @($statusCounts)
   overlay_attempt_status_counts = @($overlayAttemptStatusCounts)
+  dialog_attempt_status_counts = @($dialogAttemptStatusCounts)
   pending_routes = @($pending | Select-Object -First $MaxPending)
   attempted_unmapped_routes = @($attemptedUnmapped | Select-Object -First $MaxPending)
   overlay_pending_known_pages = @($overlayPending | Select-Object -First $MaxPending)
+  dialog_pending_known_pages = @($dialogPending | Select-Object -First $MaxPending)
 }
 
 if ($Json) {
@@ -229,6 +271,7 @@ if ($Json) {
 } else {
   Write-Host ("Xinjian UI coverage: {0}/{1} eligible routes mapped, {2} attempted-unmapped, {3} pending." -f $payload.totals.mapped_routes, $payload.totals.eligible_routes, $payload.totals.attempted_unmapped_routes, $payload.totals.pending_routes)
   Write-Host ("Xinjian overlay coverage: {0}/{1} known mapped pages in overlay map, {2} attempted, {3} pending, {4} overlay actions." -f $payload.overlay_totals.overlay_mapped_pages, $payload.overlay_totals.known_mapped_pages, $payload.overlay_totals.overlay_attempted_pages, $payload.overlay_totals.overlay_pending_pages, $payload.overlay_totals.overlay_actions)
+  Write-Host ("Xinjian dialog coverage: {0}/{1} known mapped pages in dialog map, {2} attempted, {3} pending, {4} dialog actions." -f $payload.dialog_totals.dialog_mapped_pages, $payload.dialog_totals.known_mapped_pages, $payload.dialog_totals.dialog_attempted_pages, $payload.dialog_totals.dialog_pending_pages, $payload.dialog_totals.dialog_actions)
   if ($pending.Count -gt 0) {
     Write-Host "Next pending routes:"
     foreach ($route in @($pending | Select-Object -First $MaxPending)) {

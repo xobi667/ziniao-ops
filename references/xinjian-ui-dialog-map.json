@@ -1,0 +1,1228 @@
+{
+  "version": "2026-07-08",
+  "system": "xinjian_erp",
+  "source": "generated_from_sanitized_cdp_dialog_captures",
+  "generated_at": "2026-07-08T11:11:44.352Z",
+  "policy": {
+    "default_mode": "read_only_map_first",
+    "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
+    "write_action_rule": "Dialog submit/confirm/save/write buttons are confirmation-required and were not clicked during capture."
+  },
+  "pages": [
+    {
+      "id": "dialog.ad.group.detail",
+      "name": "广告详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/group-detail\\/?$",
+      "url_contains": [
+        "/ad/group-detail"
+      ],
+      "title_aliases": [
+        "广告详情 - 心舰",
+        "广告详情"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 广告详情.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/group-detail",
+        "captured_page_title": "广告详情 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 3,
+          "field_labels": 2
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "修改",
+            "trigger_selector": "div.white-box:nth-of-type(3) > form.el-form > div.hui-box > div.hui-tit:nth-of-type(1) > span:nth-of-type(2) > button.el-button.el-button--text.el-button--small",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "设置目标ROAS",
+                "type": "dialog",
+                "buttons": [
+                  "关闭",
+                  "取消",
+                  "确定"
+                ],
+                "field_labels": [
+                  "全站推广自动竞价 Shopee在您的每日预算内最大化广告曝光，并在完成学习阶段后保持良好的推广回报率（ROAS）",
+                  "全站推广自定义ROAS Shopee优先实现您的选中的ROAS目标，并在完成学习阶段后提升广告曝光"
+                ],
+                "placeholders": []
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.ad.group.detail.dialog_opener.修改",
+          "name": "修改",
+          "aliases": [
+            "修改",
+            "修改弹窗",
+            "修改表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 修改 dialog/drawer on 广告详情; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "修改",
+            "trigger_selector": "div.white-box:nth-of-type(3) > form.el-form > div.hui-box > div.hui-tit:nth-of-type(1) > span:nth-of-type(2) > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.ad.group.detail.dialog_button.修改.关闭",
+          "name": "修改关闭",
+          "aliases": [
+            "关闭",
+            "修改关闭",
+            "设置目标ROAS关闭"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 关闭 inside the 修改 dialog/drawer on 广告详情.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "修改",
+            "dialog_title": "设置目标ROAS",
+            "button_text": "关闭",
+            "trigger_selector": "div.white-box:nth-of-type(3) > form.el-form > div.hui-box > div.hui-tit:nth-of-type(1) > span:nth-of-type(2) > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.ad.group.detail.dialog_button.修改.取消",
+          "name": "修改取消",
+          "aliases": [
+            "取消",
+            "修改取消",
+            "设置目标ROAS取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 修改 dialog/drawer on 广告详情.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "修改",
+            "dialog_title": "设置目标ROAS",
+            "button_text": "取消",
+            "trigger_selector": "div.white-box:nth-of-type(3) > form.el-form > div.hui-box > div.hui-tit:nth-of-type(1) > span:nth-of-type(2) > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.ad.group.detail.dialog_button.修改.确定",
+          "name": "修改确定",
+          "aliases": [
+            "确定",
+            "修改确定",
+            "设置目标ROAS确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 修改 dialog/drawer on 广告详情.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "修改",
+            "dialog_title": "设置目标ROAS",
+            "button_text": "确定",
+            "trigger_selector": "div.white-box:nth-of-type(3) > form.el-form > div.hui-box > div.hui-tit:nth-of-type(1) > span:nth-of-type(2) > button.el-button.el-button--text.el-button--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.ad.shop.detail",
+      "name": "店铺广告分析",
+      "module": "ADS",
+      "route_pattern": "^/ad/shop-detail\\/?$",
+      "url_contains": [
+        "/ad/shop-detail"
+      ],
+      "title_aliases": [
+        "店铺广告分析 - 心舰",
+        "店铺广告分析"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 店铺广告分析.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/shop-detail",
+        "captured_page_title": "店铺广告分析 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 3,
+          "field_labels": 1
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "预警设置",
+            "trigger_selector": "table.el-table__header > thead.has-gutter > tr > th.el-table_2_column_7.el-table__cell:nth-of-type(3) > div.cell > button.el-button.el-button--text.el-button--small",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "",
+                "type": "dialog",
+                "buttons": [
+                  "关闭",
+                  "取消",
+                  "确定"
+                ],
+                "field_labels": [
+                  "条件设置"
+                ],
+                "placeholders": [
+                  "请选择"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.ad.shop.detail.dialog_opener.预警设置",
+          "name": "预警设置",
+          "aliases": [
+            "预警设置",
+            "预警设置弹窗",
+            "预警设置表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 预警设置 dialog/drawer on 店铺广告分析; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "预警设置",
+            "trigger_selector": "table.el-table__header > thead.has-gutter > tr > th.el-table_2_column_7.el-table__cell:nth-of-type(3) > div.cell > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.ad.shop.detail.dialog_button.预警设置.关闭",
+          "name": "预警设置关闭",
+          "aliases": [
+            "关闭",
+            "预警设置关闭"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 关闭 inside the 预警设置 dialog/drawer on 店铺广告分析.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "预警设置",
+            "dialog_title": "",
+            "button_text": "关闭",
+            "trigger_selector": "table.el-table__header > thead.has-gutter > tr > th.el-table_2_column_7.el-table__cell:nth-of-type(3) > div.cell > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.ad.shop.detail.dialog_button.预警设置.取消",
+          "name": "预警设置取消",
+          "aliases": [
+            "取消",
+            "预警设置取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 预警设置 dialog/drawer on 店铺广告分析.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "预警设置",
+            "dialog_title": "",
+            "button_text": "取消",
+            "trigger_selector": "table.el-table__header > thead.has-gutter > tr > th.el-table_2_column_7.el-table__cell:nth-of-type(3) > div.cell > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.ad.shop.detail.dialog_button.预警设置.确定",
+          "name": "预警设置确定",
+          "aliases": [
+            "确定",
+            "预警设置确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 预警设置 dialog/drawer on 店铺广告分析.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "预警设置",
+            "dialog_title": "",
+            "button_text": "确定",
+            "trigger_selector": "table.el-table__header > thead.has-gutter > tr > th.el-table_2_column_7.el-table__cell:nth-of-type(3) > div.cell > button.el-button.el-button--text.el-button--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.bi.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 3,
+          "field_labels": 11
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "新增售后单",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "新增售后单",
+                "type": "dialog",
+                "buttons": [
+                  "添加补发",
+                  "取消",
+                  "确定"
+                ],
+                "field_labels": [
+                  "售后原因",
+                  "售后方案",
+                  "订单号",
+                  "店铺",
+                  "总商品成本",
+                  "售后日期",
+                  "附件",
+                  "标签",
+                  "状态",
+                  "录入成本中心",
+                  "备注"
+                ],
+                "placeholders": [
+                  "请选择售后原因",
+                  "请选择售后方案",
+                  "请输入订单号",
+                  "自动匹配店铺",
+                  "总商品成本",
+                  "币种",
+                  "请选择售后日期",
+                  "请选择标签",
+                  "请选择状态",
+                  "请输入备注"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.bi.aftersalesorder.index.dialog_opener.新增售后单",
+          "name": "新增售后单",
+          "aliases": [
+            "新增售后单",
+            "新增售后单弹窗",
+            "新增售后单表单",
+            "售后单新增",
+            "售后单新增弹窗",
+            "售后单新增表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.aftersalesorder.index.dialog_button.新增售后单.添加补发",
+          "name": "新增售后单添加补发",
+          "aliases": [
+            "添加补发",
+            "新增售后单添加补发",
+            "售后单新增添加补发"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 添加补发 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "添加补发",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.aftersalesorder.index.dialog_button.新增售后单.取消",
+          "name": "新增售后单取消",
+          "aliases": [
+            "取消",
+            "新增售后单取消",
+            "售后单新增取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "取消",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.aftersalesorder.index.dialog_button.新增售后单.确定",
+          "name": "新增售后单确定",
+          "aliases": [
+            "确定",
+            "新增售后单确定",
+            "售后单新增确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "确定",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.bi.operationcenter.aftersaleorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSaleOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSaleOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 3,
+          "field_labels": 11
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "新增售后单",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "新增售后单",
+                "type": "dialog",
+                "buttons": [
+                  "添加补发",
+                  "取消",
+                  "确定"
+                ],
+                "field_labels": [
+                  "售后原因",
+                  "售后方案",
+                  "订单号",
+                  "店铺",
+                  "总商品成本",
+                  "售后日期",
+                  "附件",
+                  "标签",
+                  "状态",
+                  "录入成本中心",
+                  "备注"
+                ],
+                "placeholders": [
+                  "请选择售后原因",
+                  "请选择售后方案",
+                  "请输入订单号",
+                  "自动匹配店铺",
+                  "总商品成本",
+                  "币种",
+                  "请选择售后日期",
+                  "请选择标签",
+                  "请选择状态",
+                  "请输入备注"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.bi.operationcenter.aftersaleorder.index.dialog_opener.新增售后单",
+          "name": "新增售后单",
+          "aliases": [
+            "新增售后单",
+            "新增售后单弹窗",
+            "新增售后单表单",
+            "售后单新增",
+            "售后单新增弹窗",
+            "售后单新增表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.operationcenter.aftersaleorder.index.dialog_button.新增售后单.添加补发",
+          "name": "新增售后单添加补发",
+          "aliases": [
+            "添加补发",
+            "新增售后单添加补发",
+            "售后单新增添加补发"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 添加补发 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "添加补发",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.operationcenter.aftersaleorder.index.dialog_button.新增售后单.取消",
+          "name": "新增售后单取消",
+          "aliases": [
+            "取消",
+            "新增售后单取消",
+            "售后单新增取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "取消",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.operationcenter.aftersaleorder.index.dialog_button.新增售后单.确定",
+          "name": "新增售后单确定",
+          "aliases": [
+            "确定",
+            "新增售后单确定",
+            "售后单新增确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "确定",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.bi.operationcenter.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 3,
+          "field_labels": 11
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "新增售后单",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "新增售后单",
+                "type": "dialog",
+                "buttons": [
+                  "添加补发",
+                  "取消",
+                  "确定"
+                ],
+                "field_labels": [
+                  "售后原因",
+                  "售后方案",
+                  "订单号",
+                  "店铺",
+                  "总商品成本",
+                  "售后日期",
+                  "附件",
+                  "标签",
+                  "状态",
+                  "录入成本中心",
+                  "备注"
+                ],
+                "placeholders": [
+                  "请选择售后原因",
+                  "请选择售后方案",
+                  "请输入订单号",
+                  "自动匹配店铺",
+                  "总商品成本",
+                  "币种",
+                  "请选择售后日期",
+                  "请选择标签",
+                  "请选择状态",
+                  "请输入备注"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.bi.operationcenter.aftersalesorder.index.dialog_opener.新增售后单",
+          "name": "新增售后单",
+          "aliases": [
+            "新增售后单",
+            "新增售后单弹窗",
+            "新增售后单表单",
+            "售后单新增",
+            "售后单新增弹窗",
+            "售后单新增表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.operationcenter.aftersalesorder.index.dialog_button.新增售后单.添加补发",
+          "name": "新增售后单添加补发",
+          "aliases": [
+            "添加补发",
+            "新增售后单添加补发",
+            "售后单新增添加补发"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 添加补发 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "添加补发",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.operationcenter.aftersalesorder.index.dialog_button.新增售后单.取消",
+          "name": "新增售后单取消",
+          "aliases": [
+            "取消",
+            "新增售后单取消",
+            "售后单新增取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "取消",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.bi.operationcenter.aftersalesorder.index.dialog_button.新增售后单.确定",
+          "name": "新增售后单确定",
+          "aliases": [
+            "确定",
+            "新增售后单确定",
+            "售后单新增确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 新增售后单 dialog/drawer on 售后单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增售后单",
+            "dialog_title": "新增售后单",
+            "button_text": "确定",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.erp.blacklist",
+      "name": "黑名单管理",
+      "module": "ERP",
+      "route_pattern": "^/erp/blacklist\\/?$",
+      "url_contains": [
+        "/erp/blacklist"
+      ],
+      "title_aliases": [
+        "黑名单管理 - 心舰",
+        "黑名单管理"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 黑名单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/erp/blacklist",
+        "captured_page_title": "黑名单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 3,
+          "field_labels": 2
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "新增",
+            "trigger_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.mb8.el-row:nth-of-type(1) > div.el-col.el-col-1\\.5:nth-of-type(1) > button.el-button.el-button--primary.el-button--mini",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "新增黑名单",
+                "type": "dialog",
+                "buttons": [
+                  "关闭",
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "买家地址",
+                  "原因"
+                ],
+                "placeholders": [
+                  "请输入买家地址",
+                  "请选择原因"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.erp.blacklist.dialog_opener.新增",
+          "name": "新增",
+          "aliases": [
+            "新增",
+            "新增弹窗",
+            "新增表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 新增 dialog/drawer on 黑名单管理; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "trigger_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.mb8.el-row:nth-of-type(1) > div.el-col.el-col-1\\.5:nth-of-type(1) > button.el-button.el-button--primary.el-button--mini"
+          }
+        },
+        {
+          "id": "dialog.erp.blacklist.dialog_button.新增.关闭",
+          "name": "新增关闭",
+          "aliases": [
+            "关闭",
+            "新增关闭",
+            "新增黑名单关闭"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 关闭 inside the 新增 dialog/drawer on 黑名单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增黑名单",
+            "button_text": "关闭",
+            "trigger_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.mb8.el-row:nth-of-type(1) > div.el-col.el-col-1\\.5:nth-of-type(1) > button.el-button.el-button--primary.el-button--mini"
+          }
+        },
+        {
+          "id": "dialog.erp.blacklist.dialog_button.新增.确定",
+          "name": "新增确定",
+          "aliases": [
+            "确定",
+            "新增确定",
+            "新增黑名单确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 新增 dialog/drawer on 黑名单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增黑名单",
+            "button_text": "确定",
+            "trigger_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.mb8.el-row:nth-of-type(1) > div.el-col.el-col-1\\.5:nth-of-type(1) > button.el-button.el-button--primary.el-button--mini"
+          }
+        },
+        {
+          "id": "dialog.erp.blacklist.dialog_button.新增.取消",
+          "name": "新增取消",
+          "aliases": [
+            "取消",
+            "新增取消",
+            "新增黑名单取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 新增 dialog/drawer on 黑名单管理.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增黑名单",
+            "button_text": "取消",
+            "trigger_selector": "div.main-container:nth-of-type(2) > section.app-main > div.app-container > div.mb8.el-row:nth-of-type(1) > div.el-col.el-col-1\\.5:nth-of-type(1) > button.el-button.el-button--primary.el-button--mini"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.order.sku.min.price",
+      "name": "SKU最低售价配置",
+      "module": "ERP",
+      "route_pattern": "^/order/sku-min-price\\/?$",
+      "url_contains": [
+        "/order/sku-min-price"
+      ],
+      "title_aliases": [
+        "SKU最低售价配置 - 心舰",
+        "SKU最低售价配置"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for SKU最低售价配置.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/order/sku-min-price/",
+        "captured_page_title": "SKU最低售价配置 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "triggers_with_dialogs": 1,
+          "dialogs": 1,
+          "dialog_buttons": 4,
+          "field_labels": 3
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "新增",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "新增",
+                "type": "dialog",
+                "buttons": [
+                  "关闭",
+                  "选择",
+                  "取消",
+                  "确定"
+                ],
+                "field_labels": [
+                  "商品SKU",
+                  "选择店铺",
+                  "最低售价"
+                ],
+                "placeholders": [
+                  "请输入或选择商品SKU",
+                  "请选择店铺"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.order.sku.min.price.dialog_opener.新增",
+          "name": "新增",
+          "aliases": [
+            "新增",
+            "新增弹窗",
+            "新增表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 新增 dialog/drawer on SKU最低售价配置; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.order.sku.min.price.dialog_button.新增.关闭",
+          "name": "新增关闭",
+          "aliases": [
+            "关闭",
+            "新增关闭"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 关闭 inside the 新增 dialog/drawer on SKU最低售价配置.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增",
+            "button_text": "关闭",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.order.sku.min.price.dialog_button.新增.选择",
+          "name": "新增选择",
+          "aliases": [
+            "选择",
+            "新增选择"
+          ],
+          "type": "dialog_button",
+          "safety": "unknown_observed",
+          "purpose": "Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增",
+            "button_text": "选择",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.order.sku.min.price.dialog_button.新增.取消",
+          "name": "新增取消",
+          "aliases": [
+            "取消",
+            "新增取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 新增 dialog/drawer on SKU最低售价配置.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增",
+            "button_text": "取消",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        },
+        {
+          "id": "dialog.order.sku.min.price.dialog_button.新增.确定",
+          "name": "新增确定",
+          "aliases": [
+            "确定",
+            "新增确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 新增 dialog/drawer on SKU最低售价配置.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增",
+            "dialog_title": "新增",
+            "button_text": "确定",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > button.el-button.el-button--primary.el-button--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dialog.system.costom.fee",
+      "name": "自定义费用",
+      "module": "ERP",
+      "route_pattern": "^/system/costom-fee\\/?$",
+      "url_contains": [
+        "/system/costom-fee"
+      ],
+      "title_aliases": [
+        "自定义费用 - 心舰",
+        "自定义费用"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 自定义费用.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/system/costom-fee",
+        "captured_page_title": "自定义费用 - 心舰",
+        "captured_counts": {
+          "triggers": 8,
+          "triggers_with_dialogs": 3,
+          "dialogs": 3,
+          "dialog_buttons": 6,
+          "field_labels": 12
+        },
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": [
+          {
+            "trigger": "新增自定义费用",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "添加自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          },
+          {
+            "trigger": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(6) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)",
+            "dialog_count": 1,
+            "dialogs": [
+              {
+                "title": "编辑自定义费用",
+                "type": "dialog",
+                "buttons": [
+                  "确定",
+                  "取消"
+                ],
+                "field_labels": [
+                  "店铺",
+                  "费用月份",
+                  "费用类型",
+                  "金额"
+                ],
+                "placeholders": [
+                  "选择店铺",
+                  "选择费用月份",
+                  "请选择费用类型",
+                  "请输入金额（正数表示支出，负数表示收入)"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "dialog.system.costom.fee.dialog_opener.新增自定义费用",
+          "name": "新增自定义费用",
+          "aliases": [
+            "新增自定义费用",
+            "新增自定义费用弹窗",
+            "新增自定义费用表单",
+            "自定义费用新增",
+            "自定义费用新增弹窗",
+            "自定义费用新增表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 新增自定义费用 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "新增自定义费用",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "dialog.system.costom.fee.dialog_button.新增自定义费用.确定",
+          "name": "新增自定义费用确定",
+          "aliases": [
+            "确定",
+            "新增自定义费用确定",
+            "添加自定义费用确定",
+            "自定义费用新增确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 新增自定义费用 dialog/drawer on 自定义费用.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增自定义费用",
+            "dialog_title": "添加自定义费用",
+            "button_text": "确定",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "dialog.system.costom.fee.dialog_button.新增自定义费用.取消",
+          "name": "新增自定义费用取消",
+          "aliases": [
+            "取消",
+            "新增自定义费用取消",
+            "添加自定义费用取消",
+            "自定义费用新增取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 新增自定义费用 dialog/drawer on 自定义费用.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "新增自定义费用",
+            "dialog_title": "添加自定义费用",
+            "button_text": "取消",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline.small-screen-2line > div.second.flex-row:nth-of-type(2) > div.flex-row > button.el-button.el-button--primary.el-button--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "dialog.system.costom.fee.dialog_opener.编辑",
+          "name": "编辑",
+          "aliases": [
+            "编辑",
+            "编辑弹窗",
+            "编辑表单"
+          ],
+          "type": "dialog_opener",
+          "safety": "opens_dialog_no_submit",
+          "purpose": "Open the 编辑 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation.",
+          "function_source": "auto-generated from observed dialog opener; opener clicked, no submit/confirm button clicked",
+          "locator": {
+            "trigger_text": "编辑",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "dialog.system.costom.fee.dialog_button.编辑.确定",
+          "name": "编辑确定",
+          "aliases": [
+            "确定",
+            "编辑确定",
+            "编辑自定义费用确定"
+          ],
+          "type": "dialog_button",
+          "safety": "confirmation_required_write",
+          "purpose": "Use 确定 inside the 编辑 dialog/drawer on 自定义费用.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "编辑",
+            "dialog_title": "编辑自定义费用",
+            "button_text": "确定",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "dialog.system.costom.fee.dialog_button.编辑.取消",
+          "name": "编辑取消",
+          "aliases": [
+            "取消",
+            "编辑取消",
+            "编辑自定义费用取消"
+          ],
+          "type": "dialog_button",
+          "safety": "read_filter",
+          "purpose": "Use 取消 inside the 编辑 dialog/drawer on 自定义费用.",
+          "function_source": "auto-generated from observed dialog/drawer button; button was not clicked",
+          "locator": {
+            "trigger_text": "编辑",
+            "dialog_title": "编辑自定义费用",
+            "button_text": "取消",
+            "trigger_selector": "table.el-table__body > tbody > tr.el-table__row:nth-of-type(3) > td.el-table_1_column_7.act.el-table__cell:nth-of-type(7) > div.cell > button.el-button.el-button--text.el-button--mini:nth-of-type(1)"
+          }
+        }
+      ]
+    }
+  ]
+}

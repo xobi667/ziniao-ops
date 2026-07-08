@@ -383,6 +383,16 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 `references\xinjian-ui-overlay-map.json` supplements both curated and auto maps. The overlay probe opens panels and closes them, but must never click overlay items or submit forms. Private-looking select values are filtered at capture time.
 
+To capture buttons and fields that only appear after safe dialog/drawer openers, use the dialog probe. It may click opener buttons such as `新增`, `编辑`, `详情`, `查看`, `设置`, or `配置`, but must never click submit/confirm/write buttons inside the dialog:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dialogs.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-dialog-pages.ps1") -Port 9342 -OnlyMissing -MaxPages 10 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-dialog-map.ps1") -Json
+```
+
+`references\xinjian-ui-dialog-map.json` supplements static and overlay maps with dialog/drawer openers, dialog buttons, field labels, and placeholders. It does not store input values or private-looking text. Dialog submit/save/confirm/delete/write buttons are confirmation-required.
+
 If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:
 
 ```powershell
