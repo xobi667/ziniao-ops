@@ -146,18 +146,29 @@ function Resolve-OpenXinjianWindow {
     $candidateUrl = @($detected.candidates | ForEach-Object { [string]$_.url } | Where-Object { $_ -match "^https?://erp\.xinjianerp\.com/" } | Select-Object -First 1)
     if ($candidateUrl.Count -gt 0) { $selectedUrl = [string]$candidateUrl[0] }
   }
-  if (!$selectedUrl) { return $null }
 
   $candidate = $null
   if ($detected.PSObject.Properties.Match("candidates").Count -gt 0) {
-    $candidate = @($detected.candidates | Where-Object { [string]$_.url -eq $selectedUrl } | Select-Object -First 1)
+    if ($selectedUrl) {
+      $candidate = @($detected.candidates | Where-Object { [string]$_.url -eq $selectedUrl } | Select-Object -First 1)
+    } else {
+      $candidate = @($detected.candidates | Where-Object {
+          ([string]$_.source -in @("window_uia", "window_title", "cdp")) -and
+          (([string]$_.title -match "心舰") -or ([string]$_.url -match "^https?://erp\.xinjianerp\.com/"))
+        } | Select-Object -First 1)
+    }
     if ($candidate.Count -gt 0) { $candidate = $candidate[0] } else { $candidate = $null }
   }
+  if (!$selectedUrl -and !$candidate) { return $null }
+  if (!$selectedUrl -and $candidate -and $candidate.PSObject.Properties.Match("url").Count -gt 0) {
+    $selectedUrl = [string]$candidate.url
+  }
+
   return [pscustomobject]@{
     detection = $detected
     candidate = $candidate
     url = $selectedUrl
-    page_kind = Get-XinjianPageKind -PageUrl $selectedUrl
+    page_kind = if ($selectedUrl) { Get-XinjianPageKind -PageUrl $selectedUrl } else { "unknown" }
   }
 }
 
