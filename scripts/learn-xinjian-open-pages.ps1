@@ -1,7 +1,7 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
   [string[]]$Url = @(),
-  [int]$Port = 9342,
+  [int[]]$Port = @(),
   [int]$MaxPages = 0,
   [switch]$SkipDom,
   [switch]$SkipOverlays,
@@ -31,7 +31,10 @@ function ConvertFrom-JsonText($Lines) {
 
 function Test-XinjianUrl([string]$Value) {
   $text = [string]$Value
-  return $text -match "^https?://erp\.xinjianerp\.com/" -and $text -notmatch "\s" -and $text -notmatch "/(?:login|401|404)(?:$|[?#/])"
+  return $text -match "^https?://erp\.xinjianerp\.com/" -and
+    $text -notmatch "\s" -and
+    $text -notmatch "/(?:login|xtlogin|sso|social-login|redirect|401|404)(?:$|[?#/])" -and
+    $text -notmatch "/index/(?:noaccess|ad-no-auth)(?:$|[?#/])"
 }
 
 function Get-RouteKey([string]$InputUrl) {
@@ -101,21 +104,56 @@ function Invoke-JsonScript {
   }
 }
 
+function Get-PortArgumentList {
+  param([int[]]$Ports)
+  $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+  $args = @()
+  foreach ($item in $items) {
+    $args += @("-Port", [string]$item)
+  }
+  return $args
+}
+
+function Get-ExplicitPorts {
+  return @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
+}
+
 function Get-OpenXinjianPages {
   $pages = @()
-  try {
-    $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$Port/json" -TimeoutSec 5).Content
-    $parsedPages = $body | ConvertFrom-Json
-    foreach ($page in @($parsedPages | ForEach-Object { $_ })) {
-      if ($page.type -ne "page") { continue }
-      if (!(Test-XinjianUrl ([string]$page.url))) { continue }
-      $pages += [pscustomobject]@{
-        url = [string]$page.url
-        title = [string]$page.title
-        source = "cdp_page_url"
+  $explicitPorts = @(Get-ExplicitPorts)
+  if ($explicitPorts.Count -gt 0) {
+    foreach ($probePort in $explicitPorts) {
+      try {
+        $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$probePort/json" -TimeoutSec 5).Content
+        $parsedPages = $body | ConvertFrom-Json
+        foreach ($page in @($parsedPages | ForEach-Object { $_ })) {
+          if ($page.type -ne "page") { continue }
+          if (!(Test-XinjianUrl ([string]$page.url))) { continue }
+          $pages += [pscustomobject]@{
+            url = [string]$page.url
+            title = [string]$page.title
+            source = "cdp_page_url"
+            port = [int]$probePort
+          }
+        }
+      } catch {
       }
     }
-  } catch {
+    return @($pages)
+  }
+
+  $detected = Invoke-JsonScript -ScriptName "detect-ziniao-windows.ps1" -Arguments @("-Json")
+  if (!$detected.parsed) { return @() }
+  foreach ($window in @($detected.parsed.windows)) {
+    if ([string]$window.platform -ne "xinjian_erp") { continue }
+    if (!$window.port -or ![bool]$window.reachable) { continue }
+    if (!(Test-XinjianUrl ([string]$window.page_url))) { continue }
+    $pages += [pscustomobject]@{
+      url = [string]$window.page_url
+      title = [string]$window.page_title
+      source = [string]$window.source
+      port = [int]$window.port
+    }
   }
   return @($pages)
 }
@@ -123,7 +161,7 @@ function Get-OpenXinjianPages {
 $candidatePages = @()
 foreach ($item in @($Url)) {
   if (Test-XinjianUrl $item) {
-    $candidatePages += [pscustomobject]@{ url = [string]$item; title = ""; source = "argument" }
+    $candidatePages += [pscustomobject]@{ url = [string]$item; title = ""; source = "argument"; port = $null }
   }
 }
 if ($candidatePages.Count -eq 0) {
@@ -143,6 +181,10 @@ if ($MaxPages -gt 0) {
 }
 
 $before = Get-CatalogSummary
+$effectivePorts = @(Get-ExplicitPorts)
+if ($effectivePorts.Count -eq 0) {
+  $effectivePorts = @($dedupedPages | Where-Object { $_.port } | ForEach-Object { [int]$_.port } | Sort-Object -Unique)
+}
 $capturePlan = @()
 if (!$SkipDom) { $capturePlan += "capture_dom_controls" }
 if (!$SkipOverlays) { $capturePlan += "capture_overlay_dropdowns" }
@@ -153,7 +195,8 @@ if ($DryRun) {
   $payload = [ordered]@{
     ok = ($dedupedPages.Count -gt 0)
     mode = "dry_run"
-    port = $Port
+    port = if ($effectivePorts.Count -eq 1) { [int]$effectivePorts[0] } else { $null }
+    ports = @($effectivePorts)
     pages = @($dedupedPages)
     pages_count = $dedupedPages.Count
     planned_pages = @($dedupedPages | ForEach-Object {
@@ -161,13 +204,14 @@ if ($DryRun) {
           url = [string]$_.url
           title = [string]$_.title
           source = [string]$_.source
+          port = if ($_.port) { [int]$_.port } else { $null }
           route = Get-RouteKey ([string]$_.url)
         }
       })
     before_catalog = $before
     per_page_steps = $capturePlan
     final_generate = !$NoGenerate
-    next_action = if ($dedupedPages.Count -gt 0) { "rerun_without_dry_run_to_learn_open_pages" } else { "open_debuggable_xinjian_pages_or_pass_url" }
+    next_action = if ($dedupedPages.Count -gt 0) { "rerun_without_dry_run_to_learn_open_pages" } else { "make_existing_mcp_or_debug_browser_available_or_pass_url" }
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 12 } else {
     Write-Host ("Would learn {0} Xinjian page(s)." -f $dedupedPages.Count)
@@ -181,9 +225,10 @@ if ($dedupedPages.Count -eq 0) {
   $payload = [ordered]@{
     ok = $false
     mode = "no_open_xinjian_pages"
-    port = $Port
+    port = if ($effectivePorts.Count -eq 1) { [int]$effectivePorts[0] } else { $null }
+    ports = @($effectivePorts)
     before_catalog = $before
-    next_action = "open_debuggable_xinjian_pages_or_pass_url"
+    next_action = "make_existing_mcp_or_debug_browser_available_or_pass_url"
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "No debuggable Xinjian pages were found." }
   exit 1
@@ -191,7 +236,10 @@ if ($dedupedPages.Count -eq 0) {
 
 $learned = @()
 foreach ($page in $dedupedPages) {
-  $args = @("-Url", [string]$page.url, "-Port", [string]$Port, "-NoGenerate", "-Json")
+  $learnPorts = if ($page.port) { @([int]$page.port) } else { @(Get-ExplicitPorts) }
+  $args = @("-Url", [string]$page.url)
+  $args += Get-PortArgumentList -Ports $learnPorts
+  $args += @("-NoGenerate", "-Json")
   if ($SkipDom) { $args += "-SkipDom" }
   if ($SkipOverlays) { $args += "-SkipOverlays" }
   if ($SkipDialogs) { $args += "-SkipDialogs" }
@@ -202,6 +250,7 @@ foreach ($page in $dedupedPages) {
     url = [string]$page.url
     title = [string]$page.title
     source = [string]$page.source
+    port = if ($page.port) { [int]$page.port } else { $null }
     exit_code = [int]$result.exit_code
     captures = @()
     error = ""
@@ -236,7 +285,8 @@ $successful = @($learned | Where-Object { $_.ok })
 $payload = [ordered]@{
   ok = ($failed.Count -eq 0)
   mode = "learn_open_pages"
-  port = $Port
+  port = if ($effectivePorts.Count -eq 1) { [int]$effectivePorts[0] } else { $null }
+  ports = @($effectivePorts)
   pages_count = $dedupedPages.Count
   success_count = $successful.Count
   failed_count = $failed.Count
@@ -246,6 +296,7 @@ $payload = [ordered]@{
         url = [string]$_.url
         title = [string]$_.title
         source = [string]$_.source
+        port = if ($_.port) { [int]$_.port } else { $null }
         route = Get-RouteKey ([string]$_.url)
         exit_code = [int]$_.exit_code
         capture_steps = @($_.captures).Count

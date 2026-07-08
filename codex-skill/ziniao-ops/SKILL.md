@@ -379,7 +379,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\lear
 
 The current-page learner auto-selects a reachable debuggable 心舰 port and returns top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. If it only sees login or restricted 心舰 pages, it stops with `manual_login_required_in_debuggable_xinjian_browser` instead of learning the wrong page.
 
-To learn every currently debuggable 心舰 page already open in Chrome/Edge, use the batch learner. It enumerates DevTools pages, de-duplicates by route, captures each page with the safe current-page learner, then regenerates maps/catalog once:
+To learn every currently debuggable 心舰 page already open in Chrome/Edge/Ziniao, use the batch learner. It enumerates already open reachable DevTools pages, de-duplicates by route, captures each page with the safe current-page learner, then regenerates maps/catalog once. It does not open new browser windows or tabs; `-Port` only pins scanning to an existing debug port:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-open-pages.ps1") -Json

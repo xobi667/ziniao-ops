@@ -55,7 +55,7 @@ To learn every currently debuggable 心舰 page already open in Chrome/Edge, run
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-open-pages.ps1") -Json
 ```
 
-`learn-xinjian-open-pages.ps1` enumerates open DevTools pages on the configured port, de-duplicates by route, runs the current-page learner once per page with map generation deferred, then regenerates the public maps and unified catalog once at the end. Pass explicit `-Url` values or `-MaxPages` for a smaller batch.
+`learn-xinjian-open-pages.ps1` enumerates already open reachable DevTools 心舰 pages, de-duplicates by route, runs the current-page learner once per page with map generation deferred, then regenerates the public maps and unified catalog once at the end. It does not open new browser windows or tabs. Pass `-Port` only to pin scanning to an existing debug port, or pass explicit `-Url` values / `-MaxPages` for a smaller batch.
 
 2. Query the known map before using screenshots or guessing:
 
