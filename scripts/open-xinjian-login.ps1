@@ -50,30 +50,55 @@ function Normalize-UrlPath {
   return $value
 }
 
-function Test-TargetPageMatch {
+function Test-NonBusinessXinjianPath {
+  param([string]$Path)
+  $value = Normalize-UrlPath -Path $Path
+  return $value -match "^/(login|xtlogin|sso|social-login|401|404|redirect)(/|$)" -or
+    $value -match "^/index/(noaccess|ad-no-auth)(/|$)"
+}
+
+function Get-TargetPageScore {
   param(
     [object]$Page,
     [string]$TargetUrl
   )
-  if (!$Page -or !$Page.url) { return $false }
+  if (!$Page -or !$Page.url) { return -1 }
   try {
     $pageUri = [uri]([string]$Page.url)
     $targetUri = [uri]$TargetUrl
   } catch {
-    return $false
+    return -1
   }
-  if ($pageUri.Host -ne $targetUri.Host) { return $false }
+  if ($pageUri.Host -ne $targetUri.Host) { return -1 }
 
+  $score = 10
   $pagePath = Normalize-UrlPath -Path $pageUri.AbsolutePath
   $targetPath = Normalize-UrlPath -Path $targetUri.AbsolutePath
-  if ($pagePath -eq $targetPath) { return $true }
+  if (!(Test-NonBusinessXinjianPath -Path $pagePath)) { $score += 100 }
+  if ($pagePath -eq $targetPath) { $score += 80 }
   if ($pagePath -eq "/login") {
     $decodedQuery = [uri]::UnescapeDataString($pageUri.Query)
-    if ($decodedQuery -like "*redirect=$targetPath*") { return $true }
+    if ($decodedQuery -like "*redirect=$targetPath*") { $score += 20 }
   }
+  return $score
+}
 
-  # Any page on the same Xinjian host is a usable manual-login handoff target.
-  return $true
+function Select-BestTargetPage {
+  param(
+    [object[]]$Pages,
+    [string]$TargetUrl
+  )
+  $scored = @($Pages | ForEach-Object {
+      $score = Get-TargetPageScore -Page $_ -TargetUrl $TargetUrl
+      if ($score -ge 0) {
+        [pscustomobject]@{
+          score = [int]$score
+          page = $_
+        }
+      }
+    } | Sort-Object -Property @{ Expression = "score"; Descending = $true })
+  if ($scored.Count -eq 0) { return $null }
+  return $scored[0]
 }
 
 if (!$UserDataDir) {
@@ -88,14 +113,20 @@ if (!$browser) {
 
 $alreadyRunning = Test-DevToolsPort -Port $Port
 $reusedPage = $null
+$reusedPageScore = $null
 $openedNewTab = $false
 if ($alreadyRunning) {
-  $reusedPage = Get-DevToolsPages -Port $Port | Where-Object { Test-TargetPageMatch -Page $_ -TargetUrl $Url } | Select-Object -First 1
+  $bestPage = Select-BestTargetPage -Pages (Get-DevToolsPages -Port $Port) -TargetUrl $Url
+  if ($bestPage) {
+    $reusedPage = $bestPage.page
+    $reusedPageScore = [int]$bestPage.score
+  }
   if (!$reusedPage) {
     try {
       $encoded = [uri]::EscapeDataString($Url)
       $reusedPage = Invoke-RestMethod -Method Put -Uri "http://127.0.0.1:$Port/json/new?$encoded" -TimeoutSec 3
       $openedNewTab = $true
+      $reusedPageScore = Get-TargetPageScore -Page $reusedPage -TargetUrl $Url
     } catch {
       # The existing debug browser is still usable; the user can navigate manually if new-tab fails.
     }
@@ -114,7 +145,11 @@ if ($alreadyRunning) {
   Start-Process -FilePath $browser -ArgumentList $args -WindowStyle $windowStyle | Out-Null
   Start-Sleep -Seconds 2
   $openedNewTab = $true
-  $reusedPage = Get-DevToolsPages -Port $Port | Where-Object { Test-TargetPageMatch -Page $_ -TargetUrl $Url } | Select-Object -First 1
+  $bestPage = Select-BestTargetPage -Pages (Get-DevToolsPages -Port $Port) -TargetUrl $Url
+  if ($bestPage) {
+    $reusedPage = $bestPage.page
+    $reusedPageScore = [int]$bestPage.score
+  }
 }
 
 $portReady = Test-DevToolsPort -Port $Port
@@ -130,6 +165,7 @@ $result = [ordered]@{
   matched_page_url = if ($reusedPage) { [string]$reusedPage.url } else { "" }
   matched_page_title = if ($reusedPage) { [string]$reusedPage.title } else { "" }
   matched_page_id = if ($reusedPage) { [string]$reusedPage.id } else { "" }
+  matched_page_score = if ($null -ne $reusedPageScore) { [int]$reusedPageScore } else { $null }
   next_action = if ($portReady) { "manual_login_then_fetch" } else { "browser_started_but_devtools_not_ready" }
   fetch_command = "powershell -ExecutionPolicy Bypass -File scripts\fetch-xinjian-browser-data.ps1 -Port $Port -StoreName `"<店铺A>,<店铺B>`" -Days 7 -Json"
 }
