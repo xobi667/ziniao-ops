@@ -7,6 +7,7 @@ param(
   [int[]]$Port = @(),
   [string]$Url = "https://erp.xinjianerp.com/index/home",
   [switch]$ZiniaoOnly,
+  [switch]$NoAutoOpen,
   [switch]$Json
 )
 
@@ -19,6 +20,27 @@ $StoreName = @(
     }
   }
 )
+
+function ConvertFrom-JsonLines($Lines) {
+  $text = (($Lines | Out-String).Trim())
+  if (!$text) { return $null }
+  try {
+    return $text | ConvertFrom-Json
+  } catch {
+    return $null
+  }
+}
+
+function Get-RuntimeStatus {
+  $raw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "get-runtime-status.ps1") -Refresh -Json 2>&1)
+  $status = ConvertFrom-JsonLines $raw
+  if ($status) { return $status }
+  return [pscustomobject]@{
+    ok = $false
+    error = "runtime_status_parse_failed"
+    raw_output = ($raw | Out-String)
+  }
+}
 
 function Get-DebugBrowserPorts {
   param(
@@ -164,6 +186,28 @@ function Open-CdpUrl([int]$CdpPort, [string]$TargetUrl) {
   return $false
 }
 
+function Invoke-AutoOpenXinjian {
+  param([int]$CdpPort)
+
+  $openScript = Join-Path $PSScriptRoot "open-xinjian-login.ps1"
+  if (!(Test-Path -LiteralPath $openScript)) {
+    return [pscustomobject]@{
+      ok = $false
+      error = "open_xinjian_login_script_missing"
+      path = $openScript
+    }
+  }
+  $raw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $openScript -Port $CdpPort -Url $Url -Json 2>&1)
+  $json = ConvertFrom-JsonLines $raw
+  return [pscustomobject]@{
+    ok = ($LASTEXITCODE -eq 0 -and $json -and [bool]$json.ok)
+    exit_code = $LASTEXITCODE
+    port = $CdpPort
+    result = $json
+    raw_output = if ($json) { $null } else { $raw }
+  }
+}
+
 function Invoke-XinjianFetch {
   param(
     [object]$Candidate,
@@ -239,6 +283,15 @@ function Write-SuccessAndExit {
   exit 0
 }
 
+$runtimeStatus = Get-RuntimeStatus
+$runtimeXinjianWindows = @()
+if ($runtimeStatus -and $runtimeStatus.window_detection) {
+  $runtimeXinjianWindows = @($runtimeStatus.window_detection.windows | Where-Object {
+      $_.platform -eq "xinjian_erp"
+    })
+}
+$nonDebugXinjianWindows = @($runtimeXinjianWindows | Where-Object { !$_.port })
+
 $debugPorts = @(Get-DebugBrowserPorts -ExplicitPort $Port -ZiniaoOnly:$ZiniaoOnly)
 $reachablePorts = @()
 $attempts = @()
@@ -265,6 +318,38 @@ foreach ($portInfo in $reachablePorts) {
 }
 $detectedPages = @($detectedPages |
   Sort-Object @{ Expression = "score"; Descending = $true }, @{ Expression = "is_ziniao"; Descending = $true })
+
+$autoOpen = $null
+if (!$NoAutoOpen -and (!$detectedPages -or $detectedPages.Count -eq 0) -and $runtimeXinjianWindows.Count -eq 0) {
+  $autoPort = if ($Port -and $Port.Count -gt 0) { [int]$Port[0] } else { 9339 }
+  $autoOpen = Invoke-AutoOpenXinjian -CdpPort $autoPort
+  if ($autoOpen.ok) {
+    Start-Sleep -Seconds 2
+    $debugPorts = @(Get-DebugBrowserPorts -ExplicitPort @($autoPort) -ZiniaoOnly:$false)
+    $reachablePorts = @()
+    foreach ($portInfo in $debugPorts) {
+      if (Test-CdpPort -CdpPort $portInfo.port) {
+        $reachablePorts += $portInfo
+      } else {
+        $attempts += [pscustomobject]@{
+          port = $portInfo.port
+          process_name = $portInfo.process_name
+          process_id = $portInfo.process_id
+          is_ziniao = $portInfo.is_ziniao
+          opened_url = $false
+          ok = $false
+          error = "auto_opened_cdp_port_not_reachable"
+        }
+      }
+    }
+    $detectedPages = @()
+    foreach ($portInfo in $reachablePorts) {
+      $detectedPages += @(Get-TargetPages -PortInfo $portInfo -TargetUrl $Url)
+    }
+    $detectedPages = @($detectedPages |
+      Sort-Object @{ Expression = "score"; Descending = $true }, @{ Expression = "is_ziniao"; Descending = $true })
+  }
+}
 
 $attemptedSockets = [System.Collections.Generic.HashSet[string]]::new()
 foreach ($candidate in $detectedPages) {
@@ -329,8 +414,12 @@ $lastResult = $attempts |
   Where-Object { $_.PSObject.Properties.Match("result").Count -gt 0 -and $_.result } |
   Select-Object -Last 1 -ExpandProperty result
 
-$nextAction = if (!$debugPorts -or $debugPorts.Count -eq 0) {
+$nextAction = if ((!$debugPorts -or $debugPorts.Count -eq 0) -and $nonDebugXinjianWindows.Count -gt 0) {
+  "xinjian_window_detected_without_debug_port"
+} elseif (!$debugPorts -or $debugPorts.Count -eq 0) {
   "open_ziniao_store_browser_first"
+} elseif ((!$detectedPages -or $detectedPages.Count -eq 0) -and $nonDebugXinjianWindows.Count -gt 0) {
+  "xinjian_window_detected_without_debug_port"
 } elseif (!$detectedPages -or $detectedPages.Count -eq 0) {
   "target_browser_window_not_detected"
 } elseif ($lastResult -and $lastResult.next_action) {
@@ -348,6 +437,12 @@ $payload = [ordered]@{
   scanned_ports = @($debugPorts | Select-Object port, process_name, process_id, is_ziniao)
   reachable_ports = @($reachablePorts | Select-Object port, process_name, process_id, is_ziniao)
   detected_pages = @($detectedPages | Select-Object port, process_name, process_id, is_ziniao, score, page_url, page_title)
+  runtime_status = [ordered]@{
+    runtime_state = $runtimeStatus.runtime_state
+    summary = $runtimeStatus.summary
+    xinjian_windows = @($runtimeXinjianWindows | Select-Object source, process_name, process_id, port, page_title, page_url, match_confidence, login_signal)
+  }
+  auto_open = $autoOpen
   attempts = @($attempts)
   login_state = if ($lastResult) { $lastResult.login_state } else { $null }
   stores_matched = if ($lastResult) { @($lastResult.stores_matched) } else { @() }
@@ -360,7 +455,11 @@ if ($Json) {
   $payload | ConvertTo-Json -Depth 14
 } else {
   Write-Host "XINJIAN_BROWSER_AUTO_DETECT_BLOCKED"
-  if (!$debugPorts -or $debugPorts.Count -eq 0) {
+  if ($autoOpen -and $autoOpen.ok -and ($nextAction -eq "manual_login_required" -or $nextAction -eq "manual_xinjian_login_in_ziniao_required")) {
+    Write-Host "Opened a controllable Xinjian browser window. Complete login there, then run the same command again."
+  } elseif ($nextAction -eq "xinjian_window_detected_without_debug_port") {
+    Write-Host "A Xinjian window was detected by title, but it has no reachable DevTools port. Reopen it through the Ziniao/CDP bridge or a browser started with remote debugging."
+  } elseif (!$debugPorts -or $debugPorts.Count -eq 0) {
     Write-Host "No running browser debug port was found. Open a Ziniao browser window first."
   } elseif (!$detectedPages -or $detectedPages.Count -eq 0) {
     Write-Host "No debuggable browser page matched the target Xinjian URL."

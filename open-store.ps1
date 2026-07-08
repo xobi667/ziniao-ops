@@ -137,8 +137,6 @@ function Test-SetupCannotFixOpenFailure($OpenJson) {
   return ($error -in @(
     "multiple_matches",
     "view_url_missing",
-    "shops_cache_missing",
-    "shops_cache_empty",
     "command_disabled",
     "gui_mouse_confirmation_required",
     "ziniao_gui_match_failed",
@@ -240,32 +238,13 @@ if (Test-SetupCannotFixOpenFailure $fastOpen.Json) {
   exit $fastOpen.Code
 }
 
-if (!$AllowGuiMouse) {
-  if ($Json) {
-    Write-OneShotResult ([ordered]@{
-      ok = $false
-      method = "open_store_gui_mouse_required"
-      error = "gui_mouse_confirmation_required"
-      message = "Opening did not finish through non-mouse automation. Setup or GUI fallback may focus Ziniao and move the mouse; rerun with -AllowGuiMouse only when that is acceptable."
-      query = $Query
-      view = $View
-      view_inferred_from_query = $ViewWasInferred
-      current_window_first = $false
-      open = $fastOpen.Json
-      raw_open_output = if ($fastOpen.Json) { $null } else { $fastOpen.Output }
-      next_step = "Use .\\open-shop.ps1 with -DryRun -Json for matching checks, or rerun this command with -AllowGuiMouse when the employee accepts foreground GUI control."
-    }) 4
-  }
-  if ($fastOpen.Json -and $fastOpen.Json.message) {
-    Write-Host $fastOpen.Json.message
-  }
-  Write-Host "Opening did not finish through non-mouse automation. Rerun with -AllowGuiMouse only if foreground GUI control is acceptable."
-  exit 4
-}
-
 if (!$Json) {
-  Write-Host "Current-window quick open did not finish. Preparing Ziniao and waiting for local login if needed."
-  Write-Host "Complete login in the Ziniao window; this command will continue automatically after login."
+  if ($AllowGuiMouse) {
+    Write-Host "Current-window quick open did not finish. Preparing Ziniao and waiting for local login if needed."
+    Write-Host "Complete login in the Ziniao window; this command will continue automatically after login."
+  } else {
+    Write-Host "Current-window quick open did not finish. Running non-mouse Ziniao setup automatically."
+  }
 }
 
 $setupArgs = @(
@@ -307,7 +286,11 @@ if ($setupCode -ne 0) {
       view_inferred_from_query = $ViewWasInferred
       setup = $setupJson
       raw_output = if ($setupJson) { $null } else { $setupOutput }
-      next_step = "Finish login in the foregrounded Ziniao window, then run the same open command again."
+      next_step = if ($AllowGuiMouse) {
+        "Finish login in the foregrounded Ziniao window, then run the same open command again."
+      } else {
+        "Non-mouse setup failed. Fix the reported local blocker, then rerun the same command; foreground GUI fallback is still disabled unless -AllowGuiMouse is passed."
+      }
     }) $setupCode
   }
 }

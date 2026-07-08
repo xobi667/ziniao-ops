@@ -32,7 +32,7 @@ function Test-DevToolsPort {
 }
 
 if (!$UserDataDir) {
-  $UserDataDir = Join-Path ([System.IO.Path]::GetTempPath()) "codex-xinjian-browser-profile"
+  $UserDataDir = Join-Path ([System.IO.Path]::GetTempPath()) "codex-xinjian-browser-profile-$Port"
 }
 New-Item -ItemType Directory -Force -Path $UserDataDir | Out-Null
 

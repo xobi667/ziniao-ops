@@ -44,6 +44,14 @@ If opening fails or the employee asks what is missing, run:
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "diagnose-local.ps1")
 ```
 
+For lightweight current-state detection that does not move the mouse, navigate, or read cookies/tokens, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\get-runtime-status.ps1") -Json
+```
+
+It caches results briefly by default. Use `-Refresh` after the employee says they just logged in. Use `-Full` only when a stronger WebDriver/diagnose probe is needed. Treat `seller_window_detected` or `xinjian_window_detected` as page-open signals, not proof that the backend API is authenticated. The detector uses DevTools URL/title when available and falls back to normal browser window titles when no DevTools port exists; title-only matches are useful for not missing an already-open window, but they are not controllable until the page is reopened with a DevTools port. Default workflows should run detection and safe non-mouse recovery automatically; do not ask the employee to run these checks manually.
+
 If the employee is setting up this package for the first time, or if Ziniao login/cache readiness is unclear, run:
 
 ```powershell
@@ -366,6 +374,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinj
 ```
 
 If it returns `manual_xinjian_login_in_ziniao_required`, 心舰 is open in a 紫鸟 browser but not logged in; the employee must manually complete 心舰 login there.
+
+If no 心舰 window is found, `xinjian-ziniao-bridge.ps1` auto-opens a controllable Edge/Chrome page by default and then continues detection. If that page is not logged in, the employee must manually complete login in the opened browser; Codex should rerun the same command after login. Use `-NoAutoOpen` only for diagnostics. If it returns `xinjian_window_detected_without_debug_port`, a likely 心舰 window was found by title, so the bridge should not open a duplicate window. That title-only window cannot be inspected or used for data extraction until it is reopened through a debuggable bridge or browser profile.
 
 Use `scripts\invoke-ziniao-cli.ps1` by default for local store list/open/inspect commands when the optional `ziniao` CLI is installed. The wrapper still refuses secret-like arguments and long-running commands unless explicitly allowed. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
 

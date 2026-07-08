@@ -243,7 +243,11 @@ const expression = `(() => {
               if (shopApi && typeof shopApi.getShops === "function") {
                 shopCalls.push(shopApi.getShops({}));
               }
-              const shopResults = await Promise.allSettled(shopCalls);
+              const shopResults = await withTimeout(
+                Promise.allSettled(shopCalls),
+                8000,
+                "shop_lookup_timeout"
+              );
               shopRows = uniqueShops(shopResults.flatMap((item) => (
                 item.status === "fulfilled" ? collectShops(item.value) : []
               )));
@@ -263,6 +267,10 @@ const expression = `(() => {
                 suggestions[requested] = suggestShops(requested, shopRows);
               }
             });
+
+            if (matched.length === 0 && appModuleError) {
+              throw new Error(appModuleError + "; falling_back_to_native_fetch");
+            }
 
             const currentData = [];
             const preData = [];

@@ -183,6 +183,8 @@ $required = @(
   "scripts\powershell-utils.ps1",
   "scripts\invoke-ziniao-cli.ps1",
   "scripts\invoke-auto-ziniao.ps1",
+  "scripts\detect-ziniao-windows.ps1",
+  "scripts\get-runtime-status.ps1",
   "scripts\install-upstream-tools.ps1",
   "scripts\sensitive-text.ps1",
   "scripts\check-external-tools.ps1",
