@@ -44,6 +44,7 @@ function Get-LocatorStrategy($Action) {
     if ($locator.tab_texts -and $locator.dom_placeholders) { return "click_quick_tab_text_or_placeholder_list" }
     if ($locator.tab_texts) { return "click_visible_tab_text_from_list" }
     if ($locator.dom_placeholders) { return "input_or_filter_placeholder_list" }
+    if ($locator.table_column) { return "row_context_required_column_header" }
     if ($locator.uia_name) { return "map_only_uia_locator" }
   }
   $type = [string]$Action.type
@@ -101,7 +102,8 @@ $locatorStrategy = Get-LocatorStrategy $action
 $requiresExport = ($safetyMode -eq "confirmation_required_export")
 $requiresWrite = ($safetyMode -eq "confirmation_required_write")
 $unknownSafety = ($safetyMode -eq "dry_run_only_unknown_safety")
-$canExecute = !$unknownSafety -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+$requiresRowContext = ($locatorStrategy -like "row_context_required*")
+$canExecute = !$unknownSafety -and !$requiresRowContext -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
 
 $plan = [ordered]@{
   intent = $Intent
@@ -117,7 +119,9 @@ $plan = [ordered]@{
   locator_strategy = $locatorStrategy
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
-  safety_note = if ($requiresWrite) {
+  safety_note = if ($requiresRowContext) {
+    "Row-level action needs an explicit row context or captured row button metadata. Dry-run only; refusing to blindly click the first row."
+  } elseif ($requiresWrite) {
     "Write/delete/save/submit-like action. Dry-run by default; pass -Execute -AllowWrite only after explicit user confirmation."
   } elseif ($requiresExport) {
     "Export/download action. Dry-run by default; pass -Execute -AllowExport only after explicit user confirmation."
@@ -155,7 +159,7 @@ if (!$canExecute) {
     ok = $false
     mode = "blocked_by_safety"
     plan = $plan
-    next_action = if ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
+    next_action = if ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20

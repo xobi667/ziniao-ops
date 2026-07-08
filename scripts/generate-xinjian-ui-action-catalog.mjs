@@ -60,6 +60,7 @@ function locatorStrategy(action) {
   if (Array.isArray(locator.tab_texts) && locator.tab_texts.length && Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return "click_quick_tab_text_or_placeholder_list";
   if (Array.isArray(locator.tab_texts) && locator.tab_texts.length) return "click_visible_tab_text_from_list";
   if (Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) return "input_or_filter_placeholder_list";
+  if (locator.table_column) return "row_context_required_column_header";
   if (locator.uia_name) return "uia_locator";
   if (hasVisibleTextFallback(action)) return "click_visible_action_text";
   if (hasFilterLabelFallback(action)) return "click_visible_filter_label_or_text";
@@ -89,6 +90,7 @@ function actionContext(action) {
   if (locator.dialog_title && locator.button_text) return `${clean(locator.dialog_title)} -> ${clean(locator.button_text)}`;
   if (locator.column_header && locator.row_action_text) return `${clean(locator.column_header)} -> ${clean(locator.row_action_text)}`;
   if (locator.row_action_text) return clean(locator.row_action_text);
+  if (locator.table_column) return `column:${clean(locator.table_column)}`;
   if (Array.isArray(locator.tab_texts) && locator.tab_texts.length && Array.isArray(locator.dom_placeholders) && locator.dom_placeholders.length) {
     return `tabs:${unique(locator.tab_texts).join("/")}; placeholders:${unique(locator.dom_placeholders).join("/")}`;
   }

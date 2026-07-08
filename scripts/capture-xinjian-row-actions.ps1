@@ -5,6 +5,7 @@ param(
   [string]$OutputPath = "",
   [int]$MaxTables = 12,
   [int]$MaxRowsPerTable = 20,
+  [int]$WaitMs = 8000,
   [switch]$Json
 )
 
@@ -47,7 +48,7 @@ if (!(Test-Path -LiteralPath $helper)) {
   exit 2
 }
 
-$argsList = @($helper, "--port", [string]$Port, "--match-url", $Url, "--out", $OutputPath, "--max-tables", [string]$MaxTables, "--max-rows-per-table", [string]$MaxRowsPerTable)
+$argsList = @($helper, "--port", [string]$Port, "--match-url", $Url, "--out", $OutputPath, "--max-tables", [string]$MaxTables, "--max-rows-per-table", [string]$MaxRowsPerTable, "--wait-ms", [string]$WaitMs)
 $raw = @(& node @argsList 2>&1)
 $code = $LASTEXITCODE
 $text = ($raw | Out-String).Trim()

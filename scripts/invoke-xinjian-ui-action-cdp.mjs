@@ -233,6 +233,22 @@ const expression = `(() => {
     return false;
   };
   const run = async () => {
+    if (action.locator?.table_column && ["row_navigation", "row_operation"].includes(action.type)) {
+      return {
+        ok: false,
+        action_id: action.id || "",
+        action_name: action.name || "",
+        action_type: action.type || "",
+        safety: action.safety || "",
+        page: {
+          href: location.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]"),
+          title: document.title,
+          path: location.pathname
+        },
+        error: "row_context_required",
+        next_action: "Provide a row identifier or capture exact row action button metadata before executing this row-level action."
+      };
+    }
     let clicked = false;
     if (action.type === "navigation" || action.type === "module_switch") clicked = clickNavigation();
     else if (action.type === "overlay_trigger" || action.type === "overlay_item") clicked = await clickOverlay();

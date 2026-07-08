@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T11:48:36.581Z",
+  "generated_at": "2026-07-08T11:54:41.305Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -86,8 +86,8 @@
       "click_visible_tab_text_from_list": 1,
       "input_or_filter_placeholder": 67,
       "input_or_filter_placeholder_list": 2,
-      "map_only": 2,
       "navigate_href": 43,
+      "row_context_required_column_header": 2,
       "uia_locator": 9
     }
   },
@@ -193,30 +193,7 @@
         "purpose": "Choose 利润 from the 请选择 overlay on 首页."
       }
     ],
-    "map_only_actions": [
-      {
-        "page": "店铺广告分析",
-        "route": "/ad/shop-detail",
-        "action": "行分析",
-        "context": "",
-        "type": "row_navigation",
-        "safety_mode": "safe_execute_allowed",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Open a row-level advertising analysis/detail page for the selected shop or ad entity."
-      },
-      {
-        "page": "下载中心",
-        "route": "/download/list",
-        "action": "操作",
-        "context": "",
-        "type": "row_operation",
-        "safety_mode": "confirmation_required_export",
-        "locator_strategy": "map_only",
-        "source_map": "curated",
-        "purpose": "Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture."
-      }
-    ],
+    "map_only_actions": [],
     "empty_locator_actions": [],
     "next_improvements": [
       "Capture generic platform tabs, row navigation, and row operations with exact DOM text or row-action locators where possible.",
@@ -1267,7 +1244,7 @@
         {
           "id": "ad.shop_detail.open_detail",
           "name": "行分析",
-          "context": "",
+          "context": "column:分析",
           "aliases": [
             "行分析",
             "查看广告分析",
@@ -1279,11 +1256,12 @@
           "safety_mode": "safe_execute_allowed",
           "confirmation_required": false,
           "purpose": "Open a row-level advertising analysis/detail page for the selected shop or ad entity.",
-          "function_source": "observed table column; exact row button text not captured yet",
+          "function_source": "observed table column; current verified capture had no rows, so execution requires explicit row context or later row-button capture",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "row_context_required_column_header",
           "locator": {
-            "table_column": "分析"
+            "table_column": "分析",
+            "requires_row_context": true
           }
         },
         {
@@ -1377,7 +1355,7 @@
         {
           "id": "erp.ads.rule_log.filter.date_range",
           "name": "日期范围",
-          "context": "placeholders:开始日期/结束日期",
+          "context": "column:执行时间",
           "aliases": [
             "日期",
             "开始日期",
@@ -1530,7 +1508,7 @@
         {
           "id": "erp.ads.rule_log.detail",
           "name": "详情",
-          "context": "text:详情",
+          "context": "column:操作",
           "aliases": [
             "详情",
             "查看详情",
@@ -11338,7 +11316,7 @@
         {
           "id": "download.list.filter.report_name",
           "name": "报告名称",
-          "context": "placeholder:请输入报告名称",
+          "context": "column:报表名称",
           "aliases": [
             "报告名称",
             "报表名称",
@@ -11381,7 +11359,7 @@
         {
           "id": "download.list.row_operation",
           "name": "操作",
-          "context": "",
+          "context": "column:操作",
           "aliases": [
             "下载",
             "打开报表",
@@ -11393,11 +11371,12 @@
           "safety_mode": "confirmation_required_export",
           "confirmation_required": true,
           "purpose": "Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture.",
-          "function_source": "observed table operation column; row button text not captured",
+          "function_source": "observed table operation column; current verified capture had no rows, so execution requires explicit row context or later row-button capture",
           "source_map": "curated",
-          "locator_strategy": "map_only",
+          "locator_strategy": "row_context_required_column_header",
           "locator": {
-            "table_column": "操作"
+            "table_column": "操作",
+            "requires_row_context": true
           }
         }
       ]

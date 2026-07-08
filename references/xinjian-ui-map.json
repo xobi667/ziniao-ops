@@ -694,8 +694,8 @@
           "type": "row_navigation",
           "safety": "navigation",
           "purpose": "Open a row-level advertising analysis/detail page for the selected shop or ad entity.",
-          "function_source": "observed table column; exact row button text not captured yet",
-          "locator": { "table_column": "分析" }
+          "function_source": "observed table column; current verified capture had no rows, so execution requires explicit row context or later row-button capture",
+          "locator": { "table_column": "分析", "requires_row_context": true }
         }
       ]
     },
@@ -1000,8 +1000,8 @@
           "type": "row_operation",
           "safety": "confirmation_required_export",
           "purpose": "Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture.",
-          "function_source": "observed table operation column; row button text not captured",
-          "locator": { "table_column": "操作" }
+          "function_source": "observed table operation column; current verified capture had no rows, so execution requires explicit row context or later row-button capture",
+          "locator": { "table_column": "操作", "requires_row_context": true }
         }
       ]
     }
