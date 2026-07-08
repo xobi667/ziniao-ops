@@ -210,6 +210,8 @@ const typeCounts = {};
 const safetyCounts = {};
 const locatorStrategyCounts = {};
 let globalActionCount = 0;
+let tableHeaderActionCount = 0;
+const tableHeaderSource = { id: "table_header", label: "table-header" };
 
 function ensurePage(pageLike, source) {
   const needles = unique(pageLike?.url_contains || []);
@@ -240,7 +242,7 @@ function ensurePage(pageLike, source) {
 function addAction(pageLike, action, source, global = false) {
   const page = ensurePage(global ? { id: "global", name: "Global", module: "Global" } : pageLike, source);
   const identity = actionIdentity(page.route || page.id, action, source.id);
-  if (actionSeen.has(identity)) return;
+  if (actionSeen.has(identity)) return false;
   actionSeen.add(identity);
   const mode = safetyMode(action);
   const strategy = locatorStrategy(action);
@@ -263,6 +265,55 @@ function addAction(pageLike, action, source, global = false) {
     locator_strategy: strategy,
     locator: action.locator || {}
   });
+  return true;
+}
+
+function actionIdSegment(value) {
+  return clean(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fa5]+/gi, ".")
+    .replace(/^\.+|\.+$/g, "") || "column";
+}
+
+function collectTableHeaderNames(pageLike) {
+  const names = [];
+  const observedHeaders = pageLike?.observed_controls?.table_headers;
+  if (Array.isArray(observedHeaders)) {
+    for (const header of observedHeaders) {
+      if (typeof header === "string") names.push(header);
+      else if (header && typeof header === "object") names.push(header.name);
+    }
+  }
+  for (const key of ["table_headers", "table_columns"]) {
+    if (Array.isArray(pageLike?.[key])) names.push(...pageLike[key]);
+  }
+  if (Array.isArray(pageLike?.layout?.table_columns)) names.push(...pageLike.layout.table_columns);
+  return unique(names).filter((name) => !["选择框", "操作"].includes(name));
+}
+
+function addTableHeaderActions(pageLike) {
+  const explicitColumns = new Set(
+    (pageLike?.actions || [])
+      .filter((action) => clean(action?.type) === "table_column")
+      .map((action) => clean(action?.name).toLowerCase())
+  );
+  let added = 0;
+  for (const name of collectTableHeaderNames(pageLike)) {
+    if (explicitColumns.has(name.toLowerCase())) continue;
+    const idBase = clean(pageLike?.id) || routeKey((pageLike?.url_contains || [])[0]) || "xinjian.page";
+    const action = {
+      id: `${actionIdSegment(idBase)}.table.column.${actionIdSegment(name)}`,
+      name,
+      aliases: [name],
+      type: "table_column",
+      safety: "read_filter",
+      purpose: `Remember that ${clean(pageLike?.name) || "this page"} has the ${name} table column/metric.`,
+      function_source: "generated from sanitized public table header metadata; no row data was read",
+      locator: { table_column: name }
+    };
+    if (addAction(pageLike, action, tableHeaderSource)) added += 1;
+  }
+  return added;
 }
 
 for (const source of sources) {
@@ -282,6 +333,7 @@ for (const source of sources) {
       addAction(page, action, source);
       actionCount += 1;
     }
+    tableHeaderActionCount += addTableHeaderActions(page);
   }
   sourceStats.push({
     source: source.label,
@@ -289,6 +341,16 @@ for (const source of sources) {
     version: clean(map.version),
     pages: (map.pages || []).length,
     actions: actionCount
+  });
+}
+
+if (tableHeaderActionCount > 0) {
+  sourceStats.push({
+    source: tableHeaderSource.label,
+    loaded: true,
+    version: "generated",
+    pages: 0,
+    actions: tableHeaderActionCount
   });
 }
 

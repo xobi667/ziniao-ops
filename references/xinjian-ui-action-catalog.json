@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T14:30:01.649Z",
+  "generated_at": "2026-07-08T15:58:33.985Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -10,7 +10,7 @@
   },
   "totals": {
     "pages": 49,
-    "actions": 928,
+    "actions": 1010,
     "global_actions": 6,
     "source_stats": [
       {
@@ -47,6 +47,13 @@
         "version": "2026-07-08",
         "pages": 47,
         "actions": 6
+      },
+      {
+        "source": "table-header",
+        "loaded": true,
+        "version": "generated",
+        "pages": 0,
+        "actions": 82
       }
     ],
     "type_counts": {
@@ -68,12 +75,12 @@
       "row_operation": 1,
       "status_tab": 5,
       "tab": 46,
-      "table_column": 370
+      "table_column": 452
     },
     "safety_counts": {
       "confirmation_required_export": 8,
       "confirmation_required_write": 139,
-      "safe_execute_allowed": 781
+      "safe_execute_allowed": 863
     },
     "locator_strategy_counts": {
       "click_first_matching_row_action_in_table": 6,
@@ -87,7 +94,7 @@
       "input_or_filter_placeholder": 67,
       "input_or_filter_placeholder_list": 2,
       "navigate_href": 43,
-      "read_table_column_header": 370,
+      "read_table_column_header": 452,
       "row_context_required_column_header": 2,
       "row_context_required_dialog": 3,
       "uia_locator": 9
@@ -121,7 +128,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -293,6 +301,63 @@
           "locator": {
             "trigger_text": "修改",
             "trigger_selector": "div.white-box:nth-of-type(3) > form.el-form > div.hui-box > div.hui-tit:nth-of-type(1) > span:nth-of-type(2) > button.el-button.el-button--text.el-button--small"
+          }
+        },
+        {
+          "id": "ad.group.detail.table.column.点击出价",
+          "name": "点击出价",
+          "context": "column:点击出价",
+          "aliases": [
+            "点击出价"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告详情 has the 点击出价 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "点击出价"
+          }
+        },
+        {
+          "id": "ad.group.detail.table.column.关键词",
+          "name": "关键词",
+          "context": "column:关键词",
+          "aliases": [
+            "关键词"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告详情 has the 关键词 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "关键词"
+          }
+        },
+        {
+          "id": "ad.group.detail.table.column.关联版位",
+          "name": "关联版位",
+          "context": "column:关联版位",
+          "aliases": [
+            "关联版位"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告详情 has the 关联版位 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "关联版位"
           }
         }
       ]
@@ -712,7 +777,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -1081,6 +1147,272 @@
               "Tiktok"
             ]
           }
+        },
+        {
+          "id": "ad.shop.detail.table.column.点击量",
+          "name": "点击量",
+          "context": "column:点击量",
+          "aliases": [
+            "点击量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 点击量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "点击量"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.点击率",
+          "name": "点击率",
+          "context": "column:点击率",
+          "aliases": [
+            "点击率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 点击率 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "点击率"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.店铺",
+          "name": "店铺",
+          "context": "column:店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 店铺 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.分析",
+          "name": "分析",
+          "context": "column:分析",
+          "aliases": [
+            "分析"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 分析 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "分析"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.广告订单量",
+          "name": "广告订单量",
+          "context": "column:广告订单量",
+          "aliases": [
+            "广告订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 广告订单量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "广告订单量"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.广告花费",
+          "name": "广告花费",
+          "context": "column:广告花费",
+          "aliases": [
+            "广告花费"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 广告花费 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "广告花费"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.广告销量",
+          "name": "广告销量",
+          "context": "column:广告销量",
+          "aliases": [
+            "广告销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 广告销量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "广告销量"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.广告销售额",
+          "name": "广告销售额",
+          "context": "column:广告销售额",
+          "aliases": [
+            "广告销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 广告销售额 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "广告销售额"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.广告余额预警设置",
+          "name": "广告余额预警设置",
+          "context": "column:广告余额预警设置",
+          "aliases": [
+            "广告余额预警设置"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 广告余额预警设置 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "广告余额预警设置"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.平均下单成本",
+          "name": "平均下单成本",
+          "context": "column:平均下单成本",
+          "aliases": [
+            "平均下单成本"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 平均下单成本 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "平均下单成本"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.展现量",
+          "name": "展现量",
+          "context": "column:展现量",
+          "aliases": [
+            "展现量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 展现量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "展现量"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.转化率",
+          "name": "转化率",
+          "context": "column:转化率",
+          "aliases": [
+            "转化率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the 转化率 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "转化率"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.acos",
+          "name": "ACoS",
+          "context": "column:ACoS",
+          "aliases": [
+            "ACoS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the ACoS table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "ACoS"
+          }
+        },
+        {
+          "id": "ad.shop.detail.table.column.roas",
+          "name": "ROAS",
+          "context": "column:ROAS",
+          "aliases": [
+            "ROAS"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 店铺广告分析 has the ROAS table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "ROAS"
+          }
         }
       ]
     },
@@ -1102,7 +1434,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -1383,6 +1716,139 @@
           "locator": {
             "dom_text": "详情",
             "table_column": "操作"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.变更",
+          "name": "变更",
+          "context": "column:变更",
+          "aliases": [
+            "变更"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 变更 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "变更"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.触发条件",
+          "name": "触发条件",
+          "context": "column:触发条件",
+          "aliases": [
+            "触发条件"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 触发条件 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "触发条件"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.广告信息",
+          "name": "广告信息",
+          "context": "column:广告信息",
+          "aliases": [
+            "广告信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 广告信息 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "广告信息"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.规则名称",
+          "name": "规则名称",
+          "context": "column:规则名称",
+          "aliases": [
+            "规则名称"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 规则名称 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "规则名称"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.执行操作",
+          "name": "执行操作",
+          "context": "column:执行操作",
+          "aliases": [
+            "执行操作"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 执行操作 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "执行操作"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.执行结果",
+          "name": "执行结果",
+          "context": "column:执行结果",
+          "aliases": [
+            "执行结果"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 执行结果 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "执行结果"
+          }
+        },
+        {
+          "id": "erp.ads.rule.log.table.column.执行时间",
+          "name": "执行时间",
+          "context": "column:执行时间",
+          "aliases": [
+            "执行时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 广告规则执行日志 has the 执行时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "执行时间"
           }
         }
       ]
@@ -6729,7 +7195,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -6982,6 +7449,177 @@
             "trigger_text": "全部商务",
             "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
           }
+        },
+        {
+          "id": "crm.blacklist.table.column.达人标签",
+          "name": "达人标签",
+          "context": "column:达人标签",
+          "aliases": [
+            "达人标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 达人标签 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人标签"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.达人信息",
+          "name": "达人信息",
+          "context": "column:达人信息",
+          "aliases": [
+            "达人信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 达人信息 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人信息"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.点赞数",
+          "name": "点赞数",
+          "context": "column:点赞数",
+          "aliases": [
+            "点赞数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 点赞数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "点赞数"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.粉丝数",
+          "name": "粉丝数",
+          "context": "column:粉丝数",
+          "aliases": [
+            "粉丝数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 粉丝数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "粉丝数"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.拉黑操作人",
+          "name": "拉黑操作人",
+          "context": "column:拉黑操作人",
+          "aliases": [
+            "拉黑操作人"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 拉黑操作人 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "拉黑操作人"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.拉黑时间",
+          "name": "拉黑时间",
+          "context": "column:拉黑时间",
+          "aliases": [
+            "拉黑时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 拉黑时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "拉黑时间"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.拉黑原因",
+          "name": "拉黑原因",
+          "context": "column:拉黑原因",
+          "aliases": [
+            "拉黑原因"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 拉黑原因 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "拉黑原因"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.联系方式",
+          "name": "联系方式",
+          "context": "column:联系方式",
+          "aliases": [
+            "联系方式"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 联系方式 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "联系方式"
+          }
+        },
+        {
+          "id": "crm.blacklist.table.column.品类",
+          "name": "品类",
+          "context": "column:品类",
+          "aliases": [
+            "品类"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 黑名单 has the 品类 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "品类"
+          }
         }
       ]
     },
@@ -7002,7 +7640,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -7166,6 +7805,367 @@
             "trigger_text": "状态",
             "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.blacklist-filter-item:nth-of-type(5) > div.el-form-item__content > div.el-select.multiple-select.placeholder666"
           }
+        },
+        {
+          "id": "crm.focus.table.column.达人标签",
+          "name": "达人标签",
+          "context": "column:达人标签",
+          "aliases": [
+            "达人标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 达人标签 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人标签"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.达人信息",
+          "name": "达人信息",
+          "context": "column:达人信息",
+          "aliases": [
+            "达人信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 达人信息 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人信息"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.带货订单量",
+          "name": "带货订单量",
+          "context": "column:带货订单量",
+          "aliases": [
+            "带货订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 带货订单量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "带货订单量"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.点赞数",
+          "name": "点赞数",
+          "context": "column:点赞数",
+          "aliases": [
+            "点赞数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 点赞数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "点赞数"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.粉丝数",
+          "name": "粉丝数",
+          "context": "column:粉丝数",
+          "aliases": [
+            "粉丝数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 粉丝数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "粉丝数"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.跟进商务",
+          "name": "跟进商务",
+          "context": "column:跟进商务",
+          "aliases": [
+            "跟进商务"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 跟进商务 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "跟进商务"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.跟进时间",
+          "name": "跟进时间",
+          "context": "column:跟进时间",
+          "aliases": [
+            "跟进时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 跟进时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "跟进时间"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.互动率",
+          "name": "互动率",
+          "context": "column:互动率",
+          "aliases": [
+            "互动率"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 互动率 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "互动率"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.画像.品类",
+          "name": "画像 / 品类",
+          "context": "column:画像 / 品类",
+          "aliases": [
+            "画像 / 品类"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 画像 / 品类 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "画像 / 品类"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.商品销量",
+          "name": "商品销量",
+          "context": "column:商品销量",
+          "aliases": [
+            "商品销量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 商品销量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "商品销量"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.视频平均播放量",
+          "name": "视频平均播放量",
+          "context": "column:视频平均播放量",
+          "aliases": [
+            "视频平均播放量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 视频平均播放量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "视频平均播放量"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.视频销售额",
+          "name": "视频销售额",
+          "context": "column:视频销售额",
+          "aliases": [
+            "视频销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 视频销售额 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "视频销售额"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.销售额",
+          "name": "销售额",
+          "context": "column:销售额",
+          "aliases": [
+            "销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 销售额 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "销售额"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.佣金总额",
+          "name": "佣金总额",
+          "context": "column:佣金总额",
+          "aliases": [
+            "佣金总额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 佣金总额 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "佣金总额"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.直播销售额",
+          "name": "直播销售额",
+          "context": "column:直播销售额",
+          "aliases": [
+            "直播销售额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 直播销售额 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "直播销售额"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.状态",
+          "name": "状态",
+          "context": "column:状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the 状态 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.gmv",
+          "name": "GMV",
+          "context": "column:GMV",
+          "aliases": [
+            "GMV"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the GMV table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "GMV"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.item.sold",
+          "name": "Item Sold",
+          "context": "column:Item Sold",
+          "aliases": [
+            "Item Sold"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the Item Sold table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "Item Sold"
+          }
+        },
+        {
+          "id": "crm.focus.table.column.roi",
+          "name": "ROI",
+          "context": "column:ROI",
+          "aliases": [
+            "ROI"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 重点关注 has the ROI table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "ROI"
+          }
         }
       ]
     },
@@ -7186,7 +8186,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -7959,6 +8960,177 @@
             "uia_name_starts_with": "已申样",
             "uia_type": "TabItem"
           }
+        },
+        {
+          "id": "crm.highseas.table.column.达人标签",
+          "name": "达人标签",
+          "context": "column:达人标签",
+          "aliases": [
+            "达人标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 达人标签 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人标签"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.达人信息",
+          "name": "达人信息",
+          "context": "column:达人信息",
+          "aliases": [
+            "达人信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 达人信息 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人信息"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.粉丝数",
+          "name": "粉丝数",
+          "context": "column:粉丝数",
+          "aliases": [
+            "粉丝数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 粉丝数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "粉丝数"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.跟进商务",
+          "name": "跟进商务",
+          "context": "column:跟进商务",
+          "aliases": [
+            "跟进商务"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 跟进商务 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "跟进商务"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.画像.品类",
+          "name": "画像 / 品类",
+          "context": "column:画像 / 品类",
+          "aliases": [
+            "画像 / 品类"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 画像 / 品类 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "画像 / 品类"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.交互时间",
+          "name": "交互时间",
+          "context": "column:交互时间",
+          "aliases": [
+            "交互时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 交互时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "交互时间"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.状态",
+          "name": "状态",
+          "context": "column:状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the 状态 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.gmv",
+          "name": "GMV",
+          "context": "column:GMV",
+          "aliases": [
+            "GMV"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the GMV table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "GMV"
+          }
+        },
+        {
+          "id": "crm.highseas.table.column.item.sold",
+          "name": "Item Sold",
+          "context": "column:Item Sold",
+          "aliases": [
+            "Item Sold"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 达人公海 has the Item Sold table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "Item Sold"
+          }
         }
       ]
     },
@@ -7979,7 +9151,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -8487,6 +9660,177 @@
             "trigger_text": "选择标签",
             "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.my-master-filter-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.my-master-tag-filter.placeholder666"
           }
+        },
+        {
+          "id": "crm.my.master.table.column.达人标签",
+          "name": "达人标签",
+          "context": "column:达人标签",
+          "aliases": [
+            "达人标签"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 达人标签 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人标签"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.达人信息",
+          "name": "达人信息",
+          "context": "column:达人信息",
+          "aliases": [
+            "达人信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 达人信息 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人信息"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.粉丝数",
+          "name": "粉丝数",
+          "context": "column:粉丝数",
+          "aliases": [
+            "粉丝数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 粉丝数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "粉丝数"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.跟进商务",
+          "name": "跟进商务",
+          "context": "column:跟进商务",
+          "aliases": [
+            "跟进商务"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 跟进商务 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "跟进商务"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.跟进时间",
+          "name": "跟进时间",
+          "context": "column:跟进时间",
+          "aliases": [
+            "跟进时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 跟进时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "跟进时间"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.画像.品类",
+          "name": "画像 / 品类",
+          "context": "column:画像 / 品类",
+          "aliases": [
+            "画像 / 品类"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 画像 / 品类 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "画像 / 品类"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.状态",
+          "name": "状态",
+          "context": "column:状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the 状态 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "状态"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.gmv",
+          "name": "GMV",
+          "context": "column:GMV",
+          "aliases": [
+            "GMV"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the GMV table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "GMV"
+          }
+        },
+        {
+          "id": "crm.my.master.table.column.item.sold",
+          "name": "Item Sold",
+          "context": "column:Item Sold",
+          "aliases": [
+            "Item Sold"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 我的达人 has the Item Sold table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "Item Sold"
+          }
         }
       ]
     },
@@ -8760,7 +10104,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -8884,6 +10229,120 @@
           "locator": {
             "trigger_text": "选择店铺",
             "trigger_selector": "div.white-box:nth-of-type(2) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "data.overview.table.column.成交订单量",
+          "name": "成交订单量",
+          "context": "column:成交订单量",
+          "aliases": [
+            "成交订单量"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 数据概览 has the 成交订单量 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "成交订单量"
+          }
+        },
+        {
+          "id": "data.overview.table.column.成交金额",
+          "name": "成交金额",
+          "context": "column:成交金额",
+          "aliases": [
+            "成交金额"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 数据概览 has the 成交金额 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "成交金额"
+          }
+        },
+        {
+          "id": "data.overview.table.column.成交商品数",
+          "name": "成交商品数",
+          "context": "column:成交商品数",
+          "aliases": [
+            "成交商品数"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 数据概览 has the 成交商品数 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "成交商品数"
+          }
+        },
+        {
+          "id": "data.overview.table.column.达人信息",
+          "name": "达人信息",
+          "context": "column:达人信息",
+          "aliases": [
+            "达人信息"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 数据概览 has the 达人信息 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "达人信息"
+          }
+        },
+        {
+          "id": "data.overview.table.column.店铺",
+          "name": "店铺",
+          "context": "column:店铺",
+          "aliases": [
+            "店铺"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 数据概览 has the 店铺 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "店铺"
+          }
+        },
+        {
+          "id": "data.overview.table.column.排名",
+          "name": "排名",
+          "context": "column:排名",
+          "aliases": [
+            "排名"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 数据概览 has the 排名 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "排名"
           }
         }
       ]
@@ -18693,7 +20152,8 @@
         "curated",
         "dialog",
         "overlay",
-        "row-action"
+        "row-action",
+        "table-header"
       ],
       "actions": [
         {
@@ -18806,6 +20266,120 @@
           "locator": {
             "table_column": "操作",
             "requires_row_context": true
+          }
+        },
+        {
+          "id": "download.list.table.column.报表名称",
+          "name": "报表名称",
+          "context": "column:报表名称",
+          "aliases": [
+            "报表名称"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 下载中心 has the 报表名称 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "报表名称"
+          }
+        },
+        {
+          "id": "download.list.table.column.报表日期范围",
+          "name": "报表日期范围",
+          "context": "column:报表日期范围",
+          "aliases": [
+            "报表日期范围"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 下载中心 has the 报表日期范围 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "报表日期范围"
+          }
+        },
+        {
+          "id": "download.list.table.column.创建时间",
+          "name": "创建时间",
+          "context": "column:创建时间",
+          "aliases": [
+            "创建时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 下载中心 has the 创建时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "创建时间"
+          }
+        },
+        {
+          "id": "download.list.table.column.功能模块",
+          "name": "功能模块",
+          "context": "column:功能模块",
+          "aliases": [
+            "功能模块"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 下载中心 has the 功能模块 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "功能模块"
+          }
+        },
+        {
+          "id": "download.list.table.column.生成时间",
+          "name": "生成时间",
+          "context": "column:生成时间",
+          "aliases": [
+            "生成时间"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 下载中心 has the 生成时间 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "生成时间"
+          }
+        },
+        {
+          "id": "download.list.table.column.生成状态",
+          "name": "生成状态",
+          "context": "column:生成状态",
+          "aliases": [
+            "生成状态"
+          ],
+          "type": "table_column",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Remember that 下载中心 has the 生成状态 table column/metric.",
+          "function_source": "generated from sanitized public table header metadata; no row data was read",
+          "source_map": "table-header",
+          "locator_strategy": "read_table_column_header",
+          "locator": {
+            "table_column": "生成状态"
           }
         }
       ]

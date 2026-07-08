@@ -63,6 +63,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\lear
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\query-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
 ```
 
+By default the query script reads `references/xinjian-ui-action-catalog.json` first, so generated read-only table-header memory is available to intent matching. If the catalog is unavailable, it falls back to the raw curated/auto/overlay/dialog/row-action maps.
+
 3. To inspect the full remembered button/action catalog:
 
 ```powershell
@@ -162,7 +164,10 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -CompareCatalog -Json
 ```
+
+The UIA capture filters private/noisy browser controls, pagination-only list items, close glyphs, and non-action buttons before saving observations. `-CompareCatalog` compares the visible controls against the current unified action catalog and reports matched controls plus non-navigation controls that are still missing from memory.
 
 The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`, `.ziniao-ops\xinjian-overlay-captures\`, `.ziniao-ops\xinjian-dialog-captures\`, `.ziniao-ops\xinjian-row-action-captures\`, `.ziniao-ops\xinjian-route-discovery\`, `.ziniao-ops\xinjian-crawl-state.json`, `.ziniao-ops\xinjian-overlay-crawl-state.json`, `.ziniao-ops\xinjian-dialog-crawl-state.json`, `.ziniao-ops\xinjian-row-action-crawl-state.json`, or `.ziniao-ops\xinjian-ui-observations\`. These local files are intentionally ignored by Git. Promote only generic page knowledge into `references/xinjian-ui-map.json`, generated `references/xinjian-ui-auto-map.json`, generated `references/xinjian-ui-overlay-map.json`, generated `references/xinjian-ui-dialog-map.json`, generated `references/xinjian-ui-row-action-map.json`, or the generated catalog.
 
@@ -211,7 +216,7 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Dynamic overlay coverage: 47 public known pages, 0 pending after exclusions, 26 pages with promoted overlay actions, 21 pages retained as safely probed with no public overlay actions, 121 overlay actions after stale action-menu leakage filtering and same-context de-duplication.
 - Dialog/drawer coverage: 47 public known pages, 0 pending after exclusions, 9 pages with promoted dialog actions, 38 pages retained as safely probed with no public dialog actions, 41 dialog actions.
 - Table row-action coverage: 47 public known pages, 0 pending after exclusions, 2 pages with promoted row actions, 45 pages retained as safely probed with no public row actions, 6 row actions.
-- Unified action catalog: 49 pages, 928 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 370 read-only `table_column` actions for remembered table metrics/headers. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when they only expose generic shell controls, and restricted/no-access pages are tagged as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`, and row-level dialog openers are marked `row_context_required_dialog`.
+- Unified action catalog: 49 pages, 1010 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 452 read-only `table_column` actions for remembered table metrics/headers, including 82 generated from sanitized public table-header metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when they only expose generic shell controls, and restricted/no-access pages are tagged as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`, and row-level dialog openers are marked `row_context_required_dialog`.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

@@ -8,10 +8,12 @@ param(
   [string]$OverlayMapPath = "",
   [string]$DialogMapPath = "",
   [string]$RowActionMapPath = "",
+  [string]$CatalogPath = "",
   [switch]$NoAutoMap,
   [switch]$NoOverlayMap,
   [switch]$NoDialogMap,
   [switch]$NoRowActionMap,
+  [switch]$NoCatalog,
   [switch]$Json
 )
 
@@ -31,6 +33,9 @@ if (!$DialogMapPath) {
 }
 if (!$RowActionMapPath) {
   $RowActionMapPath = Join-Path $root "references\xinjian-ui-row-action-map.json"
+}
+if (!$CatalogPath) {
+  $CatalogPath = Join-Path $root "references\xinjian-ui-action-catalog.json"
 }
 if (!(Test-Path -LiteralPath $MapPath)) {
   $payload = [ordered]@{
@@ -102,13 +107,20 @@ function Get-ActionScore($Action, [string]$Query) {
     (New-UnicodeText @(0x6807, 0x8BB0))
   )
   $fields = @()
-  foreach ($name in @("name", "purpose", "type", "safety")) {
+  foreach ($name in @("name", "purpose", "context")) {
     if ($Action.PSObject.Properties.Match($name).Count -gt 0 -and $Action.$name) {
       $fields += [string]$Action.$name
     }
   }
   foreach ($alias in @($Action.aliases)) {
     if ($alias) { $fields += [string]$alias }
+  }
+  if ($Action.PSObject.Properties.Match("locator").Count -gt 0 -and $Action.locator) {
+    foreach ($prop in @("dom_text", "dom_placeholder", "trigger_text", "item_text", "button_text", "table_column", "row_action_text", "column_header")) {
+      if ($Action.locator.PSObject.Properties.Match($prop).Count -gt 0 -and $Action.locator.$prop) {
+        $fields += [string]$Action.locator.$prop
+      }
+    }
   }
   $seenFields = @{}
   foreach ($field in $fields) {
@@ -123,8 +135,8 @@ function Get-ActionScore($Action, [string]$Query) {
         break
       }
     }
-    if ($Query -eq $norm) { $score += 100 }
-    elseif ($queryCompact -and $queryCompact -eq $normCompact) { $score += 95 }
+    if ($Query -eq $norm) { $score += 250 }
+    elseif ($queryCompact -and $queryCompact -eq $normCompact) { $score += 230 }
     elseif ($Query.Contains($norm) -or $norm.Contains($Query) -or ($queryCompact -and ($queryCompact.Contains($normCompact) -or $normCompact.Contains($queryCompact)))) { $score += 35 }
     else {
       foreach ($part in @([regex]::Split($Query, "[\s,/]+") | Where-Object { $_ })) {
@@ -141,6 +153,12 @@ function Get-ActionScore($Action, [string]$Query) {
   }
   if ($Action.PSObject.Properties.Match("safety").Count -gt 0 -and $Action.safety -eq "read_filter" -and $hasReadIntentWord) {
     $score += 15
+  }
+  if ($Action.PSObject.Properties.Match("type").Count -gt 0 -and $Action.type -eq "table_column" -and
+      $Action.PSObject.Properties.Match("locator").Count -gt 0 -and $Action.locator -and
+      $Action.locator.PSObject.Properties.Match("table_column").Count -gt 0 -and
+      $queryCompact -and $queryCompact -eq (Compact-Text ([string]$Action.locator.table_column))) {
+    $score += 80
   }
   if ($Action.PSObject.Properties.Match("type").Count -gt 0 -and ($Action.type -eq "dialog_button" -or $Action.type -eq "dialog_opener")) {
     $dialogButtonWords = @(
@@ -279,57 +297,74 @@ if (!$NoRowActionMap -and (Test-Path -LiteralPath $RowActionMapPath)) {
     $rowActionMap = $null
   }
 }
-$allPages = @($map.pages)
-$pageKeys = @{}
-foreach ($page in @($allPages)) {
-  if ($page.id) { $pageKeys[[string]$page.id] = $true }
-  foreach ($needle in @($page.url_contains)) {
-    if ($needle) { $pageKeys[(Get-RouteKey $needle)] = $true }
+$catalog = $null
+$catalogSourceMode = "raw_maps"
+if (!$NoCatalog -and (Test-Path -LiteralPath $CatalogPath)) {
+  try {
+    $catalog = Get-Content -LiteralPath $CatalogPath -Raw -Encoding UTF8 | ConvertFrom-Json
+  } catch {
+    $catalog = $null
   }
 }
-if ($autoMap -and $autoMap.pages) {
-  foreach ($page in @($autoMap.pages)) {
-    $duplicate = $false
-    if ($page.id -and $pageKeys.ContainsKey([string]$page.id)) { $duplicate = $true }
+
+if ($catalog -and $catalog.pages) {
+  $catalogSourceMode = "action_catalog"
+  $globalCatalogPages = @($catalog.pages | Where-Object { [string]$_.id -eq "global" })
+  $allPages = @($catalog.pages | Where-Object { [string]$_.id -ne "global" })
+  $allGlobalActions = @($globalCatalogPages | ForEach-Object { @($_.actions) })
+} else {
+  $allPages = @($map.pages)
+  $pageKeys = @{}
+  foreach ($page in @($allPages)) {
+    if ($page.id) { $pageKeys[[string]$page.id] = $true }
     foreach ($needle in @($page.url_contains)) {
-      if ($needle -and $pageKeys.ContainsKey((Get-RouteKey $needle))) { $duplicate = $true }
+      if ($needle) { $pageKeys[(Get-RouteKey $needle)] = $true }
     }
-    if (!$duplicate) {
-      $allPages += $page
-      if ($page.id) { $pageKeys[[string]$page.id] = $true }
+  }
+  if ($autoMap -and $autoMap.pages) {
+    foreach ($page in @($autoMap.pages)) {
+      $duplicate = $false
+      if ($page.id -and $pageKeys.ContainsKey([string]$page.id)) { $duplicate = $true }
       foreach ($needle in @($page.url_contains)) {
-        if ($needle) { $pageKeys[(Get-RouteKey $needle)] = $true }
+        if ($needle -and $pageKeys.ContainsKey((Get-RouteKey $needle))) { $duplicate = $true }
+      }
+      if (!$duplicate) {
+        $allPages += $page
+        if ($page.id) { $pageKeys[[string]$page.id] = $true }
+        foreach ($needle in @($page.url_contains)) {
+          if ($needle) { $pageKeys[(Get-RouteKey $needle)] = $true }
+        }
       }
     }
   }
-}
-if ($overlayMap -and $overlayMap.pages) {
-  foreach ($page in @($overlayMap.pages)) {
-    $allPages += $page
+  if ($overlayMap -and $overlayMap.pages) {
+    foreach ($page in @($overlayMap.pages)) {
+      $allPages += $page
+    }
   }
-}
-if ($dialogMap -and $dialogMap.pages) {
-  foreach ($page in @($dialogMap.pages)) {
-    $allPages += $page
+  if ($dialogMap -and $dialogMap.pages) {
+    foreach ($page in @($dialogMap.pages)) {
+      $allPages += $page
+    }
   }
-}
-if ($rowActionMap -and $rowActionMap.pages) {
-  foreach ($page in @($rowActionMap.pages)) {
-    $allPages += $page
+  if ($rowActionMap -and $rowActionMap.pages) {
+    foreach ($page in @($rowActionMap.pages)) {
+      $allPages += $page
+    }
   }
-}
-$allGlobalActions = @($map.global_actions)
-if ($autoMap -and $autoMap.global_actions) {
-  $allGlobalActions += @($autoMap.global_actions)
-}
-if ($overlayMap -and $overlayMap.global_actions) {
-  $allGlobalActions += @($overlayMap.global_actions)
-}
-if ($dialogMap -and $dialogMap.global_actions) {
-  $allGlobalActions += @($dialogMap.global_actions)
-}
-if ($rowActionMap -and $rowActionMap.global_actions) {
-  $allGlobalActions += @($rowActionMap.global_actions)
+  $allGlobalActions = @($map.global_actions)
+  if ($autoMap -and $autoMap.global_actions) {
+    $allGlobalActions += @($autoMap.global_actions)
+  }
+  if ($overlayMap -and $overlayMap.global_actions) {
+    $allGlobalActions += @($overlayMap.global_actions)
+  }
+  if ($dialogMap -and $dialogMap.global_actions) {
+    $allGlobalActions += @($dialogMap.global_actions)
+  }
+  if ($rowActionMap -and $rowActionMap.global_actions) {
+    $allGlobalActions += @($rowActionMap.global_actions)
+  }
 }
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
@@ -437,6 +472,9 @@ $candidates = @($candidates |
     }
     if ($action.type -eq "navigation") { $rank -= 20 }
     if ($action.type -eq "button" -or $action.type -eq "batch_action") { $rank += 10 }
+    if ($action.type -eq "filter_input") { $rank += 16 }
+    if ($action.type -eq "filter_dropdown") { $rank += 12 }
+    if ($action.type -eq "table_column") { $rank += 8 }
     if ($action.type -eq "overlay_item") { $rank += 12 }
     if ($action.type -eq "overlay_trigger") { $rank -= 5 }
     if ($action.type -eq "dialog_button") { $rank += 14 }
@@ -459,6 +497,10 @@ $payload = [ordered]@{
   page_match_mode = if ($Url -and $urlMatchedPages.Count -gt 0) { "current_url_scope" } elseif ($Url) { "url_no_page_match_fallback" } else { "global_or_name_scope" }
   suppressed_off_page_name_matches = if ($Url -and $urlMatchedPages.Count -gt 0) { @($nameMatchedPages | Where-Object { !$_.current_url_match }).Count } else { 0 }
   suppressed_global_matches = $suppressedGlobalMatches
+  source_mode = $catalogSourceMode
+  catalog_path = if ($catalogSourceMode -eq "action_catalog") { $CatalogPath } else { $null }
+  catalog_version = if ($catalog) { $catalog.version } else { $null }
+  catalog_totals = if ($catalog) { $catalog.totals } else { $null }
   map_version = $map.version
   auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
   overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }

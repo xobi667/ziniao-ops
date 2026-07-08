@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 928
+- Actions: 1010
 - Global actions: 6
 
 ### Sources
@@ -17,6 +17,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | overlay | 2026-07-08 | 47 | 121 |
 | dialog | 2026-07-08 | 47 | 41 |
 | row-action | 2026-07-08 | 47 | 6 |
+| table-header | generated | 0 | 82 |
 
 ### Safety
 
@@ -24,7 +25,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | confirmation_required_export | 8 |
 | confirmation_required_write | 139 |
-| safe_execute_allowed | 781 |
+| safe_execute_allowed | 863 |
 
 ### Locator Strategies
 
@@ -41,7 +42,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | input_or_filter_placeholder | 67 |
 | input_or_filter_placeholder_list | 2 |
 | navigate_href | 43 |
-| read_table_column_header | 370 |
+| read_table_column_header | 452 |
 | row_context_required_column_header | 2 |
 | row_context_required_dialog | 3 |
 | uia_locator | 9 |
@@ -55,8 +56,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 广告详情
 
 - Route: `/ad/group-detail`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 7
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 10
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -67,6 +68,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 修改取消 | 修改 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 修改 dialog/drawer on 广告详情. |
 | 修改确定 | 修改 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 修改 dialog/drawer on 广告详情. |
 | 修改 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 修改 dialog/drawer on 广告详情; do not submit changes without explicit confirmation. |
+| 点击出价 | column:点击出价 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告详情 has the 点击出价 table column/metric. |
+| 关键词 | column:关键词 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告详情 has the 关键词 table column/metric. |
+| 关联版位 | column:关联版位 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告详情 has the 关联版位 table column/metric. |
 
 ## ADS / 创意详情
 
@@ -97,8 +101,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 店铺广告分析
 
 - Route: `/ad/shop-detail`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 16
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 30
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -118,12 +122,26 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 店铺广告分析. |
 | 行分析 | column:分析 | row_navigation | safe_execute_allowed | row_context_required_column_header | curated | Open a row-level advertising analysis/detail page for the selected shop or ad entity. |
 | 平台标签 | tabs:Shopee/Lazada/Tiktok | tab | safe_execute_allowed | click_visible_tab_text_from_list | curated | Switch the shop advertising analysis table between platform tabs. |
+| 点击量 | column:点击量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 点击量 table column/metric. |
+| 点击率 | column:点击率 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 点击率 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 店铺 table column/metric. |
+| 分析 | column:分析 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 分析 table column/metric. |
+| 广告订单量 | column:广告订单量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 广告订单量 table column/metric. |
+| 广告花费 | column:广告花费 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 广告花费 table column/metric. |
+| 广告销量 | column:广告销量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 广告销量 table column/metric. |
+| 广告销售额 | column:广告销售额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 广告销售额 table column/metric. |
+| 广告余额预警设置 | column:广告余额预警设置 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 广告余额预警设置 table column/metric. |
+| 平均下单成本 | column:平均下单成本 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 平均下单成本 table column/metric. |
+| 展现量 | column:展现量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 展现量 table column/metric. |
+| 转化率 | column:转化率 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 转化率 table column/metric. |
+| ACoS | column:ACoS | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the ACoS table column/metric. |
+| ROAS | column:ROAS | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the ROAS table column/metric. |
 
 ## ADS / 广告规则执行日志
 
 - Route: `/erp/ads/rule-log`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 13
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 20
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -140,6 +158,13 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 广告规则执行日志. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 广告规则执行日志. |
 | 详情 | column:操作 | row_navigation | safe_execute_allowed | click_visible_dom_text | curated | Open detail for a visible advertising rule execution log row. |
+| 变更 | column:变更 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 变更 table column/metric. |
+| 触发条件 | column:触发条件 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 触发条件 table column/metric. |
+| 广告信息 | column:广告信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 广告信息 table column/metric. |
+| 规则名称 | column:规则名称 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 规则名称 table column/metric. |
+| 执行操作 | column:执行操作 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 执行操作 table column/metric. |
+| 执行结果 | column:执行结果 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 执行结果 table column/metric. |
+| 执行时间 | column:执行时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 执行时间 table column/metric. |
 
 ## AI / 创作会话
 
@@ -505,8 +530,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 黑名单
 
 - Route: `/crm/matser/management/blacklist`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 12
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 21
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -522,12 +547,21 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 黑名单. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 黑名单. |
 | 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 黑名单. |
+| 达人标签 | column:达人标签 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 达人标签 table column/metric. |
+| 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 达人信息 table column/metric. |
+| 点赞数 | column:点赞数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 点赞数 table column/metric. |
+| 粉丝数 | column:粉丝数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 粉丝数 table column/metric. |
+| 拉黑操作人 | column:拉黑操作人 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 拉黑操作人 table column/metric. |
+| 拉黑时间 | column:拉黑时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 拉黑时间 table column/metric. |
+| 拉黑原因 | column:拉黑原因 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 拉黑原因 table column/metric. |
+| 联系方式 | column:联系方式 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 联系方式 table column/metric. |
+| 品类 | column:品类 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 黑名单 has the 品类 table column/metric. |
 
 ## CRM / 重点关注
 
 - Route: `/crm/matser/management/focus`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 8
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 27
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -539,12 +573,31 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 重点关注. |
 | 选择标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 重点关注. |
 | 状态 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 状态 overlay on 重点关注. |
+| 达人标签 | column:达人标签 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 达人标签 table column/metric. |
+| 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 达人信息 table column/metric. |
+| 带货订单量 | column:带货订单量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 带货订单量 table column/metric. |
+| 点赞数 | column:点赞数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 点赞数 table column/metric. |
+| 粉丝数 | column:粉丝数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 粉丝数 table column/metric. |
+| 跟进商务 | column:跟进商务 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 跟进商务 table column/metric. |
+| 跟进时间 | column:跟进时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 跟进时间 table column/metric. |
+| 互动率 | column:互动率 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 互动率 table column/metric. |
+| 画像 / 品类 | column:画像 / 品类 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 画像 / 品类 table column/metric. |
+| 商品销量 | column:商品销量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 商品销量 table column/metric. |
+| 视频平均播放量 | column:视频平均播放量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 视频平均播放量 table column/metric. |
+| 视频销售额 | column:视频销售额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 视频销售额 table column/metric. |
+| 销售额 | column:销售额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 销售额 table column/metric. |
+| 佣金总额 | column:佣金总额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 佣金总额 table column/metric. |
+| 直播销售额 | column:直播销售额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 直播销售额 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the 状态 table column/metric. |
+| GMV | column:GMV | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the GMV table column/metric. |
+| Item Sold | column:Item Sold | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the Item Sold table column/metric. |
+| ROI | column:ROI | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 重点关注 has the ROI table column/metric. |
 
 ## CRM / 达人公海
 
 - Route: `/crm/matser/management/highSeas`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 34
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 43
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -582,12 +635,21 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 已出单 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators that already generated orders. |
 | 已触达 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators already reached/contacted. |
 | 已申样 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators already in sample request status. |
+| 达人标签 | column:达人标签 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 达人标签 table column/metric. |
+| 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 达人信息 table column/metric. |
+| 粉丝数 | column:粉丝数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 粉丝数 table column/metric. |
+| 跟进商务 | column:跟进商务 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 跟进商务 table column/metric. |
+| 画像 / 品类 | column:画像 / 品类 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 画像 / 品类 table column/metric. |
+| 交互时间 | column:交互时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 交互时间 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 状态 table column/metric. |
+| GMV | column:GMV | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the GMV table column/metric. |
+| Item Sold | column:Item Sold | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the Item Sold table column/metric. |
 
 ## CRM / 我的达人
 
 - Route: `/crm/matser/management/myMaster`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 23
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 32
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -614,6 +676,15 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 我的达人. |
 | 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 我的达人. |
 | 选择标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 我的达人. |
+| 达人标签 | column:达人标签 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 达人标签 table column/metric. |
+| 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 达人信息 table column/metric. |
+| 粉丝数 | column:粉丝数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 粉丝数 table column/metric. |
+| 跟进商务 | column:跟进商务 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 跟进商务 table column/metric. |
+| 跟进时间 | column:跟进时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 跟进时间 table column/metric. |
+| 画像 / 品类 | column:画像 / 品类 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 画像 / 品类 table column/metric. |
+| 状态 | column:状态 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 状态 table column/metric. |
+| GMV | column:GMV | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the GMV table column/metric. |
+| Item Sold | column:Item Sold | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the Item Sold table column/metric. |
 
 ## CRM / 店铺详情
 
@@ -639,8 +710,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 数据概览
 
 - Route: `/dataView/data-overview`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 6
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 12
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -650,6 +721,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 数据概览. |
 | 搜索商品名称或链接ID |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 搜索商品名称或链接ID overlay on 数据概览. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 数据概览. |
+| 成交订单量 | column:成交订单量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 成交订单量 table column/metric. |
+| 成交金额 | column:成交金额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 成交金额 table column/metric. |
+| 成交商品数 | column:成交商品数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 成交商品数 table column/metric. |
+| 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 达人信息 table column/metric. |
+| 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 店铺 table column/metric. |
+| 排名 | column:排名 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 排名 table column/metric. |
 
 ## ERP / 流程定义
 
@@ -1346,8 +1423,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## System / 下载中心
 
 - Route: `/download/list`
-- Sources: curated, dialog, overlay, row-action
-- Actions: 5
+- Sources: curated, dialog, overlay, row-action, table-header
+- Actions: 11
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -1356,6 +1433,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 报告名称 | column:报表名称 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Search generated reports by report name. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 下载中心. |
 | 操作 | column:操作 | row_operation | confirmation_required_export | row_context_required_column_header | curated | Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture. |
+| 报表名称 | column:报表名称 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 报表名称 table column/metric. |
+| 报表日期范围 | column:报表日期范围 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 报表日期范围 table column/metric. |
+| 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 创建时间 table column/metric. |
+| 功能模块 | column:功能模块 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 功能模块 table column/metric. |
+| 生成时间 | column:生成时间 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 生成时间 table column/metric. |
+| 生成状态 | column:生成状态 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 生成状态 table column/metric. |
 
 ## System / 首页
 
