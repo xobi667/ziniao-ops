@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_overlay_captures",
-  "generated_at": "2026-07-08T13:42:46.486Z",
+  "generated_at": "2026-07-08T13:46:08.755Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
@@ -977,8 +977,8 @@
           "overlays_with_items": 1,
           "items": 2,
           "filtered_items": 11,
-          "overlays": 4,
-          "overlay_actions": 6
+          "overlays": 9,
+          "overlay_actions": 9
         },
         "coverage_result": "actions_promoted",
         "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
@@ -1000,6 +1000,47 @@
             "items": [
               "成功",
               "失败"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 6,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 3,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "成功",
+              "失败"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
             ]
           },
           {
@@ -1111,6 +1152,55 @@
           "locator": {
             "trigger_text": "请选择",
             "trigger_selector": "section.app-main.height-auto > div.app-container.rule-log-page > div.page-down.pagination-section:nth-of-type(5) > div.pagination.el-pagination:nth-of-type(2) > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
           }
         }
       ]

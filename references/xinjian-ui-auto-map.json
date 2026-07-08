@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dom_captures",
-  "generated_at": "2026-07-08T13:32:51.975Z",
+  "generated_at": "2026-07-08T13:46:07.945Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "This generated map stores generic page controls only. It must not contain credentials, cookies, tokens, storage values, input values, or private table row data.",

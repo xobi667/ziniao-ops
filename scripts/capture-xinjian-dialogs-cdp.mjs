@@ -230,6 +230,13 @@ const expression = `(async () => {
   };
 
   await closeDialogs();
+  const initialPage = {
+    href: redactUrl(location.href),
+    title: document.title,
+    path: location.pathname,
+    has_app_root: !!document.querySelector("#app"),
+    has_password_input: !!document.querySelector("input[type='password']")
+  };
   const seen = new Set();
   const triggers = Array.from(document.querySelectorAll("button, .el-button, [role='button']"))
     .filter(isVisible)
@@ -295,17 +302,19 @@ const expression = `(async () => {
     }
   }
   await closeDialogs();
+  const finalPage = {
+    href: redactUrl(location.href),
+    title: document.title,
+    path: location.pathname,
+    has_app_root: !!document.querySelector("#app"),
+    has_password_input: !!document.querySelector("input[type='password']")
+  };
 
   return {
     captured_at: new Date().toISOString(),
     source: "chrome_cdp_dialog_probe",
-    page: {
-      href: redactUrl(location.href),
-      title: document.title,
-      path: location.pathname,
-      has_app_root: !!document.querySelector("#app"),
-      has_password_input: !!document.querySelector("input[type='password']")
-    },
+    page: initialPage,
+    final_page: finalPage,
     counts: {
       triggers: results.length,
       triggers_with_dialogs: results.filter((item) => item.dialog_count > 0).length,

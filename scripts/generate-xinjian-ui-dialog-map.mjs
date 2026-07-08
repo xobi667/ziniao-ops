@@ -152,6 +152,40 @@ function moduleFromPath(routePath) {
   return "ERP";
 }
 
+function publicRouteCandidate(value) {
+  const route = normalizePath(value);
+  if (!route || route === "/" || route === "/login" || route === "/404" || route === "/401") return "";
+  return route;
+}
+
+function routeFromCapture(capture) {
+  const candidates = [];
+  const matchedUrl = capture?.matched_page?.url || "";
+  if (matchedUrl) candidates.push({ route: publicRouteCandidate(matchedUrl), weight: 4 });
+  for (const trigger of capture.dialog_triggers || []) {
+    if (trigger?.before_path) candidates.push({ route: publicRouteCandidate(trigger.before_path), weight: 3 });
+  }
+  candidates.push({ route: publicRouteCandidate(capture?.page?.path || capture?.page?.href || ""), weight: 2 });
+  candidates.push({ route: publicRouteCandidate(capture?.final_page?.path || capture?.final_page?.href || ""), weight: 1 });
+
+  const scores = new Map();
+  for (const candidate of candidates) {
+    const route = candidate.route;
+    if (!route) continue;
+    const penalty = route === "/index/noaccess" ? -10 : 0;
+    scores.set(route, (scores.get(route) || 0) + candidate.weight + penalty);
+  }
+  return [...scores.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+}
+
+function titleFromCapture(capture, routePath) {
+  const matchedUrl = normalizePath(capture?.matched_page?.url || "");
+  if (matchedUrl === routePath && capture?.matched_page?.title) return capture.matched_page.title;
+  const pageRoute = normalizePath(capture?.page?.path || capture?.page?.href || "");
+  if (pageRoute === routePath && capture?.page?.title) return capture.page.title;
+  return capture?.matched_page?.title || capture?.page?.title || routePath;
+}
+
 function classifySafety(name, type) {
   const compact = clean(name).replace(/\s+/g, "");
   if (type === "dialog_opener") return "opens_dialog_no_submit";
@@ -193,9 +227,10 @@ function aliasesForOpener(triggerName) {
 
 function pageFromCapture(capture) {
   const page = capture.page || {};
-  const routePath = normalizePath(page.path);
-  if (!routePath || routePath === "/" || routePath === "/login" || routePath === "/404" || routePath === "/401") return null;
-  const pageName = clean(String(page.title || "").replace(/\s*-\s*心舰\s*$/g, "")) || routePath;
+  const routePath = routeFromCapture(capture);
+  if (!routePath) return null;
+  const pageTitle = titleFromCapture(capture, routePath);
+  const pageName = clean(String(pageTitle || "").replace(/\s*-\s*心舰\s*$/g, "")) || routePath;
   const dialogs = [];
   const actions = [];
 
@@ -267,6 +302,10 @@ function pageFromCapture(capture) {
       source: "chrome_cdp_dialog_probe",
       captured_page_url: page.href || "",
       captured_page_title: page.title || "",
+      matched_page_url: capture?.matched_page?.url || "",
+      matched_page_title: capture?.matched_page?.title || "",
+      final_page_url: capture?.final_page?.href || "",
+      final_page_title: capture?.final_page?.title || "",
       captured_counts: capture.counts || {},
       coverage_result: dedupedActions.length > 0 ? "actions_promoted" : "probe_ran_no_public_dialog_actions",
       function_source: "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"

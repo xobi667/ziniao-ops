@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 1002
+- Actions: 1005
 - Global actions: 6
 
 ### Sources
@@ -14,7 +14,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
 | auto | 2026-07-08 | 38 | 713 |
-| overlay | 2026-07-08 | 47 | 289 |
+| overlay | 2026-07-08 | 47 | 292 |
 | dialog | 2026-07-08 | 47 | 41 |
 | row-action | 2026-07-08 | 47 | 6 |
 
@@ -24,7 +24,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | confirmation_required_export | 8 |
 | confirmation_required_write | 170 |
-| safe_execute_allowed | 824 |
+| safe_execute_allowed | 827 |
 
 ### Locator Strategies
 
@@ -32,9 +32,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | click_first_matching_row_action_in_table | 6 |
 | click_quick_tab_text_or_placeholder_list | 3 |
-| click_trigger_selector | 83 |
+| click_trigger_selector | 84 |
 | click_trigger_selector_then_dialog_button_text | 31 |
-| click_trigger_selector_then_overlay_item_text | 106 |
+| click_trigger_selector_then_overlay_item_text | 108 |
 | click_visible_action_text | 50 |
 | click_visible_dom_text | 222 |
 | click_visible_tab_text_from_list | 1 |
@@ -129,8 +129,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 广告规则执行日志
 
 - Route: `/erp/ads/rule-log`
-- Sources: curated, overlay, row-action
-- Actions: 10
+- Sources: curated, dialog, overlay, row-action
+- Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -140,7 +140,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 搜索内容 | placeholder:请输入搜索内容 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Search advertising rule execution logs. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Filter advertising rule execution logs by shop. |
 | 成功 | 请选择 -> 成功 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 成功 from the 请选择 overlay on 广告规则执行日志. |
+| 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 广告规则执行日志. |
 | 失败 | 请选择 -> 失败 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 失败 from the 请选择 overlay on 广告规则执行日志. |
+| 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 广告规则执行日志. |
+| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 广告规则执行日志. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 广告规则执行日志. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 广告规则执行日志. |
 | 详情 | column:操作 | row_navigation | safe_execute_allowed | click_visible_dom_text | curated | Open detail for a visible advertising rule execution log row. |
@@ -1471,7 +1474,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## System / 受限页面
 
 - Route: `/index/noaccess`
-- Sources: auto, dialog
+- Sources: auto
 - Actions: 4
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |

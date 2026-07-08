@@ -51,6 +51,37 @@ function Get-ActionProp($Action, [string]$Name) {
   return $null
 }
 
+function Test-RestrictedPage {
+  param([object]$Page)
+  $route = [string]$Page.route
+  $name = [string]$Page.name
+  return $route -match "(^|/)noaccess(/|$)" -or $name -match "受限|无权限|No\s*Access"
+}
+
+function Test-SparseShellPage {
+  param(
+    [object[]]$Actions,
+    [object]$SourceCounts,
+    [int]$MinActionThreshold
+  )
+  $items = @($Actions)
+  if ($items.Count -eq 0 -or $items.Count -ge $MinActionThreshold) { return $false }
+  foreach ($source in @("auto", "overlay", "dialog", "row-action")) {
+    if (!$SourceCounts.Contains($source)) { return $false }
+  }
+  $knownShellNames = @(
+    -join ([char]0x4fdd, [char]0x5b58, [char]0x914d, [char]0x7f6e),
+    -join ([char]0x91cd, [char]0x7f6e, [char]0x914d, [char]0x7f6e),
+    -join ([char]0x7528, [char]0x6237, [char]0x83dc, [char]0x5355),
+    -join ([char]0x9996, [char]0x9875)
+  )
+  foreach ($action in $items) {
+    $name = [string](Get-ActionProp $action "name")
+    if ($knownShellNames -notcontains $name) { return $false }
+  }
+  return $true
+}
+
 function Convert-PageReportForOutput($Report, [bool]$Detailed) {
   if ($Detailed) { return $Report }
   return [pscustomobject]([ordered]@{
@@ -84,6 +115,7 @@ foreach ($page in $pages) {
   $safetyCounts = Get-CountMap ($actions | ForEach-Object { Get-ActionProp $_ "safety_mode" })
   $locatorCounts = Get-CountMap ($actions | ForEach-Object { Get-ActionProp $_ "locator_strategy" })
   $gaps = @()
+  $notes = @()
   $riskScore = 0
 
   $manualReview = [int]($safetyCounts["manual_review"])
@@ -92,11 +124,15 @@ foreach ($page in $pages) {
       $locator = Get-ActionProp $_ "locator"
       !$locator -or @($locator.PSObject.Properties).Count -eq 0
     }).Count
+  $isRestrictedPage = Test-RestrictedPage $page
+  $isSparseShellPage = Test-SparseShellPage -Actions $actions -SourceCounts $sourceCounts -MinActionThreshold $MinActions
+  if ($isRestrictedPage) { $notes += "restricted_or_noaccess_page" }
+  if ($isSparseShellPage) { $notes += "sparse_shell_page_fully_covered" }
 
   if ($actions.Count -eq 0) {
     $gaps += "no_actions"
     $riskScore += 100
-  } elseif ($actions.Count -lt $MinActions) {
+  } elseif ($actions.Count -lt $MinActions -and !$isRestrictedPage -and !$isSparseShellPage) {
     $gaps += "low_action_count"
     $riskScore += (40 - $actions.Count)
   }
@@ -112,7 +148,7 @@ foreach ($page in $pages) {
     $gaps += "empty_locators"
     $riskScore += 60 + $emptyLocator
   }
-  $isRealPage = [string]$page.route -and [string]$page.module -ne "Global"
+  $isRealPage = [string]$page.route -and [string]$page.module -ne "Global" -and !$isRestrictedPage
   if ($isRealPage) {
     if (!$sourceCounts.Contains("overlay")) {
       $gaps += "no_overlay_memory"
@@ -155,6 +191,7 @@ foreach ($page in $pages) {
       types = $typeCounts
       locator_strategies = $locatorCounts
       gaps = $gaps
+      notes = $notes
       risk_score = $riskScore
       recommended_command = if ($learnUrl) { "powershell -ExecutionPolicy Bypass -File (Join-Path `$ZiniaoOpsHome `"scripts\learn-xinjian-current-page.ps1`") -Url `"$learnUrl`" -Json" } else { "" }
     })

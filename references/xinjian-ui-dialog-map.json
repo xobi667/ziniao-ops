@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_dialog_captures",
-  "generated_at": "2026-07-08T13:42:46.506Z",
+  "generated_at": "2026-07-08T13:47:32.066Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Dialog map stores safe dialog/drawer opener labels plus generic button/field labels only. Input values, cookies, storage, tokens, and private-looking text are not captured.",
@@ -26,6 +26,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/ad/group-detail",
         "captured_page_title": "广告详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/ad/group-detail",
+        "matched_page_title": "广告详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -156,6 +160,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/ad/originality-detail",
         "captured_page_title": "创意详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/ad/originality-detail",
+        "matched_page_title": "创意详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -189,6 +197,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/ad/shop-detail",
         "captured_page_title": "店铺广告分析 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/ad/shop-detail",
+        "matched_page_title": "店铺广告分析 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -301,6 +313,43 @@
       ]
     },
     {
+      "id": "dialog.erp.ads.rule.log",
+      "name": "广告规则执行日志",
+      "module": "ADS",
+      "route_pattern": "^/erp/ads/rule-log\\/?$",
+      "url_contains": [
+        "/erp/ads/rule-log"
+      ],
+      "title_aliases": [
+        "受限页面 - 心舰",
+        "广告规则执行日志"
+      ],
+      "purpose": "Auto-generated dialog/drawer memory for 广告规则执行日志.",
+      "evidence": {
+        "source": "chrome_cdp_dialog_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/index/noaccess",
+        "captured_page_title": "受限页面 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/erp/ads/rule-log/",
+        "matched_page_title": "广告规则执行日志 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
+        "captured_counts": {
+          "triggers": 4,
+          "triggers_with_dialogs": 0,
+          "dialogs": 0,
+          "dialog_buttons": 0,
+          "field_labels": 0,
+          "dialog_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_dialog_actions",
+        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
+      },
+      "observed_controls": {
+        "dialogs": []
+      },
+      "actions": []
+    },
+    {
       "id": "dialog.ai.talk",
       "name": "创作会话",
       "module": "AI",
@@ -317,6 +366,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/ai/talk",
         "captured_page_title": "创作会话 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/ai/talk",
+        "matched_page_title": "创作会话 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -350,6 +403,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
         "captured_page_title": "售后单管理 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
+        "matched_page_title": "售后单管理 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -503,6 +560,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bi/monitor/pushFlowStats/",
         "captured_page_title": "推送监控 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bi/monitor/pushFlowStats/",
+        "matched_page_title": "推送监控 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -536,6 +597,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
         "captured_page_title": "售后单管理 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
+        "matched_page_title": "售后单管理 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -689,6 +754,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
         "captured_page_title": "售后单管理 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
+        "matched_page_title": "售后单管理 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -842,6 +911,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bi/profit/detail",
         "captured_page_title": "店铺利润分析详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bi/profit/detail",
+        "matched_page_title": "店铺利润分析详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -875,6 +948,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/dataView/data-overview",
         "captured_page_title": "数据概览 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/dataView/data-overview",
+        "matched_page_title": "数据概览 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -908,6 +985,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/user-analyze/detail",
         "captured_page_title": "商品复购分析报告详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/user-analyze/detail",
+        "matched_page_title": "商品复购分析报告详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -941,6 +1022,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/coopera-detail",
         "captured_page_title": "合作单详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/coopera-detail",
+        "matched_page_title": "合作单详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -974,6 +1059,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail",
         "captured_page_title": "合作单详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail",
+        "matched_page_title": "合作单详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1007,6 +1096,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail-simple",
         "captured_page_title": "合作单详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail-simple",
+        "matched_page_title": "合作单详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1040,6 +1133,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/favorite/detail",
         "captured_page_title": "收藏夹详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/favorite/detail",
+        "matched_page_title": "收藏夹详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 0,
@@ -1073,6 +1170,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/blacklist",
         "captured_page_title": "黑名单 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/matser/management/blacklist",
+        "matched_page_title": "黑名单 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1106,6 +1207,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/focus",
         "captured_page_title": "重点关注 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/matser/management/focus",
+        "matched_page_title": "重点关注 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1139,6 +1244,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/highSeas",
         "captured_page_title": "达人公海 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/matser/management/highSeas",
+        "matched_page_title": "达人公海 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1172,6 +1281,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
         "captured_page_title": "我的达人 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
+        "matched_page_title": "我的达人 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1385,6 +1498,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/crm/shop-detail",
         "captured_page_title": "店铺详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/crm/shop-detail",
+        "matched_page_title": "店铺详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1418,6 +1535,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bpm/manager/definition",
         "captured_page_title": "流程定义 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bpm/manager/definition",
+        "matched_page_title": "流程定义 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1451,6 +1572,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/create",
         "captured_page_title": "发起 OA 请假 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/create",
+        "matched_page_title": "发起 OA 请假 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1484,6 +1609,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/detail",
         "captured_page_title": "查看 OA 请假 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/detail",
+        "matched_page_title": "查看 OA 请假 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1517,6 +1646,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/create",
         "captured_page_title": "发起流程 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bpm/process-instance/create",
+        "matched_page_title": "发起流程 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1550,6 +1683,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/detail",
         "captured_page_title": "流程详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/bpm/process-instance/detail",
+        "matched_page_title": "流程详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1583,6 +1720,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/erp/blacklist",
         "captured_page_title": "黑名单管理 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/erp/blacklist",
+        "matched_page_title": "黑名单管理 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -1716,6 +1857,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/job/log",
         "captured_page_title": "调度日志 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/job/log",
+        "matched_page_title": "调度日志 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1749,6 +1894,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/monitor/message_list",
         "captured_page_title": "预警消息 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/monitor/message_list",
+        "matched_page_title": "预警消息 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1782,6 +1931,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/order/sku-min-price/",
         "captured_page_title": "SKU最低售价配置 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/order/sku-min-price/",
+        "matched_page_title": "SKU最低售价配置 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 1,
@@ -1932,6 +2085,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/product-data/detail",
         "captured_page_title": "商品评论详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/product-data/detail",
+        "matched_page_title": "商品评论详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1965,6 +2122,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/product-data/performance-detail",
         "captured_page_title": "商品表现分析 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/product-data/performance-detail",
+        "matched_page_title": "商品表现分析 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -1998,6 +2159,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/product-sku/InventoryReport_detail",
         "captured_page_title": "进销存详情 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/product-sku/InventoryReport_detail",
+        "matched_page_title": "进销存详情 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2031,6 +2196,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/performance",
         "captured_page_title": "业绩利润报表 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/report-center/detail/performance",
+        "matched_page_title": "业绩利润报表 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2064,6 +2233,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shop",
         "captured_page_title": "店铺利润报表 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/report-center/detail/shop",
+        "matched_page_title": "店铺利润报表 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2097,6 +2270,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeGoods",
         "captured_page_title": "Shopee商品数据表 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeGoods",
+        "matched_page_title": "Shopee商品数据表 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2130,6 +2307,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeShop",
         "captured_page_title": "Shopee店铺数据表 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeShop",
+        "matched_page_title": "Shopee店铺数据表 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2163,6 +2344,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/shop/auth",
         "captured_page_title": "授权结果 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/shop/auth",
+        "matched_page_title": "授权结果 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2196,6 +2381,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/shop/auth-fail",
         "captured_page_title": "授权失败 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/shop/auth-fail",
+        "matched_page_title": "授权失败 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2229,6 +2418,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/shop-data/performance-board",
         "captured_page_title": "店铺表现看板 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/shop-data/performance-board",
+        "matched_page_title": "店铺表现看板 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 1,
           "triggers_with_dialogs": 0,
@@ -2262,6 +2455,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/shop-data/performance-detail",
         "captured_page_title": "店铺表现分析 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/shop-data/performance-detail",
+        "matched_page_title": "店铺表现分析 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2295,6 +2492,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/system/costom-fee",
         "captured_page_title": "自定义费用 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/system/costom-fee",
+        "matched_page_title": "自定义费用 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 8,
           "triggers_with_dialogs": 3,
@@ -2715,6 +2916,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/system/package-open-record/",
         "captured_page_title": "套餐开通记录 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/system/package-open-record/",
+        "matched_page_title": "套餐开通记录 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2748,6 +2953,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/user/package",
         "captured_page_title": "单量套餐 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/user/package",
+        "matched_page_title": "单量套餐 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2781,6 +2990,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/download/list",
         "captured_page_title": "下载中心 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/download/list",
+        "matched_page_title": "下载中心 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,
@@ -2814,41 +3027,12 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/index/home",
         "captured_page_title": "首页 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/index/home",
+        "matched_page_title": "首页 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
-          "triggers_with_dialogs": 0,
-          "dialogs": 0,
-          "dialog_buttons": 0,
-          "field_labels": 0,
-          "dialog_actions": 0
-        },
-        "coverage_result": "probe_ran_no_public_dialog_actions",
-        "function_source": "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
-      },
-      "observed_controls": {
-        "dialogs": []
-      },
-      "actions": []
-    },
-    {
-      "id": "dialog.index.noaccess",
-      "name": "受限页面",
-      "module": "System",
-      "route_pattern": "^/index/noaccess\\/?$",
-      "url_contains": [
-        "/index/noaccess"
-      ],
-      "title_aliases": [
-        "受限页面 - 心舰",
-        "受限页面"
-      ],
-      "purpose": "Auto-generated dialog/drawer memory for 受限页面.",
-      "evidence": {
-        "source": "chrome_cdp_dialog_probe",
-        "captured_page_url": "https://erp.xinjianerp.com/index/noaccess",
-        "captured_page_title": "受限页面 - 心舰",
-        "captured_counts": {
-          "triggers": 4,
           "triggers_with_dialogs": 0,
           "dialogs": 0,
           "dialog_buttons": 0,
@@ -2880,6 +3064,10 @@
         "source": "chrome_cdp_dialog_probe",
         "captured_page_url": "https://erp.xinjianerp.com/index/thali",
         "captured_page_title": "套餐 - 心舰",
+        "matched_page_url": "https://erp.xinjianerp.com/index/thali",
+        "matched_page_title": "套餐 - 心舰",
+        "final_page_url": "",
+        "final_page_title": "",
         "captured_counts": {
           "triggers": 0,
           "triggers_with_dialogs": 0,

@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T13:42:56.565Z",
+  "generated_at": "2026-07-08T13:47:53.364Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -10,7 +10,7 @@
   },
   "totals": {
     "pages": 49,
-    "actions": 1002,
+    "actions": 1005,
     "global_actions": 6,
     "source_stats": [
       {
@@ -32,7 +32,7 @@
         "loaded": true,
         "version": "2026-07-08",
         "pages": 47,
-        "actions": 289
+        "actions": 292
       },
       {
         "source": "dialog",
@@ -61,8 +61,8 @@
       "form_input": 3,
       "module_switch": 4,
       "navigation": 45,
-      "overlay_item": 106,
-      "overlay_trigger": 73,
+      "overlay_item": 108,
+      "overlay_trigger": 74,
       "row_action": 6,
       "row_navigation": 2,
       "row_operation": 1,
@@ -73,14 +73,14 @@
     "safety_counts": {
       "confirmation_required_export": 8,
       "confirmation_required_write": 170,
-      "safe_execute_allowed": 824
+      "safe_execute_allowed": 827
     },
     "locator_strategy_counts": {
       "click_first_matching_row_action_in_table": 6,
       "click_quick_tab_text_or_placeholder_list": 3,
-      "click_trigger_selector": 83,
+      "click_trigger_selector": 84,
       "click_trigger_selector_then_dialog_button_text": 31,
-      "click_trigger_selector_then_overlay_item_text": 106,
+      "click_trigger_selector_then_overlay_item_text": 108,
       "click_visible_action_text": 50,
       "click_visible_dom_text": 222,
       "click_visible_tab_text_from_list": 1,
@@ -1274,10 +1274,12 @@
       ],
       "title_aliases": [
         "广告规则执行日志 - 心舰",
-        "广告规则执行日志"
+        "广告规则执行日志",
+        "受限页面 - 心舰"
       ],
       "sources": [
         "curated",
+        "dialog",
         "overlay",
         "row-action"
       ],
@@ -1415,6 +1417,28 @@
           }
         },
         {
+          "id": "overlay.erp.ads.rule.log.overlay_item.开始日期.今天",
+          "name": "今天",
+          "context": "开始日期 -> 今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Choose 今天 from the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "source_map": "overlay",
+          "locator_strategy": "click_trigger_selector_then_overlay_item_text",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
           "id": "overlay.erp.ads.rule.log.overlay_item.请选择.失败",
           "name": "失败",
           "context": "请选择 -> 失败",
@@ -1434,6 +1458,48 @@
             "trigger_text": "请选择",
             "item_text": "失败",
             "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "context": "开始日期 -> 昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "source_map": "overlay",
+          "locator_strategy": "click_trigger_selector_then_overlay_item_text",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "context": "",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "safety_mode": "safe_execute_allowed",
+          "confirmation_required": false,
+          "purpose": "Open the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "source_map": "overlay",
+          "locator_strategy": "click_trigger_selector",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
           }
         },
         {
@@ -21010,8 +21076,7 @@
         "受限页面"
       ],
       "sources": [
-        "auto",
-        "dialog"
+        "auto"
       ],
       "actions": [
         {

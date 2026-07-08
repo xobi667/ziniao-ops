@@ -276,10 +276,11 @@ foreach ($page in @($beforeReport.weak_pages)) {
 }
 
 $selectedUrls = @($selected | ForEach-Object { [string]$_.url })
+$hasWeakPages = [int]$beforeReport.weak_pages_count -gt 0
 
 if ($DryRun -or $selectedUrls.Count -eq 0) {
   $payload = [ordered]@{
-    ok = ($selectedUrls.Count -gt 0)
+    ok = ($selectedUrls.Count -gt 0 -or !$hasWeakPages)
     mode = "dry_run"
     ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
     filters = [ordered]@{
@@ -305,13 +306,19 @@ if ($DryRun -or $selectedUrls.Count -eq 0) {
     } else {
       ""
     }
-    next_action = if ($selectedUrls.Count -gt 0) { "rerun_without_dry_run_to_learn_weak_pages" } else { "no_learnable_weak_pages_found_or_lower_filters" }
+    next_action = if ($selectedUrls.Count -gt 0) {
+      "rerun_without_dry_run_to_learn_weak_pages"
+    } elseif (!$hasWeakPages) {
+      "no_weak_pages_found"
+    } else {
+      "no_learnable_weak_pages_found_or_lower_filters"
+    }
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 16 } else {
     Write-Host ("Selected weak Xinjian pages: {0}" -f $selectedUrls.Count)
     foreach ($page in $selected) { Write-Host ("- [{0}] {1} {2}" -f $page.risk_score, $page.name, $page.url) }
   }
-  if ($selectedUrls.Count -gt 0) { exit 0 }
+  if ($selectedUrls.Count -gt 0 -or !$hasWeakPages) { exit 0 }
   exit 1
 }
 
