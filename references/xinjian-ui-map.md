@@ -129,7 +129,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 
 The batch crawler opens a temporary CDP tab per mapped route, captures overlay triggers/items, closes the tab, and records local attempt state under `.ziniao-ops\xinjian-overlay-crawl-state.json`. Generated overlay pages are retained with `evidence.coverage_result = probe_ran_no_public_overlay_actions` when the probe ran safely but found no public overlay actions.
 
-The overlay probe opens safe Element UI trigger panels (`select`, `cascader`, `dropdown`, date picker), records sanitized generic menu items, and closes the panel. It does not click overlay items. Private-looking select values are filtered at capture time.
+The overlay probe opens safe Element UI trigger panels (`select`, `cascader`, `dropdown`, date picker), records sanitized generic menu items, and closes the panel. It does not click overlay items. Private-looking select values are filtered at capture time. The public generator also filters stale action-menu leakage, so write-like menu items such as batch delete, information update, or creator transfer are not promoted when they were observed under filter-only triggers such as shop/category/business/age selectors.
 
 9. To capture dialog/drawer controls that only appear after a safe opener:
 
@@ -207,10 +207,10 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
 - Public map pages: 10 curated route pages plus one curated global action group and 38 generated auto-map pages.
-- Dynamic overlay coverage: 47 public known pages, 0 pending after exclusions, 26 pages with promoted overlay actions, 21 pages retained as safely probed with no public overlay actions, 292 overlay actions.
+- Dynamic overlay coverage: 47 public known pages, 0 pending after exclusions, 26 pages with promoted overlay actions, 21 pages retained as safely probed with no public overlay actions, 121 overlay actions after stale action-menu leakage filtering and same-context de-duplication.
 - Dialog/drawer coverage: 47 public known pages, 0 pending after exclusions, 9 pages with promoted dialog actions, 38 pages retained as safely probed with no public dialog actions, 41 dialog actions.
 - Table row-action coverage: 47 public known pages, 0 pending after exclusions, 2 pages with promoted row actions, 45 pages retained as safely probed with no public row actions, 6 row actions.
-- Unified action catalog: 49 pages, 989 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 370 read-only `table_column` actions for remembered table metrics/headers. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when they only expose generic shell controls, and restricted/no-access pages are tagged as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
+- Unified action catalog: 49 pages, 928 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 370 read-only `table_column` actions for remembered table metrics/headers. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when they only expose generic shell controls, and restricted/no-access pages are tagged as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`, and row-level dialog openers are marked `row_context_required_dialog`.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

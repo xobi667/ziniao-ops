@@ -98,13 +98,45 @@ function isFilterLikeTrigger(triggerName, triggerType) {
   return /select|cascader|date/.test(type) || /选择|请选择|店铺|品类|商务|人员|负责人|状态|标签|年龄|日期|时间|月份/.test(name);
 }
 
+function isActionLikeTrigger(triggerName, triggerType) {
+  const name = clean(triggerName).replace(/\s+/g, "");
+  const type = clean(triggerType).toLowerCase();
+  return /dropdown/.test(type) || /批量操作|选择批量操作|操作|更多|动作/.test(name);
+}
+
 function isWriteMenuLikeItem(value) {
   const text = clean(value).replace(/\s+/g, "");
   return /批量|删除|导入|信息更新|编辑|修改|保存|提交|新增|添加|恢复|转移|分配|认领|应用|标记/.test(text);
 }
 
+function isSearchCriterionItem(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /^(达人ID|达人昵称|达人名称|视频ID号|视频名称|Tiktok账号|TikTok账号|店铺名称|店铺名|负责人|人员|商务|按店铺|按负责人|按人员)$/.test(text);
+}
+
+function isDashboardMetricItem(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /^(店铺|订单|利润|费用|商品)$/.test(text);
+}
+
+function isSearchCriterionTrigger(value) {
+  const text = clean(value).replace(/\s+/g, "");
+  return /^(请选择|选择|搜索字段|搜索方式|查询字段|查询方式|筛选字段|筛选方式)$/.test(text);
+}
+
+function isFilterCompatibleItem(triggerName, triggerType, itemName) {
+  if (isActionLikeTrigger(triggerName, triggerType)) {
+    return isWriteMenuLikeItem(itemName) || /导出|下载/.test(clean(itemName).replace(/\s+/g, ""));
+  }
+  if (!isFilterLikeTrigger(triggerName, triggerType)) return true;
+  if (isWriteMenuLikeItem(itemName)) return false;
+  if ((isSearchCriterionItem(itemName) || isDashboardMetricItem(itemName)) && !isSearchCriterionTrigger(triggerName)) return false;
+  return true;
+}
+
 function isStaleActionMenuForFilterTrigger(triggerName, triggerType, rawItems) {
   if (!isFilterLikeTrigger(triggerName, triggerType)) return false;
+  if (isActionLikeTrigger(triggerName, triggerType)) return false;
   const names = (rawItems || [])
     .map((item) => clean(item?.name))
     .filter(Boolean)
@@ -247,6 +279,7 @@ function pageFromCapture(capture) {
     const items = rawItems.filter((item) => {
       const itemName = clean(item.name);
       if (!isGenericOverlayItem(itemName)) return false;
+      if (!isFilterCompatibleItem(triggerName, trigger.trigger_type, itemName)) return false;
       if (isDateShortcut(itemName) && !isDateLikeTrigger(triggerName)) return false;
       if (isDateLikeTrigger(triggerName) && !isDateShortcut(itemName)) return false;
       if (isStatusLikeTrigger(triggerName) && !isStatusLikeItem(itemName)) return false;
@@ -286,7 +319,10 @@ function pageFromCapture(capture) {
   }
   const seen = new Set();
   const dedupedActions = actions.filter((action) => {
-    const key = `${action.type}|${action.name}|${JSON.stringify(action.locator)}`;
+    const locator = action.locator || {};
+    const key = locator.trigger_text
+      ? `${action.type}|${action.name}|${clean(locator.trigger_text)}|${clean(locator.item_text)}`
+      : `${action.type}|${action.name}|${JSON.stringify(locator)}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -350,7 +386,10 @@ for (const file of files) {
 const pages = [...pagesById.values()].map((page) => {
   const seenActions = new Set();
   page.actions = page.actions.filter((action) => {
-    const key = `${action.type}|${action.name}|${JSON.stringify(action.locator)}`;
+    const locator = action.locator || {};
+    const key = locator.trigger_text
+      ? `${action.type}|${action.name}|${clean(locator.trigger_text)}|${clean(locator.item_text)}`
+      : `${action.type}|${action.name}|${JSON.stringify(locator)}`;
     if (seenActions.has(key)) return false;
     seenActions.add(key);
     return true;
