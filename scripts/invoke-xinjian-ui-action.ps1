@@ -7,6 +7,7 @@ param(
   [switch]$Execute,
   [switch]$AllowWrite,
   [switch]$AllowExport,
+  [switch]$NoAutoDetectUrl,
   [int]$CandidateIndex = 0,
   [switch]$Json
 )
@@ -18,6 +19,189 @@ function ConvertFrom-JsonText($Lines) {
   $text = (($Lines | Out-String).Trim())
   if (!$text) { return $null }
   try { return $text | ConvertFrom-Json } catch { return $null }
+}
+
+function Invoke-XinjianActionQuery {
+  param(
+    [string]$QueryIntent,
+    [string]$QueryUrl
+  )
+  $queryArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", (Join-Path $PSScriptRoot "query-xinjian-ui-action.ps1"), "-Intent", $QueryIntent, "-Json")
+  if ($QueryUrl) { $queryArgs += @("-Url", $QueryUrl) }
+  $raw = @(& powershell @queryArgs 2>&1)
+  [pscustomobject]@{
+    raw = $raw
+    exit_code = $LASTEXITCODE
+    parsed = ConvertFrom-JsonText $raw
+  }
+}
+
+function Resolve-XinjianUrlByIntent {
+  param(
+    [string]$QueryIntent,
+    [object]$Detection
+  )
+  $urls = @($Detection.candidates |
+    ForEach-Object { [string]$_.url } |
+    Where-Object { Test-XinjianUrl $_ } |
+    Sort-Object -Unique)
+  if ($urls.Count -lt 2) { return $null }
+  $scores = @()
+  foreach ($candidateUrl in $urls) {
+    $probe = Invoke-XinjianActionQuery -QueryIntent $QueryIntent -QueryUrl $candidateUrl
+    if (!$probe.parsed -or !$probe.parsed.ok -or @($probe.parsed.matches).Count -eq 0) {
+      $scores += [pscustomobject]@{
+        url = $candidateUrl
+        ok = $false
+        score = 0
+        rank = 0
+        page_name = ""
+        action_name = ""
+      }
+      continue
+    }
+    $best = @($probe.parsed.matches)[0]
+    $scores += [pscustomobject]@{
+      url = $candidateUrl
+      ok = $true
+      score = [int]$best.score
+      rank = [int]$best.rank
+      page_name = [string]$best.page_name
+      action_name = [string]$best.action.name
+    }
+  }
+  $ordered = @($scores | Sort-Object @{ Expression = "score"; Descending = $true }, @{ Expression = "rank"; Descending = $true })
+  if ($ordered.Count -eq 0 -or !$ordered[0].ok -or $ordered[0].score -le 0) { return $null }
+  if ($ordered.Count -gt 1 -and $ordered[1].ok -and $ordered[1].score -eq $ordered[0].score -and $ordered[1].rank -eq $ordered[0].rank) {
+    return $null
+  }
+  return [pscustomobject]@{
+    url = [string]$ordered[0].url
+    score = [int]$ordered[0].score
+    rank = [int]$ordered[0].rank
+    page_name = [string]$ordered[0].page_name
+    action_name = [string]$ordered[0].action_name
+    candidates = @($ordered)
+  }
+}
+
+function Get-ForegroundProcessId {
+  try {
+    Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public static class ZiniaoOpsNativeWindow {
+  [DllImport("user32.dll")]
+  public static extern IntPtr GetForegroundWindow();
+  [DllImport("user32.dll")]
+  public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+}
+"@ -ErrorAction SilentlyContinue | Out-Null
+    $pid = [uint32]0
+    $handle = [ZiniaoOpsNativeWindow]::GetForegroundWindow()
+    if ($handle -eq [IntPtr]::Zero) { return $null }
+    [void][ZiniaoOpsNativeWindow]::GetWindowThreadProcessId($handle, [ref]$pid)
+    if ($pid -gt 0) { return [int]$pid }
+  } catch {
+  }
+  return $null
+}
+
+function Test-XinjianUrl([string]$Value) {
+  $text = [string]$Value
+  return $text -match "^https?://erp\.xinjianerp\.com/" -and $text -notmatch "\s"
+}
+
+function Resolve-XinjianCurrentUrl([int]$CdpPort) {
+  $result = [ordered]@{
+    ok = $false
+    url = ""
+    source = ""
+    confidence = "none"
+    reason = ""
+    candidates = @()
+  }
+  $detector = Join-Path $PSScriptRoot "detect-ziniao-windows.ps1"
+  if (!(Test-Path -LiteralPath $detector)) {
+    $result.reason = "detector_missing"
+    return [pscustomobject]$result
+  }
+
+  $raw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $detector -Port $CdpPort -Json 2>&1)
+  $detected = ConvertFrom-JsonText $raw
+  if (!$detected -or !$detected.ok) {
+    $result.reason = "detector_failed"
+    return [pscustomobject]$result
+  }
+
+  $foregroundPid = Get-ForegroundProcessId
+  $windows = @($detected.windows | Where-Object {
+      $_.platform -eq "xinjian_erp" -and $_.page_url -and (Test-XinjianUrl ([string]$_.page_url))
+    })
+  $visible = @($windows | Where-Object { $_.source -in @("window_uia", "window_title") })
+  $visibleCandidates = @($visible | Select-Object -First 8 | ForEach-Object {
+      [ordered]@{
+        source = $_.source
+        process_id = $_.process_id
+        title = $_.page_title
+        url = $_.page_url
+        is_foreground_process = ($foregroundPid -and $_.process_id -eq $foregroundPid)
+      }
+    })
+  $result.candidates = @($visibleCandidates)
+
+  $foreground = @($visible | Where-Object { $foregroundPid -and $_.process_id -eq $foregroundPid } | Select-Object -First 1)
+  if ($foreground.Count -gt 0) {
+    $result.ok = $true
+    $result.url = [string]$foreground[0].page_url
+    $result.source = [string]$foreground[0].source
+    $result.confidence = "foreground_window_url"
+    return [pscustomobject]$result
+  }
+
+  $uniqueVisibleUrls = @($visible | ForEach-Object { [string]$_.page_url } | Where-Object { $_ } | Sort-Object -Unique)
+  if ($uniqueVisibleUrls.Count -eq 1) {
+    $result.ok = $true
+    $result.url = [string]$uniqueVisibleUrls[0]
+    $result.source = "visible_window_url"
+    $result.confidence = "single_visible_xinjian_window"
+    return [pscustomobject]$result
+  }
+
+  $uniqueCdpUrls = @()
+  try {
+    $body = (Invoke-WebRequest -UseBasicParsing -Uri "http://127.0.0.1:$CdpPort/json" -TimeoutSec 5).Content
+    $parsedPages = $body | ConvertFrom-Json
+    $pages = @($parsedPages | ForEach-Object { $_ })
+    $uniqueCdpUrls = @($pages |
+      Where-Object { $_.type -eq "page" -and (Test-XinjianUrl ([string]$_.url)) } |
+      ForEach-Object { [string]$_.url } |
+      Sort-Object -Unique)
+  } catch {
+    $uniqueCdpUrls = @()
+  }
+  if ($uniqueCdpUrls.Count -eq 1) {
+    $result.ok = $true
+    $result.url = [string]$uniqueCdpUrls[0]
+    $result.source = "cdp_page_url"
+    $result.confidence = "single_debuggable_xinjian_page"
+    return [pscustomobject]$result
+  }
+
+  $knownCandidateUrls = @($result.candidates | ForEach-Object { [string]$_.url } | Where-Object { $_ })
+  foreach ($cdpUrl in $uniqueCdpUrls) {
+    if ($knownCandidateUrls -contains $cdpUrl) { continue }
+    $result.candidates += [ordered]@{
+      source = "cdp_page_url"
+      process_id = $null
+      title = ""
+      url = $cdpUrl
+      is_foreground_process = $false
+    }
+  }
+
+  $result.reason = if ($uniqueVisibleUrls.Count -gt 1 -or $uniqueCdpUrls.Count -gt 1) { "ambiguous_xinjian_windows" } else { "no_xinjian_window" }
+  return [pscustomobject]$result
 }
 
 function Get-SafetyMode([string]$Safety) {
@@ -63,9 +247,33 @@ function Get-LocatorStrategy($Action) {
   return "best_effort_locator"
 }
 
-$queryRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "query-xinjian-ui-action.ps1") -Intent $Intent -Url $Url -Json 2>&1)
-$queryExit = $LASTEXITCODE
-$query = ConvertFrom-JsonText $queryRaw
+$requestedUrl = $Url
+$urlDetection = $null
+if (!$Url -and !$NoAutoDetectUrl) {
+  $urlDetection = Resolve-XinjianCurrentUrl -CdpPort $Port
+  if ($urlDetection.ok -and $urlDetection.url) {
+    $Url = [string]$urlDetection.url
+  } elseif ($urlDetection.reason -eq "ambiguous_xinjian_windows") {
+    $intentChoice = Resolve-XinjianUrlByIntent -QueryIntent $Intent -Detection $urlDetection
+    if ($intentChoice -and $intentChoice.url) {
+      $Url = [string]$intentChoice.url
+      $urlDetection = [pscustomobject]([ordered]@{
+          ok = $true
+          url = $Url
+          source = "intent_scored_visible_window"
+          confidence = "intent_unique_best_match"
+          reason = "ambiguous_xinjian_windows_resolved_by_intent"
+          candidates = $urlDetection.candidates
+          intent_resolution = $intentChoice
+        })
+    }
+  }
+}
+
+$queryResult = Invoke-XinjianActionQuery -QueryIntent $Intent -QueryUrl $Url
+$queryRaw = $queryResult.raw
+$queryExit = $queryResult.exit_code
+$query = $queryResult.parsed
 if (!$query) {
   $payload = [ordered]@{
     ok = $false
@@ -84,6 +292,8 @@ if (!$query.ok -or $matches.Count -eq 0) {
     mode = "no_match"
     intent = $Intent
     url = $Url
+    requested_url = $requestedUrl
+    url_detection = $urlDetection
     query = $query
     next_action = "capture_current_page_then_update_xinjian_ui_map"
   }
@@ -103,11 +313,14 @@ $requiresExport = ($safetyMode -eq "confirmation_required_export")
 $requiresWrite = ($safetyMode -eq "confirmation_required_write")
 $unknownSafety = ($safetyMode -eq "dry_run_only_unknown_safety")
 $requiresRowContext = ($locatorStrategy -like "row_context_required*")
-$canExecute = !$unknownSafety -and !$requiresRowContext -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+$requiresPageContext = !$Url
+$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
 
 $plan = [ordered]@{
   intent = $Intent
   url = $Url
+  requested_url = $requestedUrl
+  url_detection = $urlDetection
   port = $Port
   candidate_index = $CandidateIndex
   page_id = $match.page_id
@@ -119,7 +332,13 @@ $plan = [ordered]@{
   locator_strategy = $locatorStrategy
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
-  safety_note = if ($requiresRowContext) {
+  safety_note = if ($requiresPageContext -and $requiresWrite) {
+    "Write/delete/save/submit-like action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowWrite only after explicit confirmation."
+  } elseif ($requiresPageContext -and $requiresExport) {
+    "Export/download action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowExport only after explicit confirmation."
+  } elseif ($requiresPageContext) {
+    "No current Xinjian URL was resolved. Dry-run only; bring the target Xinjian window to the foreground or pass -Url to execute."
+  } elseif ($requiresRowContext) {
     "Row-level action needs an explicit row context or captured row button metadata. Dry-run only; refusing to blindly click the first row."
   } elseif ($requiresWrite) {
     "Write/delete/save/submit-like action. Dry-run by default; pass -Execute -AllowWrite only after explicit user confirmation."
@@ -159,7 +378,7 @@ if (!$canExecute) {
     ok = $false
     mode = "blocked_by_safety"
     plan = $plan
-    next_action = if ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
+    next_action = if ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20
@@ -200,7 +419,8 @@ $actionForRun = $action | ConvertTo-Json -Depth 14 | ConvertFrom-Json
 $actionForRun | Add-Member -NotePropertyName "runtime_intent" -NotePropertyValue $Intent -Force
 $actionForRun | ConvertTo-Json -Depth 14 | Set-Content -LiteralPath $actionPath -Encoding UTF8
 
-$argsList = @($helper, "--port", [string]$Port, "--match-url", $Url, "--action-file", $actionPath)
+$argsList = @($helper, "--port", [string]$Port, "--action-file", $actionPath)
+if ($Url) { $argsList += @("--match-url", $Url) }
 if ($AllowWrite) { $argsList += "--allow-write" }
 if ($AllowExport) { $argsList += "--allow-export" }
 $previousErrorActionPreference = $ErrorActionPreference

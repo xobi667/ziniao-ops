@@ -41,10 +41,10 @@ The generated `references/xinjian-ui-action-catalog.md` is a human-readable page
 4. For RPA-style routing, convert the mapped intent into a dry-run action plan before clicking:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Json
 ```
 
-The invoker reports the matched page/action, safety gate, and locator strategy. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
+The invoker reports the matched page/action, safety gate, and locator strategy. If `-Url` is omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent; a single best visible match becomes the current page. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` to force global matching. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
 
 Locator strategy is layered. Exact selectors, row-action locators, hrefs, visible DOM text, placeholder strings, placeholder lists, and known tab-text lists are used first. For known date/platform lists, the invoker passes the user's original intent into the CDP helper so requests such as `近7天`, `最近七天`, `Shopee`, or `Lazada` can choose the matching visible tab instead of clicking a generic label. When a safe tab/status-tab has no explicit locator, the invoker may click the matching visible action text. When a date filter has no explicit placeholder, it may focus the nearest visible date/select control next to the filter label. Row-level generic entries such as `行分析` and `操作` are recorded as `row_context_required_column_header` when only the table column is known; the invoker refuses to blindly click the first row until a row context or exact row-action button metadata is available.
 
