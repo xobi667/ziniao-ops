@@ -4,6 +4,8 @@ param(
   [string]$Intent,
   [string]$Url = "",
   [string]$MapPath = "",
+  [string]$AutoMapPath = "",
+  [switch]$NoAutoMap,
   [switch]$Json
 )
 
@@ -11,6 +13,9 @@ $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 if (!$MapPath) {
   $MapPath = Join-Path $root "references\xinjian-ui-map.json"
+}
+if (!$AutoMapPath) {
+  $AutoMapPath = Join-Path $root "references\xinjian-ui-auto-map.json"
 }
 if (!(Test-Path -LiteralPath $MapPath)) {
   $payload = [ordered]@{
@@ -26,6 +31,10 @@ function Normalize-Text([string]$Text) {
   return ([string]$Text).ToLowerInvariant().Trim()
 }
 
+function Compact-Text([string]$Text) {
+  return (Normalize-Text $Text) -replace "\s+", ""
+}
+
 function Get-RoutePath([string]$InputUrl) {
   if (!$InputUrl) { return "" }
   try {
@@ -36,8 +45,26 @@ function Get-RoutePath([string]$InputUrl) {
   }
 }
 
+function Get-RouteKey([string]$InputPath) {
+  if (!$InputPath) { return "" }
+  $value = [string]$InputPath
+  if ($value -match "^[A-Za-z][A-Za-z0-9+.-]*://") {
+    try {
+      $uri = [uri]$value
+      $value = $uri.AbsolutePath
+    } catch {
+    }
+  }
+  if (!$value) { return "" }
+  if (!$value.StartsWith("/")) { $value = "/" + $value }
+  $value = $value -replace "/+", "/"
+  if ($value.Length -gt 1) { $value = $value.TrimEnd("/") }
+  return $value.ToLowerInvariant()
+}
+
 function Get-ActionScore($Action, [string]$Query) {
   $score = 0
+  $queryCompact = Compact-Text $Query
   $fields = @()
   foreach ($name in @("name", "purpose", "type", "safety")) {
     if ($Action.PSObject.Properties.Match($name).Count -gt 0 -and $Action.$name) {
@@ -49,9 +76,11 @@ function Get-ActionScore($Action, [string]$Query) {
   }
   foreach ($field in $fields) {
     $norm = Normalize-Text $field
+    $normCompact = Compact-Text $norm
     if (!$norm) { continue }
     if ($Query -eq $norm) { $score += 100 }
-    elseif ($Query.Contains($norm) -or $norm.Contains($Query)) { $score += 35 }
+    elseif ($queryCompact -and $queryCompact -eq $normCompact) { $score += 95 }
+    elseif ($Query.Contains($norm) -or $norm.Contains($Query) -or ($queryCompact -and ($queryCompact.Contains($normCompact) -or $normCompact.Contains($queryCompact)))) { $score += 35 }
     else {
       foreach ($part in @([regex]::Split($Query, "[\s,/]+") | Where-Object { $_ })) {
         if ($norm.Contains($part)) { $score += 8 }
@@ -62,11 +91,47 @@ function Get-ActionScore($Action, [string]$Query) {
 }
 
 $map = Get-Content -LiteralPath $MapPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$autoMap = $null
+if (!$NoAutoMap -and (Test-Path -LiteralPath $AutoMapPath)) {
+  try {
+    $autoMap = Get-Content -LiteralPath $AutoMapPath -Raw -Encoding UTF8 | ConvertFrom-Json
+  } catch {
+    $autoMap = $null
+  }
+}
+$allPages = @($map.pages)
+$pageKeys = @{}
+foreach ($page in @($allPages)) {
+  if ($page.id) { $pageKeys[[string]$page.id] = $true }
+  foreach ($needle in @($page.url_contains)) {
+    if ($needle) { $pageKeys[(Get-RouteKey $needle)] = $true }
+  }
+}
+if ($autoMap -and $autoMap.pages) {
+  foreach ($page in @($autoMap.pages)) {
+    $duplicate = $false
+    if ($page.id -and $pageKeys.ContainsKey([string]$page.id)) { $duplicate = $true }
+    foreach ($needle in @($page.url_contains)) {
+      if ($needle -and $pageKeys.ContainsKey((Get-RouteKey $needle))) { $duplicate = $true }
+    }
+    if (!$duplicate) {
+      $allPages += $page
+      if ($page.id) { $pageKeys[[string]$page.id] = $true }
+      foreach ($needle in @($page.url_contains)) {
+        if ($needle) { $pageKeys[(Get-RouteKey $needle)] = $true }
+      }
+    }
+  }
+}
+$allGlobalActions = @($map.global_actions)
+if ($autoMap -and $autoMap.global_actions) {
+  $allGlobalActions += @($autoMap.global_actions)
+}
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
 
 $matchedPages = @()
-foreach ($page in @($map.pages)) {
+foreach ($page in @($allPages)) {
   $pageScore = 0
   if ($route -and $page.route_pattern -and $route -match $page.route_pattern) { $pageScore += 100 }
   if ($Url -and $page.url_contains) {
@@ -82,11 +147,11 @@ foreach ($page in @($map.pages)) {
   }
 }
 if ($matchedPages.Count -eq 0 -and !$Url) {
-  $matchedPages = @($map.pages | ForEach-Object { [pscustomobject]@{ page = $_; score = 0 } })
+  $matchedPages = @($allPages | ForEach-Object { [pscustomobject]@{ page = $_; score = 0 } })
 }
 
 $candidates = @()
-foreach ($action in @($map.global_actions)) {
+foreach ($action in @($allGlobalActions)) {
   $score = Get-ActionScore -Action $action -Query $query
   if ($score -gt 0) {
     $candidates += [pscustomobject]@{
@@ -120,6 +185,8 @@ $payload = [ordered]@{
   url = $Url
   route = $route
   map_version = $map.version
+  auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
+  map_pages_total = $allPages.Count
   matched_pages = @($matchedPages | Sort-Object score -Descending | Select-Object -First 5 | ForEach-Object {
       [ordered]@{ id = $_.page.id; name = $_.page.name; score = $_.score }
     })

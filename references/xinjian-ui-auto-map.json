@@ -1,0 +1,3531 @@
+{
+  "version": "2026-07-08",
+  "system": "xinjian_erp",
+  "source": "generated_from_sanitized_cdp_dom_captures",
+  "generated_at": "2026-07-08T10:19:36.510Z",
+  "policy": {
+    "default_mode": "read_only_map_first",
+    "note": "This generated map stores generic page controls only. It must not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
+    "write_action_rule": "Auto-generated write/export/batch/edit/save/delete actions are confirmation-required until manually verified."
+  },
+  "pages": [
+    {
+      "id": "auto.ai.talk",
+      "name": "创作会话",
+      "module": "AI",
+      "route_pattern": "^/ai/talk\\/?$",
+      "url_contains": [
+        "/ai/talk"
+      ],
+      "title_aliases": [
+        "创作会话 - 心舰",
+        "创作会话"
+      ],
+      "purpose": "Auto-generated UI memory for 创作会话.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/ai/talk",
+        "captured_page_title": "创作会话 - 心舰",
+        "captured_counts": {
+          "controls": 24,
+          "buttons": 3,
+          "inputs": 0,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": []
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": []
+      },
+      "actions": [
+        {
+          "id": "auto.ai.talk.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 创作会话; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.ai.talk.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 创作会话; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.ai.talk.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.ai.talk.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 创作会话 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bi.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated UI memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "controls": 114,
+          "buttons": 12,
+          "inputs": 6,
+          "tabs": 4,
+          "menus": 30,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [
+          "选择店铺",
+          "开始日期",
+          "结束日期",
+          "请输入订单号（双击批量搜索）"
+        ],
+        "tabs": [
+          "售后单",
+          "数据概览",
+          "商品售后统计",
+          "售后专项统计"
+        ],
+        "table_columns": [
+          "订单信息",
+          "包裹信息",
+          "售后方案",
+          "状态",
+          "售后原因",
+          "标签",
+          "订单实付金额",
+          "售后明细",
+          "换货明细",
+          "售后金额",
+          "创建人",
+          "附件",
+          "备注",
+          "售后时间",
+          "创建时间",
+          "操作"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "新增售后单",
+          "搜索",
+          "重置",
+          "切换币种",
+          "批量操作",
+          "导入售后单"
+        ],
+        "inputs": [
+          "选择店铺",
+          "开始日期",
+          "结束日期",
+          "请输入订单号（双击批量搜索）",
+          "请选择"
+        ],
+        "selects": [
+          "请选择"
+        ],
+        "tabs": [
+          "售后单",
+          "数据概览",
+          "商品售后统计",
+          "售后专项统计"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "订单信息",
+          "包裹信息",
+          "售后方案",
+          "状态",
+          "售后原因",
+          "标签",
+          "订单实付金额",
+          "售后明细",
+          "换货明细",
+          "售后金额",
+          "创建人",
+          "附件",
+          "备注",
+          "售后时间",
+          "创建时间",
+          "操作"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bi.aftersalesorder.index.filter.input.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 选择店铺.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "选择店铺"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.filter.input.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 开始日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "开始日期"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.filter.input.结束日期",
+          "name": "结束日期",
+          "aliases": [
+            "结束日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 结束日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "结束日期"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.filter.input.请输入订单号.双击批量搜索",
+          "name": "请输入订单号（双击批量搜索）",
+          "aliases": [
+            "请输入订单号（双击批量搜索）"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 请输入订单号（双击批量搜索）.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "请输入订单号（双击批量搜索）"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.tab.售后单",
+          "name": "售后单",
+          "aliases": [
+            "售后单"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 售后单 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "售后单"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.tab.数据概览",
+          "name": "数据概览",
+          "aliases": [
+            "数据概览"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 数据概览 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "数据概览"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.tab.商品售后统计",
+          "name": "商品售后统计",
+          "aliases": [
+            "商品售后统计"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "商品售后统计"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.tab.售后专项统计",
+          "name": "售后专项统计",
+          "aliases": [
+            "售后专项统计"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "售后专项统计"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.新增售后单",
+          "name": "新增售后单",
+          "aliases": [
+            "新增售后单"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "新增售后单"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.搜索",
+          "name": "搜索",
+          "aliases": [
+            "搜索"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "搜索"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.重置",
+          "name": "重置",
+          "aliases": [
+            "重置"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.切换币种",
+          "name": "切换币种",
+          "aliases": [
+            "切换币种"
+          ],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Change the visible view setting on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "切换币种"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.batch.action.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "batch_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "批量操作"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.button.导入售后单",
+          "name": "导入售后单",
+          "aliases": [
+            "导入售后单"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "导入售后单"
+          }
+        },
+        {
+          "id": "auto.bi.aftersalesorder.index.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 售后单管理 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bi.monitor.pushflowstats",
+      "name": "推送监控",
+      "module": "BI",
+      "route_pattern": "^/bi/monitor/pushFlowStats\\/?$",
+      "url_contains": [
+        "/bi/monitor/pushFlowStats"
+      ],
+      "title_aliases": [
+        "推送监控 - 心舰",
+        "推送监控"
+      ],
+      "purpose": "Auto-generated UI memory for 推送监控.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/monitor/pushFlowStats/",
+        "captured_page_title": "推送监控 - 心舰",
+        "captured_counts": {
+          "controls": 55,
+          "buttons": 6,
+          "inputs": 6,
+          "tabs": 11,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [
+          "平台推送",
+          "订单同步",
+          "普通队列",
+          "优先队列",
+          "待处理超时",
+          "执行中超时",
+          "同步点落后",
+          "拉单租户",
+          "入库租户",
+          "拉单店铺",
+          "入库店铺"
+        ],
+        "table_columns": [
+          "类型/重试",
+          "含义",
+          "数量",
+          "风险",
+          "店铺",
+          "所属租户",
+          "平台/国家",
+          "待处理时长",
+          "名称",
+          "每秒"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "刷新",
+          "刷新同步详情",
+          "刷新 Top10"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [
+          "平台推送",
+          "订单同步",
+          "普通队列",
+          "优先队列",
+          "待处理超时",
+          "执行中超时",
+          "同步点落后",
+          "拉单租户",
+          "入库租户",
+          "拉单店铺",
+          "入库店铺"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "类型/重试",
+          "含义",
+          "数量",
+          "风险",
+          "店铺",
+          "所属租户",
+          "平台/国家",
+          "待处理时长",
+          "名称",
+          "每秒"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.平台推送",
+          "name": "平台推送",
+          "aliases": [
+            "平台推送"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 平台推送 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "平台推送"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.订单同步",
+          "name": "订单同步",
+          "aliases": [
+            "订单同步"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 订单同步 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "订单同步"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.普通队列",
+          "name": "普通队列",
+          "aliases": [
+            "普通队列"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 普通队列 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "普通队列"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.优先队列",
+          "name": "优先队列",
+          "aliases": [
+            "优先队列"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 优先队列 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "优先队列"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.待处理超时",
+          "name": "待处理超时",
+          "aliases": [
+            "待处理超时"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 待处理超时 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "待处理超时"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.执行中超时",
+          "name": "执行中超时",
+          "aliases": [
+            "执行中超时"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 执行中超时 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "执行中超时"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.同步点落后",
+          "name": "同步点落后",
+          "aliases": [
+            "同步点落后"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 同步点落后 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "同步点落后"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.拉单租户",
+          "name": "拉单租户",
+          "aliases": [
+            "拉单租户"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 拉单租户 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "拉单租户"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.入库租户",
+          "name": "入库租户",
+          "aliases": [
+            "入库租户"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 入库租户 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "入库租户"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.拉单店铺",
+          "name": "拉单店铺",
+          "aliases": [
+            "拉单店铺"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 拉单店铺 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "拉单店铺"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.tab.入库店铺",
+          "name": "入库店铺",
+          "aliases": [
+            "入库店铺"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 推送监控 to the 入库店铺 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "入库店铺"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 推送监控; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 推送监控; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.button.刷新",
+          "name": "刷新",
+          "aliases": [
+            "刷新"
+          ],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Change the visible view setting on 推送监控.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "刷新"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.navigation.刷新同步详情",
+          "name": "刷新同步详情",
+          "aliases": [
+            "刷新同步详情"
+          ],
+          "type": "navigation",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 推送监控; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "刷新同步详情"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.button.刷新.top10",
+          "name": "刷新 Top10",
+          "aliases": [
+            "刷新 Top10",
+            "刷新Top10"
+          ],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Change the visible view setting on 推送监控.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "刷新 Top10"
+          }
+        },
+        {
+          "id": "auto.bi.monitor.pushflowstats.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 推送监控 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bi.operationcenter.aftersaleorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSaleOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSaleOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated UI memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "controls": 114,
+          "buttons": 12,
+          "inputs": 6,
+          "tabs": 4,
+          "menus": 30,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [
+          "选择店铺",
+          "开始日期",
+          "结束日期",
+          "请输入订单号（双击批量搜索）"
+        ],
+        "tabs": [
+          "售后单",
+          "数据概览",
+          "商品售后统计",
+          "售后专项统计"
+        ],
+        "table_columns": [
+          "订单信息",
+          "包裹信息",
+          "售后方案",
+          "状态",
+          "售后原因",
+          "标签",
+          "订单实付金额",
+          "售后明细",
+          "换货明细",
+          "售后金额",
+          "创建人",
+          "附件",
+          "备注",
+          "售后时间",
+          "创建时间",
+          "操作"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "新增售后单",
+          "搜索",
+          "重置",
+          "切换币种",
+          "批量操作",
+          "导入售后单"
+        ],
+        "inputs": [
+          "选择店铺",
+          "开始日期",
+          "结束日期",
+          "请输入订单号（双击批量搜索）",
+          "请选择"
+        ],
+        "selects": [
+          "请选择"
+        ],
+        "tabs": [
+          "售后单",
+          "数据概览",
+          "商品售后统计",
+          "售后专项统计"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "订单信息",
+          "包裹信息",
+          "售后方案",
+          "状态",
+          "售后原因",
+          "标签",
+          "订单实付金额",
+          "售后明细",
+          "换货明细",
+          "售后金额",
+          "创建人",
+          "附件",
+          "备注",
+          "售后时间",
+          "创建时间",
+          "操作"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.filter.input.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 选择店铺.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "选择店铺"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.filter.input.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 开始日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "开始日期"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.filter.input.结束日期",
+          "name": "结束日期",
+          "aliases": [
+            "结束日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 结束日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "结束日期"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.filter.input.请输入订单号.双击批量搜索",
+          "name": "请输入订单号（双击批量搜索）",
+          "aliases": [
+            "请输入订单号（双击批量搜索）"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 请输入订单号（双击批量搜索）.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "请输入订单号（双击批量搜索）"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.tab.售后单",
+          "name": "售后单",
+          "aliases": [
+            "售后单"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 售后单 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "售后单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.tab.数据概览",
+          "name": "数据概览",
+          "aliases": [
+            "数据概览"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 数据概览 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "数据概览"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.tab.商品售后统计",
+          "name": "商品售后统计",
+          "aliases": [
+            "商品售后统计"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "商品售后统计"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.tab.售后专项统计",
+          "name": "售后专项统计",
+          "aliases": [
+            "售后专项统计"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "售后专项统计"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.新增售后单",
+          "name": "新增售后单",
+          "aliases": [
+            "新增售后单"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "新增售后单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.搜索",
+          "name": "搜索",
+          "aliases": [
+            "搜索"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "搜索"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.重置",
+          "name": "重置",
+          "aliases": [
+            "重置"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.切换币种",
+          "name": "切换币种",
+          "aliases": [
+            "切换币种"
+          ],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Change the visible view setting on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "切换币种"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.batch.action.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "batch_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "批量操作"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.button.导入售后单",
+          "name": "导入售后单",
+          "aliases": [
+            "导入售后单"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "导入售后单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersaleorder.index.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 售后单管理 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bi.operationcenter.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated UI memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "controls": 114,
+          "buttons": 12,
+          "inputs": 6,
+          "tabs": 4,
+          "menus": 30,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [
+          "选择店铺",
+          "开始日期",
+          "结束日期",
+          "请输入订单号（双击批量搜索）"
+        ],
+        "tabs": [
+          "售后单",
+          "数据概览",
+          "商品售后统计",
+          "售后专项统计"
+        ],
+        "table_columns": [
+          "订单信息",
+          "包裹信息",
+          "售后方案",
+          "状态",
+          "售后原因",
+          "标签",
+          "订单实付金额",
+          "售后明细",
+          "换货明细",
+          "售后金额",
+          "创建人",
+          "附件",
+          "备注",
+          "售后时间",
+          "创建时间",
+          "操作"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "新增售后单",
+          "搜索",
+          "重置",
+          "切换币种",
+          "批量操作",
+          "导入售后单"
+        ],
+        "inputs": [
+          "选择店铺",
+          "开始日期",
+          "结束日期",
+          "请输入订单号（双击批量搜索）",
+          "请选择"
+        ],
+        "selects": [
+          "请选择"
+        ],
+        "tabs": [
+          "售后单",
+          "数据概览",
+          "商品售后统计",
+          "售后专项统计"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "订单信息",
+          "包裹信息",
+          "售后方案",
+          "状态",
+          "售后原因",
+          "标签",
+          "订单实付金额",
+          "售后明细",
+          "换货明细",
+          "售后金额",
+          "创建人",
+          "附件",
+          "备注",
+          "售后时间",
+          "创建时间",
+          "操作"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.filter.input.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 选择店铺.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "选择店铺"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.filter.input.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 开始日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "开始日期"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.filter.input.结束日期",
+          "name": "结束日期",
+          "aliases": [
+            "结束日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 结束日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "结束日期"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.filter.input.请输入订单号.双击批量搜索",
+          "name": "请输入订单号（双击批量搜索）",
+          "aliases": [
+            "请输入订单号（双击批量搜索）"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 售后单管理 by 请输入订单号（双击批量搜索）.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "请输入订单号（双击批量搜索）"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.tab.售后单",
+          "name": "售后单",
+          "aliases": [
+            "售后单"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 售后单 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "售后单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.tab.数据概览",
+          "name": "数据概览",
+          "aliases": [
+            "数据概览"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 数据概览 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "数据概览"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.tab.商品售后统计",
+          "name": "商品售后统计",
+          "aliases": [
+            "商品售后统计"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 商品售后统计 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "商品售后统计"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.tab.售后专项统计",
+          "name": "售后专项统计",
+          "aliases": [
+            "售后专项统计"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 售后单管理 to the 售后专项统计 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "售后专项统计"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.新增售后单",
+          "name": "新增售后单",
+          "aliases": [
+            "新增售后单"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "新增售后单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.搜索",
+          "name": "搜索",
+          "aliases": [
+            "搜索"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "搜索"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.重置",
+          "name": "重置",
+          "aliases": [
+            "重置"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.切换币种",
+          "name": "切换币种",
+          "aliases": [
+            "切换币种"
+          ],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Change the visible view setting on 售后单管理.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "切换币种"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.batch.action.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "batch_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "批量操作"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.button.导入售后单",
+          "name": "导入售后单",
+          "aliases": [
+            "导入售后单"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 售后单管理; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "导入售后单"
+          }
+        },
+        {
+          "id": "auto.bi.operationcenter.aftersalesorder.index.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 售后单管理 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bi.profit.detail",
+      "name": "店铺利润分析详情",
+      "module": "BI",
+      "route_pattern": "^/bi/profit/detail\\/?$",
+      "url_contains": [
+        "/bi/profit/detail"
+      ],
+      "title_aliases": [
+        "店铺利润分析详情 - 心舰",
+        "店铺利润分析详情"
+      ],
+      "purpose": "Auto-generated UI memory for 店铺利润分析详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/profit/detail",
+        "captured_page_title": "店铺利润分析详情 - 心舰",
+        "captured_counts": {
+          "controls": 36,
+          "buttons": 6,
+          "inputs": 2,
+          "tabs": 4,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [
+          "开始日期",
+          "结束日期"
+        ],
+        "tabs": [
+          "今天",
+          "昨天",
+          "近7天",
+          "近30天"
+        ],
+        "table_columns": [
+          "日期"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "重置",
+          "切换到汇总视图"
+        ],
+        "inputs": [
+          "开始日期",
+          "结束日期"
+        ],
+        "selects": [],
+        "tabs": [
+          "今天",
+          "昨天",
+          "近7天",
+          "近30天"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "日期"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bi.profit.detail.filter.input.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 店铺利润分析详情 by 开始日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "开始日期"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.filter.input.结束日期",
+          "name": "结束日期",
+          "aliases": [
+            "结束日期"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 店铺利润分析详情 by 结束日期.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "结束日期"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.tab.今天",
+          "name": "今天",
+          "aliases": [
+            "今天"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 店铺利润分析详情 to the 今天 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "今天"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.tab.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 店铺利润分析详情 to the 昨天 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "昨天"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.tab.近7天",
+          "name": "近7天",
+          "aliases": [
+            "近7天"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 店铺利润分析详情 to the 近7天 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "近7天"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.tab.近30天",
+          "name": "近30天",
+          "aliases": [
+            "近30天"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 店铺利润分析详情 to the 近30天 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "近30天"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 店铺利润分析详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 店铺利润分析详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.button.重置",
+          "name": "重置",
+          "aliases": [
+            "重置"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 店铺利润分析详情.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.button.切换到汇总视图",
+          "name": "切换到汇总视图",
+          "aliases": [
+            "切换到汇总视图"
+          ],
+          "type": "button",
+          "safety": "view_setting",
+          "purpose": "Change the visible view setting on 店铺利润分析详情.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "切换到汇总视图"
+          }
+        },
+        {
+          "id": "auto.bi.profit.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 店铺利润分析详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.crm.coopera.detail",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/coopera-detail\\/?$",
+      "url_contains": [
+        "/crm/coopera-detail"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated UI memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/coopera-detail",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "controls": 46,
+          "buttons": 3,
+          "inputs": 2,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": [
+          "商品信息",
+          "商品价格",
+          "销售额",
+          "销量",
+          "订单量",
+          "预估佣金",
+          "店铺",
+          "订单信息",
+          "样品状态",
+          "申样时间",
+          "寄样方式",
+          "操作",
+          "视频信息",
+          "合作商品",
+          "视频播放量",
+          "带货订单量",
+          "带货销量",
+          "带货销售额",
+          "千次展示转化率"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "商品信息",
+          "商品价格",
+          "销售额",
+          "销量",
+          "订单量",
+          "预估佣金",
+          "店铺",
+          "订单信息",
+          "样品状态",
+          "申样时间",
+          "寄样方式",
+          "操作",
+          "视频信息",
+          "合作商品",
+          "视频播放量",
+          "带货订单量",
+          "带货销量",
+          "带货销售额",
+          "千次展示转化率"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.crm.coopera.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.crm.coopera.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 合作单详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.crm.cooperation.detail",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/cooperation-detail\\/?$",
+      "url_contains": [
+        "/crm/cooperation-detail"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated UI memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "controls": 41,
+          "buttons": 5,
+          "inputs": 0,
+          "tabs": 4,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [
+          "销售数据",
+          "直播链接",
+          "视频链接",
+          "订单列表"
+        ],
+        "table_columns": [
+          "商品信息",
+          "店铺",
+          "价格",
+          "销量",
+          "销售额",
+          "取消金额",
+          "结算销量",
+          "结算销售额",
+          "预估佣金",
+          "结算佣金"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [
+          "销售数据",
+          "直播链接",
+          "视频链接",
+          "订单列表"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "商品信息",
+          "店铺",
+          "价格",
+          "销量",
+          "销售额",
+          "取消金额",
+          "结算销量",
+          "结算销售额",
+          "预估佣金",
+          "结算佣金"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.crm.cooperation.detail.tab.销售数据",
+          "name": "销售数据",
+          "aliases": [
+            "销售数据"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 销售数据 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "销售数据"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.tab.直播链接",
+          "name": "直播链接",
+          "aliases": [
+            "直播链接"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 直播链接 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "直播链接"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.tab.视频链接",
+          "name": "视频链接",
+          "aliases": [
+            "视频链接"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 视频链接 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "视频链接"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.tab.订单列表",
+          "name": "订单列表",
+          "aliases": [
+            "订单列表"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 订单列表 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "订单列表"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 合作单详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.crm.cooperation.detail.simple",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/cooperation-detail-simple\\/?$",
+      "url_contains": [
+        "/crm/cooperation-detail-simple"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated UI memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail-simple",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "controls": 41,
+          "buttons": 5,
+          "inputs": 0,
+          "tabs": 4,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [
+          "销售数据",
+          "直播链接",
+          "视频链接",
+          "订单列表"
+        ],
+        "table_columns": [
+          "商品信息",
+          "店铺",
+          "价格",
+          "销量",
+          "销售额",
+          "取消金额",
+          "结算销量",
+          "结算销售额",
+          "预估佣金",
+          "结算佣金"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [
+          "销售数据",
+          "直播链接",
+          "视频链接",
+          "订单列表"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "商品信息",
+          "店铺",
+          "价格",
+          "销量",
+          "销售额",
+          "取消金额",
+          "结算销量",
+          "结算销售额",
+          "预估佣金",
+          "结算佣金"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.crm.cooperation.detail.simple.tab.销售数据",
+          "name": "销售数据",
+          "aliases": [
+            "销售数据"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 销售数据 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "销售数据"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.tab.直播链接",
+          "name": "直播链接",
+          "aliases": [
+            "直播链接"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 直播链接 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "直播链接"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.tab.视频链接",
+          "name": "视频链接",
+          "aliases": [
+            "视频链接"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 视频链接 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "视频链接"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.tab.订单列表",
+          "name": "订单列表",
+          "aliases": [
+            "订单列表"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 合作单详情 to the 订单列表 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "订单列表"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 合作单详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.crm.cooperation.detail.simple.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 合作单详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.crm.favorite.detail",
+      "name": "收藏夹详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/favorite/detail\\/?$",
+      "url_contains": [
+        "/crm/favorite/detail"
+      ],
+      "title_aliases": [
+        "收藏夹详情 - 心舰",
+        "收藏夹详情"
+      ],
+      "purpose": "Auto-generated UI memory for 收藏夹详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/favorite/detail",
+        "captured_page_title": "收藏夹详情 - 心舰",
+        "captured_counts": {
+          "controls": 45,
+          "buttons": 10,
+          "inputs": 4,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [
+          "邀约次数",
+          "请输入昵称或达人ID"
+        ],
+        "tabs": [],
+        "table_columns": [
+          "达人信息",
+          "粉丝数",
+          "总销售额",
+          "邀约次数",
+          "添加时间",
+          "操作"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "搜索",
+          "重置",
+          "群发邮件",
+          "批量操作",
+          "去达人广场添加"
+        ],
+        "inputs": [
+          "邀约次数",
+          "请输入昵称或达人ID",
+          "请选择"
+        ],
+        "selects": [
+          "邀约次数",
+          "请选择"
+        ],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "达人信息",
+          "粉丝数",
+          "总销售额",
+          "邀约次数",
+          "添加时间",
+          "操作"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.crm.favorite.detail.filter.input.邀约次数",
+          "name": "邀约次数",
+          "aliases": [
+            "邀约次数"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 收藏夹详情 by 邀约次数.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "邀约次数"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.filter.input.请输入昵称或达人id",
+          "name": "请输入昵称或达人ID",
+          "aliases": [
+            "请输入昵称或达人ID"
+          ],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter 收藏夹详情 by 请输入昵称或达人ID.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "请输入昵称或达人ID"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.filter.dropdown.邀约次数",
+          "name": "邀约次数",
+          "aliases": [
+            "邀约次数"
+          ],
+          "type": "filter_dropdown",
+          "safety": "read_filter",
+          "purpose": "Filter 收藏夹详情 by 邀约次数.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "邀约次数"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.搜索",
+          "name": "搜索",
+          "aliases": [
+            "搜索"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 收藏夹详情.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "搜索"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.重置",
+          "name": "重置",
+          "aliases": [
+            "重置"
+          ],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply or clear filters on 收藏夹详情.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.群发邮件",
+          "name": "群发邮件",
+          "aliases": [
+            "群发邮件"
+          ],
+          "type": "button",
+          "safety": "unknown_observed",
+          "purpose": "Observed 群发邮件 control on 收藏夹详情; exact behavior has not been clicked yet.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "群发邮件"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.batch.action.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "batch_action",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "批量操作"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.button.去达人广场添加",
+          "name": "去达人广场添加",
+          "aliases": [
+            "去达人广场添加"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 收藏夹详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "去达人广场添加"
+          }
+        },
+        {
+          "id": "auto.crm.favorite.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 收藏夹详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.crm.shop.detail",
+      "name": "店铺详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/shop-detail\\/?$",
+      "url_contains": [
+        "/crm/shop-detail"
+      ],
+      "title_aliases": [
+        "店铺详情 - 心舰",
+        "店铺详情"
+      ],
+      "purpose": "Auto-generated UI memory for 店铺详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/shop-detail",
+        "captured_page_title": "店铺详情 - 心舰",
+        "captured_counts": {
+          "controls": 36,
+          "buttons": 5,
+          "inputs": 2,
+          "tabs": 2,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [
+          "店铺商品",
+          "关联达人"
+        ],
+        "table_columns": [
+          "商品信息",
+          "单价",
+          "总销量",
+          "总销售额",
+          "关联达人"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [
+          "请选择"
+        ],
+        "selects": [
+          "请选择"
+        ],
+        "tabs": [
+          "店铺商品",
+          "关联达人"
+        ],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "商品信息",
+          "单价",
+          "总销量",
+          "总销售额",
+          "关联达人"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.crm.shop.detail.tab.店铺商品",
+          "name": "店铺商品",
+          "aliases": [
+            "店铺商品"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 店铺详情 to the 店铺商品 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "店铺商品"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.tab.关联达人",
+          "name": "关联达人",
+          "aliases": [
+            "关联达人"
+          ],
+          "type": "tab",
+          "safety": "read_filter",
+          "purpose": "Switch 店铺详情 to the 关联达人 tab/view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "tab_text": "关联达人"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 店铺详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 店铺详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.crm.shop.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 店铺详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bpm.manager.definition",
+      "name": "流程定义",
+      "module": "ERP",
+      "route_pattern": "^/bpm/manager/definition\\/?$",
+      "url_contains": [
+        "/bpm/manager/definition"
+      ],
+      "title_aliases": [
+        "流程定义 - 心舰",
+        "流程定义"
+      ],
+      "purpose": "Auto-generated UI memory for 流程定义.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/manager/definition",
+        "captured_page_title": "流程定义 - 心舰",
+        "captured_counts": {
+          "controls": 42,
+          "buttons": 3,
+          "inputs": 0,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": [
+          "定义编号",
+          "定义名称",
+          "定义分类",
+          "表单信息",
+          "流程版本",
+          "状态",
+          "部署时间",
+          "定义描述",
+          "操作"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "定义编号",
+          "定义名称",
+          "定义分类",
+          "表单信息",
+          "流程版本",
+          "状态",
+          "部署时间",
+          "定义描述",
+          "操作"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bpm.manager.definition.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 流程定义; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 流程定义; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bpm.manager.definition.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 流程定义 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bpm.oa.leave.create",
+      "name": "发起 OA 请假",
+      "module": "ERP",
+      "route_pattern": "^/bpm/oa/leave/create\\/?$",
+      "url_contains": [
+        "/bpm/oa/leave/create"
+      ],
+      "title_aliases": [
+        "发起 OA 请假 - 心舰",
+        "发起 OA 请假"
+      ],
+      "purpose": "Auto-generated UI memory for 发起 OA 请假.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/create",
+        "captured_page_title": "发起 OA 请假 - 心舰",
+        "captured_counts": {
+          "controls": 30,
+          "buttons": 4,
+          "inputs": 4,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [
+          "选择开始时间",
+          "选择结束时间",
+          "请输入原因"
+        ],
+        "tabs": [],
+        "table_columns": []
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单",
+          "提 交"
+        ],
+        "inputs": [
+          "选择开始时间",
+          "选择结束时间",
+          "请选择",
+          "请输入原因"
+        ],
+        "selects": [
+          "请选择"
+        ],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": []
+      },
+      "actions": [
+        {
+          "id": "auto.bpm.oa.leave.create.form.input.选择开始时间",
+          "name": "选择开始时间",
+          "aliases": [
+            "选择开始时间"
+          ],
+          "type": "form_input",
+          "safety": "form_field",
+          "purpose": "Fill or choose the 选择开始时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "选择开始时间"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.form.input.选择结束时间",
+          "name": "选择结束时间",
+          "aliases": [
+            "选择结束时间"
+          ],
+          "type": "form_input",
+          "safety": "form_field",
+          "purpose": "Fill or choose the 选择结束时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "选择结束时间"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.form.input.请输入原因",
+          "name": "请输入原因",
+          "aliases": [
+            "请输入原因"
+          ],
+          "type": "form_input",
+          "safety": "form_field",
+          "purpose": "Fill or choose the 请输入原因 field on 发起 OA 请假; submitting the form still requires explicit confirmation.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_placeholder": "请输入原因"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 发起 OA 请假; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 发起 OA 请假; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.button.提.交",
+          "name": "提 交",
+          "aliases": [
+            "提 交",
+            "提交"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 发起 OA 请假; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "提 交"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.create.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 发起 OA 请假 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bpm.oa.leave.detail",
+      "name": "查看 OA 请假",
+      "module": "ERP",
+      "route_pattern": "^/bpm/oa/leave/detail\\/?$",
+      "url_contains": [
+        "/bpm/oa/leave/detail"
+      ],
+      "title_aliases": [
+        "查看 OA 请假 - 心舰",
+        "查看 OA 请假"
+      ],
+      "purpose": "Auto-generated UI memory for 查看 OA 请假.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/detail",
+        "captured_page_title": "查看 OA 请假 - 心舰",
+        "captured_counts": {
+          "controls": 24,
+          "buttons": 3,
+          "inputs": 0,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": []
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": []
+      },
+      "actions": [
+        {
+          "id": "auto.bpm.oa.leave.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 查看 OA 请假; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 查看 OA 请假; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bpm.oa.leave.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 查看 OA 请假 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bpm.process.instance.create",
+      "name": "发起流程",
+      "module": "ERP",
+      "route_pattern": "^/bpm/process-instance/create\\/?$",
+      "url_contains": [
+        "/bpm/process-instance/create"
+      ],
+      "title_aliases": [
+        "发起流程 - 心舰",
+        "发起流程"
+      ],
+      "purpose": "Auto-generated UI memory for 发起流程.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/create",
+        "captured_page_title": "发起流程 - 心舰",
+        "captured_counts": {
+          "controls": 29,
+          "buttons": 3,
+          "inputs": 0,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": [
+          "流程名称",
+          "流程分类",
+          "流程版本",
+          "流程描述",
+          "操作"
+        ]
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": [
+          "流程名称",
+          "流程分类",
+          "流程版本",
+          "流程描述",
+          "操作"
+        ]
+      },
+      "actions": [
+        {
+          "id": "auto.bpm.process.instance.create.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 发起流程; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 发起流程; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.create.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 发起流程 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.bpm.process.instance.detail",
+      "name": "流程详情",
+      "module": "ERP",
+      "route_pattern": "^/bpm/process-instance/detail\\/?$",
+      "url_contains": [
+        "/bpm/process-instance/detail"
+      ],
+      "title_aliases": [
+        "流程详情 - 心舰",
+        "流程详情"
+      ],
+      "purpose": "Auto-generated UI memory for 流程详情.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/detail",
+        "captured_page_title": "流程详情 - 心舰",
+        "captured_counts": {
+          "controls": 25,
+          "buttons": 3,
+          "inputs": 0,
+          "tabs": 0,
+          "menus": 19,
+          "links": 2
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": []
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": []
+      },
+      "actions": [
+        {
+          "id": "auto.bpm.process.instance.detail.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 流程详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.detail.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 流程详情; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.detail.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.bpm.process.instance.detail.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 流程详情 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    },
+    {
+      "id": "auto.index.noaccess",
+      "name": "受限页面",
+      "module": "System",
+      "route_pattern": "^/index/noaccess\\/?$",
+      "url_contains": [
+        "/index/noaccess"
+      ],
+      "title_aliases": [
+        "受限页面 - 心舰",
+        "受限页面"
+      ],
+      "purpose": "Auto-generated UI memory for 受限页面.",
+      "evidence": {
+        "source": "chrome_cdp_dom_auto",
+        "captured_page_url": "https://erp.xinjianerp.com/index/noaccess",
+        "captured_page_title": "受限页面 - 心舰",
+        "captured_counts": {
+          "controls": 24,
+          "buttons": 3,
+          "inputs": 0,
+          "tabs": 0,
+          "menus": 19,
+          "links": 1
+        },
+        "function_source": "observed DOM labels, placeholders, tabs, links, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": [],
+        "tabs": [],
+        "table_columns": []
+      },
+      "observed_controls": {
+        "buttons": [
+          "保存配置",
+          "重置配置",
+          "用户菜单"
+        ],
+        "inputs": [],
+        "selects": [],
+        "tabs": [],
+        "links": [
+          {
+            "name": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        ],
+        "table_headers": []
+      },
+      "actions": [
+        {
+          "id": "auto.index.noaccess.button.保存配置",
+          "name": "保存配置",
+          "aliases": [
+            "保存配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 受限页面; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "保存配置"
+          }
+        },
+        {
+          "id": "auto.index.noaccess.button.重置配置",
+          "name": "重置配置",
+          "aliases": [
+            "重置配置"
+          ],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open or run a write/configuration action on 受限页面; requires explicit confirmation before committing changes.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "重置配置"
+          }
+        },
+        {
+          "id": "auto.index.noaccess.button.用户菜单",
+          "name": "用户菜单",
+          "aliases": [
+            "用户菜单"
+          ],
+          "type": "button",
+          "safety": "account_menu",
+          "purpose": "Open the current user/account menu.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "用户菜单"
+          }
+        },
+        {
+          "id": "auto.index.noaccess.navigation.首页",
+          "name": "首页",
+          "aliases": [
+            "首页"
+          ],
+          "type": "navigation",
+          "safety": "navigation",
+          "purpose": "Navigate from 受限页面 to a related detail or analysis view.",
+          "function_source": "auto-generated from observed CDP DOM label/placeholder; behavior not clicked",
+          "locator": {
+            "dom_text": "首页",
+            "href": "https://erp.xinjianerp.com/index/home"
+          }
+        }
+      ]
+    }
+  ]
+}

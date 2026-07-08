@@ -6,7 +6,10 @@ The machine-readable map lives in:
 
 ```text
 references/xinjian-ui-map.json
+references/xinjian-ui-auto-map.json
 ```
+
+`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement.
 
 ## Workflow
 
@@ -30,13 +33,29 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\disc
 
 Use route discovery to choose a real 心舰 path before opening new pages. It reads Vue Router metadata plus visible link/menu labels only.
 
-4. If a debuggable Chrome/Edge page is available, capture real DOM controls:
+4. To expand coverage in batches, crawl unmapped routes and capture their DOM controls:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\crawl-xinjian-dom-pages.ps1") -Port 9342 -OnlyUnmapped -MaxPages 20 -Json
+```
+
+The crawler opens one route at a time through CDP, captures controls, then closes the temporary tab it opened. It does not click page controls.
+
+5. Promote sanitized local captures into the generated auto map:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-auto-map.ps1") -NoMergeExisting -Json
+```
+
+The generator skips pages already present in the curated map, removes empty captures, normalizes account-menu labels, skips generic/private-looking values, and marks write/export/batch/edit/save/delete actions as confirmation-required.
+
+6. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dom-map.ps1") -Port 9342 -Json
 ```
 
-5. If the page or button is not debuggable, capture the current page through Windows UIA read-only:
+7. If the page or button is not debuggable, capture the current page through Windows UIA read-only:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
@@ -48,15 +67,16 @@ The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`,
 
 - Capture uses Chrome CDP DOM metadata or Windows UI Automation read-only access. It does not click, type, move the mouse, read cookies, read localStorage/sessionStorage, or read tokens.
 - Route discovery uses Chrome CDP to read Vue Router metadata and visible link/menu labels. It does not read cookies, storage, tokens, input values, or table row data.
+- Batch crawling only navigates to frontend routes in temporary CDP tabs and closes those tabs after capture. It must not be used to submit forms or run write actions.
 - Default capture excludes table row values because they can contain private business data. Use row data only for a user-requested report, not for public skill memory.
 - Any action that assigns, claims, saves, submits, deletes, exports, or batch-updates must be treated as confirmation-required unless the user explicitly asks for that exact operation.
 - A mapped locator is a memory aid, not permission to perform a write action.
 
 ## Current Coverage
 
-Route discovery has been verified against the logged-in 心舰 frontend and can read about 100+ Vue Router entries from the page. The public action map currently promotes only generic controls from real CDP DOM captures.
+Route discovery has been verified against the logged-in 心舰 frontend and can read about 100+ Vue Router entries from the page. The public action maps currently promote only generic controls from real CDP DOM captures.
 
-Mapped pages:
+Curated mapped pages:
 
 - CRM / 数据概览: `/dataView/data-overview`
 - CRM / 达人公海: `/crm/matser/management/highSeas`
@@ -68,6 +88,8 @@ Mapped pages:
 - ADS / 创意详情: `/ad/originality-detail`
 - ADS / 广告规则执行日志: `/erp/ads/rule-log`
 - System / 下载中心: `/download/list`
+
+Generated auto-map coverage currently includes additional BI, CRM detail, BPM/process, AI, and restricted-state pages captured from logged-in CDP DOM. Query scripts merge the curated and generated maps, with curated pages taking precedence.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

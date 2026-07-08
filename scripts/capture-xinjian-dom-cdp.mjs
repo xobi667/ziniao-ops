@@ -109,6 +109,9 @@ const expression = `(() => {
     return role || tag;
   };
   const textOf = (el) => {
+    if (el.closest(".avatar-container") || /\\bavatar-wrapper\\b/.test(String(el.className || ""))) {
+      return "用户菜单";
+    }
     const tag = el.tagName.toLowerCase();
     const type = controlType(el);
     const aria = el.getAttribute("aria-label") || "";
