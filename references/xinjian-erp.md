@@ -2,6 +2,8 @@
 
 Use this reference when the user asks for 心舰 ERP, xinjianerp.com, ERP 广告数据, 产品广告, 分时数据, or hourly ad performance analysis.
 
+For 心舰 page/button memory and RPA-like "say what to do" routing, use `references/xinjian-ui-map.md` first. Query `references/xinjian-ui-map.json` with `scripts/query-xinjian-ui-action.ps1` before taking screenshots or guessing buttons. Capture unmapped pages with `scripts/capture-xinjian-ui-map.ps1`, then promote only generic controls and purposes into the public map.
+
 ## Default Route
 
 Always start with the non-mouse data workflow:

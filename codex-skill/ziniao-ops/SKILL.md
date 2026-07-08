@@ -338,6 +338,30 @@ For 心舰 ERP / Xinjian ERP advertising tasks, especially 产品广告分时数
 <package_root>\references\xinjian-erp.md
 ```
 
+For 心舰 ERP page/button memory, UI action mapping, or requests like "把按钮都记住", "别每次截图", "像 RPA 一样说什么就干什么", read:
+
+```text
+<package_root>\references\xinjian-ui-map.md
+```
+
+Then query the known map before taking screenshots or guessing:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\query-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Url "<当前心舰URL>" -Json
+```
+
+If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-dom-map.ps1") -Port 9342 -Json
+```
+
+If the current 心舰 page is not debuggable or the page is still unmapped, capture it through Windows UIA read-only and promote only generic button/filter/menu knowledge into `references\xinjian-ui-map.json`:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-ui-map.ps1") -Json
+```
+
 Then use the non-mouse data workflow first:
 
 ```powershell

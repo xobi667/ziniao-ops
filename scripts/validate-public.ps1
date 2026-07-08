@@ -185,6 +185,10 @@ $required = @(
   "scripts\invoke-auto-ziniao.ps1",
   "scripts\detect-ziniao-windows.ps1",
   "scripts\get-runtime-status.ps1",
+  "scripts\capture-xinjian-ui-map.ps1",
+  "scripts\capture-xinjian-dom-map.ps1",
+  "scripts\capture-xinjian-dom-cdp.mjs",
+  "scripts\query-xinjian-ui-action.ps1",
   "scripts\install-upstream-tools.ps1",
   "scripts\sensitive-text.ps1",
   "scripts\check-external-tools.ps1",
@@ -214,7 +218,9 @@ $required = @(
   "references\upstreams.md",
   "references\upstreams.json",
   "references\upstream-integration.md",
-  "references\xinjian-erp.md"
+  "references\xinjian-erp.md",
+  "references\xinjian-ui-map.md",
+  "references\xinjian-ui-map.json"
 )
 foreach ($rel in $required) {
   if (!(Test-Path -LiteralPath (Join-Path $Root $rel))) {

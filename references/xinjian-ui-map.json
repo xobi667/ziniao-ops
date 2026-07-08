@@ -1,0 +1,602 @@
+{
+  "version": "2026-07-08.1",
+  "system": "xinjian_erp",
+  "policy": {
+    "default_mode": "read_only_map_first",
+    "capture_storage": ".ziniao-ops/xinjian-ui-observations/",
+    "do_not_store": [
+      "passwords",
+      "verification codes",
+      "cookies",
+      "tokens",
+      "browser localStorage",
+      "private table row data",
+      "customer personal data"
+    ],
+    "write_action_rule": "Actions that assign, claim, batch update, save, delete, submit, or export must be treated as confirmation-required unless the user explicitly asked for that action."
+  },
+  "global_actions": [
+    {
+      "id": "xinjian.module.bi",
+      "name": "BI",
+      "aliases": ["BI", "数据看板", "商业分析"],
+      "type": "module_switch",
+      "safety": "navigation",
+      "purpose": "Switch to the BI/business intelligence module.",
+      "locator": { "uia_name": "BI", "uia_role": "top_module_switch" }
+    },
+    {
+      "id": "xinjian.module.erp",
+      "name": "ERP",
+      "aliases": ["ERP", "运营", "运营中心", "订单分析", "店铺分析", "商品分析"],
+      "type": "module_switch",
+      "safety": "navigation",
+      "purpose": "Switch to ERP operations pages such as orders, shops, products, finance, and warnings.",
+      "locator": { "uia_name": "ERP", "uia_role": "top_module_switch" }
+    },
+    {
+      "id": "xinjian.module.ads",
+      "name": "ADS",
+      "aliases": ["ADS", "广告", "广告数据", "产品广告", "投放", "广告后台"],
+      "type": "module_switch",
+      "safety": "navigation",
+      "purpose": "Switch to the advertising module before querying product ad performance.",
+      "locator": { "uia_name": "ADS", "uia_role": "top_module_switch" }
+    },
+    {
+      "id": "xinjian.module.crm",
+      "name": "CRM",
+      "aliases": ["CRM", "达人", "达人公海", "达人管理"],
+      "type": "module_switch",
+      "safety": "navigation",
+      "purpose": "Switch to CRM pages for creator management and outreach workflows.",
+      "locator": { "uia_name": "CRM", "uia_role": "top_module_switch" }
+    },
+    {
+      "id": "xinjian.layout.save_config",
+      "name": "保存配置",
+      "aliases": ["保存配置", "保存布局", "保存主题"],
+      "type": "button",
+      "safety": "confirmation_required",
+      "purpose": "Save current theme/layout configuration.",
+      "locator": { "uia_name": "保存配置", "uia_role": "save_layout_button" }
+    },
+    {
+      "id": "xinjian.layout.reset_config",
+      "name": "重置配置",
+      "aliases": ["重置配置", "恢复布局", "重置主题"],
+      "type": "button",
+      "safety": "confirmation_required",
+      "purpose": "Reset theme/layout configuration.",
+      "locator": { "uia_name": "重置配置", "uia_role": "reset_button" }
+    }
+  ],
+  "pages": [
+    {
+      "id": "crm.highseas",
+      "name": "达人公海",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/highSeas$",
+      "url_contains": ["/crm/matser/management/highSeas"],
+      "title_aliases": ["达人公海 - 心舰", "达人公海"],
+      "purpose": "Creator high-seas pool. Used to search, filter, claim, assign, and batch-manage creators.",
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/highSeas",
+        "captured_page_title": "达人公海 - 心舰",
+        "captured_counts": {
+          "controls": 95,
+          "buttons": 10,
+          "inputs": 11,
+          "tabs": 5,
+          "menus": 21,
+          "links": 5
+        },
+        "function_source": "observed DOM labels, placeholders, href routes, disabled state, and table headers; write-action behavior not clicked"
+      },
+      "layout": {
+        "top_modules": ["BI", "ERP", "ADS", "CRM", "设置"],
+        "breadcrumbs": ["首页", "订单统计", "受限页面", "达人公海"],
+        "visible_left_menu": ["数据概览", "达人管理", "达人公海", "我的达人", "重点关注", "黑名单", "邀约管理", "站内私信", "合作管理", "内容管理", "店铺商品", "团队管理", "配置中心"],
+        "filters": ["选择店铺", "品类", "全部商务", "地区", "粉丝数", "性别分布", "年龄分布", "选择标签", "达人ID"],
+        "tabs": ["全部", "已触达", "已申样", "合作中", "已出单"],
+        "table_columns": ["选择框", "达人信息", "画像 / 品类", "粉丝数", "GMV", "Item Sold", "达人标签", "跟进商务", "状态", "交互时间", "操作"]
+      },
+      "observed_controls": {
+        "links": [
+          { "name": "数据概览", "href": "https://erp.xinjianerp.com/dataView/data-overview" },
+          { "name": "达人公海", "href": "https://erp.xinjianerp.com/crm/matser/management/highSeas", "active": true },
+          { "name": "我的达人", "href": "https://erp.xinjianerp.com/crm/matser/management/myMaster" },
+          { "name": "重点关注", "href": "https://erp.xinjianerp.com/crm/matser/management/focus" },
+          { "name": "黑名单", "href": "https://erp.xinjianerp.com/crm/matser/management/blacklist" }
+        ],
+        "menus": [
+          { "name": "数据概览", "type": "menuitem" },
+          { "name": "达人管理", "type": "submenu", "active": true, "opened": true },
+          { "name": "达人公海", "type": "menuitem", "active": true },
+          { "name": "我的达人", "type": "menuitem" },
+          { "name": "重点关注", "type": "menuitem" },
+          { "name": "黑名单", "type": "menuitem" },
+          { "name": "邀约管理", "type": "submenu" },
+          { "name": "站内私信", "type": "submenu" },
+          { "name": "合作管理", "type": "submenu" },
+          { "name": "内容管理", "type": "submenu" },
+          { "name": "店铺商品", "type": "submenu" },
+          { "name": "团队管理", "type": "submenu" },
+          { "name": "配置中心", "type": "submenu" }
+        ],
+        "inputs": [
+          { "name": "选择店铺", "placeholder": "选择店铺", "dom_type": "input", "classes": ["el-input__inner"] },
+          { "name": "选择店铺", "placeholder": "选择店铺", "dom_type": "input", "classes": ["el-cascader__search-input"] },
+          { "name": "品类", "placeholder": "品类", "dom_type": "input", "classes": ["el-input__inner"] },
+          { "name": "品类", "placeholder": "品类", "dom_type": "input", "classes": ["el-cascader__search-input"] },
+          { "name": "全部商务", "placeholder": "全部商务", "dom_type": "input", "classes": ["el-input__inner"] },
+          { "name": "年龄分布", "placeholder": "年龄分布", "dom_type": "input", "classes": ["el-input__inner"] },
+          { "name": "选择标签", "placeholder": "选择标签", "dom_type": "input", "classes": ["el-input__inner"] },
+          { "name": "选择标签", "placeholder": "选择标签", "dom_type": "input", "classes": ["el-cascader__search-input"] },
+          { "name": "请输入达人ID(双击批量搜索)", "placeholder": "请输入达人ID(双击批量搜索)", "dom_type": "input", "classes": ["el-input__inner"] },
+          { "name": "请选择", "placeholder": "请选择", "dom_type": "input", "purpose": "pagination page-size selector" },
+          { "name": "", "placeholder": "", "dom_type": "input", "purpose": "pagination jump-page input" }
+        ],
+        "selects": [
+          { "name": "全部商务", "classes": ["el-select", "filterable-select"] },
+          { "name": "请选择", "purpose": "地区 selector", "classes": ["el-select", "el-select--mini"] },
+          { "name": "请选择", "purpose": "粉丝数 selector", "classes": ["el-select", "el-select--mini"] },
+          { "name": "请选择", "purpose": "性别分布 selector", "classes": ["el-select", "el-select--mini"] },
+          { "name": "年龄分布", "classes": ["el-select", "placeholder666", "el-select--mini"] },
+          { "name": "请选择", "purpose": "达人ID match-type selector", "classes": ["el-select", "join-right", "el-select--small"] },
+          { "name": "请选择", "purpose": "pagination page-size selector", "classes": ["el-select", "el-select--mini"] }
+        ],
+        "buttons": [
+          { "name": "保存配置", "disabled": false, "classes": ["el-button", "el-button--primary", "el-button--small", "is-plain"] },
+          { "name": "重置配置", "disabled": false, "classes": ["el-button", "el-button--default", "el-button--small", "is-plain"] },
+          { "name": "美绮", "disabled": false, "role": "button", "purpose": "user/account dropdown" },
+          { "name": "搜索", "disabled": false, "classes": ["el-button", "noGlobal", "el-button--primary", "el-button--small"] },
+          { "name": "重置", "disabled": false, "classes": ["el-button", "noGlobal", "el-button--default", "el-button--small", "is-plain"] },
+          { "name": "分配达人", "disabled": true, "classes": ["el-button", "noGlobal", "el-button--primary", "el-button--mini", "is-disabled"] },
+          { "name": "认领达人", "disabled": true, "classes": ["el-button", "noGlobal", "el-button--primary", "el-button--mini", "is-disabled"] },
+          { "name": "批量操作", "disabled": false, "role": "button", "classes": ["el-button", "noGlobal", "el-button--primary", "el-button--mini", "el-dropdown-selfdefine"] },
+          { "name": "", "disabled": true, "classes": ["btn-prev"], "purpose": "pagination previous page" },
+          { "name": "", "disabled": false, "classes": ["btn-next"], "purpose": "pagination next page" }
+        ],
+        "tabs": [
+          { "name": "全部 69", "role": "tab", "active": false, "dom_id": "tab-0" },
+          { "name": "已触达 69", "role": "tab", "active": true, "dom_id": "tab-1" },
+          { "name": "已申样 0", "role": "tab", "active": false, "dom_id": "tab-4" },
+          { "name": "合作中 0", "role": "tab", "active": false, "dom_id": "tab-2" },
+          { "name": "已出单 0", "role": "tab", "active": false, "dom_id": "tab-3" }
+        ],
+        "table_headers": [
+          { "name": "选择框", "dom_type": "th", "classes": ["el-table-column--selection"] },
+          { "name": "达人信息", "dom_type": "th" },
+          { "name": "画像 / 品类", "dom_type": "th" },
+          { "name": "粉丝数", "dom_type": "th", "sortable": true },
+          { "name": "GMV", "dom_type": "th", "sortable": true },
+          { "name": "Item Sold", "dom_type": "th", "sortable": true },
+          { "name": "达人标签", "dom_type": "th" },
+          { "name": "跟进商务", "dom_type": "th" },
+          { "name": "状态", "dom_type": "th" },
+          { "name": "交互时间", "dom_type": "th", "sortable": true },
+          { "name": "操作", "dom_type": "th" }
+        ]
+      },
+      "actions": [
+        {
+          "id": "crm.highseas.filter.shop",
+          "name": "选择店铺",
+          "aliases": ["选择店铺", "店铺筛选", "按店铺筛选", "筛店铺"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter creators by shop.",
+          "function_source": "observed placeholder and label; behavior not clicked",
+          "locator": { "uia_name": "选择店铺", "uia_type": "Edit", "dom_placeholder": "选择店铺", "dom_class": "el-input__inner" }
+        },
+        {
+          "id": "crm.highseas.filter.category",
+          "name": "品类",
+          "aliases": ["品类", "筛品类", "类目"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter creators by product/category fit.",
+          "function_source": "observed placeholder and label; behavior not clicked",
+          "locator": { "uia_name": "品类", "uia_type": "Edit", "dom_placeholder": "品类", "dom_class": "el-input__inner" }
+        },
+        {
+          "id": "crm.highseas.filter.business_owner",
+          "name": "全部商务",
+          "aliases": ["商务", "全部商务", "跟进商务", "按商务筛选"],
+          "type": "filter_dropdown",
+          "safety": "read_filter",
+          "purpose": "Filter creators by business owner/follow-up owner.",
+          "function_source": "observed placeholder and select class; behavior not clicked",
+          "locator": { "uia_name": "全部商务", "uia_type": "Edit", "dom_placeholder": "全部商务", "dom_class": "filterable-select" }
+        },
+        {
+          "id": "crm.highseas.filter.region",
+          "name": "地区",
+          "aliases": ["地区", "国家", "区域"],
+          "type": "filter_dropdown",
+          "safety": "read_filter",
+          "purpose": "Filter creators by region.",
+          "function_source": "UIA label plus observed select position; behavior not clicked",
+          "locator": { "uia_name": "地区", "near_icon": true }
+        },
+        {
+          "id": "crm.highseas.filter.fans",
+          "name": "粉丝数",
+          "aliases": ["粉丝数", "粉丝区间", "按粉丝筛选"],
+          "type": "filter_dropdown",
+          "safety": "read_filter",
+          "purpose": "Filter creators by follower-count range.",
+          "function_source": "UIA label plus observed select position; behavior not clicked",
+          "locator": { "uia_name": "粉丝数", "near_icon": true }
+        },
+        {
+          "id": "crm.highseas.filter.gender",
+          "name": "性别分布",
+          "aliases": ["性别分布", "性别", "男女比例"],
+          "type": "filter_dropdown",
+          "safety": "read_filter",
+          "purpose": "Filter creators by audience gender distribution.",
+          "function_source": "UIA label plus observed select position; behavior not clicked",
+          "locator": { "uia_name": "性别分布", "near_icon": true }
+        },
+        {
+          "id": "crm.highseas.filter.age",
+          "name": "年龄分布",
+          "aliases": ["年龄分布", "年龄", "年龄区间"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter creators by audience age distribution.",
+          "function_source": "observed placeholder and select class; behavior not clicked",
+          "locator": { "uia_name": "年龄分布", "uia_type": "Edit", "dom_placeholder": "年龄分布" }
+        },
+        {
+          "id": "crm.highseas.filter.tag",
+          "name": "选择标签",
+          "aliases": ["选择标签", "达人标签", "标签筛选"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Filter creators by tag.",
+          "function_source": "observed placeholder and label; behavior not clicked",
+          "locator": { "uia_name": "选择标签", "uia_type": "Edit", "dom_placeholder": "选择标签" }
+        },
+        {
+          "id": "crm.highseas.filter.creator_id",
+          "name": "达人ID",
+          "aliases": ["达人ID", "达人 id", "批量搜索达人", "输入达人ID"],
+          "type": "filter_input",
+          "safety": "read_filter",
+          "purpose": "Search one or multiple creator IDs. The placeholder says double-click for batch search.",
+          "function_source": "observed placeholder; behavior not clicked",
+          "locator": { "uia_name": "请输入达人ID(双击批量搜索)", "uia_type": "Edit", "dom_placeholder": "请输入达人ID(双击批量搜索)" }
+        },
+        {
+          "id": "crm.highseas.search",
+          "name": "搜索",
+          "aliases": ["搜索", "查询", "筛选", "查达人"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply current filters and refresh the creator list.",
+          "function_source": "observed button text and primary button class; behavior not clicked",
+          "locator": { "uia_name": "搜索", "uia_type": "Button", "uia_role": "search_button", "dom_text": "搜索", "dom_class": "el-button--primary" }
+        },
+        {
+          "id": "crm.highseas.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选", "恢复默认"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear high-seas filters and return to the default list.",
+          "function_source": "observed button text and default button class; behavior not clicked",
+          "locator": { "uia_name": "重置", "uia_type": "Button", "uia_role": "reset_button", "dom_text": "重置" }
+        },
+        {
+          "id": "crm.highseas.tab.all",
+          "name": "全部",
+          "aliases": ["全部", "全部达人"],
+          "type": "status_tab",
+          "safety": "read_filter",
+          "purpose": "Show all creators in the high-seas list.",
+          "locator": { "uia_name_starts_with": "全部", "uia_type": "TabItem" }
+        },
+        {
+          "id": "crm.highseas.tab.reached",
+          "name": "已触达",
+          "aliases": ["已触达", "已联系"],
+          "type": "status_tab",
+          "safety": "read_filter",
+          "purpose": "Show creators already reached/contacted.",
+          "locator": { "uia_name_starts_with": "已触达", "uia_type": "TabItem" }
+        },
+        {
+          "id": "crm.highseas.tab.sampled",
+          "name": "已申样",
+          "aliases": ["已申样", "已申请样品", "申样"],
+          "type": "status_tab",
+          "safety": "read_filter",
+          "purpose": "Show creators already in sample request status.",
+          "locator": { "uia_name_starts_with": "已申样", "uia_type": "TabItem" }
+        },
+        {
+          "id": "crm.highseas.tab.cooperating",
+          "name": "合作中",
+          "aliases": ["合作中", "正在合作"],
+          "type": "status_tab",
+          "safety": "read_filter",
+          "purpose": "Show creators currently cooperating.",
+          "locator": { "uia_name_starts_with": "合作中", "uia_type": "TabItem" }
+        },
+        {
+          "id": "crm.highseas.tab.ordered",
+          "name": "已出单",
+          "aliases": ["已出单", "出单达人"],
+          "type": "status_tab",
+          "safety": "read_filter",
+          "purpose": "Show creators that already generated orders.",
+          "locator": { "uia_name_starts_with": "已出单", "uia_type": "TabItem" }
+        },
+        {
+          "id": "crm.highseas.assign_creator",
+          "name": "分配达人",
+          "aliases": ["分配达人", "分配", "派给商务"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Assign selected creators to a business owner. Requires selected rows and explicit user confirmation.",
+          "function_source": "observed disabled button text; behavior not clicked",
+          "observed_disabled": true,
+          "locator": { "uia_name": "分配达人", "uia_type": "Button", "uia_role": "write_assign_button", "dom_text": "分配达人" }
+        },
+        {
+          "id": "crm.highseas.claim_creator",
+          "name": "认领达人",
+          "aliases": ["认领达人", "认领"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Claim selected creators into the current user's task/follow-up pool. Requires explicit user confirmation.",
+          "function_source": "observed disabled button text; behavior not clicked",
+          "observed_disabled": true,
+          "locator": { "uia_name": "认领达人", "uia_type": "Button", "uia_role": "write_claim_button", "dom_text": "认领达人" }
+        },
+        {
+          "id": "crm.highseas.batch_operations",
+          "name": "批量操作",
+          "aliases": ["批量操作", "批量处理", "批量"],
+          "type": "button_menu",
+          "safety": "confirmation_required_write",
+          "purpose": "Open batch operation menu for selected creators. Treat concrete batch action as unknown until the menu is captured.",
+          "function_source": "observed dropdown button text; dropdown items not captured yet",
+          "locator": { "uia_name": "批量操作", "uia_type": "Button", "uia_role": "batch_action_menu", "dom_text": "批量操作", "dom_class": "el-dropdown-selfdefine" }
+        }
+      ]
+    },
+    {
+      "id": "data.overview",
+      "name": "数据概览",
+      "module": "CRM",
+      "route_pattern": "^/dataView/data-overview$",
+      "url_contains": ["/dataView/data-overview"],
+      "title_aliases": ["数据概览 - 心舰", "数据概览"],
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/dataView/data-overview",
+        "captured_page_title": "数据概览 - 心舰",
+        "captured_counts": { "controls": 51, "buttons": 5, "inputs": 9, "tabs": 6, "menus": 17, "links": 1 },
+        "function_source": "observed DOM labels, placeholders, tabs, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": ["全部商务", "开始日期", "结束日期", "选择店铺", "搜索商品名称或链接ID"],
+        "tabs": ["昨天", "近7天", "近30天"],
+        "table_columns": ["排名", "达人信息", "店铺", "成交订单量", "成交金额", "成交商品数"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "搜索", "重置"],
+        "inputs": ["全部商务", "开始日期", "结束日期", "选择店铺", "搜索商品名称或链接ID", "请选择"],
+        "tabs": ["昨天", "近7天", "近30天"],
+        "table_headers": ["排名", "达人信息", "店铺", "成交订单量", "成交金额", "成交商品数"]
+      },
+      "actions": [
+        {
+          "id": "data.overview.search",
+          "name": "搜索",
+          "aliases": ["搜索", "查询", "筛选", "查数据概览"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply current data-overview filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "搜索", "dom_class": "el-button--primary" }
+        },
+        {
+          "id": "data.overview.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current data-overview filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        }
+      ]
+    },
+    {
+      "id": "crm.my_master",
+      "name": "我的达人",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/myMaster$",
+      "url_contains": ["/crm/matser/management/myMaster"],
+      "title_aliases": ["我的达人 - 心舰", "我的达人"],
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
+        "captured_page_title": "我的达人 - 心舰",
+        "captured_counts": { "controls": 93, "buttons": 9, "inputs": 11, "tabs": 5, "menus": 21, "links": 5 },
+        "function_source": "observed DOM labels, placeholders, tabs, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": ["全部商务", "选择标签", "品类", "年龄分布", "开始日期", "结束日期", "达人ID"],
+        "tabs": ["全部", "已触达", "已申样", "合作中", "已出单"],
+        "table_columns": ["达人信息", "画像 / 品类", "粉丝数", "GMV", "Item Sold", "达人标签", "跟进商务", "状态", "跟进时间", "操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "搜索", "重置", "添加达人", "批量操作", "分页上一页", "分页下一页"],
+        "inputs": ["全部商务", "选择标签", "品类", "年龄分布", "开始日期", "结束日期", "请输入达人ID(双击批量搜索)", "请选择"],
+        "tabs": ["全部 0", "已触达 0", "已申样 0", "合作中 0", "已出单 0"],
+        "table_headers": ["达人信息", "画像 / 品类", "粉丝数", "GMV", "Item Sold", "达人标签", "跟进商务", "状态", "跟进时间", "操作"]
+      },
+      "actions": [
+        {
+          "id": "crm.my_master.search",
+          "name": "搜索",
+          "aliases": ["搜索", "查询", "筛选", "查我的达人"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply current my-master filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "搜索" }
+        },
+        {
+          "id": "crm.my_master.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current my-master filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "crm.my_master.add_creator",
+          "name": "添加达人",
+          "aliases": ["添加达人", "新增达人"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Open add-creator flow. Requires explicit confirmation before submitting any data.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "添加达人" }
+        },
+        {
+          "id": "crm.my_master.batch_operations",
+          "name": "批量操作",
+          "aliases": ["批量操作", "批量处理"],
+          "type": "button_menu",
+          "safety": "confirmation_required_write",
+          "purpose": "Open batch operation menu. Concrete menu items still need capture after opening the menu.",
+          "function_source": "observed button text; dropdown items not captured yet",
+          "locator": { "dom_text": "批量操作" }
+        }
+      ]
+    },
+    {
+      "id": "crm.focus",
+      "name": "重点关注",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/focus$",
+      "url_contains": ["/crm/matser/management/focus"],
+      "title_aliases": ["重点关注 - 心舰", "重点关注"],
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/focus",
+        "captured_page_title": "重点关注 - 心舰",
+        "captured_counts": { "controls": 115, "buttons": 8, "inputs": 11, "tabs": 0, "menus": 21, "links": 5 },
+        "function_source": "observed DOM labels, placeholders, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": ["全部商务", "选择标签", "品类", "状态", "开始日期", "结束日期", "达人ID"],
+        "table_columns": ["达人信息", "画像 / 品类", "粉丝数", "点赞数", "视频平均播放量", "互动率", "GMV", "Item Sold", "带货订单量", "商品销量", "销售额", "视频销售额", "直播销售额", "佣金总额", "ROI", "达人标签", "跟进商务", "状态", "跟进时间", "操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "搜索", "重置", "转移达人", "分页上一页", "分页下一页"],
+        "inputs": ["全部商务", "选择标签", "品类", "状态", "开始日期", "结束日期", "请输入达人ID(双击批量搜索)", "请选择"],
+        "table_headers": ["达人信息", "画像 / 品类", "粉丝数", "点赞数", "视频平均播放量", "互动率", "GMV", "Item Sold", "带货订单量", "商品销量", "销售额", "视频销售额", "直播销售额", "佣金总额", "ROI", "达人标签", "跟进商务", "状态", "跟进时间", "操作"]
+      },
+      "actions": [
+        {
+          "id": "crm.focus.search",
+          "name": "搜索",
+          "aliases": ["搜索", "查询", "筛选", "查重点关注"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply current focus-page filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "搜索" }
+        },
+        {
+          "id": "crm.focus.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current focus-page filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "crm.focus.transfer_creator",
+          "name": "转移达人",
+          "aliases": ["转移达人", "转移"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Transfer selected creators. Requires selected rows and explicit confirmation.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "转移达人" }
+        }
+      ]
+    },
+    {
+      "id": "crm.blacklist",
+      "name": "黑名单",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/blacklist$",
+      "url_contains": ["/crm/matser/management/blacklist"],
+      "title_aliases": ["黑名单 - 心舰", "黑名单"],
+      "evidence": {
+        "source": "chrome_cdp_dom",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/blacklist",
+        "captured_page_title": "黑名单 - 心舰",
+        "captured_counts": { "controls": 71, "buttons": 8, "inputs": 10, "tabs": 0, "menus": 21, "links": 5 },
+        "function_source": "observed DOM labels, placeholders, and table headers; behavior not clicked"
+      },
+      "layout": {
+        "filters": ["全部商务", "达人标签", "品类", "开始日期", "结束日期", "达人ID"],
+        "table_columns": ["达人信息", "粉丝数", "点赞数", "联系方式", "品类", "达人标签", "拉黑操作人", "拉黑原因", "拉黑时间", "操作"]
+      },
+      "observed_controls": {
+        "buttons": ["保存配置", "重置配置", "美绮", "搜索", "重置", "批量恢复", "分页上一页", "分页下一页"],
+        "inputs": ["全部商务", "达人标签", "品类", "开始日期", "结束日期", "请输入达人ID(双击批量搜索)", "请选择"],
+        "table_headers": ["达人信息", "粉丝数", "点赞数", "联系方式", "品类", "达人标签", "拉黑操作人", "拉黑原因", "拉黑时间", "操作"]
+      },
+      "actions": [
+        {
+          "id": "crm.blacklist.search",
+          "name": "搜索",
+          "aliases": ["搜索", "查询", "筛选", "查黑名单"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Apply current blacklist filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "搜索" }
+        },
+        {
+          "id": "crm.blacklist.reset",
+          "name": "重置",
+          "aliases": ["重置", "清空筛选"],
+          "type": "button",
+          "safety": "read_filter",
+          "purpose": "Clear current blacklist filters.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "重置" }
+        },
+        {
+          "id": "crm.blacklist.batch_restore",
+          "name": "批量恢复",
+          "aliases": ["批量恢复", "恢复达人", "移出黑名单"],
+          "type": "button",
+          "safety": "confirmation_required_write",
+          "purpose": "Restore selected creators from blacklist. Requires selected rows and explicit confirmation.",
+          "function_source": "observed button text; behavior not clicked",
+          "locator": { "dom_text": "批量恢复" }
+        }
+      ]
+    }
+  ]
+}
