@@ -46,7 +46,7 @@ If the current page is missing, weakly mapped, or newly changed, learn it in one
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-current-page.ps1") -Json
 ```
 
-`learn-xinjian-current-page.ps1` resolves the current page, captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels/operation-column action words, then regenerates the public maps and unified action catalog. It does not read cookies, storage, tokens, input values, or table row cell values. Use `-DryRun` to preview the steps, or pass `-SkipDialogs`, `-SkipOverlays`, `-SkipRowActions`, or `-SkipDom` for narrower learning.
+`learn-xinjian-current-page.ps1` resolves the current page, captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels/operation-column action words, then regenerates the public maps and unified action catalog. It validates that every capture's `matched_page.url` route matches the target route; if a capture lands on a different page, generation is skipped so wrong-page controls are not promoted. It does not read cookies, storage, tokens, input values, or table row cell values. Use `-DryRun` to preview the steps, or pass `-SkipDialogs`, `-SkipOverlays`, `-SkipRowActions`, or `-SkipDom` for narrower learning.
 
 To learn every currently debuggable 心舰 page already open in Chrome/Edge, run:
 
@@ -167,6 +167,7 @@ The captures write local observations under `.ziniao-ops\xinjian-dom-captures\`,
 ## Safety
 
 - Capture uses Chrome CDP DOM metadata or Windows UI Automation read-only access. It does not click, type, move the mouse, read cookies, read localStorage/sessionStorage, or read tokens.
+- The current-page learner validates capture route consistency before generating public maps. A mismatched `matched_page.url` is treated as a failed learning pass, not as usable memory.
 - Route discovery uses Chrome CDP to read Vue Router metadata and visible link/menu labels. It does not read cookies, storage, tokens, input values, or table row data.
 - Batch crawling only navigates to frontend routes in temporary CDP tabs and closes those tabs after capture. It must not be used to submit forms or run write actions.
 - Overlay capture opens panels but does not click overlay items. Treat overlay write/export/batch/edit/delete entries as confirmation-required.

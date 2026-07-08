@@ -103,6 +103,22 @@ function Get-CatalogSummary {
   }
 }
 
+function Get-RouteKey([string]$InputUrl) {
+  if (!$InputUrl) { return "" }
+  try {
+    $uri = [uri]$InputUrl
+    $path = $uri.AbsolutePath
+    if (!$path.StartsWith("/")) { $path = "/" + $path }
+    if ($path.Length -gt 1) { $path = $path.TrimEnd("/") }
+    return $path.ToLowerInvariant()
+  } catch {
+    $text = [string]$InputUrl
+    if (!$text.StartsWith("/")) { $text = "/" + $text }
+    if ($text.Length -gt 1) { $text = $text.TrimEnd("/") }
+    return $text.ToLowerInvariant()
+  }
+}
+
 function New-StepSummary {
   param(
     [string]$Name,
@@ -138,6 +154,39 @@ function New-StepSummary {
     $item["result"] = $parsed
   }
   return $item
+}
+
+function Add-CaptureRouteValidation {
+  param(
+    [object[]]$Steps,
+    [string]$TargetUrl
+  )
+  $expectedRoute = Get-RouteKey $TargetUrl
+  if (!$expectedRoute) { return @($Steps) }
+
+  foreach ($step in @($Steps)) {
+    if (!$step.ok) { continue }
+    $matchedPage = $null
+    if ($step.summary -and $step.summary.Contains("matched_page")) {
+      $matchedPage = $step.summary["matched_page"]
+    }
+    if (!$matchedPage -or !$matchedPage.url) { continue }
+
+    $actualRoute = Get-RouteKey ([string]$matchedPage.url)
+    if ($actualRoute -and $actualRoute -ne $expectedRoute) {
+      $step["ok"] = $false
+      $step["error"] = "matched_page_url_mismatch"
+      $step.summary["expected_route"] = $expectedRoute
+      $step.summary["actual_route"] = $actualRoute
+      $step.summary["validation"] = "failed"
+    } else {
+      $step.summary["expected_route"] = $expectedRoute
+      $step.summary["actual_route"] = $actualRoute
+      $step.summary["validation"] = "matched_target_route"
+    }
+  }
+
+  return @($Steps)
 }
 
 $requestedUrl = $Url
@@ -211,10 +260,12 @@ if (!$GenerateOnly) {
   if (!$SkipRowActions) {
     $captures += New-StepSummary -Name "capture_table_row_actions" -Result (Invoke-JsonScript -ScriptName "capture-xinjian-row-actions.ps1" -Arguments @("-Port", [string]$Port, "-Url", $Url, "-MaxTables", [string]$MaxTables, "-Json"))
   }
+  $captures = @(Add-CaptureRouteValidation -Steps $captures -TargetUrl $Url)
 }
 
 $generators = @()
-if (!$NoGenerate) {
+$captureFailures = @($captures | Where-Object { !$_.ok })
+if (!$NoGenerate -and $captureFailures.Count -eq 0) {
   $generators += New-StepSummary -Name "generate_auto_map" -Result (Invoke-JsonScript -ScriptName "generate-xinjian-ui-auto-map.ps1" -Arguments @("-Json"))
   $generators += New-StepSummary -Name "generate_overlay_map" -Result (Invoke-JsonScript -ScriptName "generate-xinjian-ui-overlay-map.ps1" -Arguments @("-Json"))
   $generators += New-StepSummary -Name "generate_dialog_map" -Result (Invoke-JsonScript -ScriptName "generate-xinjian-ui-dialog-map.ps1" -Arguments @("-Json"))
