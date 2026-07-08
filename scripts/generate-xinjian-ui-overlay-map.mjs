@@ -254,7 +254,6 @@ function pageFromCapture(capture) {
       });
     }
   }
-  if (overlays.length === 0 && actions.length === 0) return null;
   const seen = new Set();
   const dedupedActions = actions.filter((action) => {
     const key = `${action.type}|${action.name}|${JSON.stringify(action.locator)}`;
@@ -276,6 +275,7 @@ function pageFromCapture(capture) {
       captured_page_url: page.href || "",
       captured_page_title: page.title || "",
       captured_counts: capture.counts || {},
+      coverage_result: dedupedActions.length > 0 ? "actions_promoted" : "probe_ran_no_public_overlay_actions",
       function_source: "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
     },
     observed_controls: { overlays },
@@ -326,6 +326,12 @@ const pages = [...pagesById.values()].map((page) => {
     return true;
   });
   ensureUniqueActionIds(page.actions);
+  page.evidence.coverage_result = page.actions.length > 0 ? "actions_promoted" : "probe_ran_no_public_overlay_actions";
+  page.evidence.captured_counts = {
+    ...(page.evidence.captured_counts || {}),
+    overlays: page.observed_controls.overlays.length,
+    overlay_actions: page.actions.length
+  };
   return page;
 }).sort((a, b) => `${a.module}.${a.id}`.localeCompare(`${b.module}.${b.id}`));
 

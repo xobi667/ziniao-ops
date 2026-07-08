@@ -251,18 +251,19 @@ function pageFromCapture(capture) {
   const actions = [];
   for (const table of capture.tables || []) {
     const rowActions = Array.isArray(table.actions) ? table.actions.filter((item) => isPublicUiText(item.name, 24)) : [];
-    if (rowActions.length === 0) continue;
     const headers = unique((table.headers || []).filter((item) => isPublicUiText(item, 40)));
-    tables.push({
-      title: isPublicUiText(table.title, 40) ? clean(table.title) : "",
-      headers,
-      row_count_sampled: table.row_count_sampled || 0,
-      actions: rowActions.map((item) => ({
-        name: clean(item.name),
-        column_header: isPublicUiText(item.column_header, 40) ? clean(item.column_header) : "",
-        disabled: !!item.disabled
-      }))
-    });
+    if (headers.length > 0 || rowActions.length > 0) {
+      tables.push({
+        title: isPublicUiText(table.title, 40) ? clean(table.title) : "",
+        headers,
+        row_count_sampled: table.row_count_sampled || 0,
+        actions: rowActions.map((item) => ({
+          name: clean(item.name),
+          column_header: isPublicUiText(item.column_header, 40) ? clean(item.column_header) : "",
+          disabled: !!item.disabled
+        }))
+      });
+    }
     for (const item of rowActions) {
       const name = clean(item.name);
       const columnHeader = isPublicUiText(item.column_header, 40) ? clean(item.column_header) : "";
@@ -285,7 +286,6 @@ function pageFromCapture(capture) {
   }
   const dedupedTables = dedupeTables(tables);
   const dedupedActions = dedupeRowActions(actions);
-  if (dedupedTables.length === 0 && dedupedActions.length === 0) return null;
   return {
     id: pageIdFromPath(routePath),
     name: pageName,
@@ -299,6 +299,7 @@ function pageFromCapture(capture) {
       captured_page_url: page.href || "",
       captured_page_title: page.title || "",
       captured_counts: capture.counts || {},
+      coverage_result: dedupedActions.length > 0 ? "actions_promoted" : "probe_ran_no_public_row_actions",
       function_source: "observed table row action labels and generic headers only; row actions not clicked"
     },
     observed_controls: { tables: dedupedTables },
@@ -348,6 +349,7 @@ const pages = [...pagesById.values()].map((page) => {
     row_actions: page.actions.length,
     sampled_rows: page.observed_controls.tables.reduce((sum, table) => sum + (table.row_count_sampled || 0), 0)
   };
+  page.evidence.coverage_result = page.actions.length > 0 ? "actions_promoted" : "probe_ran_no_public_row_actions";
   return page;
 }).sort((a, b) => `${a.module}.${a.id}`.localeCompare(`${b.module}.${b.id}`));
 

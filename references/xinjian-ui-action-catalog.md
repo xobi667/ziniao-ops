@@ -14,9 +14,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
 | auto | 2026-07-08 | 38 | 713 |
-| overlay | 2026-07-08 | 26 | 289 |
-| dialog | 2026-07-08 | 9 | 41 |
-| row-action | 2026-07-08 | 2 | 6 |
+| overlay | 2026-07-08 | 47 | 289 |
+| dialog | 2026-07-08 | 47 | 41 |
+| row-action | 2026-07-08 | 47 | 6 |
 
 ### Safety
 
@@ -54,7 +54,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 广告详情
 
 - Route: `/ad/group-detail`
-- Sources: curated, dialog
+- Sources: curated, dialog, overlay, row-action
 - Actions: 7
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -70,7 +70,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 创意详情
 
 - Route: `/ad/originality-detail`
-- Sources: curated, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 22
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -101,7 +101,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 店铺广告分析
 
 - Route: `/ad/shop-detail`
-- Sources: curated, dialog, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 19
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -129,7 +129,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ADS / 广告规则执行日志
 
 - Route: `/erp/ads/rule-log`
-- Sources: curated, overlay
+- Sources: curated, overlay, row-action
 - Actions: 10
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -148,7 +148,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## AI / 创作会话
 
 - Route: `/ai/talk`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 4
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -161,7 +161,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## BI / 售后单管理
 
 - Route: `/bi/afterSalesOrder/index`
-- Sources: auto, dialog, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 41
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -211,7 +211,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## BI / 推送监控
 
 - Route: `/bi/monitor/pushFlowStats`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 28
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -248,7 +248,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## BI / 售后单管理
 
 - Route: `/bi/operationCenter/afterSaleOrder/index`
-- Sources: auto, dialog, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 41
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -298,7 +298,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## BI / 售后单管理
 
 - Route: `/bi/operationCenter/afterSalesOrder/index`
-- Sources: auto, dialog, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 41
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -348,7 +348,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## BI / 店铺利润分析详情
 
 - Route: `/bi/profit/detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -370,7 +370,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## BI / 商品复购分析报告详情
 
 - Route: `/user-analyze/detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 14
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -393,7 +393,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 合作单详情
 
 - Route: `/crm/coopera-detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 23
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -425,7 +425,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 合作单详情
 
 - Route: `/crm/cooperation-detail-simple`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 18
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -452,7 +452,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 合作单详情
 
 - Route: `/crm/cooperation-detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 18
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -479,7 +479,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 收藏夹详情
 
 - Route: `/crm/favorite/detail`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 21
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -509,7 +509,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 黑名单
 
 - Route: `/crm/matser/management/blacklist`
-- Sources: curated, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 18
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -536,7 +536,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 重点关注
 
 - Route: `/crm/matser/management/focus`
-- Sources: curated, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 8
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -553,7 +553,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 达人公海
 
 - Route: `/crm/matser/management/highSeas`
-- Sources: curated, overlay, row-action
+- Sources: curated, dialog, overlay, row-action
 - Actions: 58
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -620,7 +620,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 我的达人
 
 - Route: `/crm/matser/management/myMaster`
-- Sources: curated, dialog, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 43
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -672,7 +672,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 店铺详情
 
 - Route: `/crm/shop-detail`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 12
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -693,7 +693,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## CRM / 数据概览
 
 - Route: `/dataView/data-overview`
-- Sources: curated, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 6
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -708,7 +708,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 流程定义
 
 - Route: `/bpm/manager/definition`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -730,7 +730,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 发起 OA 请假
 
 - Route: `/bpm/oa/leave/create`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 9
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -748,7 +748,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 查看 OA 请假
 
 - Route: `/bpm/oa/leave/detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 4
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -761,7 +761,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 发起流程
 
 - Route: `/bpm/process-instance/create`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 9
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -779,7 +779,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 流程详情
 
 - Route: `/bpm/process-instance/detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 4
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -792,7 +792,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 黑名单管理
 
 - Route: `/erp/blacklist`
-- Sources: auto, dialog
+- Sources: auto, dialog, overlay, row-action
 - Actions: 17
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -818,7 +818,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 调度日志
 
 - Route: `/job/log`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 23
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -850,7 +850,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 预警消息
 
 - Route: `/monitor/message_list`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 29
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -888,7 +888,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / SKU最低售价配置
 
 - Route: `/order/sku-min-price`
-- Sources: auto, dialog, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 24
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -921,7 +921,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 商品评论详情
 
 - Route: `/product-data/detail`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 20
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -950,7 +950,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 商品表现分析
 
 - Route: `/product-data/performance-detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 52
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1011,7 +1011,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 进销存详情
 
 - Route: `/product-sku/InventoryReport_detail`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 27
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1047,7 +1047,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 业绩利润报表
 
 - Route: `/report-center/detail/performance`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1069,7 +1069,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 店铺利润报表
 
 - Route: `/report-center/detail/shop`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 12
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1090,7 +1090,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / Shopee商品数据表
 
 - Route: `/report-center/detail/shopeeGoods`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 49
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1148,7 +1148,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / Shopee店铺数据表
 
 - Route: `/report-center/detail/shopeeShop`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 53
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1210,7 +1210,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 店铺表现看板
 
 - Route: `/shop-data/performance-board`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 5
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1224,7 +1224,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 店铺表现分析
 
 - Route: `/shop-data/performance-detail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 49
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1282,7 +1282,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 授权失败
 
 - Route: `/shop/auth-fail`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 5
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1296,7 +1296,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 授权结果
 
 - Route: `/shop/auth`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 5
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1349,7 +1349,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 套餐开通记录
 
 - Route: `/system/package-open-record`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 13
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1371,7 +1371,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## ERP / 单量套餐
 
 - Route: `/user/package`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 5
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1400,7 +1400,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## System / 下载中心
 
 - Route: `/download/list`
-- Sources: curated, overlay
+- Sources: curated, dialog, overlay, row-action
 - Actions: 5
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1414,7 +1414,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## System / 首页
 
 - Route: `/index/home`
-- Sources: auto, overlay
+- Sources: auto, dialog, overlay, row-action
 - Actions: 48
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1471,7 +1471,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## System / 受限页面
 
 - Route: `/index/noaccess`
-- Sources: auto
+- Sources: auto, dialog
 - Actions: 4
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
@@ -1484,7 +1484,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## System / 套餐
 
 - Route: `/index/thali`
-- Sources: auto
+- Sources: auto, dialog, overlay, row-action
 - Actions: 4
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |

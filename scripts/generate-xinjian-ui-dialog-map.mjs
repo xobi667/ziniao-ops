@@ -247,7 +247,6 @@ function pageFromCapture(capture) {
       }
     }
   }
-  if (dialogs.length === 0 && actions.length === 0) return null;
   const seen = new Set();
   const dedupedActions = actions.filter((action) => {
     const key = actionIdentity(action);
@@ -269,6 +268,7 @@ function pageFromCapture(capture) {
       captured_page_url: page.href || "",
       captured_page_title: page.title || "",
       captured_counts: capture.counts || {},
+      coverage_result: dedupedActions.length > 0 ? "actions_promoted" : "probe_ran_no_public_dialog_actions",
       function_source: "observed safe dialog openers and sanitized dialog controls; submit/confirm buttons not clicked"
     },
     observed_controls: { dialogs },
@@ -319,6 +319,12 @@ const pages = [...pagesById.values()].map((page) => {
     return true;
   });
   ensureUniqueActionIds(page.actions);
+  page.evidence.coverage_result = page.actions.length > 0 ? "actions_promoted" : "probe_ran_no_public_dialog_actions";
+  page.evidence.captured_counts = {
+    ...(page.evidence.captured_counts || {}),
+    dialogs: page.observed_controls.dialogs.length,
+    dialog_actions: page.actions.length
+  };
   return page;
 }).sort((a, b) => `${a.module}.${a.id}`.localeCompare(`${b.module}.${b.id}`));
 

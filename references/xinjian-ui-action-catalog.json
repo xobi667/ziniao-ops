@@ -2,7 +2,7 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-08T13:33:00.498Z",
+  "generated_at": "2026-07-08T13:42:56.565Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -31,21 +31,21 @@
         "source": "overlay",
         "loaded": true,
         "version": "2026-07-08",
-        "pages": 26,
+        "pages": 47,
         "actions": 289
       },
       {
         "source": "dialog",
         "loaded": true,
         "version": "2026-07-08",
-        "pages": 9,
+        "pages": 47,
         "actions": 41
       },
       {
         "source": "row-action",
         "loaded": true,
         "version": "2026-07-08",
-        "pages": 2,
+        "pages": 47,
         "actions": 6
       }
     ],
@@ -118,7 +118,9 @@
       ],
       "sources": [
         "curated",
-        "dialog"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -309,7 +311,9 @@
       ],
       "sources": [
         "curated",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -820,7 +824,8 @@
       "sources": [
         "curated",
         "dialog",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -1273,7 +1278,8 @@
       ],
       "sources": [
         "curated",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -1508,7 +1514,10 @@
         "创作会话"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -1607,7 +1616,8 @@
       "sources": [
         "auto",
         "dialog",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -2433,7 +2443,10 @@
         "推送监控"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -2989,7 +3002,8 @@
       "sources": [
         "auto",
         "dialog",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -3817,7 +3831,8 @@
       "sources": [
         "auto",
         "dialog",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -4643,7 +4658,10 @@
         "店铺利润分析详情"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -4911,7 +4929,10 @@
         "商品复购分析报告详情"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -5198,7 +5219,10 @@
         "合作单详情"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -5656,7 +5680,10 @@
         "合作单详情"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -6019,7 +6046,10 @@
         "合作单详情"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -6383,7 +6413,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -6808,7 +6840,9 @@
       ],
       "sources": [
         "curated",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -7211,7 +7245,9 @@
       ],
       "sources": [
         "curated",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -7393,6 +7429,7 @@
       ],
       "sources": [
         "curated",
+        "dialog",
         "overlay",
         "row-action"
       ],
@@ -8716,7 +8753,8 @@
       "sources": [
         "curated",
         "dialog",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -9684,7 +9722,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -9935,7 +9975,9 @@
       ],
       "sources": [
         "curated",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -10077,7 +10119,10 @@
         "流程定义"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -10346,7 +10391,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -10540,7 +10587,10 @@
         "查看 OA 请假"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -10637,7 +10687,10 @@
         "发起流程"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -10829,7 +10882,10 @@
         "流程详情"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -10927,7 +10983,9 @@
       ],
       "sources": [
         "auto",
-        "dialog"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -11290,7 +11348,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -11756,7 +11816,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -12344,7 +12406,8 @@
       "sources": [
         "auto",
         "dialog",
-        "overlay"
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -12849,7 +12912,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -13258,7 +13323,10 @@
         "商品表现分析"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -14268,7 +14336,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -14804,7 +14874,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -15082,7 +15154,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -15340,7 +15414,10 @@
         "Shopee商品数据表"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -16294,7 +16371,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -17325,7 +17404,10 @@
         "店铺表现看板"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -17441,7 +17523,10 @@
         "店铺表现分析"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -18393,7 +18478,10 @@
         "授权失败"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -18509,7 +18597,10 @@
         "授权结果"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -19270,7 +19361,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -19539,7 +19632,10 @@
         "单量套餐"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -19809,7 +19905,9 @@
       ],
       "sources": [
         "curated",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -19941,7 +20039,9 @@
       ],
       "sources": [
         "auto",
-        "overlay"
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {
@@ -20910,7 +21010,8 @@
         "受限页面"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog"
       ],
       "actions": [
         {
@@ -21007,7 +21108,10 @@
         "套餐"
       ],
       "sources": [
-        "auto"
+        "auto",
+        "dialog",
+        "overlay",
+        "row-action"
       ],
       "actions": [
         {

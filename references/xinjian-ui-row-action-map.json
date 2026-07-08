@@ -2,13 +2,927 @@
   "version": "2026-07-08",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_row_action_captures",
-  "generated_at": "2026-07-08T12:47:33.090Z",
+  "generated_at": "2026-07-08T13:42:46.519Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Row action map stores table headers and row action button labels only. It does not store row cell values, cookies, storage, tokens, or private-looking text.",
     "write_action_rule": "Row write/export/delete/edit actions are confirmation-required until manually verified."
   },
   "pages": [
+    {
+      "id": "row.ad.group.detail",
+      "name": "广告详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/group-detail\\/?$",
+      "url_contains": [
+        "/ad/group-detail"
+      ],
+      "title_aliases": [
+        "广告详情 - 心舰",
+        "广告详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 广告详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/group-detail",
+        "captured_page_title": "广告详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 1
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "关键词",
+              "关联版位",
+              "点击出价"
+            ],
+            "row_count_sampled": 1,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.ad.originality.detail",
+      "name": "创意详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/originality-detail\\/?$",
+      "url_contains": [
+        "/ad/originality-detail"
+      ],
+      "title_aliases": [
+        "创意详情 - 心舰",
+        "创意详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 创意详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/originality-detail",
+        "captured_page_title": "创意详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "应用 切换币种",
+            "headers": [
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.ad.shop.detail",
+      "name": "店铺广告分析",
+      "module": "ADS",
+      "route_pattern": "^/ad/shop-detail\\/?$",
+      "url_contains": [
+        "/ad/shop-detail"
+      ],
+      "title_aliases": [
+        "店铺广告分析 - 心舰",
+        "店铺广告分析"
+      ],
+      "purpose": "Auto-generated row-action memory for 店铺广告分析.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/shop-detail",
+        "captured_page_title": "店铺广告分析 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "仅显示已授权店铺 切换币种",
+            "headers": [
+              "店铺",
+              "分析",
+              "广告余额预警设置",
+              "广告花费",
+              "展现量",
+              "点击量",
+              "点击率",
+              "广告订单量",
+              "转化率",
+              "广告销量",
+              "平均下单成本",
+              "广告销售额",
+              "ACoS",
+              "ROAS",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.erp.ads.rule.log",
+      "name": "广告规则执行日志",
+      "module": "ADS",
+      "route_pattern": "^/erp/ads/rule-log\\/?$",
+      "url_contains": [
+        "/erp/ads/rule-log"
+      ],
+      "title_aliases": [
+        "广告规则执行日志 - 心舰",
+        "广告规则执行日志"
+      ],
+      "purpose": "Auto-generated row-action memory for 广告规则执行日志.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/erp/ads/rule-log/",
+        "captured_page_title": "广告规则执行日志 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "执行日志 共 0 条 全部结果 - 规则名称 重置",
+            "headers": [
+              "广告信息",
+              "规则名称",
+              "触发条件",
+              "执行操作",
+              "变更",
+              "执行结果",
+              "执行时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.ai.talk",
+      "name": "创作会话",
+      "module": "AI",
+      "route_pattern": "^/ai/talk\\/?$",
+      "url_contains": [
+        "/ai/talk"
+      ],
+      "title_aliases": [
+        "创作会话 - 心舰",
+        "创作会话"
+      ],
+      "purpose": "Auto-generated row-action memory for 创作会话.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ai/talk",
+        "captured_page_title": "创作会话 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bi.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated row-action memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "订单信息",
+              "包裹信息",
+              "售后方案",
+              "状态",
+              "售后原因",
+              "标签",
+              "订单实付金额",
+              "售后明细",
+              "换货明细",
+              "售后金额",
+              "创建人",
+              "附件",
+              "备注",
+              "售后时间",
+              "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bi.monitor.pushflowstats",
+      "name": "推送监控",
+      "module": "BI",
+      "route_pattern": "^/bi/monitor/pushFlowStats\\/?$",
+      "url_contains": [
+        "/bi/monitor/pushFlowStats"
+      ],
+      "title_aliases": [
+        "推送监控 - 心舰",
+        "推送监控"
+      ],
+      "purpose": "Auto-generated row-action memory for 推送监控.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/monitor/pushFlowStats/",
+        "captured_page_title": "推送监控 - 心舰",
+        "captured_counts": {
+          "tables": 3,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "类型/重试",
+              "含义",
+              "数量"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "风险",
+              "店铺",
+              "所属租户",
+              "平台/国家",
+              "待处理时长"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "名称",
+              "数量",
+              "每秒"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bi.operationcenter.aftersaleorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSaleOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSaleOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated row-action memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "订单信息",
+              "包裹信息",
+              "售后方案",
+              "状态",
+              "售后原因",
+              "标签",
+              "订单实付金额",
+              "售后明细",
+              "换货明细",
+              "售后金额",
+              "创建人",
+              "附件",
+              "备注",
+              "售后时间",
+              "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bi.operationcenter.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated row-action memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "订单信息",
+              "包裹信息",
+              "售后方案",
+              "状态",
+              "售后原因",
+              "标签",
+              "订单实付金额",
+              "售后明细",
+              "换货明细",
+              "售后金额",
+              "创建人",
+              "附件",
+              "备注",
+              "售后时间",
+              "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bi.profit.detail",
+      "name": "店铺利润分析详情",
+      "module": "BI",
+      "route_pattern": "^/bi/profit/detail\\/?$",
+      "url_contains": [
+        "/bi/profit/detail"
+      ],
+      "title_aliases": [
+        "店铺利润分析详情 - 心舰",
+        "店铺利润分析详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 店铺利润分析详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/profit/detail",
+        "captured_page_title": "店铺利润分析详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "隐藏无订单数据 切换到汇总视图",
+            "headers": [
+              "日期"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.dataview.data.overview",
+      "name": "数据概览",
+      "module": "BI",
+      "route_pattern": "^/dataView/data-overview\\/?$",
+      "url_contains": [
+        "/dataView/data-overview"
+      ],
+      "title_aliases": [
+        "数据概览 - 心舰",
+        "数据概览"
+      ],
+      "purpose": "Auto-generated row-action memory for 数据概览.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/dataView/data-overview",
+        "captured_page_title": "数据概览 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "昨天 近7天 近30天 本月",
+            "headers": [
+              "排名",
+              "达人信息",
+              "店铺",
+              "成交订单量",
+              "成交金额",
+              "成交商品数"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.user.analyze.detail",
+      "name": "商品复购分析报告详情",
+      "module": "BI",
+      "route_pattern": "^/user-analyze/detail\\/?$",
+      "url_contains": [
+        "/user-analyze/detail"
+      ],
+      "title_aliases": [
+        "商品复购分析报告详情 - 心舰",
+        "商品复购分析报告详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 商品复购分析报告详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/user-analyze/detail",
+        "captured_page_title": "商品复购分析报告详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "产品规格复购统计",
+            "headers": [
+              "产品规格",
+              "总订单数",
+              "复购订单数",
+              "订单复购率",
+              "下单用户数",
+              "复购用户数",
+              "用户复购率",
+              "平均复购周期(天)"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.coopera.detail",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/coopera-detail\\/?$",
+      "url_contains": [
+        "/crm/coopera-detail"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/coopera-detail",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "tables": 3,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "合作商品",
+            "headers": [
+              "商品信息",
+              "商品价格",
+              "销售额",
+              "销量",
+              "订单量",
+              "预估佣金"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "样品跟进",
+            "headers": [
+              "商品信息",
+              "店铺",
+              "订单信息",
+              "样品状态",
+              "申样时间",
+              "寄样方式",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "交付视频 交付直播",
+            "headers": [
+              "视频信息",
+              "合作商品",
+              "视频播放量",
+              "带货订单量",
+              "带货销量",
+              "带货销售额",
+              "千次展示转化率"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.cooperation.detail",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/cooperation-detail\\/?$",
+      "url_contains": [
+        "/crm/cooperation-detail"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "合作商品",
+            "headers": [
+              "商品信息",
+              "店铺",
+              "价格"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "商品信息",
+              "销量",
+              "销售额",
+              "取消金额",
+              "结算销量",
+              "结算销售额",
+              "预估佣金",
+              "结算佣金"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.cooperation.detail.simple",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/cooperation-detail-simple\\/?$",
+      "url_contains": [
+        "/crm/cooperation-detail-simple"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail-simple",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "合作商品",
+            "headers": [
+              "商品信息",
+              "店铺",
+              "价格"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "商品信息",
+              "销量",
+              "销售额",
+              "取消金额",
+              "结算销量",
+              "结算销售额",
+              "预估佣金",
+              "结算佣金"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.favorite.detail",
+      "name": "收藏夹详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/favorite/detail\\/?$",
+      "url_contains": [
+        "/crm/favorite/detail"
+      ],
+      "title_aliases": [
+        "收藏夹详情 - 心舰",
+        "收藏夹详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 收藏夹详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/favorite/detail",
+        "captured_page_title": "收藏夹详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "达人信息",
+              "粉丝数",
+              "总销售额",
+              "邀约次数",
+              "添加时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.matser.management.blacklist",
+      "name": "黑名单",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/blacklist\\/?$",
+      "url_contains": [
+        "/crm/matser/management/blacklist"
+      ],
+      "title_aliases": [
+        "黑名单 - 心舰",
+        "黑名单"
+      ],
+      "purpose": "Auto-generated row-action memory for 黑名单.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/blacklist",
+        "captured_page_title": "黑名单 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "批量恢复",
+            "headers": [
+              "达人信息",
+              "粉丝数",
+              "点赞数",
+              "联系方式",
+              "品类",
+              "达人标签",
+              "拉黑操作人",
+              "拉黑原因",
+              "拉黑时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "批量恢复",
+            "headers": [
+              "粉丝数",
+              "点赞数",
+              "联系方式",
+              "品类",
+              "达人标签",
+              "拉黑操作人",
+              "拉黑原因",
+              "拉黑时间",
+              "操作",
+              "达人信息"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.matser.management.focus",
+      "name": "重点关注",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/focus\\/?$",
+      "url_contains": [
+        "/crm/matser/management/focus"
+      ],
+      "title_aliases": [
+        "重点关注 - 心舰",
+        "重点关注"
+      ],
+      "purpose": "Auto-generated row-action memory for 重点关注.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/focus",
+        "captured_page_title": "重点关注 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "达人信息",
+              "画像 / 品类",
+              "粉丝数",
+              "点赞数",
+              "视频平均播放量",
+              "互动率",
+              "GMV",
+              "Item Sold",
+              "带货订单量",
+              "商品销量",
+              "销售额",
+              "视频销售额",
+              "直播销售额",
+              "佣金总额",
+              "ROI",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "跟进时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
     {
       "id": "row.crm.matser.management.highseas",
       "name": "达人公海",
@@ -27,14 +941,49 @@
         "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/highSeas",
         "captured_page_title": "达人公海 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 3,
           "row_actions": 4,
-          "sampled_rows": 20
+          "sampled_rows": 60
         },
+        "coverage_result": "actions_promoted",
         "function_source": "observed table row action labels and generic headers only; row actions not clicked"
       },
       "observed_controls": {
         "tables": [
+          {
+            "title": "",
+            "headers": [
+              "达人信息",
+              "画像 / 品类",
+              "粉丝数",
+              "GMV",
+              "Item Sold",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "交互时间",
+              "操作"
+            ],
+            "row_count_sampled": 20,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "画像 / 品类",
+              "粉丝数",
+              "GMV",
+              "Item Sold",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "交互时间",
+              "达人信息",
+              "操作"
+            ],
+            "row_count_sampled": 20,
+            "actions": []
+          },
           {
             "title": "",
             "headers": [
@@ -163,6 +1112,1150 @@
       ]
     },
     {
+      "id": "row.crm.matser.management.mymaster",
+      "name": "我的达人",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/myMaster\\/?$",
+      "url_contains": [
+        "/crm/matser/management/myMaster"
+      ],
+      "title_aliases": [
+        "我的达人 - 心舰",
+        "我的达人"
+      ],
+      "purpose": "Auto-generated row-action memory for 我的达人.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
+        "captured_page_title": "我的达人 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "达人信息",
+              "画像 / 品类",
+              "粉丝数",
+              "GMV",
+              "Item Sold",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "跟进时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "画像 / 品类",
+              "粉丝数",
+              "GMV",
+              "Item Sold",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "跟进时间",
+              "达人信息",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.crm.shop.detail",
+      "name": "店铺详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/shop-detail\\/?$",
+      "url_contains": [
+        "/crm/shop-detail"
+      ],
+      "title_aliases": [
+        "店铺详情 - 心舰",
+        "店铺详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 店铺详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/shop-detail",
+        "captured_page_title": "店铺详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "商品信息",
+              "单价",
+              "总销量",
+              "总销售额",
+              "关联达人"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bpm.manager.definition",
+      "name": "流程定义",
+      "module": "ERP",
+      "route_pattern": "^/bpm/manager/definition\\/?$",
+      "url_contains": [
+        "/bpm/manager/definition"
+      ],
+      "title_aliases": [
+        "流程定义 - 心舰",
+        "流程定义"
+      ],
+      "purpose": "Auto-generated row-action memory for 流程定义.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/manager/definition",
+        "captured_page_title": "流程定义 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "定义编号",
+              "定义名称",
+              "定义分类",
+              "表单信息",
+              "流程版本",
+              "状态",
+              "部署时间",
+              "定义描述",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bpm.oa.leave.create",
+      "name": "发起 OA 请假",
+      "module": "ERP",
+      "route_pattern": "^/bpm/oa/leave/create\\/?$",
+      "url_contains": [
+        "/bpm/oa/leave/create"
+      ],
+      "title_aliases": [
+        "发起 OA 请假 - 心舰",
+        "发起 OA 请假"
+      ],
+      "purpose": "Auto-generated row-action memory for 发起 OA 请假.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/create",
+        "captured_page_title": "发起 OA 请假 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bpm.oa.leave.detail",
+      "name": "查看 OA 请假",
+      "module": "ERP",
+      "route_pattern": "^/bpm/oa/leave/detail\\/?$",
+      "url_contains": [
+        "/bpm/oa/leave/detail"
+      ],
+      "title_aliases": [
+        "查看 OA 请假 - 心舰",
+        "查看 OA 请假"
+      ],
+      "purpose": "Auto-generated row-action memory for 查看 OA 请假.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/detail",
+        "captured_page_title": "查看 OA 请假 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bpm.process.instance.create",
+      "name": "发起流程",
+      "module": "ERP",
+      "route_pattern": "^/bpm/process-instance/create\\/?$",
+      "url_contains": [
+        "/bpm/process-instance/create"
+      ],
+      "title_aliases": [
+        "发起流程 - 心舰",
+        "发起流程"
+      ],
+      "purpose": "Auto-generated row-action memory for 发起流程.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/create",
+        "captured_page_title": "发起流程 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "流程名称",
+              "流程分类",
+              "流程版本",
+              "流程描述",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.bpm.process.instance.detail",
+      "name": "流程详情",
+      "module": "ERP",
+      "route_pattern": "^/bpm/process-instance/detail\\/?$",
+      "url_contains": [
+        "/bpm/process-instance/detail"
+      ],
+      "title_aliases": [
+        "流程详情 - 心舰",
+        "流程详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 流程详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/detail",
+        "captured_page_title": "流程详情 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.erp.blacklist",
+      "name": "黑名单管理",
+      "module": "ERP",
+      "route_pattern": "^/erp/blacklist\\/?$",
+      "url_contains": [
+        "/erp/blacklist"
+      ],
+      "title_aliases": [
+        "黑名单管理 - 心舰",
+        "黑名单管理"
+      ],
+      "purpose": "Auto-generated row-action memory for 黑名单管理.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/erp/blacklist",
+        "captured_page_title": "黑名单管理 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "新增 自动加黑 批量删除",
+            "headers": [
+              "买家地址",
+              "原因",
+              "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.job.log",
+      "name": "调度日志",
+      "module": "ERP",
+      "route_pattern": "^/job/log\\/?$",
+      "url_contains": [
+        "/job/log"
+      ],
+      "title_aliases": [
+        "调度日志 - 心舰",
+        "调度日志"
+      ],
+      "purpose": "Auto-generated row-action memory for 调度日志.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/job/log",
+        "captured_page_title": "调度日志 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "显示/隐藏",
+            "headers": [
+              "日志编号",
+              "任务编号",
+              "处理器的名字",
+              "处理器的参数",
+              "第几次执行",
+              "执行时间",
+              "执行时长",
+              "任务状态",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.monitor.message.list",
+      "name": "预警消息",
+      "module": "ERP",
+      "route_pattern": "^/monitor/message_list\\/?$",
+      "url_contains": [
+        "/monitor/message_list"
+      ],
+      "title_aliases": [
+        "预警消息 - 心舰",
+        "预警消息"
+      ],
+      "purpose": "Auto-generated row-action memory for 预警消息.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/monitor/message_list",
+        "captured_page_title": "预警消息 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "标记已处理 标记未处理 只显示待处理",
+            "headers": [
+              "订单信息",
+              "规则名称",
+              "预警类型",
+              "预警条件",
+              "预警内容",
+              "处理状态",
+              "预警时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.order.sku.min.price",
+      "name": "SKU最低售价配置",
+      "module": "ERP",
+      "route_pattern": "^/order/sku-min-price\\/?$",
+      "url_contains": [
+        "/order/sku-min-price"
+      ],
+      "title_aliases": [
+        "SKU最低售价配置 - 心舰",
+        "SKU最低售价配置"
+      ],
+      "purpose": "Auto-generated row-action memory for SKU最低售价配置.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/order/sku-min-price/",
+        "captured_page_title": "SKU最低售价配置 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "商品SKU",
+              "店铺",
+              "最低售价",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.product.data.detail",
+      "name": "商品评论详情",
+      "module": "ERP",
+      "route_pattern": "^/product-data/detail\\/?$",
+      "url_contains": [
+        "/product-data/detail"
+      ],
+      "title_aliases": [
+        "商品评论详情 - 心舰",
+        "商品评论详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 商品评论详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/product-data/detail",
+        "captured_page_title": "商品评论详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "评价信息 翻译",
+              "评级",
+              "处理状态",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.product.data.performance.detail",
+      "name": "商品表现分析",
+      "module": "ERP",
+      "route_pattern": "^/product-data/performance-detail\\/?$",
+      "url_contains": [
+        "/product-data/performance-detail"
+      ],
+      "title_aliases": [
+        "商品表现分析 - 心舰",
+        "商品表现分析"
+      ],
+      "purpose": "Auto-generated row-action memory for 商品表现分析.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/product-data/performance-detail",
+        "captured_page_title": "商品表现分析 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "日期",
+              "销售数据",
+              "商品访问数据",
+              "商品加购数据",
+              "下单数据",
+              "已确定订单数据",
+              "广告数据",
+              "有效订单量",
+              "有效销量",
+              "有效销售额",
+              "退款订单量",
+              "退款率",
+              "商品收藏数",
+              "访客数",
+              "PV",
+              "点赞量",
+              "加购访客数",
+              "加购商品数",
+              "加购转化率",
+              "下单买家数",
+              "下单商品数",
+              "下单金额",
+              "下单转化率",
+              "已确定订单买家数",
+              "已确定订单销售量",
+              "已确定订单销售额",
+              "下单到已确定订单转化率",
+              "已确定订单转化率",
+              "展现量",
+              "点击量",
+              "点击率",
+              "广告花费",
+              "广告销量",
+              "广告销售额",
+              "广告订单量",
+              "转化率",
+              "每次转化成本",
+              "ROAS",
+              "CIR",
+              "直接转化",
+              "直接已售商品",
+              "直接销售额",
+              "直接ROAS",
+              "直接CIR",
+              "直接转化率",
+              "每次直接转化成本",
+              "ACoAS",
+              "ASoAS"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "销售数据",
+              "商品访问数据",
+              "商品加购数据",
+              "下单数据",
+              "已确定订单数据",
+              "广告数据",
+              "有效订单量",
+              "有效销量",
+              "有效销售额",
+              "退款订单量",
+              "退款率",
+              "商品收藏数",
+              "访客数",
+              "PV",
+              "点赞量",
+              "加购访客数",
+              "加购商品数",
+              "加购转化率",
+              "下单买家数",
+              "下单商品数",
+              "下单金额",
+              "下单转化率",
+              "已确定订单买家数",
+              "已确定订单销售量",
+              "已确定订单销售额",
+              "下单到已确定订单转化率",
+              "已确定订单转化率",
+              "展现量",
+              "点击量",
+              "点击率",
+              "广告花费",
+              "广告销量",
+              "广告销售额",
+              "广告订单量",
+              "转化率",
+              "每次转化成本",
+              "ROAS",
+              "CIR",
+              "直接转化",
+              "直接已售商品",
+              "直接销售额",
+              "直接ROAS",
+              "直接CIR",
+              "直接转化率",
+              "每次直接转化成本",
+              "ACoAS",
+              "ASoAS",
+              "日期"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.product.sku.inventoryreport.detail",
+      "name": "进销存详情",
+      "module": "ERP",
+      "route_pattern": "^/product-sku/InventoryReport_detail\\/?$",
+      "url_contains": [
+        "/product-sku/InventoryReport_detail"
+      ],
+      "title_aliases": [
+        "进销存详情 - 心舰",
+        "进销存详情"
+      ],
+      "purpose": "Auto-generated row-action memory for 进销存详情.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/product-sku/InventoryReport_detail",
+        "captured_page_title": "进销存详情 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "日期",
+              "入库",
+              "出库",
+              "采购入库",
+              "调拨入库",
+              "手动入库",
+              "退货入库",
+              "盘盈入库",
+              "取消单入库",
+              "三方仓同步入库",
+              "手动出库",
+              "销售出库",
+              "调拨出库",
+              "盘亏出库",
+              "三方仓同步出库"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.report.center.detail.performance",
+      "name": "业绩利润报表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/performance\\/?$",
+      "url_contains": [
+        "/report-center/detail/performance"
+      ],
+      "title_aliases": [
+        "业绩利润报表 - 心舰",
+        "业绩利润报表"
+      ],
+      "purpose": "Auto-generated row-action memory for 业绩利润报表.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/performance",
+        "captured_page_title": "业绩利润报表 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.report.center.detail.shop",
+      "name": "店铺利润报表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/shop\\/?$",
+      "url_contains": [
+        "/report-center/detail/shop"
+      ],
+      "title_aliases": [
+        "店铺利润报表 - 心舰",
+        "店铺利润报表"
+      ],
+      "purpose": "Auto-generated row-action memory for 店铺利润报表.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shop",
+        "captured_page_title": "店铺利润报表 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.report.center.detail.shopeegoods",
+      "name": "Shopee商品数据表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/shopeeGoods\\/?$",
+      "url_contains": [
+        "/report-center/detail/shopeeGoods"
+      ],
+      "title_aliases": [
+        "Shopee商品数据表 - 心舰",
+        "Shopee商品数据表"
+      ],
+      "purpose": "Auto-generated row-action memory for Shopee商品数据表.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeGoods",
+        "captured_page_title": "Shopee商品数据表 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "-",
+            "headers": [
+              "项目",
+              "总数据",
+              "收入",
+              "支出",
+              "产出",
+              "日期",
+              "商品访客数",
+              "件数",
+              "销售",
+              "测评销量",
+              "有效销量",
+              "测评金额",
+              "平均客单价",
+              "转化率",
+              "有效销售额",
+              "搜索广告费",
+              "搜索广告转化",
+              "搜索广告销售额",
+              "搜索广告点击率",
+              "搜索广告转化率",
+              "搜索广告ROI",
+              "关联广告费",
+              "关联广告转化",
+              "关联广告销售额",
+              "关联广告点击率",
+              "关联广告转化率",
+              "关联广告ROI",
+              "推广广告费",
+              "推广广告转化",
+              "推广广告销售额",
+              "推广广告点击率",
+              "推广广告转化率",
+              "推广广告ROI",
+              "测评损耗",
+              "商品成本",
+              "平台费用",
+              "退款金额",
+              "预估运费",
+              "利润",
+              "销售利润率"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.report.center.detail.shopeeshop",
+      "name": "Shopee店铺数据表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/shopeeShop\\/?$",
+      "url_contains": [
+        "/report-center/detail/shopeeShop"
+      ],
+      "title_aliases": [
+        "Shopee店铺数据表 - 心舰",
+        "Shopee店铺数据表"
+      ],
+      "purpose": "Auto-generated row-action memory for Shopee店铺数据表.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeShop",
+        "captured_page_title": "Shopee店铺数据表 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "项目",
+              "总数据",
+              "收入",
+              "支出",
+              "产出",
+              "日期",
+              "访客数",
+              "订单量",
+              "销售额",
+              "测评订单量",
+              "测评销量",
+              "测评金额",
+              "有效订单量",
+              "有效销量",
+              "每个订单的销售额",
+              "店铺转化率",
+              "有效销售额",
+              "搜索广告费",
+              "搜索广告转化",
+              "搜索广告销售额",
+              "搜索广告点击率",
+              "搜索广告转化率",
+              "搜索广告ROI",
+              "关联广告费",
+              "关联广告转化",
+              "关联广告销售额",
+              "关联广告点击率",
+              "关联广告转化率",
+              "关联广告ROI",
+              "推广广告费",
+              "推广广告转化",
+              "推广广告销售额",
+              "推广广告点击率",
+              "推广广告转化率",
+              "推广广告ROI",
+              "测评损耗",
+              "退款金额",
+              "商品成本",
+              "平台费用",
+              "预估运费",
+              "利润",
+              "销售利润率"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.shop.auth",
+      "name": "授权结果",
+      "module": "ERP",
+      "route_pattern": "^/shop/auth\\/?$",
+      "url_contains": [
+        "/shop/auth"
+      ],
+      "title_aliases": [
+        "授权结果 - 心舰",
+        "授权结果"
+      ],
+      "purpose": "Auto-generated row-action memory for 授权结果.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop/auth",
+        "captured_page_title": "授权结果 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.shop.auth.fail",
+      "name": "授权失败",
+      "module": "ERP",
+      "route_pattern": "^/shop/auth-fail\\/?$",
+      "url_contains": [
+        "/shop/auth-fail"
+      ],
+      "title_aliases": [
+        "授权失败 - 心舰",
+        "授权失败"
+      ],
+      "purpose": "Auto-generated row-action memory for 授权失败.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop/auth-fail",
+        "captured_page_title": "授权失败 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.shop.data.performance.board",
+      "name": "店铺表现看板",
+      "module": "ERP",
+      "route_pattern": "^/shop-data/performance-board\\/?$",
+      "url_contains": [
+        "/shop-data/performance-board"
+      ],
+      "title_aliases": [
+        "店铺表现看板 - 心舰",
+        "店铺表现看板"
+      ],
+      "purpose": "Auto-generated row-action memory for 店铺表现看板.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop-data/performance-board",
+        "captured_page_title": "店铺表现看板 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.shop.data.performance.detail",
+      "name": "店铺表现分析",
+      "module": "ERP",
+      "route_pattern": "^/shop-data/performance-detail\\/?$",
+      "url_contains": [
+        "/shop-data/performance-detail"
+      ],
+      "title_aliases": [
+        "店铺表现分析 - 心舰",
+        "店铺表现分析"
+      ],
+      "purpose": "Auto-generated row-action memory for 店铺表现分析.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop-data/performance-detail",
+        "captured_page_title": "店铺表现分析 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "日期",
+              "销售数据",
+              "商品表现",
+              "广告数据",
+              "有效订单量",
+              "有效销量",
+              "有效销售额",
+              "退款订单量",
+              "退款率",
+              "商品收藏数",
+              "访客数",
+              "PV",
+              "点赞量",
+              "加购访客数",
+              "加购商品数",
+              "加购转化率",
+              "下单买家数",
+              "下单商品数",
+              "下单金额",
+              "下单转化率",
+              "已确定订单买家数",
+              "已确定订单销售量",
+              "已确定订单销售额",
+              "下单到已确定订单转化率",
+              "已确定订单转化率",
+              "展现量",
+              "点击量",
+              "点击率",
+              "广告花费",
+              "广告销量",
+              "广告销售额",
+              "广告订单量",
+              "转化率",
+              "每次转化成本",
+              "ROAS",
+              "CIR",
+              "直接转化",
+              "直接已售商品",
+              "直接销售额",
+              "直接ROAS",
+              "直接CIR",
+              "直接转化率",
+              "每次直接转化成本",
+              "ACoAS",
+              "ASoAS"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "销售数据",
+              "商品表现",
+              "广告数据",
+              "有效订单量",
+              "有效销量",
+              "有效销售额",
+              "退款订单量",
+              "退款率",
+              "商品收藏数",
+              "访客数",
+              "PV",
+              "点赞量",
+              "加购访客数",
+              "加购商品数",
+              "加购转化率",
+              "下单买家数",
+              "下单商品数",
+              "下单金额",
+              "下单转化率",
+              "已确定订单买家数",
+              "已确定订单销售量",
+              "已确定订单销售额",
+              "下单到已确定订单转化率",
+              "已确定订单转化率",
+              "展现量",
+              "点击量",
+              "点击率",
+              "广告花费",
+              "广告销量",
+              "广告销售额",
+              "广告订单量",
+              "转化率",
+              "每次转化成本",
+              "ROAS",
+              "CIR",
+              "直接转化",
+              "直接已售商品",
+              "直接销售额",
+              "直接ROAS",
+              "直接CIR",
+              "直接转化率",
+              "每次直接转化成本",
+              "ACoAS",
+              "ASoAS",
+              "日期"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
       "id": "row.system.costom.fee",
       "name": "自定义费用",
       "module": "ERP",
@@ -180,10 +2273,11 @@
         "captured_page_url": "https://erp.xinjianerp.com/system/costom-fee",
         "captured_page_title": "自定义费用 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 2,
           "sampled_rows": 19
         },
+        "coverage_result": "actions_promoted",
         "function_source": "observed table row action labels and generic headers only; row actions not clicked"
       },
       "observed_controls": {
@@ -211,6 +2305,19 @@
                 "disabled": false
               }
             ]
+          },
+          {
+            "title": "",
+            "headers": [
+              "店铺",
+              "费用月份",
+              "费用类型",
+              "金额",
+              "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
           }
         ]
       },
@@ -258,6 +2365,211 @@
           }
         }
       ]
+    },
+    {
+      "id": "row.system.package.open.record",
+      "name": "套餐开通记录",
+      "module": "ERP",
+      "route_pattern": "^/system/package-open-record\\/?$",
+      "url_contains": [
+        "/system/package-open-record"
+      ],
+      "title_aliases": [
+        "套餐开通记录 - 心舰",
+        "套餐开通记录"
+      ],
+      "purpose": "Auto-generated row-action memory for 套餐开通记录.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/system/package-open-record/",
+        "captured_page_title": "套餐开通记录 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "租户",
+              "套餐",
+              "开通人",
+              "开通时间"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.user.package",
+      "name": "单量套餐",
+      "module": "ERP",
+      "route_pattern": "^/user/package\\/?$",
+      "url_contains": [
+        "/user/package"
+      ],
+      "title_aliases": [
+        "单量套餐 - 心舰",
+        "单量套餐"
+      ],
+      "purpose": "Auto-generated row-action memory for 单量套餐.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/user/package",
+        "captured_page_title": "单量套餐 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
+    },
+    {
+      "id": "row.download.list",
+      "name": "下载中心",
+      "module": "System",
+      "route_pattern": "^/download/list\\/?$",
+      "url_contains": [
+        "/download/list"
+      ],
+      "title_aliases": [
+        "下载中心 - 心舰",
+        "下载中心"
+      ],
+      "purpose": "Auto-generated row-action memory for 下载中心.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/download/list",
+        "captured_page_title": "下载中心 - 心舰",
+        "captured_counts": {
+          "tables": 1,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "报表名称",
+              "功能模块",
+              "报表日期范围",
+              "创建时间",
+              "生成时间",
+              "生成状态",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.index.home",
+      "name": "首页",
+      "module": "System",
+      "route_pattern": "^/index/home\\/?$",
+      "url_contains": [
+        "/index/home"
+      ],
+      "title_aliases": [
+        "首页 - 心舰",
+        "首页"
+      ],
+      "purpose": "Auto-generated row-action memory for 首页.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/index/home",
+        "captured_page_title": "首页 - 心舰",
+        "captured_counts": {
+          "tables": 2,
+          "row_actions": 0,
+          "sampled_rows": 12
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": [
+          {
+            "title": "",
+            "headers": [
+              "排名",
+              "城市",
+              "有效销量",
+              "有效订单量",
+              "有效订单量占比"
+            ],
+            "row_count_sampled": 10,
+            "actions": []
+          },
+          {
+            "title": "排行榜 销售榜 利润榜 退货榜 店铺 显示10条 -",
+            "headers": [
+              "排名",
+              "分析",
+              "店铺",
+              "有效销量",
+              "有效订单量",
+              "有效销售额(CNY)",
+              "利润(CNY)",
+              "利润率"
+            ],
+            "row_count_sampled": 2,
+            "actions": []
+          }
+        ]
+      },
+      "actions": []
+    },
+    {
+      "id": "row.index.thali",
+      "name": "套餐",
+      "module": "System",
+      "route_pattern": "^/index/thali\\/?$",
+      "url_contains": [
+        "/index/thali"
+      ],
+      "title_aliases": [
+        "套餐 - 心舰",
+        "套餐"
+      ],
+      "purpose": "Auto-generated row-action memory for 套餐.",
+      "evidence": {
+        "source": "chrome_cdp_row_action_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/index/thali",
+        "captured_page_title": "套餐 - 心舰",
+        "captured_counts": {
+          "tables": 0,
+          "row_actions": 0,
+          "sampled_rows": 0
+        },
+        "coverage_result": "probe_ran_no_public_row_actions",
+        "function_source": "observed table row action labels and generic headers only; row actions not clicked"
+      },
+      "observed_controls": {
+        "tables": []
+      },
+      "actions": []
     }
   ]
 }

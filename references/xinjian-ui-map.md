@@ -39,7 +39,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\learn-xinjian-weak-pages.ps1") -DryRun -Json
 ```
 
-`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. `learn-xinjian-weak-pages.ps1` uses that report to select the highest-risk learnable pages and run the safe current-page learner in a bounded batch. It records local attempt state under `.ziniao-ops\xinjian-weak-page-learn-state.json` and skips recently attempted pages by default so learning keeps moving forward; pass `-RetryAttempted` to revisit them. Use `-DryRun` first, then rerun without `-DryRun` for the selected batch.
+`report-xinjian-action-memory.ps1` reads the unified action catalog and reports weak pages, source coverage, locator gaps, audit counts, and per-page recommended learning commands. Dynamic source coverage is page-level, not only action-level: overlay/dialog/row-action maps keep sanitized page evidence even when a safe probe found no public overlay, dialog, or row-action buttons. That prevents the audit from repeatedly retrying pages that were already checked and genuinely had no promotable dynamic controls. `learn-xinjian-weak-pages.ps1` uses that report to select the highest-risk learnable pages and run the safe current-page learner in a bounded batch. It records local attempt state under `.ziniao-ops\xinjian-weak-page-learn-state.json` and skips recently attempted pages by default so learning keeps moving forward; pass `-RetryAttempted` to revisit them. Use `-DryRun` first, then rerun without `-DryRun` for the selected batch.
 
 If the current page is missing, weakly mapped, or newly changed, learn it in one safe pass:
 
@@ -127,7 +127,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-overlay-map.ps1") -Json
 ```
 
-The batch crawler opens a temporary CDP tab per mapped route, captures overlay triggers/items, closes the tab, and records local attempt state under `.ziniao-ops\xinjian-overlay-crawl-state.json`.
+The batch crawler opens a temporary CDP tab per mapped route, captures overlay triggers/items, closes the tab, and records local attempt state under `.ziniao-ops\xinjian-overlay-crawl-state.json`. Generated overlay pages are retained with `evidence.coverage_result = probe_ran_no_public_overlay_actions` when the probe ran safely but found no public overlay actions.
 
 The overlay probe opens safe Element UI trigger panels (`select`, `cascader`, `dropdown`, date picker), records sanitized generic menu items, and closes the panel. It does not click overlay items. Private-looking select values are filtered at capture time.
 
@@ -139,7 +139,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-dialog-map.ps1") -Json
 ```
 
-The dialog probe may click safe opener buttons such as `新增`, `编辑`, `详情`, `查看`, `设置`, or `配置`, records sanitized dialog/drawer buttons, field labels, and placeholders, then closes the dialog. It does not click submit/confirm/write buttons, does not type, and does not read input values.
+The dialog probe may click safe opener buttons such as `新增`, `编辑`, `详情`, `查看`, `设置`, or `配置`, records sanitized dialog/drawer buttons, field labels, and placeholders, then closes the dialog. It does not click submit/confirm/write buttons, does not type, and does not read input values. Generated dialog pages are retained with `evidence.coverage_result = probe_ran_no_public_dialog_actions` when no public dialog controls are promotable.
 
 10. To capture table row-level operation buttons without reading row data:
 
@@ -149,7 +149,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\craw
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-row-action-map.ps1") -Json
 ```
 
-The row-action probe reads table headers and row action labels only. For operation columns, it stores recognized generic action words rather than full cell text. It may open non-mutating row menu triggers such as `更多` or `操作`, but it does not click row action menu items and does not read row cell values.
+The row-action probe reads table headers and row action labels only. For operation columns, it stores recognized generic action words rather than full cell text. It may open non-mutating row menu triggers such as `更多` or `操作`, but it does not click row action menu items and does not read row cell values. Generated row-action pages are retained with `evidence.coverage_result = probe_ran_no_public_row_actions` when no row actions are visible or promotable.
 
 11. If a debuggable Chrome/Edge page is available, capture one current page's real DOM controls:
 
@@ -206,11 +206,11 @@ Coverage snapshot from the 2026-07-08 CDP crawl:
 - Eligible routes mapped in curated or auto map: 42.
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
-- Public map pages: 10 curated pages plus 38 generated auto-map pages.
-- Dynamic overlay coverage: 47 public known pages, 45 attempted by the overlay crawler plus the current open-page learner, 0 pending after exclusions, 26 pages promoted to the overlay map, 289 overlay actions.
-- Dialog/drawer coverage: 47 public known pages, 47 attempted by the dialog crawler plus the current open-page learner, 0 pending after exclusions, 9 pages promoted to the dialog map, 41 dialog actions.
-- Table row-action coverage: 47 public known pages, 47 attempted by the row-action crawler plus targeted fixed-right operation-column learning, 0 pending after exclusions, 2 pages promoted to the row-action map, 6 row actions.
-- Unified action catalog: 49 pages, 1002 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 377 read-only `table_column` actions for remembered table metrics/headers. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions; row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
+- Public map pages: 10 curated route pages plus one curated global action group and 38 generated auto-map pages.
+- Dynamic overlay coverage: 47 public known pages, 0 pending after exclusions, 26 pages with promoted overlay actions, 21 pages retained as safely probed with no public overlay actions, 289 overlay actions.
+- Dialog/drawer coverage: 47 public known pages, 0 pending after exclusions, 9 pages with promoted dialog actions, 38 pages retained as safely probed with no public dialog actions, 41 dialog actions.
+- Table row-action coverage: 47 public known pages, 0 pending after exclusions, 2 pages with promoted row actions, 45 pages retained as safely probed with no public row actions, 6 row actions.
+- Unified action catalog: 49 pages, 1002 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 377 read-only `table_column` actions for remembered table metrics/headers. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages; only 6 pages remain weak, mostly low-action or restricted/simple pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

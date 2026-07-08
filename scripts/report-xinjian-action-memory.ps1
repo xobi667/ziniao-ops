@@ -75,6 +75,11 @@ $pageReports = @()
 foreach ($page in $pages) {
   $actions = @($page.actions)
   $sourceCounts = Get-CountMap ($actions | ForEach-Object { Get-ActionProp $_ "source_map" })
+  foreach ($sourceName in @($page.sources | ForEach-Object { [string]$_ })) {
+    if ($sourceName -and !$sourceCounts.Contains($sourceName)) {
+      $sourceCounts[$sourceName] = 0
+    }
+  }
   $typeCounts = Get-CountMap ($actions | ForEach-Object { Get-ActionProp $_ "type" })
   $safetyCounts = Get-CountMap ($actions | ForEach-Object { Get-ActionProp $_ "safety_mode" })
   $locatorCounts = Get-CountMap ($actions | ForEach-Object { Get-ActionProp $_ "locator_strategy" })
@@ -107,17 +112,20 @@ foreach ($page in $pages) {
     $gaps += "empty_locators"
     $riskScore += 60 + $emptyLocator
   }
-  if (!$sourceCounts.Contains("overlay")) {
-    $gaps += "no_overlay_memory"
-    $riskScore += 8
-  }
-  if (!$sourceCounts.Contains("dialog")) {
-    $gaps += "no_dialog_memory"
-    $riskScore += 4
-  }
-  if (!$sourceCounts.Contains("row-action")) {
-    $gaps += "no_row_action_memory"
-    $riskScore += 2
+  $isRealPage = [string]$page.route -and [string]$page.module -ne "Global"
+  if ($isRealPage) {
+    if (!$sourceCounts.Contains("overlay")) {
+      $gaps += "no_overlay_memory"
+      $riskScore += 8
+    }
+    if (!$sourceCounts.Contains("dialog")) {
+      $gaps += "no_dialog_memory"
+      $riskScore += 4
+    }
+    if (!$sourceCounts.Contains("row-action")) {
+      $gaps += "no_row_action_memory"
+      $riskScore += 2
+    }
   }
   if ([int]($safetyCounts["safe_execute_allowed"]) -eq 0) {
     $gaps += "no_safe_actions"

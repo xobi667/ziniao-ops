@@ -368,6 +368,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\lear
 
 Use `learn-xinjian-weak-pages.ps1` to automatically select and learn a bounded batch of high-risk pages from the audit report. It records local attempt state under `.ziniao-ops\xinjian-weak-page-learn-state.json` and skips recently attempted pages by default so learning keeps moving forward; pass `-RetryAttempted` to revisit them. Keep `-DryRun` for planning, then rerun without it when the selected pages are acceptable.
 
+Dynamic source coverage is page-level, not only action-level. Overlay/dialog/row-action generators keep sanitized page entries even when a safe probe found no public dynamic controls, using `probe_ran_no_public_overlay_actions`, `probe_ran_no_public_dialog_actions`, or `probe_ran_no_public_row_actions` in `evidence.coverage_result`. Treat those entries as valid coverage evidence during audits so the workflow does not repeatedly relearn pages that were already checked and genuinely had no promotable dynamic buttons.
+
 If the current page is missing from memory or looks weakly mapped, learn it in one safe pass before guessing. This captures DOM controls, dropdown/select/date overlays, safe dialog/drawer controls, and table row action labels/operation-column action words, then regenerates the public maps and unified action catalog. The learner validates that every capture's `matched_page.url` route matches the target route; if a capture lands on a different page, generation is skipped so wrong-page controls are not promoted:
 
 ```powershell
@@ -435,6 +437,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 ```
 
 `references\xinjian-ui-overlay-map.json` supplements both curated and auto maps. The overlay probe opens panels and closes them, but must never click overlay items or submit forms. Private-looking select values are filtered at capture time.
+Pages safely probed with no promotable overlay items are still retained in the overlay map as coverage evidence.
 
 To capture buttons and fields that only appear after safe dialog/drawer openers, use the dialog probe. It may click opener buttons such as `新增`, `编辑`, `详情`, `查看`, `设置`, or `配置`, but must never click submit/confirm/write buttons inside the dialog:
 
@@ -445,6 +448,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 ```
 
 `references\xinjian-ui-dialog-map.json` supplements static and overlay maps with dialog/drawer openers, dialog buttons, field labels, and placeholders. It does not store input values or private-looking text. Dialog submit/save/confirm/delete/write buttons are confirmation-required.
+Pages safely probed with no promotable dialog/drawer controls are still retained in the dialog map as coverage evidence.
 
 To capture table row-level operation buttons such as `详情`, `编辑`, `删除`, `恢复`, `设置`, or `预警设置`, use the row-action probe. It reads only table headers, row action labels, and generic action words from operation columns. It may open non-mutating row menu triggers such as `更多` or `操作`, but it must not read row cell values or click row action menu items:
 
@@ -455,6 +459,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 ```
 
 `references\xinjian-ui-row-action-map.json` supplements static, overlay, and dialog maps with table row action labels and operation-column action words. Row edit/delete/export/write actions are confirmation-required.
+Pages safely probed with no promotable row actions are still retained in the row-action map as coverage evidence.
 
 If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:
 
