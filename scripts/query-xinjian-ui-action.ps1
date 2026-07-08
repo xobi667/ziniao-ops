@@ -263,23 +263,55 @@ $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
 
 $matchedPages = @()
+$urlMatchedPages = @()
+$nameMatchedPages = @()
 foreach ($page in @($allPages)) {
   $pageScore = 0
+  $routeMatched = $false
+  $urlContainsMatched = $false
+  $nameMatched = $false
   if ($route -and $page.route_pattern -and $route -match $page.route_pattern) { $pageScore += 100 }
+  if ($route -and $page.route_pattern -and $route -match $page.route_pattern) { $routeMatched = $true }
   if ($Url -and $page.url_contains) {
     foreach ($needle in @($page.url_contains)) {
-      if ($Url -like "*$needle*") { $pageScore += 50 }
+      if ($Url -like "*$needle*") {
+        $pageScore += 50
+        $urlContainsMatched = $true
+      }
     }
   }
   if ($query -and ((Normalize-Text $page.name).Contains($query) -or $query.Contains((Normalize-Text $page.name)))) {
     $pageScore += 30
+    $nameMatched = $true
   }
   if ($pageScore -gt 0) {
-    $matchedPages += [pscustomobject]@{ page = $page; score = $pageScore }
+    $item = [pscustomobject]@{
+      page = $page
+      score = $pageScore
+      route_matched = $routeMatched
+      url_contains_matched = $urlContainsMatched
+      name_matched = $nameMatched
+      current_url_match = ($routeMatched -or $urlContainsMatched)
+    }
+    if ($item.current_url_match) { $urlMatchedPages += $item }
+    if ($nameMatched) { $nameMatchedPages += $item }
+    $matchedPages += $item
   }
 }
+if ($Url -and $urlMatchedPages.Count -gt 0) {
+  $matchedPages = @($urlMatchedPages)
+}
 if ($matchedPages.Count -eq 0 -and !$Url) {
-  $matchedPages = @($allPages | ForEach-Object { [pscustomobject]@{ page = $_; score = 0 } })
+  $matchedPages = @($allPages | ForEach-Object {
+      [pscustomobject]@{
+        page = $_
+        score = 0
+        route_matched = $false
+        url_contains_matched = $false
+        name_matched = $false
+        current_url_match = $false
+      }
+    })
 }
 
 $candidates = @()
@@ -340,6 +372,8 @@ $payload = [ordered]@{
   intent = $Intent
   url = $Url
   route = $route
+  page_match_mode = if ($Url -and $urlMatchedPages.Count -gt 0) { "current_url_scope" } elseif ($Url) { "url_no_page_match_fallback" } else { "global_or_name_scope" }
+  suppressed_off_page_name_matches = if ($Url -and $urlMatchedPages.Count -gt 0) { @($nameMatchedPages | Where-Object { !$_.current_url_match }).Count } else { 0 }
   map_version = $map.version
   auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
   overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
@@ -347,7 +381,12 @@ $payload = [ordered]@{
   row_action_map_version = if ($rowActionMap) { $rowActionMap.version } else { $null }
   map_pages_total = $allPages.Count
   matched_pages = @($matchedPages | Sort-Object score -Descending | Select-Object -First 5 | ForEach-Object {
-      [ordered]@{ id = $_.page.id; name = $_.page.name; score = $_.score }
+      [ordered]@{
+        id = $_.page.id
+        name = $_.page.name
+        score = $_.score
+        current_url_match = [bool]$_.current_url_match
+      }
     })
   matches = @($candidates)
   next_action = if ($candidates.Count -gt 0) { "use_best_match_or_capture_current_page" } else { "capture_current_page_then_update_xinjian_ui_map" }

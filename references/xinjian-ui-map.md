@@ -36,6 +36,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 
 The invoker reports the matched page/action, safety gate, and locator strategy. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
 
+When `-Url` is provided, query and invoke scripts first scope page-level matches to the current route. Off-page name matches are suppressed unless no current-page match exists, so an intent like `首页` on `/ai/talk` resolves to the current page's 首页 action instead of the 首页 page's unrelated controls.
+
 4. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 
 ```powershell
