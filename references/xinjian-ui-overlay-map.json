@@ -1,0 +1,430 @@
+{
+  "version": "2026-07-08",
+  "system": "xinjian_erp",
+  "source": "generated_from_sanitized_cdp_overlay_captures",
+  "generated_at": "2026-07-08T10:44:08.182Z",
+  "policy": {
+    "default_mode": "read_only_map_first",
+    "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
+    "write_action_rule": "Overlay write/export/batch/edit/save/delete actions are confirmation-required until manually verified."
+  },
+  "pages": [
+    {
+      "id": "overlay.ad.originality.detail",
+      "name": "创意详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/originality-detail\\/?$",
+      "url_contains": [
+        "/ad/originality-detail"
+      ],
+      "title_aliases": [
+        "创意详情 - 心舰",
+        "创意详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 创意详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/originality-detail",
+        "captured_page_title": "创意详情 - 心舰",
+        "captured_counts": {
+          "triggers": 4,
+          "overlays_with_items": 3,
+          "items": 13,
+          "filtered_items": 45
+        },
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择创意状态",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 9,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 9,
+            "items": [
+              "按视频名称",
+              "按视频ID号",
+              "按Tiktok账号"
+            ]
+          },
+          {
+            "trigger": "选择批量操作",
+            "trigger_type": "select",
+            "item_count": 5,
+            "filtered_item_count": 11,
+            "items": [
+              "按视频名称",
+              "按视频ID号",
+              "按Tiktok账号",
+              "添加至广告计划",
+              "批量排除"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 5,
+            "filtered_item_count": 16,
+            "items": [
+              "按视频名称",
+              "按视频ID号",
+              "按Tiktok账号",
+              "添加至广告计划",
+              "批量排除"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.请选择创意状态",
+          "name": "请选择创意状态",
+          "aliases": [
+            "请选择创意状态"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择创意状态 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择创意状态",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.multiple-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按视频名称",
+          "name": "按视频名称",
+          "aliases": [
+            "按视频名称",
+            "请选择按视频名称"
+          ],
+          "type": "overlay_item",
+          "safety": "unknown_observed",
+          "purpose": "Choose 按视频名称 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按视频名称",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按视频id号",
+          "name": "按视频ID号",
+          "aliases": [
+            "按视频ID号",
+            "请选择按视频ID号"
+          ],
+          "type": "overlay_item",
+          "safety": "unknown_observed",
+          "purpose": "Choose 按视频ID号 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按视频ID号",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按tiktok账号",
+          "name": "按Tiktok账号",
+          "aliases": [
+            "按Tiktok账号",
+            "请选择按Tiktok账号"
+          ],
+          "type": "overlay_item",
+          "safety": "unknown_observed",
+          "purpose": "Choose 按Tiktok账号 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按Tiktok账号",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.选择批量操作",
+          "name": "选择批量操作",
+          "aliases": [
+            "选择批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.按视频名称",
+          "name": "批量按视频名称",
+          "aliases": [
+            "按视频名称",
+            "选择批量操作按视频名称",
+            "批量按视频名称"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 按视频名称 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "按视频名称",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.按视频id号",
+          "name": "批量按视频ID号",
+          "aliases": [
+            "按视频ID号",
+            "选择批量操作按视频ID号",
+            "批量按视频ID号"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 按视频ID号 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "按视频ID号",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.按tiktok账号",
+          "name": "批量按Tiktok账号",
+          "aliases": [
+            "按Tiktok账号",
+            "选择批量操作按Tiktok账号",
+            "批量按Tiktok账号"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 按Tiktok账号 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "按Tiktok账号",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.添加至广告计划",
+          "name": "批量添加至广告计划",
+          "aliases": [
+            "添加至广告计划",
+            "选择批量操作添加至广告计划",
+            "批量添加至广告计划",
+            "至广告计划添加"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 添加至广告计划 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "添加至广告计划",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.批量排除",
+          "name": "批量排除",
+          "aliases": [
+            "批量排除",
+            "选择批量操作批量排除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量排除 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "批量排除",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.app-container.flex-column-box > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按视频名称",
+          "name": "按视频名称",
+          "aliases": [
+            "按视频名称",
+            "请选择按视频名称"
+          ],
+          "type": "overlay_item",
+          "safety": "unknown_observed",
+          "purpose": "Choose 按视频名称 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按视频名称",
+            "trigger_selector": "div.app-container.flex-column-box > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按视频id号",
+          "name": "按视频ID号",
+          "aliases": [
+            "按视频ID号",
+            "请选择按视频ID号"
+          ],
+          "type": "overlay_item",
+          "safety": "unknown_observed",
+          "purpose": "Choose 按视频ID号 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按视频ID号",
+            "trigger_selector": "div.app-container.flex-column-box > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按tiktok账号",
+          "name": "按Tiktok账号",
+          "aliases": [
+            "按Tiktok账号",
+            "请选择按Tiktok账号"
+          ],
+          "type": "overlay_item",
+          "safety": "unknown_observed",
+          "purpose": "Choose 按Tiktok账号 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按Tiktok账号",
+            "trigger_selector": "div.app-container.flex-column-box > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.添加至广告计划",
+          "name": "添加至广告计划",
+          "aliases": [
+            "添加至广告计划",
+            "请选择添加至广告计划",
+            "至广告计划添加"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 添加至广告计划 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "添加至广告计划",
+            "trigger_selector": "div.app-container.flex-column-box > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.批量排除",
+          "name": "批量排除",
+          "aliases": [
+            "批量排除",
+            "请选择批量排除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量排除 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "批量排除",
+            "trigger_selector": "div.app-container.flex-column-box > div.page-down:nth-of-type(3) > div.pagination-container:nth-of-type(2) > div.el-pagination > span.el-pagination__sizes:nth-of-type(2) > div.el-select.el-select--mini"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.matser.management.mymaster",
+      "name": "我的达人",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/myMaster\\/?$",
+      "url_contains": [
+        "/crm/matser/management/myMaster"
+      ],
+      "title_aliases": [
+        "我的达人 - 心舰",
+        "我的达人"
+      ],
+      "purpose": "Auto-generated overlay memory for 我的达人.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
+        "captured_page_title": "我的达人 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0
+        },
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        }
+      ]
+    }
+  ]
+}

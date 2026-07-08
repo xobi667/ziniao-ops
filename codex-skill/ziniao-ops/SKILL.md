@@ -367,6 +367,15 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\gene
 `references\xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures. It is broad memory, not final proof of behavior. Curated `references\xinjian-ui-map.json` takes precedence when both contain the same route.
 The crawler records local attempt state under `.ziniao-ops\xinjian-crawl-state.json`; pass `-RetryAttempted` only when intentionally revisiting empty, restricted, redirected, or previously failed routes.
 
+To capture dynamic dropdown/menu/select/date-panel items on a known page, use the overlay probe and regenerate the overlay map:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capture-xinjian-overlays.ps1") -Port 9342 -Url "<心舰页面URL>" -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-overlay-map.ps1") -Json
+```
+
+`references\xinjian-ui-overlay-map.json` supplements both curated and auto maps. The overlay probe opens panels and closes them, but must never click overlay items or submit forms. Private-looking select values are filtered at capture time.
+
 If a debuggable 心舰 Chrome/Edge page is available, capture real DOM controls first:
 
 ```powershell

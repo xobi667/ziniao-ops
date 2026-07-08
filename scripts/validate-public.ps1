@@ -188,12 +188,16 @@ $required = @(
   "scripts\capture-xinjian-ui-map.ps1",
   "scripts\capture-xinjian-dom-map.ps1",
   "scripts\capture-xinjian-dom-cdp.mjs",
+  "scripts\capture-xinjian-overlays.ps1",
+  "scripts\capture-xinjian-overlays-cdp.mjs",
   "scripts\discover-xinjian-routes.ps1",
   "scripts\discover-xinjian-routes-cdp.mjs",
   "scripts\crawl-xinjian-dom-pages.ps1",
   "scripts\report-xinjian-ui-coverage.ps1",
   "scripts\generate-xinjian-ui-auto-map.ps1",
   "scripts\generate-xinjian-ui-auto-map.mjs",
+  "scripts\generate-xinjian-ui-overlay-map.ps1",
+  "scripts\generate-xinjian-ui-overlay-map.mjs",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\install-upstream-tools.ps1",
   "scripts\sensitive-text.ps1",
@@ -227,7 +231,8 @@ $required = @(
   "references\xinjian-erp.md",
   "references\xinjian-ui-map.md",
   "references\xinjian-ui-map.json",
-  "references\xinjian-ui-auto-map.json"
+  "references\xinjian-ui-auto-map.json",
+  "references\xinjian-ui-overlay-map.json"
 )
 foreach ($rel in $required) {
   if (!(Test-Path -LiteralPath (Join-Path $Root $rel))) {

@@ -5,7 +5,9 @@ param(
   [string]$Url = "",
   [string]$MapPath = "",
   [string]$AutoMapPath = "",
+  [string]$OverlayMapPath = "",
   [switch]$NoAutoMap,
+  [switch]$NoOverlayMap,
   [switch]$Json
 )
 
@@ -16,6 +18,9 @@ if (!$MapPath) {
 }
 if (!$AutoMapPath) {
   $AutoMapPath = Join-Path $root "references\xinjian-ui-auto-map.json"
+}
+if (!$OverlayMapPath) {
+  $OverlayMapPath = Join-Path $root "references\xinjian-ui-overlay-map.json"
 }
 if (!(Test-Path -LiteralPath $MapPath)) {
   $payload = [ordered]@{
@@ -33,6 +38,10 @@ function Normalize-Text([string]$Text) {
 
 function Compact-Text([string]$Text) {
   return (Normalize-Text $Text) -replace "\s+", ""
+}
+
+function New-UnicodeText([int[]]$Codepoints) {
+  return -join ($Codepoints | ForEach-Object { [char]$_ })
 }
 
 function Get-RoutePath([string]$InputUrl) {
@@ -65,7 +74,23 @@ function Get-RouteKey([string]$InputPath) {
 function Get-ActionScore($Action, [string]$Query) {
   $score = 0
   $queryCompact = Compact-Text $Query
-  $commandWords = @("搜索", "查询", "重置", "新增", "添加", "保存", "提交", "导出", "下载", "删除", "编辑", "修改", "应用", "批量", "标记")
+  $commandWords = @(
+    (New-UnicodeText @(0x641C, 0x7D22)),
+    (New-UnicodeText @(0x67E5, 0x8BE2)),
+    (New-UnicodeText @(0x91CD, 0x7F6E)),
+    (New-UnicodeText @(0x65B0, 0x589E)),
+    (New-UnicodeText @(0x6DFB, 0x52A0)),
+    (New-UnicodeText @(0x4FDD, 0x5B58)),
+    (New-UnicodeText @(0x63D0, 0x4EA4)),
+    (New-UnicodeText @(0x5BFC, 0x51FA)),
+    (New-UnicodeText @(0x4E0B, 0x8F7D)),
+    (New-UnicodeText @(0x5220, 0x9664)),
+    (New-UnicodeText @(0x7F16, 0x8F91)),
+    (New-UnicodeText @(0x4FEE, 0x6539)),
+    (New-UnicodeText @(0x5E94, 0x7528)),
+    (New-UnicodeText @(0x6279, 0x91CF)),
+    (New-UnicodeText @(0x6807, 0x8BB0))
+  )
   $fields = @()
   foreach ($name in @("name", "purpose", "type", "safety")) {
     if ($Action.PSObject.Properties.Match($name).Count -gt 0 -and $Action.$name) {
@@ -97,7 +122,14 @@ function Get-ActionScore($Action, [string]$Query) {
       }
     }
   }
-  if ($Action.PSObject.Properties.Match("safety").Count -gt 0 -and $Action.safety -eq "read_filter" -and ($queryCompact.Contains("搜索") -or $queryCompact.Contains("查询") -or $queryCompact.Contains("重置"))) {
+  $hasReadIntentWord = $false
+  foreach ($word in @($commandWords[0], $commandWords[1], $commandWords[2])) {
+    if ($queryCompact.Contains($word)) {
+      $hasReadIntentWord = $true
+      break
+    }
+  }
+  if ($Action.PSObject.Properties.Match("safety").Count -gt 0 -and $Action.safety -eq "read_filter" -and $hasReadIntentWord) {
     $score += 15
   }
   return $score
@@ -110,6 +142,14 @@ if (!$NoAutoMap -and (Test-Path -LiteralPath $AutoMapPath)) {
     $autoMap = Get-Content -LiteralPath $AutoMapPath -Raw -Encoding UTF8 | ConvertFrom-Json
   } catch {
     $autoMap = $null
+  }
+}
+$overlayMap = $null
+if (!$NoOverlayMap -and (Test-Path -LiteralPath $OverlayMapPath)) {
+  try {
+    $overlayMap = Get-Content -LiteralPath $OverlayMapPath -Raw -Encoding UTF8 | ConvertFrom-Json
+  } catch {
+    $overlayMap = $null
   }
 }
 $allPages = @($map.pages)
@@ -136,9 +176,17 @@ if ($autoMap -and $autoMap.pages) {
     }
   }
 }
+if ($overlayMap -and $overlayMap.pages) {
+  foreach ($page in @($overlayMap.pages)) {
+    $allPages += $page
+  }
+}
 $allGlobalActions = @($map.global_actions)
 if ($autoMap -and $autoMap.global_actions) {
   $allGlobalActions += @($autoMap.global_actions)
+}
+if ($overlayMap -and $overlayMap.global_actions) {
+  $allGlobalActions += @($overlayMap.global_actions)
 }
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
@@ -195,10 +243,19 @@ $candidates = @($candidates |
   ForEach-Object {
     $action = $_.action
     $rank = 0
+    $genericChooseText = New-UnicodeText @(0x8BF7, 0x9009, 0x62E9)
+    $triggerText = ""
+    if ($action.PSObject.Properties.Match("locator").Count -gt 0 -and $action.locator -and $action.locator.PSObject.Properties.Match("trigger_text").Count -gt 0) {
+      $triggerText = [string]$action.locator.trigger_text
+    }
     if ($action.type -eq "navigation") { $rank -= 20 }
     if ($action.type -eq "button" -or $action.type -eq "batch_action") { $rank += 10 }
+    if ($action.type -eq "overlay_item") { $rank += 12 }
+    if ($action.type -eq "overlay_trigger") { $rank -= 5 }
     if ($action.safety -eq "read_filter") { $rank += 8 }
     if ([string]$action.safety -like "confirmation_required*") { $rank += 6 }
+    if ($triggerText -eq $genericChooseText) { $rank -= 8 }
+    elseif ($triggerText) { $rank += 4 }
     $_ | Add-Member -NotePropertyName rank -NotePropertyValue $rank -Force
     $_
   } |
@@ -211,6 +268,7 @@ $payload = [ordered]@{
   route = $route
   map_version = $map.version
   auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
+  overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
   map_pages_total = $allPages.Count
   matched_pages = @($matchedPages | Sort-Object score -Descending | Select-Object -First 5 | ForEach-Object {
       [ordered]@{ id = $_.page.id; name = $_.page.name; score = $_.score }
