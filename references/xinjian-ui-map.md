@@ -142,6 +142,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 ```
 
 The readiness report writes `references/xinjian-ui-rpa-readiness.json` and `.md`. It checks whether every catalog action has purpose, function source, context, locator metadata, and whether live controls and safe execution evidence still have gaps. Remaining boundaries such as business no-access pages, confirmation-required write/export actions, and row-context actions are listed separately so they are not confused with missing button memory. Read-only table-column memory is listed as non-gap readable column memory. Known terminal pages such as `/index/noaccess` are tracked as non-gap restricted pages. Row-context actions are executable only with explicit `-RowIndex` / `-RowText` or clear row intent inferred from the user's wording.
+The readiness report also includes `execution_guard_plans`: write/export/row-context counts there are controlled execution plans (`post_execute` or `row_context_follow_up`), not missing button memory.
 
 5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 

@@ -192,6 +192,7 @@ if ($writeActions.Count -gt 0) {
     kind = "confirmation_required_write"
     count = $writeActions.Count
     meaning = "Write/delete/save/submit actions are remembered but must not execute without explicit confirmation."
+    handled_by = "post_execute.write_confirmation_follow_up"
   }
 }
 if ($exportActions.Count -gt 0) {
@@ -199,6 +200,7 @@ if ($exportActions.Count -gt 0) {
     kind = "confirmation_required_export"
     count = $exportActions.Count
     meaning = "Export/download actions are remembered but require explicit confirmation before execution."
+    handled_by = "post_execute.export_download_follow_up"
   }
 }
 if ($rowContextActions.Count -gt 0) {
@@ -206,6 +208,7 @@ if ($rowContextActions.Count -gt 0) {
     kind = "row_context_required"
     count = $rowContextActions.Count
     meaning = "Row-level actions need resolved row context: explicit RowIndex/RowText or row intent inferred from phrases such as first row / contains text; the invoker refuses to blindly click a row."
+    handled_by = "row_context_follow_up.row_context_required_follow_up"
   }
 }
 if ($tableColumnActions.Count -gt 0) {
@@ -213,6 +216,34 @@ if ($tableColumnActions.Count -gt 0) {
     kind = "read_only_table_memory"
     count = $tableColumnActions.Count
     meaning = "Table columns/metrics are remembered for planning and can be read from the current debuggable page through CDP without clicking; they are intentionally not treated as clickable buttons."
+  }
+}
+
+$executionGuardPlans = [ordered]@{
+  write_confirmation_follow_up = $writeActions.Count
+  export_download_follow_up = $exportActions.Count
+  row_context_required_follow_up = $rowContextActions.Count
+  table_column_read_with_cdp = $tableColumnActions.Count
+}
+if ($writeActions.Count -gt 0) {
+  $nonGapBoundaries += [ordered]@{
+    kind = "write_confirmation_follow_up_plans"
+    count = $writeActions.Count
+    meaning = "Write/delete/save/submit buttons have machine-readable post_execute rerun and verification plans; explicit AllowWrite is still required."
+  }
+}
+if ($exportActions.Count -gt 0) {
+  $nonGapBoundaries += [ordered]@{
+    kind = "export_download_follow_up_plans"
+    count = $exportActions.Count
+    meaning = "Export/download buttons have machine-readable post_execute rerun, wait-for-download, and download-center fallback plans; explicit AllowExport is still required."
+  }
+}
+if ($rowContextActions.Count -gt 0) {
+  $nonGapBoundaries += [ordered]@{
+    kind = "row_context_follow_up_plans"
+    count = $rowContextActions.Count
+    meaning = "Row-level buttons have machine-readable rerun plans for RowIndex or RowText; the invoker still refuses to blindly click the first row."
   }
 }
 
@@ -258,6 +289,7 @@ $payload = [ordered]@{
   }
   live_coverage = $liveTotals
   safe_action_exercise = $exerciseTotals
+  execution_guard_plans = $executionGuardPlans
   remaining_boundaries = @($remainingBoundaries)
   non_gap_boundaries = @($nonGapBoundaries)
   next_action = if ($qualityOk -and $liveOk -and $exerciseOk) {
@@ -286,6 +318,7 @@ $lines += "- Live controls: observed $($payload.live_coverage.observed_controls)
 $lines += "- Safe action exercise: executable $($payload.safe_action_exercise.executable_actions), verified $($payload.safe_action_exercise.verified_actions), failed $($payload.safe_action_exercise.failed_actions), not attempted $($payload.safe_action_exercise.not_attempted_actions)"
 $lines += "- Row-context execution: $($payload.totals.row_context_executable_with_resolved_context) row-level actions can be planned with explicit or inferred row context; none are blindly clicked by default."
 $lines += "- Table-column reading: $($payload.totals.table_column_readable_with_cdp) remembered columns can be read from a debuggable current page without clicking."
+$lines += "- Structured follow-up plans: write $($payload.execution_guard_plans.write_confirmation_follow_up), export $($payload.execution_guard_plans.export_download_follow_up), row-context $($payload.execution_guard_plans.row_context_required_follow_up), table-read $($payload.execution_guard_plans.table_column_read_with_cdp)."
 $lines += "- Next action: $($payload.next_action)"
 $lines += ""
 $lines += "## Remaining Boundaries"
@@ -294,7 +327,8 @@ if ($remainingBoundaries.Count -eq 0) {
   $lines += "- None."
 } else {
   foreach ($item in $remainingBoundaries) {
-    $lines += ("- {0}: {1}. {2}" -f $item.kind, $item.count, $item.meaning)
+    $suffix = if ($item.Contains("handled_by")) { " Handled by: $($item.handled_by)." } else { "" }
+    $lines += ("- {0}: {1}. {2}{3}" -f $item.kind, $item.count, $item.meaning, $suffix)
   }
 }
 $lines += ""

@@ -387,6 +387,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 ```
 
 It writes `references\xinjian-ui-rpa-readiness.json` / `.md` and checks catalog quality, live button coverage, safe action exercise proof, and remaining non-default boundaries such as business no-access pages, confirmation-required write/export actions, and row-context actions. Read-only table-column memory is tracked separately as non-gap readable column memory. Known terminal pages such as `/index/noaccess` are tracked separately as non-gap restricted pages, not missing button memory.
+Read `execution_guard_plans` before answering "还缺什么": write/export/row-context counts there mean those actions have machine-readable confirmation or row-selection follow-up plans, so they are controlled execution boundaries rather than missing button memory.
 
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
 

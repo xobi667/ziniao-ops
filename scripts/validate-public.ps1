@@ -227,6 +227,7 @@ $required = @(
   "scripts\exercise-xinjian-safe-actions.ps1",
   "scripts\audit-xinjian-live-button-coverage.ps1",
   "scripts\report-xinjian-rpa-readiness.ps1",
+  "scripts\test-xinjian-rpa-readiness-report.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",
   "scripts\install-upstream-tools.ps1",
@@ -434,6 +435,25 @@ if (Test-Path -LiteralPath $writeActionTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_write_action_test_error" $_.Exception.Message $writeActionTestPath
+  }
+}
+
+$rpaReadinessReportTestPath = Join-Path $Root "scripts\test-xinjian-rpa-readiness-report.ps1"
+if (Test-Path -LiteralPath $rpaReadinessReportTestPath) {
+  try {
+    $rpaReadinessReportRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $rpaReadinessReportTestPath -Json 2>&1)
+    $rpaReadinessReportExit = $LASTEXITCODE
+    $rpaReadinessReportResult = $null
+    try {
+      $rpaReadinessReportResult = ($rpaReadinessReportRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_rpa_readiness_report_test_parse_failed" ("RPA readiness report test output was not JSON: {0}" -f ($rpaReadinessReportRaw | Out-String).Trim()) $rpaReadinessReportTestPath
+    }
+    if ($rpaReadinessReportResult -and ($rpaReadinessReportExit -ne 0 -or !$rpaReadinessReportResult.ok)) {
+      Add-Issue "error" "xinjian_rpa_readiness_report_test_failed" ("RPA readiness report regression test failed: {0}" -f (($rpaReadinessReportResult.failures) -join ",")) $rpaReadinessReportTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_rpa_readiness_report_test_error" $_.Exception.Message $rpaReadinessReportTestPath
   }
 }
 
