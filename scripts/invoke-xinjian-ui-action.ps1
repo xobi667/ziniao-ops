@@ -23,6 +23,83 @@ function ConvertFrom-JsonText($Lines) {
   try { return $text | ConvertFrom-Json } catch { return $null }
 }
 
+function Convert-ChineseOrdinalToInt([string]$Text) {
+  $value = ([string]$Text).Trim()
+  if (!$value) { return 0 }
+  if ($value -match "^\d+$") { return [int]$value }
+  function Get-ChineseDigitValue([string]$DigitText) {
+    if ([string]::IsNullOrWhiteSpace($DigitText)) { return $null }
+    switch ([int][char]$DigitText[0]) {
+      0x96f6 { return 0 }
+      0x4e00 { return 1 }
+      0x4e8c { return 2 }
+      0x4e24 { return 2 }
+      0x4e09 { return 3 }
+      0x56db { return 4 }
+      0x4e94 { return 5 }
+      0x516d { return 6 }
+      0x4e03 { return 7 }
+      0x516b { return 8 }
+      0x4e5d { return 9 }
+      default { return $null }
+    }
+  }
+  $digitValue = Get-ChineseDigitValue $value
+  if ($null -ne $digitValue) { return [int]$digitValue }
+  $ten = [string][char]0x5341
+  $tenIndex = $value.IndexOf($ten)
+  if ($tenIndex -lt 0) { return 0 }
+  $left = $value.Substring(0, $tenIndex)
+  $right = $value.Substring($tenIndex + 1)
+  $tens = if ($left) { Get-ChineseDigitValue $left } else { 1 }
+  $ones = if ($right) { Get-ChineseDigitValue $right } else { 0 }
+  if ($null -eq $tens -or $null -eq $ones -or $tens -le 0 -or $ones -lt 0) { return 0 }
+  return ($tens * 10) + $ones
+}
+
+function Resolve-RowContextFromIntent([string]$Text) {
+  $intentText = [string]$Text
+  $rowIndexValue = 0
+  $rowTextValue = ""
+  $source = ""
+
+  if ($intentText -match "\u7b2c\s*(\d{1,3})\s*\u884c") {
+    $rowIndexValue = [int]$Matches[1]
+    $source = "intent_row_index"
+  } elseif ($intentText -match "\u7b2c\s*([\u4e00\u4e8c\u4e24\u4e09\u56db\u4e94\u516d\u4e03\u516b\u4e5d\u5341]{1,4})\s*\u884c") {
+    $rowIndexValue = Convert-ChineseOrdinalToInt $Matches[1]
+    if ($rowIndexValue -gt 0) { $source = "intent_row_index" }
+  }
+
+  if ($rowIndexValue -le 0) {
+    $openQuoteChars = -join @([char]34, [char]0x201c, [char]39, [char]0x2018)
+    $closeQuoteChars = -join @([char]34, [char]0x201d, [char]39, [char]0x2019)
+    $openQuoteClass = [regex]::Escape($openQuoteChars)
+    $closeQuoteClass = [regex]::Escape($closeQuoteChars)
+    $rowTextPatterns = @(
+      "(?:\u884c\u6587\u672c|\u884c\u5185\u5bb9|\u884c\u5173\u952e\u5b57)\s*(?:\u662f|\u4e3a|=|:|\uff1a)\s*[$openQuoteClass]?(?<value>.+?)[$closeQuoteClass]?\s*$",
+      "(?:\u5305\u542b|\u542b\u6709|\u5339\u914d)\s*[$openQuoteClass]?(?<value>.+?)[$closeQuoteClass]?\s*(?:\u7684)?(?:\u8fd9\u4e00\u884c|\u90a3\u4e00\u884c|\u4e00\u884c|\u884c)"
+    )
+    $trimQuotePattern = "^[{0}\s]+|[{1}\s]+$" -f $openQuoteClass, $closeQuoteClass
+    foreach ($pattern in $rowTextPatterns) {
+      if ($intentText -match $pattern) {
+        $rowTextValue = ([string]$Matches["value"]).Trim()
+        $rowTextValue = $rowTextValue -replace $trimQuotePattern, ""
+        if ($rowTextValue) {
+          $source = "intent_row_text"
+          break
+        }
+      }
+    }
+  }
+
+  return [pscustomobject]@{
+    row_index = $rowIndexValue
+    row_text = $rowTextValue
+    source = $source
+  }
+}
+
 function Get-PortArgumentList {
   param([int[]]$Ports)
   $items = @($Ports | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
@@ -550,6 +627,23 @@ function Get-LocatorStrategy($Action) {
   return "best_effort_locator"
 }
 
+$explicitRowContextProvided = ($RowIndex -gt 0 -or ![string]::IsNullOrWhiteSpace($RowText))
+$inferredRowContext = Resolve-RowContextFromIntent $Intent
+$rowContextSource = if ($explicitRowContextProvided) {
+  "argument"
+} elseif ($inferredRowContext.source) {
+  [string]$inferredRowContext.source
+} else {
+  ""
+}
+if (!$explicitRowContextProvided) {
+  if ($inferredRowContext.row_index -gt 0) {
+    $RowIndex = [int]$inferredRowContext.row_index
+  } elseif (![string]::IsNullOrWhiteSpace([string]$inferredRowContext.row_text)) {
+    $RowText = [string]$inferredRowContext.row_text
+  }
+}
+
 $requestedUrl = $Url
 $urlDetection = $null
 if (!$Url -and !$NoAutoDetectUrl) {
@@ -679,6 +773,7 @@ $plan = [ordered]@{
   row_context = [ordered]@{
     required = [bool]$actionHasRowContextBoundary
     provided = [bool]$hasExplicitRowContext
+    source = if ($rowContextSource) { $rowContextSource } else { $null }
     row_index = if ($RowIndex -gt 0) { $RowIndex } else { $null }
     row_text = if (![string]::IsNullOrWhiteSpace($RowText)) { "[provided]" } else { $null }
   }
@@ -702,9 +797,9 @@ $plan = [ordered]@{
   } elseif ($requiresRowContext) {
     "Row-level action needs an explicit row context. Pass -RowIndex <1-based row number> or -RowText <text visible in the target row>; refusing to blindly click a row."
   } elseif ($actionHasRowContextBoundary -and $hasExplicitRowContext -and ($requiresWrite -or $requiresExport)) {
-    "Row-level write/export action has explicit row context. Dry-run by default; pass -Execute with the required AllowWrite/AllowExport switch only after explicit user confirmation."
+    "Row-level write/export action has resolved row context. Dry-run by default; pass -Execute with the required AllowWrite/AllowExport switch only after explicit user confirmation."
   } elseif ($actionHasRowContextBoundary -and $hasExplicitRowContext) {
-    "Row-level action has explicit row context and can execute against that row with -Execute."
+    "Row-level action has resolved row context and can execute against that row with -Execute."
   } elseif ($requiresWrite -and $requiresCdpPort) {
     "Write/delete/save/submit-like action and no controllable Xinjian CDP/UIA target was resolved. Dry-run only; focus/pass the target page and use -Execute -AllowWrite only after explicit confirmation."
   } elseif ($requiresExport -and $requiresCdpPort) {

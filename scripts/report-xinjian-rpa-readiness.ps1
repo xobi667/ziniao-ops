@@ -149,7 +149,7 @@ if ($rowContextActions.Count -gt 0) {
   $remainingBoundaries += [ordered]@{
     kind = "row_context_required"
     count = $rowContextActions.Count
-    meaning = "Row-level actions need RowIndex or RowText; the invoker refuses to blindly click a row."
+    meaning = "Row-level actions need resolved row context: explicit RowIndex/RowText or row intent inferred from phrases such as first row / contains text; the invoker refuses to blindly click a row."
   }
 }
 if ($tableColumnActions.Count -gt 0) {
@@ -187,6 +187,7 @@ $payload = [ordered]@{
     table_column_memory = $tableColumnActions.Count
     row_context_required = $rowContextActions.Count
     row_context_executable_with_explicit_context = $rowContextActions.Count
+    row_context_executable_with_resolved_context = $rowContextActions.Count
     css_selector_actions = $cssSelectorActions.Count
   }
   quality = [ordered]@{
@@ -225,7 +226,7 @@ $lines += "- Catalog: $($payload.totals.pages) pages / $($payload.totals.actions
 $lines += "- Quality gaps: purpose $($payload.quality.no_purpose), function_source $($payload.quality.no_function_source), context $($payload.quality.no_context), manual/map/empty $($payload.quality.manual_review_actions)/$($payload.quality.map_only_actions)/$($payload.quality.empty_locator_actions)"
 $lines += "- Live controls: observed $($payload.live_coverage.observed_controls), matched $($payload.live_coverage.matched_controls), missing $($payload.live_coverage.missing_controls), no-access pages $($payload.live_coverage.pages_noaccess)"
 $lines += "- Safe action exercise: executable $($payload.safe_action_exercise.executable_actions), verified $($payload.safe_action_exercise.verified_actions), failed $($payload.safe_action_exercise.failed_actions), not attempted $($payload.safe_action_exercise.not_attempted_actions)"
-$lines += "- Row-context execution: $($payload.totals.row_context_executable_with_explicit_context) row-level actions can be planned with explicit RowIndex/RowText; none are blindly clicked by default."
+$lines += "- Row-context execution: $($payload.totals.row_context_executable_with_resolved_context) row-level actions can be planned with explicit or inferred row context; none are blindly clicked by default."
 $lines += "- Next action: $($payload.next_action)"
 $lines += ""
 $lines += "## Remaining Boundaries"

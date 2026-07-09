@@ -1,7 +1,7 @@
 ﻿{
     "ok":  true,
     "version":  "2026-07-09",
-    "generated_at":  "2026-07-09T04:35:22.9514655Z",
+    "generated_at":  "2026-07-09T04:43:59.9469704Z",
     "catalog_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-action-catalog.json",
     "live_coverage_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-live-button-coverage.json",
     "exercise_report_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-action-exercise-report.json",
@@ -14,6 +14,7 @@
                    "table_column_memory":  460,
                    "row_context_required":  12,
                    "row_context_executable_with_explicit_context":  12,
+                   "row_context_executable_with_resolved_context":  12,
                    "css_selector_actions":  364
                },
     "quality":  {
@@ -62,7 +63,7 @@
                                  {
                                      "kind":  "row_context_required",
                                      "count":  12,
-                                     "meaning":  "Row-level actions need RowIndex or RowText; the invoker refuses to blindly click a row."
+                                     "meaning":  "Row-level actions need resolved row context: explicit RowIndex/RowText or row intent inferred from phrases such as first row / contains text; the invoker refuses to blindly click a row."
                                  },
                                  {
                                      "kind":  "read_only_table_memory",

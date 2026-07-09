@@ -219,6 +219,7 @@ $required = @(
   "scripts\learn-xinjian-weak-pages.ps1",
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\test-xinjian-rpa-routing.ps1",
+  "scripts\test-xinjian-row-context-inference.ps1",
   "scripts\exercise-xinjian-safe-actions.ps1",
   "scripts\audit-xinjian-live-button-coverage.ps1",
   "scripts\report-xinjian-rpa-readiness.ps1",
@@ -334,6 +335,25 @@ if (Test-Path -LiteralPath $routingTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_rpa_routing_test_error" $_.Exception.Message $routingTestPath
+  }
+}
+
+$rowContextTestPath = Join-Path $Root "scripts\test-xinjian-row-context-inference.ps1"
+if (Test-Path -LiteralPath $rowContextTestPath) {
+  try {
+    $rowContextRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $rowContextTestPath -Json 2>&1)
+    $rowContextExit = $LASTEXITCODE
+    $rowContextResult = $null
+    try {
+      $rowContextResult = ($rowContextRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_row_context_test_parse_failed" ("Row-context test output was not JSON: {0}" -f ($rowContextRaw | Out-String).Trim()) $rowContextTestPath
+    }
+    if ($rowContextResult -and ($rowContextExit -ne 0 -or !$rowContextResult.ok)) {
+      Add-Issue "error" "xinjian_row_context_test_failed" ("Row-context regression test failed: {0}" -f (($rowContextResult.cases | Where-Object { !$_.ok } | Select-Object -ExpandProperty name) -join ",")) $rowContextTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_row_context_test_error" $_.Exception.Message $rowContextTestPath
   }
 }
 

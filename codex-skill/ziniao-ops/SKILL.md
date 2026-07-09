@@ -355,6 +355,7 @@ For page-name intents such as `打开下载中心`, the query layer synthesizes 
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-row-context-inference.ps1") -Json
 ```
 
 To prove that remembered safe route-scoped controls still click through CDP instead of only existing in the static map, run the safe action exerciser in batches:
@@ -436,7 +437,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<安全动作>" -Execute -Json
 ```
 
-`-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` or `-RowText "<visible row text>"` when the target row is clear. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
+`-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` / `-RowText "<visible row text>"`, or write the row target directly in the intent such as `第1行编辑`, `第一行详情`, or `包含 xxx 的行编辑`. Explicit `-RowIndex` / `-RowText` override inferred row context. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
 
 If no debuggable CDP port is resolved but the matching already-open 心舰 window has a UIA-mapped safe non-write control, the invoker reports `execution_backend = "uia"` and can run it with `-Execute` through Windows UI Automation without moving the mouse or opening another browser. Write/export actions, row-context actions, read-only table-column memory, and unknown-safety actions remain blocked without explicit confirmation and a controllable route.
 
