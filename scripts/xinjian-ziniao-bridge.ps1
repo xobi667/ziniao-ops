@@ -4,6 +4,8 @@ param(
   [int]$Days = 7,
   [string]$StartDate = "",
   [string]$EndDate = "",
+  [string]$OutputPath = "",
+  [string]$ExcelOutputPath = "",
   [int[]]$Port = @(),
   [string]$Url = "https://erp.xinjianerp.com/index/home",
   [switch]$ZiniaoOnly,
@@ -227,6 +229,8 @@ function Invoke-XinjianFetch {
   )
   if ($StartDate) { $argsList += @("-StartDate", $StartDate) }
   if ($EndDate) { $argsList += @("-EndDate", $EndDate) }
+  if ($OutputPath) { $argsList += @("-OutputPath", $OutputPath) }
+  if ($ExcelOutputPath) { $argsList += @("-ExcelOutputPath", $ExcelOutputPath) }
 
   $raw = @(& powershell @argsList 2>&1)
   try {
@@ -267,7 +271,10 @@ function Write-SuccessAndExit {
     page_url = $Attempt.result.page_url
     page_title = $Attempt.result.page_title
     login_state = $Attempt.result.login_state
+    real_data_verified = if ($Attempt.result.PSObject.Properties.Match("real_data_verified").Count -gt 0) { [bool]$Attempt.result.real_data_verified } else { $null }
+    data_source = if ($Attempt.result.PSObject.Properties.Match("data_source").Count -gt 0) { $Attempt.result.data_source } else { $null }
     result = $Attempt.result
+    analysis = if ($Attempt.result.PSObject.Properties.Match("analysis").Count -gt 0) { $Attempt.result.analysis } else { $null }
     output = $Attempt.result.output
     excel_output = $Attempt.result.excel_output
     stores_matched = @($Attempt.result.stores_matched)

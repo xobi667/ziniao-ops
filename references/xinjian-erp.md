@@ -6,16 +6,16 @@ For 心舰 page/button memory and RPA-like "say what to do" routing, use `refere
 
 ## Default Route
 
-Always start with the non-mouse data workflow:
+Always start with the real-page browser data workflow. The command opens or reuses an actual 心舰 page, fetches the hourly endpoint through that page context, and only reports figures as real when `real_data_verified=true`. It avoids hijacking the physical mouse, but it must still use a real browser page.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -ProbeEndpoint -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -Json
 ```
 
 For a request such as "最近七天 <店铺A> / <店铺B> 产品广告分时数据", use:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -ProbeEndpoint -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -Json
 ```
 
 If the user provides an exported file:
@@ -102,8 +102,8 @@ Do not read, copy, print, or reuse browser cookies, localStorage, access tokens,
 
 If the endpoint reports `账号未登录`, continue in this order:
 
-1. Search local exports with the script above.
-2. If no usable export exists, ask the user to export the hourly product ad data from 心舰 ERP.
+1. Keep the real browser page open and tell the user to complete 心舰 login there, then rerun the same command.
+2. Do not use stale local exports as a substitute for current page data unless the user explicitly provides an export path or reruns with `-AllowLocalFallback`.
 3. If the user can export now, run `wait-xinjian-export.ps1` before they export so the download is analyzed automatically.
 4. If Codex in-app browser is available, open 心舰 ERP there and let the user manually log in, then inspect page responses.
 5. If the user explicitly asks for a login workaround and accepts a manual browser login, use `open-xinjian-login.ps1` plus `fetch-xinjian-browser-data.ps1`.

@@ -216,6 +216,7 @@ $required = @(
   "scripts\list-xinjian-page-actions.ps1",
   "scripts\test-xinjian-page-actions-command-inventory.ps1",
   "scripts\test-xinjian-auto-open-login-bridge.ps1",
+  "scripts\test-xinjian-ad-hourly-browser-first.ps1",
   "scripts\report-xinjian-action-memory.ps1",
   "scripts\learn-xinjian-current-page.ps1",
   "scripts\learn-xinjian-open-pages.ps1",
@@ -518,6 +519,25 @@ if (Test-Path -LiteralPath $autoOpenLoginBridgeTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_auto_open_login_bridge_test_error" $_.Exception.Message $autoOpenLoginBridgeTestPath
+  }
+}
+
+$adHourlyBrowserFirstTestPath = Join-Path $Root "scripts\test-xinjian-ad-hourly-browser-first.ps1"
+if (Test-Path -LiteralPath $adHourlyBrowserFirstTestPath) {
+  try {
+    $adHourlyBrowserFirstRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $adHourlyBrowserFirstTestPath -Json 2>&1)
+    $adHourlyBrowserFirstExit = $LASTEXITCODE
+    $adHourlyBrowserFirstResult = $null
+    try {
+      $adHourlyBrowserFirstResult = ($adHourlyBrowserFirstRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_ad_hourly_browser_first_test_parse_failed" ("Ad-hourly browser-first test output was not JSON: {0}" -f ($adHourlyBrowserFirstRaw | Out-String).Trim()) $adHourlyBrowserFirstTestPath
+    }
+    if ($adHourlyBrowserFirstResult -and ($adHourlyBrowserFirstExit -ne 0 -or !$adHourlyBrowserFirstResult.ok)) {
+      Add-Issue "error" "xinjian_ad_hourly_browser_first_test_failed" ("Ad-hourly browser-first regression test failed: {0}" -f (($adHourlyBrowserFirstResult.failures) -join ",")) $adHourlyBrowserFirstTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_ad_hourly_browser_first_test_error" $_.Exception.Message $adHourlyBrowserFirstTestPath
   }
 }
 

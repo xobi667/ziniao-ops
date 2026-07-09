@@ -8,7 +8,15 @@ param(
   [string]$EndDate = "",
   [string]$OutputPath = "",
   [string]$ExcelOutputPath = "",
+  [string]$BrowserBridgeScriptPath = "",
+  [int[]]$Port = @(),
+  [string]$Url = "https://erp.xinjianerp.com/index/home",
   [switch]$ProbeEndpoint,
+  [switch]$NoBrowserFetch,
+  [switch]$AllowLocalFallback,
+  [switch]$NoAutoOpen,
+  [switch]$ForceOpen,
+  [switch]$ZiniaoOnly,
   [switch]$Json
 )
 
@@ -25,6 +33,9 @@ $StoreName = @(
 
 if (!(Test-Path -LiteralPath $analyzer)) {
   throw "Analyzer not found: $analyzer"
+}
+if (!$BrowserBridgeScriptPath) {
+  $BrowserBridgeScriptPath = Join-Path $PSScriptRoot "xinjian-ziniao-bridge.ps1"
 }
 
 function Get-ResultProperty {
@@ -49,6 +60,82 @@ function Get-ResultArray {
     return @()
   }
   return @($value | ForEach-Object { $_ } | Where-Object { $null -ne $_ -and [string]$_ -ne "" })
+}
+
+function ConvertFrom-JsonText($Lines) {
+  $text = (($Lines | Out-String).Trim())
+  if (!$text) { return $null }
+  try { return $text | ConvertFrom-Json } catch { return $null }
+}
+
+function Get-BrowserFetchVerified($Result) {
+  if (!$Result) { return $false }
+  if ($Result.PSObject.Properties.Match("real_data_verified").Count -gt 0) {
+    return [bool]$Result.real_data_verified
+  }
+  if ($Result.PSObject.Properties.Match("result").Count -gt 0 -and $Result.result -and $Result.result.PSObject.Properties.Match("real_data_verified").Count -gt 0) {
+    return [bool]$Result.result.real_data_verified
+  }
+  return $false
+}
+
+function Get-BrowserFetchProperty($Result, [string]$Name) {
+  if (!$Result) { return $null }
+  if ($Result.PSObject.Properties.Match($Name).Count -gt 0) {
+    return $Result.$Name
+  }
+  if ($Result.PSObject.Properties.Match("result").Count -gt 0 -and $Result.result -and $Result.result.PSObject.Properties.Match($Name).Count -gt 0) {
+    return $Result.result.$Name
+  }
+  return $null
+}
+
+function Invoke-BrowserPageFetch {
+  if (!(Test-Path -LiteralPath $BrowserBridgeScriptPath)) {
+    return [pscustomobject]@{
+      ok = $false
+      error = "browser_bridge_script_missing"
+      path = $BrowserBridgeScriptPath
+      next_action = "repair_missing_xinjian_browser_bridge"
+    }
+  }
+
+  $bridgeArgs = @(
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    $BrowserBridgeScriptPath,
+    "-StoreName",
+    ($StoreName -join ","),
+    "-Days",
+    [string]$Days,
+    "-Url",
+    $Url,
+    "-OutputPath",
+    $OutputPath,
+    "-ExcelOutputPath",
+    $ExcelOutputPath,
+    "-Json"
+  )
+  if ($StartDate) { $bridgeArgs += @("-StartDate", $StartDate) }
+  if ($EndDate) { $bridgeArgs += @("-EndDate", $EndDate) }
+  foreach ($item in @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)) {
+    $bridgeArgs += @("-Port", [string]$item)
+  }
+  if ($NoAutoOpen) { $bridgeArgs += "-NoAutoOpen" }
+  if ($ForceOpen) { $bridgeArgs += "-ForceOpen" }
+  if ($ZiniaoOnly) { $bridgeArgs += "-ZiniaoOnly" }
+
+  $raw = @(& powershell @bridgeArgs 2>&1)
+  $parsed = ConvertFrom-JsonText $raw
+  if ($parsed) { return $parsed }
+  return [pscustomobject]@{
+    ok = $false
+    error = "browser_bridge_output_parse_failed"
+    raw_output = ($raw | Out-String).Trim()
+    next_action = "inspect_xinjian_browser_bridge_output"
+  }
 }
 
 if (!$SearchRoot -or $SearchRoot.Count -eq 0) {
@@ -85,6 +172,73 @@ if (!$ExcelOutputPath) {
   }
 } elseif (![System.IO.Path]::IsPathRooted($ExcelOutputPath)) {
   $ExcelOutputPath = Join-Path $root $ExcelOutputPath
+}
+
+$browserFetch = $null
+$hasInputPath = @($InputPath | Where-Object { $_ }).Count -gt 0
+if (!$NoBrowserFetch -and !$hasInputPath) {
+  $browserFetch = Invoke-BrowserPageFetch
+  $browserVerified = Get-BrowserFetchVerified $browserFetch
+  if ($browserVerified) {
+    $payload = [ordered]@{
+      ok = $true
+      mode = "browser_page_fetch"
+      real_data_verified = $true
+      browser_fetch = $browserFetch
+      data_source = Get-BrowserFetchProperty -Result $browserFetch -Name "data_source"
+      analysis = Get-BrowserFetchProperty -Result $browserFetch -Name "analysis"
+      output = Get-BrowserFetchProperty -Result $browserFetch -Name "output"
+      excel_output = Get-BrowserFetchProperty -Result $browserFetch -Name "excel_output"
+      next_action = Get-BrowserFetchProperty -Result $browserFetch -Name "next_action"
+    }
+    if ($Json) {
+      $payload | ConvertTo-Json -Depth 16
+    } else {
+      Write-Host "XINJIAN_AD_HOURLY_BROWSER_OK"
+      Write-Host "Excel: $($payload.excel_output)"
+    }
+    exit 0
+  }
+
+  if (!$AllowLocalFallback) {
+    $payload = [ordered]@{
+      ok = $false
+      mode = "browser_page_required"
+      real_data_verified = $false
+      browser_fetch = $browserFetch
+      data_source = [ordered]@{
+        type = "none"
+        verified = $false
+        evidence = [ordered]@{
+          browser_bridge_attempted = $true
+          browser_next_action = Get-BrowserFetchProperty -Result $browserFetch -Name "next_action"
+        }
+        rejected_sources = @(
+          "stale_local_export_without_explicit_input",
+          "window_detection",
+          "uia_action_catalog",
+          "route_map",
+          "button_memory",
+          "browser_title_only"
+        )
+      }
+      output = $null
+      excel_output = $null
+      local_fallback_skipped = $true
+      next_action = if (Get-BrowserFetchProperty -Result $browserFetch -Name "next_action") {
+        Get-BrowserFetchProperty -Result $browserFetch -Name "next_action"
+      } else {
+        "open_or_login_real_xinjian_page_then_rerun"
+      }
+    }
+    if ($Json) {
+      $payload | ConvertTo-Json -Depth 16
+    } else {
+      Write-Host "XINJIAN_AD_HOURLY_BROWSER_REQUIRED"
+      Write-Host "Open or log in to the real Xinjian page, then rerun the same command."
+    }
+    exit 0
+  }
 }
 
 $endpointProbe = $null
