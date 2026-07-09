@@ -313,6 +313,58 @@ const expression = `(() => {
     }
     return null;
   };
+  const currentPageInfo = () => ({
+    href: location.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]"),
+    title: document.title,
+    path: location.pathname
+  });
+  const readTableColumn = () => {
+    const locator = action.locator || {};
+    const headerText = clean(locator.table_column || locator.column_header || action.name);
+    const wantedColumnClass = clean(locator.column_class);
+    const tables = targetTables();
+    const tableResults = [];
+    tables.forEach((table, tableIndex) => {
+      const indexes = columnIndexesForTable(table, headerText);
+      const rows = visibleRows(table);
+      const values = [];
+      rows.forEach((row) => {
+        const cells = visibleCandidates("td,.el-table__cell", row);
+        let selected = [];
+        if (indexes.length) selected = cells.filter((_, index) => indexes.includes(index));
+        if (!selected.length && wantedColumnClass) {
+          selected = cells.filter((cell) => String(cell.className || "").includes(wantedColumnClass));
+        }
+        if (!selected.length) return;
+        const value = clean(selected.map((cell) => cell.innerText || cell.textContent || "").join(" "));
+        if (value) values.push({ row_index: values.length + 1, text: value });
+      });
+      if (indexes.length || values.length) {
+        tableResults.push({
+          table_index: tableIndex + 1,
+          header: headerText,
+          column_indexes: indexes,
+          row_count: values.length,
+          values: values.slice(0, 20),
+          truncated: values.length > 20
+        });
+      }
+    });
+    const found = tableResults.length > 0;
+    return {
+      ok: found,
+      action_id: action.id || "",
+      action_name: action.name || "",
+      action_type: action.type || "",
+      safety: action.safety || "",
+      read_only: true,
+      page: currentPageInfo(),
+      table_column: headerText,
+      tables: tableResults,
+      error: found ? "" : "target_table_column_not_found",
+      next_action: found ? "" : "Confirm the current page contains the requested table column or learn the current page again."
+    };
+  };
   const clickRowAction = () => {
     const locator = action.locator || {};
     if ((locator.row_context_required || locator.requires_row_context) && !hasExplicitRowContext()) return false;
@@ -373,6 +425,9 @@ const expression = `(() => {
     return false;
   };
   const run = async () => {
+    if (action.type === "table_column" && action.locator?.table_column) {
+      return readTableColumn();
+    }
     if (["row_action", "row_navigation", "row_operation"].includes(action.type) && !hasExplicitRowContext()) {
       return {
         ok: false,

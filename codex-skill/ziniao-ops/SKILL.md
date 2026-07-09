@@ -356,6 +356,7 @@ For page-name intents such as `打开下载中心`, the query layer synthesizes 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-row-context-inference.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-table-column-read-planning.ps1") -Json
 ```
 
 To prove that remembered safe route-scoped controls still click through CDP instead of only existing in the static map, run the safe action exerciser in batches:
@@ -382,7 +383,7 @@ To answer "还缺什么" from saved evidence without opening a browser, run:
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-rpa-readiness.ps1") -Json
 ```
 
-It writes `references\xinjian-ui-rpa-readiness.json` / `.md` and checks catalog quality, live button coverage, safe action exercise proof, and remaining non-default boundaries such as business no-access pages, confirmation-required write/export actions, row-context actions, and read-only table-column memory. Known terminal pages such as `/index/noaccess` are tracked separately as non-gap restricted pages, not missing button memory.
+It writes `references\xinjian-ui-rpa-readiness.json` / `.md` and checks catalog quality, live button coverage, safe action exercise proof, and remaining non-default boundaries such as business no-access pages, confirmation-required write/export actions, and row-context actions. Read-only table-column memory is tracked separately as non-gap readable column memory. Known terminal pages such as `/index/noaccess` are tracked separately as non-gap restricted pages, not missing button memory.
 
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
 
@@ -439,9 +440,9 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 
 `-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` / `-RowText "<visible row text>"`, or write the row target directly in the intent such as `第1行编辑`, `第一行详情`, or `包含 xxx 的行编辑`. Explicit `-RowIndex` / `-RowText` override inferred row context. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
 
-If no debuggable CDP port is resolved but the matching already-open 心舰 window has a UIA-mapped safe non-write control, the invoker reports `execution_backend = "uia"` and can run it with `-Execute` through Windows UI Automation without moving the mouse or opening another browser. Write/export actions, row-context actions, read-only table-column memory, and unknown-safety actions remain blocked without explicit confirmation and a controllable route.
+If no debuggable CDP port is resolved but the matching already-open 心舰 window has a UIA-mapped safe non-write control, the invoker reports `execution_backend = "uia"` and can run it with `-Execute` through Windows UI Automation without moving the mouse or opening another browser. Write/export actions, row-context actions, and unknown-safety actions remain blocked without explicit confirmation and a controllable route. Read-only table-column memory needs a debuggable CDP route because it reads visible DOM table cells instead of clicking UIA controls.
 
-Observed table metric/header entries such as `ROAS`, `广告花费`, and `转化率` are remembered as read-only `table_column` actions. They are used for query/planning and must not be clicked as buttons.
+Observed table metric/header entries such as `ROAS`, `广告花费`, and `转化率` are remembered as read-only `table_column` actions. They must not be clicked as buttons. When the current 心舰 page is debuggable through CDP, `invoke-xinjian-ui-action.ps1 -Intent "<字段名>" -Execute -Json` reads the visible values under that remembered column without clicking, writing, exporting, or reading cookies/tokens/storage.
 
 If the target page is unclear and a debuggable 心舰 Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus before opening a new URL:
 

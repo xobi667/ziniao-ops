@@ -220,6 +220,7 @@ $required = @(
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\test-xinjian-rpa-routing.ps1",
   "scripts\test-xinjian-row-context-inference.ps1",
+  "scripts\test-xinjian-table-column-read-planning.ps1",
   "scripts\exercise-xinjian-safe-actions.ps1",
   "scripts\audit-xinjian-live-button-coverage.ps1",
   "scripts\report-xinjian-rpa-readiness.ps1",
@@ -354,6 +355,25 @@ if (Test-Path -LiteralPath $rowContextTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_row_context_test_error" $_.Exception.Message $rowContextTestPath
+  }
+}
+
+$tableColumnReadTestPath = Join-Path $Root "scripts\test-xinjian-table-column-read-planning.ps1"
+if (Test-Path -LiteralPath $tableColumnReadTestPath) {
+  try {
+    $tableColumnRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $tableColumnReadTestPath -Json 2>&1)
+    $tableColumnExit = $LASTEXITCODE
+    $tableColumnResult = $null
+    try {
+      $tableColumnResult = ($tableColumnRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_table_column_read_test_parse_failed" ("Table-column read planning test output was not JSON: {0}" -f ($tableColumnRaw | Out-String).Trim()) $tableColumnReadTestPath
+    }
+    if ($tableColumnResult -and ($tableColumnExit -ne 0 -or !$tableColumnResult.ok)) {
+      Add-Issue "error" "xinjian_table_column_read_test_failed" ("Table-column read planning regression test failed: {0}" -f (($tableColumnResult.cases | Where-Object { !$_.ok } | Select-Object -ExpandProperty name) -join ",")) $tableColumnReadTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_table_column_read_test_error" $_.Exception.Message $tableColumnReadTestPath
   }
 }
 

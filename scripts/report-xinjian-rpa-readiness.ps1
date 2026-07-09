@@ -209,10 +209,10 @@ if ($rowContextActions.Count -gt 0) {
   }
 }
 if ($tableColumnActions.Count -gt 0) {
-  $remainingBoundaries += [ordered]@{
+  $nonGapBoundaries += [ordered]@{
     kind = "read_only_table_memory"
     count = $tableColumnActions.Count
-    meaning = "Table columns/metrics are remembered for reading/planning and are not clickable actions."
+    meaning = "Table columns/metrics are remembered for planning and can be read from the current debuggable page through CDP without clicking; they are intentionally not treated as clickable buttons."
   }
 }
 
@@ -241,6 +241,7 @@ $payload = [ordered]@{
     confirmation_required_write = $writeActions.Count
     confirmation_required_export = $exportActions.Count
     table_column_memory = $tableColumnActions.Count
+    table_column_readable_with_cdp = $tableColumnActions.Count
     row_context_required = $rowContextActions.Count
     row_context_executable_with_explicit_context = $rowContextActions.Count
     row_context_executable_with_resolved_context = $rowContextActions.Count
@@ -284,6 +285,7 @@ $lines += "- Quality gaps: purpose $($payload.quality.no_purpose), function_sour
 $lines += "- Live controls: observed $($payload.live_coverage.observed_controls), matched $($payload.live_coverage.matched_controls), missing $($payload.live_coverage.missing_controls), business no-access pages $($payload.live_coverage.pages_noaccess), restricted terminal pages $($payload.live_coverage.pages_restricted_terminal)"
 $lines += "- Safe action exercise: executable $($payload.safe_action_exercise.executable_actions), verified $($payload.safe_action_exercise.verified_actions), failed $($payload.safe_action_exercise.failed_actions), not attempted $($payload.safe_action_exercise.not_attempted_actions)"
 $lines += "- Row-context execution: $($payload.totals.row_context_executable_with_resolved_context) row-level actions can be planned with explicit or inferred row context; none are blindly clicked by default."
+$lines += "- Table-column reading: $($payload.totals.table_column_readable_with_cdp) remembered columns can be read from a debuggable current page without clicking."
 $lines += "- Next action: $($payload.next_action)"
 $lines += ""
 $lines += "## Remaining Boundaries"
@@ -301,8 +303,10 @@ if ($nonGapBoundaries.Count -gt 0) {
   $lines += ""
   foreach ($item in $nonGapBoundaries) {
     $lines += ("- {0}: {1}. {2}" -f $item.kind, $item.count, $item.meaning)
-    foreach ($page in @($item.pages)) {
-      $lines += ('  - {0} `{1}` -> `{2}`' -f $page.page_name, $page.route, $page.captured_path)
+    if ($item.Contains("pages")) {
+      foreach ($page in @($item.pages)) {
+        $lines += ('  - {0} `{1}` -> `{2}`' -f $page.page_name, $page.route, $page.captured_path)
+      }
     }
   }
   $lines += ""

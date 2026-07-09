@@ -754,7 +754,11 @@ if (($requiresCdpPort -or $requiresUiaLocator) -and $uiaEligible) {
   $uiaCanExecute = Test-UiaActionExecutable -Action $action -InputUrl $Url -Detection $urlDetection
 }
 $executionBackend = if ($requiresUiaLocator) { if ($uiaCanExecute) { "uia" } else { "none" } } elseif ($effectivePort) { "cdp" } elseif ($uiaCanExecute) { "uia" } else { "none" }
-$canExecute = !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and (!$requiresCdpPort -or $uiaCanExecute) -and (!$requiresUiaLocator -or $uiaCanExecute) -and !$readOnlyCatalogEntry -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+$canExecute = if ($readOnlyCatalogEntry) {
+  !$unknownSafety -and !$requiresPageContext -and !$requiresCdpPort
+} else {
+  !$unknownSafety -and !$requiresRowContext -and !$requiresPageContext -and (!$requiresCdpPort -or $uiaCanExecute) -and (!$requiresUiaLocator -or $uiaCanExecute) -and (!$requiresExport -or $AllowExport -or $AllowWrite) -and (!$requiresWrite -or $AllowWrite)
+}
 
 $plan = [ordered]@{
   intent = $Intent
@@ -786,8 +790,10 @@ $plan = [ordered]@{
   locator_strategy = $locatorStrategy
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
-  safety_note = if ($readOnlyCatalogEntry) {
-    "Read-only table column memory. No click is needed; use the matched page/column to locate or interpret visible data."
+  safety_note = if ($readOnlyCatalogEntry -and !$requiresCdpPort) {
+    "Read-only table column can be read with -Execute through CDP. No click, write, export, cookie, token, or storage access is needed."
+  } elseif ($readOnlyCatalogEntry) {
+    "Read-only table column memory. No click is needed; open or focus a debuggable Xinjian page to read visible column values with -Execute."
   } elseif ($requiresPageContext -and $requiresWrite) {
     "Write/delete/save/submit-like action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowWrite only after explicit confirmation."
   } elseif ($requiresPageContext -and $requiresExport) {
@@ -864,7 +870,7 @@ if (!$canExecute) {
     page_kind = $currentPageKind
     execution_backend = $executionBackend
     plan = $plan
-    next_action = if ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresWrite -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresExport -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } elseif ($requiresUiaLocator) { "capture_or_focus_matching_uia_xinjian_control" } elseif ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } else { "manual_review_action_safety" }
+    next_action = if ($readOnlyCatalogEntry -and $requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_to_read_table_column" } elseif ($readOnlyCatalogEntry) { "rerun_with_execute_to_read_visible_table_column" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresWrite -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresExport -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } elseif ($requiresUiaLocator) { "capture_or_focus_matching_uia_xinjian_control" } elseif ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20

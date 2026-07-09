@@ -1,7 +1,7 @@
 ﻿{
     "ok":  true,
     "version":  "2026-07-09",
-    "generated_at":  "2026-07-09T04:50:30.9865230Z",
+    "generated_at":  "2026-07-09T04:56:25.3432572Z",
     "catalog_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-action-catalog.json",
     "live_coverage_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-live-button-coverage.json",
     "exercise_report_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-action-exercise-report.json",
@@ -12,6 +12,7 @@
                    "confirmation_required_write":  83,
                    "confirmation_required_export":  9,
                    "table_column_memory":  460,
+                   "table_column_readable_with_cdp":  460,
                    "row_context_required":  12,
                    "row_context_executable_with_explicit_context":  12,
                    "row_context_executable_with_resolved_context":  12,
@@ -73,11 +74,6 @@
                                      "kind":  "row_context_required",
                                      "count":  12,
                                      "meaning":  "Row-level actions need resolved row context: explicit RowIndex/RowText or row intent inferred from phrases such as first row / contains text; the invoker refuses to blindly click a row."
-                                 },
-                                 {
-                                     "kind":  "read_only_table_memory",
-                                     "count":  460,
-                                     "meaning":  "Table columns/metrics are remembered for reading/planning and are not clickable actions."
                                  }
                              ],
     "non_gap_boundaries":  [
@@ -94,6 +90,11 @@
                                                      "captured_path":  "/index/noaccess"
                                                  }
                                              ]
+                               },
+                               {
+                                   "kind":  "read_only_table_memory",
+                                   "count":  460,
+                                   "meaning":  "Table columns/metrics are remembered for planning and can be read from the current debuggable page through CDP without clicking; they are intentionally not treated as clickable buttons."
                                }
                            ],
     "next_action":  "rpa_memory_ready_for_accessible_visible_safe_controls"
