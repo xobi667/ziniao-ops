@@ -222,6 +222,7 @@ $required = @(
   "scripts\test-xinjian-row-context-inference.ps1",
   "scripts\test-xinjian-table-column-read-planning.ps1",
   "scripts\test-xinjian-export-action-planning.ps1",
+  "scripts\test-xinjian-write-action-planning.ps1",
   "scripts\exercise-xinjian-safe-actions.ps1",
   "scripts\audit-xinjian-live-button-coverage.ps1",
   "scripts\report-xinjian-rpa-readiness.ps1",
@@ -394,6 +395,25 @@ if (Test-Path -LiteralPath $exportActionTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_export_action_test_error" $_.Exception.Message $exportActionTestPath
+  }
+}
+
+$writeActionTestPath = Join-Path $Root "scripts\test-xinjian-write-action-planning.ps1"
+if (Test-Path -LiteralPath $writeActionTestPath) {
+  try {
+    $writeActionRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $writeActionTestPath -Json 2>&1)
+    $writeActionExit = $LASTEXITCODE
+    $writeActionResult = $null
+    try {
+      $writeActionResult = ($writeActionRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_write_action_test_parse_failed" ("Write action planning test output was not JSON: {0}" -f ($writeActionRaw | Out-String).Trim()) $writeActionTestPath
+    }
+    if ($writeActionResult -and ($writeActionExit -ne 0 -or !$writeActionResult.ok)) {
+      Add-Issue "error" "xinjian_write_action_test_failed" ("Write action planning regression test failed: {0}" -f (($writeActionResult.cases | Where-Object { !$_.ok } | Select-Object -ExpandProperty name) -join ",")) $writeActionTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_write_action_test_error" $_.Exception.Message $writeActionTestPath
   }
 }
 
