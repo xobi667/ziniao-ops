@@ -6,7 +6,7 @@ For 心舰 page/button memory and RPA-like "say what to do" routing, use `refere
 
 ## Default Route
 
-Always start with the real-page browser data workflow. The command opens or reuses an actual 心舰 page, navigates to the advertising analysis page, closes safe blocking popups, clicks read-only/navigation controls such as the advertising module, platform/date tabs, or query button, then fetches the hourly endpoint through that page context. Only report figures as real when both `real_data_verified=true` and `ui_interaction_verified=true`. It avoids hijacking the physical mouse, but it must still operate the real browser page before fetching data.
+Always start with the real-page browser data workflow. The command opens or reuses an actual 心舰 page, navigates to the advertising analysis page, closes safe blocking popups, clicks read-only/navigation controls such as the advertising module, platform/date tabs, or query button, verifies visible advertising metric text, saves a screenshot, then fetches the hourly endpoint through that page context. Only report figures as real when both `real_data_verified=true` and `ui_interaction_verified=true`. It avoids hijacking the physical mouse, but it must still operate the real browser page before fetching data.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-ad-hourly.ps1") -Json
@@ -50,7 +50,7 @@ After the user confirms login is complete in that browser window, fetch the hour
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\fetch-xinjian-browser-data.ps1") -Port 9339 -StoreName "<店铺A>,<店铺B>" -Days 7 -Json
 ```
 
-This route first runs the UI interaction probe and saves its click evidence plus screenshot under `reports.local`, then asks the page to call the known 心舰 endpoint with `credentials: "include"` and saves the endpoint response for analysis. It must not print or persist session secrets. If the UI probe cannot verify at least one safe visible click on the advertising page, the result must not be treated as real business data even when the endpoint returns rows.
+This route first runs the UI interaction probe and saves its click evidence plus screenshot under `reports.local`, then asks the page to call the known 心舰 endpoint with `credentials: "include"` and saves the endpoint response for analysis. It must not print or persist session secrets. If the UI probe cannot verify a real advertising route, at least one safe business-control click, visible advertising metric text such as `广告花费` or `广告销售额`, and a saved screenshot, the result must not be treated as real business data even when the endpoint returns rows.
 
 If the user explicitly says to run 心舰 through 紫鸟, first try the running 紫鸟 browser CDP bridge. It discovers active `ziniaobrowser.exe` debug ports, opens 心舰 in that 紫鸟 browser, then fetches the same endpoint through the page context:
 
@@ -77,7 +77,7 @@ The PowerShell wrapper writes both a Markdown summary and an Excel workbook by d
 - `原始记录`: normalized source rows used in the calculation.
 - `说明`: date window, data source, and selection logic.
 
-Only present final ad-performance figures as real data when the JSON result has `real_data_verified: true` and `ui_interaction_verified: true`. The answer should cite the evidence from `data_source.evidence`, especially the CDP page URL or input file path, UI click probe/screenshot, response path, record count, files used, and source types. If `real_data_verified` is false, do not use any generated table as a business conclusion; report the blocker from `next_action` and the relevant login/store-match fields. Window detection, title-only matches, UIA action maps, route maps, remembered buttons, MCP/browser availability checks, and API-only calls without verified UI clicks are not real data sources.
+Only present final ad-performance figures as real data when the JSON result has `real_data_verified: true` and `ui_interaction_verified: true`. The answer should cite the evidence from `data_source.evidence`, especially the CDP page URL or input file path, UI click probe, visible metric markers, screenshot path, response path, record count, files used, and source types. If `real_data_verified` is false, do not use any generated table as a business conclusion; report the blocker from `next_action` and the relevant login/store-match fields. Window detection, title-only matches, UIA action maps, route maps, remembered buttons, MCP/browser availability checks, and API-only calls without verified UI clicks are not real data sources.
 
 ## Known API
 

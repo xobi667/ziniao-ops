@@ -113,7 +113,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-a
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-export-watch.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
 ```
 
-Use the lower-level 心舰 scripts only when debugging or when a command output names a specific `next_action`. `xj-ad-hourly.ps1` still requires both `real_data_verified = true` and `ui_interaction_verified = true` before figures can be reported.
+Use the lower-level 心舰 scripts only when debugging or when a command output names a specific `next_action`. `xj-ad-hourly.ps1` still requires both `real_data_verified = true` and `ui_interaction_verified = true` before figures can be reported. The UI verification must include a real advertising page route, at least one clicked read-only business control, visible advertising metric text such as `广告花费` / `广告销售额`, and a saved screenshot path.
 
 1. Confirm the local package exists:
 
@@ -541,7 +541,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 
 The UIA capture filters private/noisy browser controls, pagination-only list items, close glyphs, and non-action buttons before saving observations. `-CompareCatalog` compares the visible controls against the current unified action catalog and reports matched controls plus non-navigation controls that are still missing from memory.
 
-Then use the real-page browser data workflow first. It must open or reuse an actual 心舰 page, navigate to the advertising analysis page, close safe blocking popups, click read-only/navigation controls such as the advertising module, platform/date tabs, or query button, and only then fetch through that page context. Only report figures when both `real_data_verified = true` and `ui_interaction_verified = true`. "No mouse" means the physical mouse is not hijacked; it does not mean skipping real page navigation or real button/page interaction.
+Then use the real-page browser data workflow first. It must open or reuse an actual 心舰 page, navigate to the advertising analysis page, close safe blocking popups, click read-only/navigation controls such as the advertising module, platform/date tabs, or query button, verify visible advertising metric text, save a screenshot, and only then fetch through that page context. Only report figures when both `real_data_verified = true` and `ui_interaction_verified = true`. "No mouse" means the physical mouse is not hijacked; it does not mean skipping real page navigation or real button/page interaction.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json

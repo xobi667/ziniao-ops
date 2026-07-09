@@ -238,11 +238,12 @@ function buildProbeExpression(targetUrl) {
     const bodyText = document.body?.innerText || "";
     const visibleMarkers = ["店铺广告分析", "广告花费", "广告销售额", "广告订单量", "ROAS", "点击率", "转化率", "展现量"]
       .filter((text) => bodyText.includes(text));
+    const metricMarkers = visibleMarkers.filter((text) => text !== "店铺广告分析");
     const clickedCount = actions.filter((item) => item.clicked && item.action === "click").length;
     const businessClickLabels = new Set(["select_tiktok_platform", "select_last_7_days", "run_visible_query"]);
     const businessClickedCount = actions.filter((item) => item.clicked && businessClickLabels.has(item.label)).length;
     const adRouteVisible = isAdRoute();
-    const verified = businessClickedCount > 0 && (adRouteVisible || visibleMarkers.length > 0);
+    const verified = businessClickedCount > 0 && adRouteVisible && metricMarkers.length >= 2;
 
     return {
       ok: true,
@@ -256,6 +257,7 @@ function buildProbeExpression(targetUrl) {
         title: document.title,
         pathname: location.pathname,
         visible_markers: visibleMarkers,
+        metric_markers: metricMarkers,
         has_password_input: !!document.querySelector("input[type='password']"),
         has_app_root: !!document.querySelector("#app")
       },
@@ -392,10 +394,15 @@ if (screenshotPath) {
   }
 }
 
+const screenshotVerified = typeof screenshot === "string" && screenshot.length > 0;
+const verified = !!probe.verified && screenshotVerified;
+
 const payload = {
   ok: !!probe.ok,
   required: true,
-  verified: !!probe.verified,
+  verified,
+  ui_verified: !!probe.verified,
+  screenshot_verified: screenshotVerified,
   port,
   webSocketDebuggerUrl: page.webSocketDebuggerUrl,
   page_url: probe.after?.href || page.url || null,
