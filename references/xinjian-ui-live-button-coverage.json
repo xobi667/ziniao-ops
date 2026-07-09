@@ -1,0 +1,706 @@
+﻿{
+    "version":  "2026-07-09",
+    "system":  "xinjian_erp",
+    "source":  "live_cdp_dom_vs_action_catalog",
+    "generated_at":  "2026-07-09T04:24:06.1578620Z",
+    "policy":  {
+                   "note":  "This report stores only sanitized route, page, control type/name, selector, and coverage status. It does not store cookies, tokens, storage values, input values, table row values, or private business values.",
+                   "comparison_scope":  "Visible non-transient controls from live route-scoped CDP DOM capture compared against xinjian-ui-action-catalog page/global action names, aliases, context, and locator labels."
+               },
+    "totals":  {
+                   "pages_selected":  48,
+                   "pages_captured":  47,
+                   "pages_redirected":  0,
+                   "pages_noaccess":  1,
+                   "pages_login":  0,
+                   "pages_failed":  0,
+                   "observed_controls":  827,
+                   "matched_controls":  827,
+                   "missing_controls":  0,
+                   "pages_with_missing_controls":  0,
+                   "status_counts":  {
+                                         "captured":  47,
+                                         "noaccess":  1
+                                     },
+                   "missing_type_counts":  {
+
+                                           }
+               },
+    "recent_missing_controls":  [
+
+                                ],
+    "pages":  [
+                  {
+                      "page_id":  "ad.group_detail",
+                      "page_name":  "广告详情",
+                      "route":  "/ad/group-detail",
+                      "status":  "captured",
+                      "captured_path":  "/ad/group-detail",
+                      "observed_controls":  11,
+                      "matched_controls":  11,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114455-ad_group-detail.json"
+                  },
+                  {
+                      "page_id":  "ad.originality_detail",
+                      "page_name":  "创意详情",
+                      "route":  "/ad/originality-detail",
+                      "status":  "captured",
+                      "captured_path":  "/ad/originality-detail",
+                      "observed_controls":  15,
+                      "matched_controls":  15,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115447-ad_originality-detail.json"
+                  },
+                  {
+                      "page_id":  "ad.shop_detail",
+                      "page_name":  "店铺广告分析",
+                      "route":  "/ad/shop-detail",
+                      "status":  "captured",
+                      "captured_path":  "/ad/shop-detail",
+                      "observed_controls":  28,
+                      "matched_controls":  28,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115456-ad_shop-detail.json"
+                  },
+                  {
+                      "page_id":  "auto.ai.talk",
+                      "page_name":  "创作会话",
+                      "route":  "/ai/talk",
+                      "status":  "captured",
+                      "captured_path":  "/ai/talk",
+                      "observed_controls":  0,
+                      "matched_controls":  0,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114522-ai_talk.json"
+                  },
+                  {
+                      "page_id":  "auto.bi.aftersalesorder.index",
+                      "page_name":  "售后单管理",
+                      "route":  "/bi/afterSalesOrder/index",
+                      "status":  "captured",
+                      "captured_path":  "/bi/afterSalesOrder/index",
+                      "observed_controls":  41,
+                      "matched_controls":  41,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114531-bi_afterSalesOrder_index.json"
+                  },
+                  {
+                      "page_id":  "auto.bi.monitor.pushflowstats",
+                      "page_name":  "推送监控",
+                      "route":  "/bi/monitor/pushFlowStats",
+                      "status":  "captured",
+                      "captured_path":  "/bi/monitor/pushFlowStats",
+                      "observed_controls":  24,
+                      "matched_controls":  24,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114540-bi_monitor_pushFlowStats.json"
+                  },
+                  {
+                      "page_id":  "auto.bi.operationcenter.aftersaleorder.index",
+                      "page_name":  "售后单管理",
+                      "route":  "/bi/operationCenter/afterSaleOrder/index",
+                      "status":  "captured",
+                      "captured_path":  "/bi/operationCenter/afterSaleOrder/index",
+                      "observed_controls":  41,
+                      "matched_controls":  41,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114549-bi_operationCenter_afterSaleOrder_index.json"
+                  },
+                  {
+                      "page_id":  "auto.bi.operationcenter.aftersalesorder.index",
+                      "page_name":  "售后单管理",
+                      "route":  "/bi/operationCenter/afterSalesOrder/index",
+                      "status":  "captured",
+                      "captured_path":  "/bi/operationCenter/afterSalesOrder/index",
+                      "observed_controls":  41,
+                      "matched_controls":  41,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114558-bi_operationCenter_afterSalesOrder_index.json"
+                  },
+                  {
+                      "page_id":  "auto.bi.profit.detail",
+                      "page_name":  "店铺利润分析详情",
+                      "route":  "/bi/profit/detail",
+                      "status":  "captured",
+                      "captured_path":  "/bi/profit/detail",
+                      "observed_controls":  9,
+                      "matched_controls":  9,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114608-bi_profit_detail.json"
+                  },
+                  {
+                      "page_id":  "auto.bpm.manager.definition",
+                      "page_name":  "流程定义",
+                      "route":  "/bpm/manager/definition",
+                      "status":  "captured",
+                      "captured_path":  "/bpm/manager/definition",
+                      "observed_controls":  8,
+                      "matched_controls":  8,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114616-bpm_manager_definition.json"
+                  },
+                  {
+                      "page_id":  "auto.bpm.oa.leave.create",
+                      "page_name":  "发起 OA 请假",
+                      "route":  "/bpm/oa/leave/create",
+                      "status":  "captured",
+                      "captured_path":  "/bpm/oa/leave/create",
+                      "observed_controls":  6,
+                      "matched_controls":  6,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114625-bpm_oa_leave_create.json"
+                  },
+                  {
+                      "page_id":  "auto.bpm.oa.leave.detail",
+                      "page_name":  "查看 OA 请假",
+                      "route":  "/bpm/oa/leave/detail",
+                      "status":  "captured",
+                      "captured_path":  "/bpm/oa/leave/detail",
+                      "observed_controls":  0,
+                      "matched_controls":  0,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114634-bpm_oa_leave_detail.json"
+                  },
+                  {
+                      "page_id":  "auto.bpm.process.instance.create",
+                      "page_name":  "发起流程",
+                      "route":  "/bpm/process-instance/create",
+                      "status":  "captured",
+                      "captured_path":  "/bpm/process-instance/create",
+                      "observed_controls":  4,
+                      "matched_controls":  4,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114643-bpm_process-instance_create.json"
+                  },
+                  {
+                      "page_id":  "auto.bpm.process.instance.detail",
+                      "page_name":  "流程详情",
+                      "route":  "/bpm/process-instance/detail",
+                      "status":  "captured",
+                      "captured_path":  "/bpm/process-instance/detail",
+                      "observed_controls":  0,
+                      "matched_controls":  0,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114652-bpm_process-instance_detail.json"
+                  },
+                  {
+                      "page_id":  "auto.crm.coopera.detail",
+                      "page_name":  "合作单详情",
+                      "route":  "/crm/coopera-detail",
+                      "status":  "captured",
+                      "captured_path":  "/crm/coopera-detail",
+                      "observed_controls":  18,
+                      "matched_controls":  18,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114700-crm_coopera-detail.json"
+                  },
+                  {
+                      "page_id":  "auto.crm.cooperation.detail",
+                      "page_name":  "合作单详情",
+                      "route":  "/crm/cooperation-detail",
+                      "status":  "captured",
+                      "captured_path":  "/crm/cooperation-detail",
+                      "observed_controls":  14,
+                      "matched_controls":  14,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114709-crm_cooperation-detail.json"
+                  },
+                  {
+                      "page_id":  "auto.crm.cooperation.detail.simple",
+                      "page_name":  "合作单详情",
+                      "route":  "/crm/cooperation-detail-simple",
+                      "status":  "captured",
+                      "captured_path":  "/crm/cooperation-detail-simple",
+                      "observed_controls":  14,
+                      "matched_controls":  14,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114718-crm_cooperation-detail-simple.json"
+                  },
+                  {
+                      "page_id":  "auto.crm.favorite.detail",
+                      "page_name":  "收藏夹详情",
+                      "route":  "/crm/favorite/detail",
+                      "status":  "captured",
+                      "captured_path":  "/crm/favorite/detail",
+                      "observed_controls":  13,
+                      "matched_controls":  13,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114727-crm_favorite_detail.json"
+                  },
+                  {
+                      "page_id":  "crm.blacklist",
+                      "page_name":  "黑名单",
+                      "route":  "/crm/matser/management/blacklist",
+                      "status":  "captured",
+                      "captured_path":  "/crm/matser/management/blacklist",
+                      "observed_controls":  28,
+                      "matched_controls":  28,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114736-crm_matser_management_blacklist.json"
+                  },
+                  {
+                      "page_id":  "crm.focus",
+                      "page_name":  "重点关注",
+                      "route":  "/crm/matser/management/focus",
+                      "status":  "captured",
+                      "captured_path":  "/crm/matser/management/focus",
+                      "observed_controls":  40,
+                      "matched_controls":  40,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114745-crm_matser_management_focus.json"
+                  },
+                  {
+                      "page_id":  "crm.highseas",
+                      "page_name":  "达人公海",
+                      "route":  "/crm/matser/management/highSeas",
+                      "status":  "captured",
+                      "captured_path":  "/crm/matser/management/highSeas",
+                      "observed_controls":  36,
+                      "matched_controls":  36,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114754-crm_matser_management_highSeas.json"
+                  },
+                  {
+                      "page_id":  "crm.my_master",
+                      "page_name":  "我的达人",
+                      "route":  "/crm/matser/management/myMaster",
+                      "status":  "captured",
+                      "captured_path":  "/crm/matser/management/myMaster",
+                      "observed_controls":  36,
+                      "matched_controls":  36,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114803-crm_matser_management_myMaster.json"
+                  },
+                  {
+                      "page_id":  "auto.crm.shop.detail",
+                      "page_name":  "店铺详情",
+                      "route":  "/crm/shop-detail",
+                      "status":  "captured",
+                      "captured_path":  "/crm/shop-detail",
+                      "observed_controls":  7,
+                      "matched_controls":  7,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114812-crm_shop-detail.json"
+                  },
+                  {
+                      "page_id":  "data.overview",
+                      "page_name":  "数据概览",
+                      "route":  "/dataView/data-overview",
+                      "status":  "captured",
+                      "captured_path":  "/dataView/data-overview",
+                      "observed_controls":  20,
+                      "matched_controls":  20,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114821-dataView_data-overview.json"
+                  },
+                  {
+                      "page_id":  "download.list",
+                      "page_name":  "下载中心",
+                      "route":  "/download/list",
+                      "status":  "captured",
+                      "captured_path":  "/download/list",
+                      "observed_controls":  11,
+                      "matched_controls":  11,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114830-download_list.json"
+                  },
+                  {
+                      "page_id":  "erp.ads.rule_log",
+                      "page_name":  "广告规则执行日志",
+                      "route":  "/erp/ads/rule-log",
+                      "status":  "captured",
+                      "captured_path":  "/erp/ads/rule-log",
+                      "observed_controls":  15,
+                      "matched_controls":  15,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114839-erp_ads_rule-log.json"
+                  },
+                  {
+                      "page_id":  "auto.erp.blacklist",
+                      "page_name":  "黑名单管理",
+                      "route":  "/erp/blacklist",
+                      "status":  "captured",
+                      "captured_path":  "/erp/blacklist",
+                      "observed_controls":  8,
+                      "matched_controls":  8,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114848-erp_blacklist.json"
+                  },
+                  {
+                      "page_id":  "auto.index.home",
+                      "page_name":  "首页",
+                      "route":  "/index/home",
+                      "status":  "captured",
+                      "captured_path":  "/index/home",
+                      "observed_controls":  15,
+                      "matched_controls":  15,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114857-index_home.json"
+                  },
+                  {
+                      "page_id":  "auto.index.noaccess",
+                      "page_name":  "受限页面",
+                      "route":  "/index/noaccess",
+                      "status":  "noaccess",
+                      "captured_path":  "/index/noaccess",
+                      "observed_controls":  0,
+                      "matched_controls":  0,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114858-index_noaccess.json"
+                  },
+                  {
+                      "page_id":  "auto.index.thali",
+                      "page_name":  "套餐",
+                      "route":  "/index/thali",
+                      "status":  "captured",
+                      "captured_path":  "/index/thali",
+                      "observed_controls":  0,
+                      "matched_controls":  0,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114906-index_thali.json"
+                  },
+                  {
+                      "page_id":  "auto.job.log",
+                      "page_name":  "调度日志",
+                      "route":  "/job/log",
+                      "status":  "captured",
+                      "captured_path":  "/job/log",
+                      "observed_controls":  15,
+                      "matched_controls":  15,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114915-job_log.json"
+                  },
+                  {
+                      "page_id":  "auto.monitor.message.list",
+                      "page_name":  "预警消息",
+                      "route":  "/monitor/message_list",
+                      "status":  "captured",
+                      "captured_path":  "/monitor/message_list",
+                      "observed_controls":  28,
+                      "matched_controls":  28,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114924-monitor_message_list.json"
+                  },
+                  {
+                      "page_id":  "auto.order.sku.min.price",
+                      "page_name":  "SKU最低售价配置",
+                      "route":  "/order/sku-min-price",
+                      "status":  "captured",
+                      "captured_path":  "/order/sku-min-price",
+                      "observed_controls":  10,
+                      "matched_controls":  10,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114933-order_sku-min-price.json"
+                  },
+                  {
+                      "page_id":  "auto.product.data.detail",
+                      "page_name":  "商品评论详情",
+                      "route":  "/product-data/detail",
+                      "status":  "captured",
+                      "captured_path":  "/product-data/detail",
+                      "observed_controls":  13,
+                      "matched_controls":  13,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114942-product-data_detail.json"
+                  },
+                  {
+                      "page_id":  "auto.product.data.performance.detail",
+                      "page_name":  "商品表现分析",
+                      "route":  "/product-data/performance-detail",
+                      "status":  "captured",
+                      "captured_path":  "/product-data/performance-detail",
+                      "observed_controls":  48,
+                      "matched_controls":  48,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-114951-product-data_performance-detail.json"
+                  },
+                  {
+                      "page_id":  "auto.product.sku.inventoryreport.detail",
+                      "page_name":  "进销存详情",
+                      "route":  "/product-sku/InventoryReport_detail",
+                      "status":  "captured",
+                      "captured_path":  "/product-sku/InventoryReport_detail",
+                      "observed_controls":  23,
+                      "matched_controls":  23,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115000-product-sku_InventoryReport_detail.json"
+                  },
+                  {
+                      "page_id":  "auto.report.center.detail.performance",
+                      "page_name":  "业绩利润报表",
+                      "route":  "/report-center/detail/performance",
+                      "status":  "captured",
+                      "captured_path":  "/report-center/detail/performance",
+                      "observed_controls":  6,
+                      "matched_controls":  6,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115009-report-center_detail_performance.json"
+                  },
+                  {
+                      "page_id":  "auto.report.center.detail.shop",
+                      "page_name":  "店铺利润报表",
+                      "route":  "/report-center/detail/shop",
+                      "status":  "captured",
+                      "captured_path":  "/report-center/detail/shop",
+                      "observed_controls":  5,
+                      "matched_controls":  5,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115018-report-center_detail_shop.json"
+                  },
+                  {
+                      "page_id":  "auto.report.center.detail.shopeegoods",
+                      "page_name":  "Shopee商品数据表",
+                      "route":  "/report-center/detail/shopeeGoods",
+                      "status":  "captured",
+                      "captured_path":  "/report-center/detail/shopeeGoods",
+                      "observed_controls":  45,
+                      "matched_controls":  45,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115027-report-center_detail_shopeeGoods.json"
+                  },
+                  {
+                      "page_id":  "auto.report.center.detail.shopeeshop",
+                      "page_name":  "Shopee店铺数据表",
+                      "route":  "/report-center/detail/shopeeShop",
+                      "status":  "captured",
+                      "captured_path":  "/report-center/detail/shopeeShop",
+                      "observed_controls":  48,
+                      "matched_controls":  48,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115036-report-center_detail_shopeeShop.json"
+                  },
+                  {
+                      "page_id":  "auto.shop.auth",
+                      "page_name":  "授权结果",
+                      "route":  "/shop/auth",
+                      "status":  "captured",
+                      "captured_path":  "/shop/auth",
+                      "observed_controls":  1,
+                      "matched_controls":  1,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115045-shop_auth.json"
+                  },
+                  {
+                      "page_id":  "auto.shop.auth.fail",
+                      "page_name":  "授权失败",
+                      "route":  "/shop/auth-fail",
+                      "status":  "captured",
+                      "captured_path":  "/shop/auth-fail",
+                      "observed_controls":  1,
+                      "matched_controls":  1,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115054-shop_auth-fail.json"
+                  },
+                  {
+                      "page_id":  "auto.shop.data.performance.board",
+                      "page_name":  "店铺表现看板",
+                      "route":  "/shop-data/performance-board",
+                      "status":  "captured",
+                      "captured_path":  "/shop-data/performance-board",
+                      "observed_controls":  1,
+                      "matched_controls":  1,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115103-shop-data_performance-board.json"
+                  },
+                  {
+                      "page_id":  "auto.shop.data.performance.detail",
+                      "page_name":  "店铺表现分析",
+                      "route":  "/shop-data/performance-detail",
+                      "status":  "captured",
+                      "captured_path":  "/shop-data/performance-detail",
+                      "observed_controls":  45,
+                      "matched_controls":  45,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115112-shop-data_performance-detail.json"
+                  },
+                  {
+                      "page_id":  "auto.system.costom.fee",
+                      "page_name":  "自定义费用",
+                      "route":  "/system/costom-fee",
+                      "status":  "captured",
+                      "captured_path":  "/system/costom-fee",
+                      "observed_controls":  15,
+                      "matched_controls":  15,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115121-system_costom-fee.json"
+                  },
+                  {
+                      "page_id":  "auto.system.package.open.record",
+                      "page_name":  "套餐开通记录",
+                      "route":  "/system/package-open-record",
+                      "status":  "captured",
+                      "captured_path":  "/system/package-open-record",
+                      "observed_controls":  9,
+                      "matched_controls":  9,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115130-system_package-open-record.json"
+                  },
+                  {
+                      "page_id":  "auto.user.package",
+                      "page_name":  "单量套餐",
+                      "route":  "/user/package",
+                      "status":  "captured",
+                      "captured_path":  "/user/package",
+                      "observed_controls":  1,
+                      "matched_controls":  1,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115139-user_package.json"
+                  },
+                  {
+                      "page_id":  "auto.user.analyze.detail",
+                      "page_name":  "商品复购分析报告详情",
+                      "route":  "/user-analyze/detail",
+                      "status":  "captured",
+                      "captured_path":  "/user-analyze/detail",
+                      "observed_controls":  10,
+                      "matched_controls":  10,
+                      "missing_controls":  [
+
+                                           ],
+                      "error":  "",
+                      "capture_path":  "D:\\UserData\\Desktop\\dianpu\\.ziniao-ops\\xinjian-live-button-audit\\20260709-115148-user-analyze_detail.json"
+                  }
+              ]
+}

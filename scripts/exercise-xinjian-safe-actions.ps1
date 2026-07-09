@@ -6,7 +6,7 @@ param(
   [string]$RouteRegex = ".",
   [string[]]$ActionType = @(),
   [int]$MaxActions = 25,
-  [int]$WaitMs = 2500,
+  [int]$WaitMs = 8000,
   [string]$StatePath = "",
   [switch]$RetryAttempted,
   [switch]$RetryFailed,

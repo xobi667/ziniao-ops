@@ -142,6 +142,16 @@ function isTransientOverlayControl(control = {}) {
   return /(?:^|[ .#>])(?:el-picker-panel|el-date-picker|el-date-range-picker|el-select-dropdown|el-cascader-panel|el-dropdown-menu|el-popper|el-tooltip__popper|el-autocomplete-suggestion|el-dialog|el-drawer|el-message-box)(?:\\b|[ .#>_-])/i.test(marker);
 }
 
+function isAppShellControl(control = {}) {
+  const selector = String(control.selector || "");
+  const classes = Array.isArray(control.classes) ? control.classes.join(" ") : String(control.classes || "");
+  const marker = `${selector} ${classes}`;
+  return (
+    /rightPanel-container|rightPanel-items|drawer-container|avatar-container|avatar-wrapper/i.test(marker) ||
+    (/el-scrollbar\.theme-light|sidebar-container|scrollbar-wrapper\.el-scrollbar__wrap/i.test(marker) && /ul\.el-menu/i.test(marker))
+  );
+}
+
 function isPrivateLike(value) {
   const text = clean(value);
   if (!text) return false;
@@ -154,7 +164,7 @@ function isPrivateLike(value) {
 }
 
 function normalizeTab(value) {
-  return clean(value).replace(/\s+\d+$/g, "");
+  return clean(value).replace(/\s+\d+$/g, "").replace(/\(\d+\)$/g, "").trim();
 }
 
 function escapeRegex(value) {
@@ -192,7 +202,7 @@ function classifySafety(name, type) {
   const text = clean(name);
   const compact = text.replace(/\s+/g, "");
   if (type === "table_column") return "read_filter";
-  if (type === "tab" || type === "filter_input" || type === "filter_dropdown") return "read_filter";
+  if (type === "tab" || type === "status_tab" || type === "filter_input" || type === "filter_dropdown") return "read_filter";
   if (type === "form_input" || type === "form_dropdown") return "form_field";
   if (/^用户菜单$/.test(text)) return "account_menu";
   if (type === "navigation") return "navigation";
@@ -213,6 +223,7 @@ function actionType(controlType, name, context = {}) {
   if (controlType === "input") return context.isFormPage ? "form_input" : "filter_input";
   if (controlType === "select") return context.isFormPage ? "form_dropdown" : "filter_dropdown";
   if (controlType === "tab") return "tab";
+  if (controlType === "menu") return "status_tab";
   if (controlType === "link") return "navigation";
   if (/详情|查看|分析|打开|进入/.test(name)) return "navigation";
   if (/批量/.test(name)) return "batch_action";
@@ -224,7 +235,7 @@ function purposeFor(name, type, pageName) {
   if (type === "table_column") return `Remember that ${pageName} has the ${name} table column/metric.`;
   if (type === "filter_input" || type === "filter_dropdown") return `Filter ${pageName} by ${name}.`;
   if (type === "form_input" || type === "form_dropdown") return `Fill or choose the ${name} field on ${pageName}; submitting the form still requires explicit confirmation.`;
-  if (type === "tab") return `Switch ${pageName} to the ${name} tab/view.`;
+  if (type === "tab" || type === "status_tab") return `Switch ${pageName} to the ${name} tab/view.`;
   if (safety === "read_filter") return `Apply or clear filters on ${pageName}.`;
   if (safety === "confirmation_required_export") return `Export or download data from ${pageName}; requires an explicit user request.`;
   if (safety === "confirmation_required_write") return `Open or run a write/configuration action on ${pageName}; requires explicit confirmation before committing changes.`;
@@ -250,8 +261,21 @@ function aliasesForAction(name) {
 function controlNames(controls, type) {
   return unique(controls
     .filter((item) => item.type === type && !isTransientOverlayControl(item))
+    .filter((item) => !isAppShellControl(item))
     .map((item) => safeName(item.placeholder || item.name, item))
     .map((name) => type === "tab" ? normalizeTab(name) : name));
+}
+
+function selectorForControl(controls, type, name) {
+  const target = clean(name).toLowerCase();
+  for (const item of controls) {
+    if (item.type !== type || isTransientOverlayControl(item) || isAppShellControl(item)) continue;
+    const itemName = type === "tab" || type === "menu"
+      ? normalizeTab(safeName(item.placeholder || item.name, item))
+      : safeName(item.placeholder || item.name, item);
+    if (clean(itemName).toLowerCase() === target) return item.selector || "";
+  }
+  return "";
 }
 
 function tableHeaders(controls) {
@@ -263,6 +287,7 @@ function tableHeaders(controls) {
 function visibleButtons(controls) {
   return unique(controls
     .filter((item) => item.type === "button" && !isTransientOverlayControl(item))
+    .filter((item) => !isAppShellControl(item))
     .map((item) => safeName(item.name, item))
     .filter(Boolean)
     .map((name) => name || "未命名按钮"));
@@ -281,9 +306,11 @@ function pageFromCapture(capture) {
   const inputs = controlNames(controls, "input");
   const selects = controlNames(controls, "select");
   const tabs = controlNames(controls, "tab");
+  const menus = controlNames(controls, "menu").map(normalizeTab);
   const headers = tableHeaders(controls);
   const links = controls
     .filter((item) => item.type === "link" && item.href && String(item.href).includes("erp.xinjianerp.com"))
+    .filter((item) => !isTransientOverlayControl(item) && !isAppShellControl(item))
     .map((item) => ({ name: safeName(item.name, item), href: String(item.href || "") }))
     .filter((item) => item.name && item.href && item.name.length <= 40);
 
@@ -309,12 +336,13 @@ function pageFromCapture(capture) {
     });
   };
 
-  for (const name of inputs) addAction(name, "input", { dom_placeholder: name });
-  for (const name of selects) addAction(name, "select", { dom_text: name });
-  for (const name of tabs) addAction(name, "tab", { tab_text: name });
-  for (const name of buttons) addAction(name, "button", { dom_text: name });
+  for (const name of inputs) addAction(name, "input", { dom_placeholder: name, selector: selectorForControl(controls, "input", name) });
+  for (const name of selects) addAction(name, "select", { dom_text: name, selector: selectorForControl(controls, "select", name) });
+  for (const name of tabs) addAction(name, "tab", { tab_text: name, selector: selectorForControl(controls, "tab", name) });
+  for (const name of menus) addAction(name, "menu", { dom_text: name, selector: selectorForControl(controls, "menu", name) });
+  for (const name of buttons) addAction(name, "button", { dom_text: name, selector: selectorForControl(controls, "button", name) });
   for (const link of links) {
-    addAction(link.name, "link", { dom_text: link.name, href: link.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]") });
+    addAction(link.name, "link", { dom_text: link.name, selector: selectorForControl(controls, "link", link.name), href: link.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]") });
   }
   for (const name of headers) addAction(name, "table_column", { table_column: name });
 
@@ -350,7 +378,7 @@ function pageFromCapture(capture) {
     },
     layout: {
       filters: unique([...inputs, ...selects].filter((name) => name && name !== "请选择")),
-      tabs,
+      tabs: unique([...tabs, ...menus]),
       table_columns: headers
     },
     observed_controls: {
@@ -358,6 +386,7 @@ function pageFromCapture(capture) {
       inputs,
       selects,
       tabs,
+      menus,
       links,
       table_headers: headers
     },

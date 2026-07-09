@@ -1,6 +1,7 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
   [string]$CatalogPath = "",
+  [string]$LiveCoveragePath = "",
   [int]$MinActions = 5,
   [int]$MaxWeakPages = 20,
   [switch]$IncludeAllPages,
@@ -12,6 +13,9 @@ $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 if (!$CatalogPath) {
   $CatalogPath = Join-Path $root "references\xinjian-ui-action-catalog.json"
+}
+if (!$LiveCoveragePath) {
+  $LiveCoveragePath = Join-Path $root "references\xinjian-ui-live-button-coverage.json"
 }
 
 if (!(Test-Path -LiteralPath $CatalogPath)) {
@@ -31,6 +35,18 @@ function Get-RouteUrl([string]$Route) {
   $path = [string]$Route
   if (!$path.StartsWith("/")) { $path = "/" + $path }
   return "https://erp.xinjianerp.com$path"
+}
+
+function Get-RouteKey([string]$Route) {
+  if (!$Route) { return "" }
+  $value = [string]$Route
+  if ($value -match "^[A-Za-z][A-Za-z0-9+.-]*://") {
+    try { $value = ([uri]$value).AbsolutePath } catch {}
+  }
+  if (!$value.StartsWith("/")) { $value = "/" + $value }
+  $value = $value -replace "/+", "/"
+  if ($value.Length -gt 1) { $value = $value.TrimEnd("/") }
+  return $value.ToLowerInvariant()
 }
 
 function Get-CountMap($Items) {
@@ -100,6 +116,18 @@ function Convert-PageReportForOutput($Report, [bool]$Detailed) {
 }
 
 $catalog = Get-Content -LiteralPath $CatalogPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$liveCoverageByRoute = @{}
+if (Test-Path -LiteralPath $LiveCoveragePath) {
+  try {
+    $liveCoverage = Get-Content -LiteralPath $LiveCoveragePath -Raw -Encoding UTF8 | ConvertFrom-Json
+    foreach ($item in @($liveCoverage.pages)) {
+      $key = Get-RouteKey ([string]$item.route)
+      if ($key) { $liveCoverageByRoute[$key] = $item }
+    }
+  } catch {
+    $liveCoverageByRoute = @{}
+  }
+}
 $pages = @($catalog.pages)
 $pageReports = @()
 
@@ -126,13 +154,19 @@ foreach ($page in $pages) {
     }).Count
   $isRestrictedPage = Test-RestrictedPage $page
   $isSparseShellPage = Test-SparseShellPage -Actions $actions -SourceCounts $sourceCounts -MinActionThreshold $MinActions
+  $liveCoverage = $liveCoverageByRoute[(Get-RouteKey ([string]$page.route))]
+  $liveMissingCount = if ($liveCoverage) { @($liveCoverage.missing_controls).Count } else { $null }
+  $isLiveCoveredPage = $liveCoverage -and [string]$liveCoverage.status -eq "captured" -and [int]$liveMissingCount -eq 0
+  $isLiveNoAccessPage = $liveCoverage -and [string]$liveCoverage.status -eq "noaccess"
   if ($isRestrictedPage) { $notes += "restricted_or_noaccess_page" }
   if ($isSparseShellPage) { $notes += "sparse_shell_page_fully_covered" }
+  if ($isLiveCoveredPage) { $notes += "live_dom_controls_fully_matched" }
+  if ($isLiveNoAccessPage) { $notes += "live_dom_noaccess_page" }
 
   if ($actions.Count -eq 0) {
     $gaps += "no_actions"
     $riskScore += 100
-  } elseif ($actions.Count -lt $MinActions -and !$isRestrictedPage -and !$isSparseShellPage) {
+  } elseif ($actions.Count -lt $MinActions -and !$isRestrictedPage -and !$isSparseShellPage -and !$isLiveCoveredPage -and !$isLiveNoAccessPage) {
     $gaps += "low_action_count"
     $riskScore += (40 - $actions.Count)
   }
@@ -148,7 +182,7 @@ foreach ($page in $pages) {
     $gaps += "empty_locators"
     $riskScore += 60 + $emptyLocator
   }
-  $isRealPage = [string]$page.route -and [string]$page.module -ne "Global" -and !$isRestrictedPage
+  $isRealPage = [string]$page.route -and [string]$page.module -ne "Global" -and !$isRestrictedPage -and !$isLiveCoveredPage -and !$isLiveNoAccessPage
   if ($isRealPage) {
     if (!$sourceCounts.Contains("overlay")) {
       $gaps += "no_overlay_memory"
@@ -192,6 +226,9 @@ foreach ($page in $pages) {
       locator_strategies = $locatorCounts
       gaps = $gaps
       notes = $notes
+      live_coverage_status = if ($liveCoverage) { [string]$liveCoverage.status } else { "" }
+      live_observed_controls = if ($liveCoverage) { [int]$liveCoverage.observed_controls } else { $null }
+      live_missing_controls = if ($liveCoverage) { [int]$liveMissingCount } else { $null }
       risk_score = $riskScore
       recommended_command = if ($learnUrl) { "powershell -ExecutionPolicy Bypass -File (Join-Path `$ZiniaoOpsHome `"scripts\learn-xinjian-current-page.ps1`") -Url `"$learnUrl`" -Json" } else { "" }
     })
@@ -230,6 +267,11 @@ $payload = [ordered]@{
     max_weak_pages = $MaxWeakPages
   }
   source_coverage_pages = $sourceCoverage
+  live_coverage = [ordered]@{
+    path = $LiveCoveragePath
+    loaded = [bool]($liveCoverageByRoute.Count -gt 0)
+    route_count = [int]$liveCoverageByRoute.Count
+  }
   weak_pages_count = @($pageReports | Where-Object { $_.risk_score -gt 0 }).Count
   weak_pages = $weakPagesForOutput
   all_pages = $allPagesForOutput

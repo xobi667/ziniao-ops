@@ -86,9 +86,38 @@ function Get-RouteKey([string]$InputPath) {
   return $value.ToLowerInvariant()
 }
 
+function Get-DateQuickIntentCanonical([string]$QueryCompact) {
+  if (!$QueryCompact) { return "" }
+  $today = New-UnicodeText @(0x4ECA, 0x5929)
+  $yesterday = New-UnicodeText @(0x6628, 0x5929)
+  $near = New-UnicodeText @(0x8FD1)
+  $recent = New-UnicodeText @(0x6700, 0x8FD1)
+  $day = New-UnicodeText @(0x5929)
+  $seven = New-UnicodeText @(0x4E03)
+  $thirty = New-UnicodeText @(0x4E09, 0x5341)
+
+  $recent7 = $near + "7" + $day
+  $recent30 = $near + "30" + $day
+  $aliases = @(
+    @{ canonical = $today; aliases = @($today) },
+    @{ canonical = $yesterday; aliases = @($yesterday) },
+    @{ canonical = $recent7; aliases = @($recent7, ($recent + "7" + $day), ($near + $seven + $day), ($recent + $seven + $day)) },
+    @{ canonical = $recent30; aliases = @($recent30, ($recent + "30" + $day), ($near + $thirty + $day), ($recent + $thirty + $day)) }
+  )
+  foreach ($item in $aliases) {
+    foreach ($alias in @($item.aliases)) {
+      if ($QueryCompact -eq (Compact-Text ([string]$alias))) {
+        return [string]$item.canonical
+      }
+    }
+  }
+  return ""
+}
+
 function Get-ActionScore($Action, [string]$Query) {
   $score = 0
   $queryCompact = Compact-Text $Query
+  $dateQuickCanonical = Get-DateQuickIntentCanonical $queryCompact
   $commandWords = @(
     (New-UnicodeText @(0x641C, 0x7D22)),
     (New-UnicodeText @(0x67E5, 0x8BE2)),
@@ -116,9 +145,16 @@ function Get-ActionScore($Action, [string]$Query) {
     if ($alias) { $fields += [string]$alias }
   }
   if ($Action.PSObject.Properties.Match("locator").Count -gt 0 -and $Action.locator) {
-    foreach ($prop in @("dom_text", "dom_placeholder", "trigger_text", "item_text", "button_text", "table_column", "row_action_text", "column_header")) {
+    foreach ($prop in @("dom_text", "dom_placeholder", "trigger_text", "item_text", "button_text", "table_column", "row_action_text", "column_header", "tab_text")) {
       if ($Action.locator.PSObject.Properties.Match($prop).Count -gt 0 -and $Action.locator.$prop) {
         $fields += [string]$Action.locator.$prop
+      }
+    }
+    foreach ($prop in @("tab_texts", "dom_placeholders")) {
+      if ($Action.locator.PSObject.Properties.Match($prop).Count -gt 0 -and $Action.locator.$prop) {
+        foreach ($value in @($Action.locator.$prop)) {
+          if ($value) { $fields += [string]$value }
+        }
       }
     }
   }
@@ -141,6 +177,19 @@ function Get-ActionScore($Action, [string]$Query) {
     else {
       foreach ($part in @([regex]::Split($Query, "[\s,/]+") | Where-Object { $_ })) {
         if ($norm.Contains($part)) { $score += 8 }
+      }
+    }
+  }
+  if ($dateQuickCanonical -and
+      $Action.PSObject.Properties.Match("type").Count -gt 0 -and $Action.type -eq "date_filter" -and
+      $Action.PSObject.Properties.Match("locator").Count -gt 0 -and $Action.locator -and
+      $Action.locator.PSObject.Properties.Match("tab_texts").Count -gt 0) {
+    $canonicalCompact = Compact-Text $dateQuickCanonical
+    foreach ($tabText in @($Action.locator.tab_texts)) {
+      $tabCompact = Compact-Text ([string]$tabText)
+      if ($tabCompact -and ($tabCompact -eq $canonicalCompact -or $tabCompact -eq $queryCompact)) {
+        $score += 320
+        break
       }
     }
   }
@@ -208,6 +257,7 @@ function Get-LocatorStrategy($Action) {
     if ($locator.trigger_selector -and $locator.button_text) { return "click_trigger_selector_then_dialog_button_text" }
     if ($locator.trigger_selector) { return "click_trigger_selector" }
     if ($locator.table_selector -and $locator.row_action_text) { return "click_first_matching_row_action_in_table" }
+    if ($locator.selector) { return "click_css_selector" }
     if ($locator.href) { return "navigate_href" }
     if ($locator.dom_text) { return "click_visible_dom_text" }
     if ($locator.dom_placeholder) { return "input_or_filter_placeholder" }
@@ -422,6 +472,7 @@ if ($catalog -and $catalog.pages) {
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
 $queryCompact = Compact-Text $query
+$dateQuickCanonical = Get-DateQuickIntentCanonical $queryCompact
 $openOrChooseIntentWords = @(
   (New-UnicodeText @(0x6253, 0x5F00)),
   (New-UnicodeText @(0x5C55, 0x5F00)),
@@ -581,6 +632,11 @@ $candidates = @($candidates |
     if ($action.type -eq "row_action") { $rank += 12 }
     if ($action.safety -eq "read_filter") { $rank += 8 }
     if ([string]$action.safety -like "confirmation_required*") { $rank += 6 }
+    if ($dateQuickCanonical) {
+      if ($action.type -eq "date_filter") { $rank += 120 }
+      if ($action.source_map -eq "curated") { $rank += 20 }
+      if ($action.type -in @("tab", "status_tab")) { $rank -= 80 }
+    }
     if ($hasOpenOrChooseIntent) {
       if ($action.type -eq "overlay_trigger") { $rank += 35 }
       if ($action.type -eq "overlay_item") { $rank += 18 }

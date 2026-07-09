@@ -102,7 +102,7 @@ const expression = `(() => {
     try { return root.querySelector(selector); } catch { return null; }
   };
   const visibleCandidates = (selector, root = document) => Array.from(root.querySelectorAll(selector)).filter(isVisible);
-  const interactiveTextSelector = "button,a,[role='button'],[role='tab'],.el-button,.el-dropdown,.el-select,.el-input,.el-input__inner,.el-date-editor,.el-range-editor,.el-tabs__item,.el-radio,.el-radio-button,.el-radio-button__inner,[tabindex]";
+  const interactiveTextSelector = "button,a,[role='button'],[role='tab'],[role='menuitem'],.el-button,.el-dropdown,.el-select,.el-input,.el-input__inner,.el-date-editor,.el-range-editor,.el-tabs__item,.el-menu-item,.el-submenu__title,.el-radio,.el-radio-button,.el-radio-button__inner,[tabindex]";
   const findByText = (text, root = document, selector = interactiveTextSelector) => {
     const target = clean(text);
     if (!target) return null;
@@ -113,7 +113,8 @@ const expression = `(() => {
   };
   const visibleDialogs = () => visibleCandidates(".el-dialog,.el-drawer,.el-message-box,[role='dialog']");
   const findOverlayItem = (text) => findByText(text, document, ".el-select-dropdown__item,.el-dropdown-menu__item,.el-cascader-node,[role='option'],li,button,a,[role='button']");
-  const clickDomText = () => clickElement(findByText(action.locator?.dom_text || action.name));
+  const queryLocatorSelector = () => query(action.locator?.selector);
+  const clickDomText = () => clickElement(queryLocatorSelector()) || clickElement(findByText(action.locator?.dom_text || action.name));
   const focusElement = (el) => {
     if (!el || !isVisible(el)) return false;
     el.scrollIntoView({ block: "center", inline: "center" });
@@ -122,6 +123,7 @@ const expression = `(() => {
     return true;
   };
   const clickInputByPlaceholder = (placeholder) => {
+    if (action.locator?.selector && focusElement(queryLocatorSelector())) return true;
     const target = clean(placeholder || action.locator?.dom_placeholder || action.name);
     if (!target) return false;
     const candidates = visibleCandidates("input[placeholder],textarea[placeholder],.el-input__inner[placeholder]");
@@ -157,6 +159,11 @@ const expression = `(() => {
     if (!list.length) return false;
     const preferred = list.find(textMatchesIntent) || list[0];
     return clickElement(findByText(preferred));
+  };
+  const clickTabText = () => {
+    const target = clean(action.locator?.tab_text || action.locator?.dom_text || action.name);
+    return clickElement(queryLocatorSelector()) ||
+      clickElement(findByText(target, document, "[role='tab'],.el-tabs__item,.el-radio,.el-radio-button,.el-radio-button__inner,.el-menu-item,.el-submenu__title,a,button,[role='button']"));
   };
   const clickPlaceholderFromList = () => {
     const placeholders = asTextList(action.locator?.dom_placeholders);
@@ -279,10 +286,10 @@ const expression = `(() => {
     else if (action.type === "dialog_opener" || action.type === "dialog_button") clicked = await clickDialog();
     else if (["filter_input", "filter_dropdown", "form_input"].includes(action.type) && action.locator?.dom_placeholder) clicked = clickFilterLabelOrText();
     else if (action.type === "date_filter") clicked = clickDateFilter();
-    else if (Array.isArray(action.locator?.tab_texts) && action.locator.tab_texts.length) clicked = clickTabTextFromList() || clickDomText();
+    else if (Array.isArray(action.locator?.tab_texts) && action.locator.tab_texts.length) clicked = clickTabTextFromList() || clickTabText() || clickDomText();
     else if (Array.isArray(action.locator?.dom_placeholders) && action.locator.dom_placeholders.length) clicked = clickPlaceholderFromList();
     else if (action.type === "row_action") clicked = clickRowAction();
-    else if (["tab", "status_tab", "row_navigation", "button_menu"].includes(action.type)) clicked = clickDomText();
+    else if (["tab", "status_tab", "row_navigation", "button_menu"].includes(action.type)) clicked = clickTabText() || clickDomText();
     else clicked = clickDomText();
     if (!(action.locator?.href && (action.type === "navigation" || action.type === "module_switch"))) {
       await wait(250);

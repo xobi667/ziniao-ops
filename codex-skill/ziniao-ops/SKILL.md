@@ -366,6 +366,15 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\exer
 
 It opens temporary CDP tabs and executes only route-scoped `safe_execute_allowed` controls. It excludes read-only table-column memory, confirmation-required write/export actions, row actions without row context, account menus by default, and no-route UIA globals. The sanitized public report is `references\xinjian-ui-action-exercise-report.json` / `.md`; local per-run state stays under `.ziniao-ops`.
 
+To prove that live pages have no unremembered visible controls, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\audit-xinjian-live-button-coverage.ps1") -Port 9339 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\audit-xinjian-live-button-coverage.ps1") -UseExistingCaptures -Json
+```
+
+The live coverage report is `references\xinjian-ui-live-button-coverage.json` / `.md`. It compares sanitized live DOM controls against the unified catalog and filters non-business chrome such as global sidebars, user menus, theme drawers, pagination, vendor watermarks, and table operation headers.
+
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
 
 ```powershell
