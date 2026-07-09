@@ -248,12 +248,84 @@ const expression = `(() => {
     }
     return clickElement(findByText(buttonText));
   };
+  const rowIndexValue = () => {
+    const value = Number(action.runtime_row_index || 0);
+    return Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;
+  };
+  const rowTextValue = () => clean(action.runtime_row_text || "");
+  const hasExplicitRowContext = () => rowIndexValue() > 0 || !!rowTextValue();
+  const visibleRows = (table) => {
+    const rows = visibleCandidates("tbody tr,.el-table__body tr,.el-table__row", table)
+      .filter((row) => clean(row.innerText || row.textContent || ""));
+    return Array.from(new Set(rows));
+  };
+  const rowMatchesContext = (row, index) => {
+    const requestedIndex = rowIndexValue();
+    if (requestedIndex > 0) return index === requestedIndex - 1;
+    const requestedText = rowTextValue().replace(/\\s+/g, "");
+    if (!requestedText) return false;
+    return clean(row.innerText || row.textContent || "").replace(/\\s+/g, "").includes(requestedText);
+  };
+  const targetTables = () => {
+    const locator = action.locator || {};
+    const tables = locator.table_selector ? [query(locator.table_selector)].filter(Boolean) : visibleCandidates(".el-table,table");
+    return tables.length ? tables : visibleCandidates(".el-table,table");
+  };
+  const targetRowInTable = (table) => {
+    const rows = visibleRows(table);
+    return rows.find((row, index) => rowMatchesContext(row, index)) || null;
+  };
+  const columnIndexesForTable = (table, headerText) => {
+    const wanted = clean(headerText).replace(/\\s+/g, "");
+    if (!wanted) return [];
+    const headers = visibleCandidates("thead th,.el-table__header th", table);
+    const indexes = [];
+    headers.forEach((header, index) => {
+      const text = clean(header.innerText || header.textContent || "").replace(/\\s+/g, "");
+      if (text === wanted || text.includes(wanted) || wanted.includes(text)) indexes.push(index);
+    });
+    return indexes;
+  };
+  const targetCellsInRow = (row, wantedColumnClass, table = null, headerText = "") => {
+    const cells = visibleCandidates("td,.el-table__cell", row);
+    if (wantedColumnClass) {
+      const matched = cells.filter((cell) => String(cell.className || "").includes(wantedColumnClass));
+      if (matched.length) return matched;
+    }
+    const indexes = table ? columnIndexesForTable(table, headerText) : [];
+    if (indexes.length) {
+      const byIndex = cells.filter((_, index) => indexes.includes(index));
+      if (byIndex.length) return byIndex;
+    }
+    return cells;
+  };
+  const findControlInRow = (row, wantedText, wantedColumnClass = "", table = null, headerText = "") => {
+    const cells = targetCellsInRow(row, wantedColumnClass, table, headerText);
+    for (const cell of cells) {
+      if (wantedText) {
+        const exact = findByText(wantedText, cell, "button,a,[role='button'],.el-button,.el-link,[tabindex]");
+        if (exact) return exact;
+      }
+    }
+    for (const cell of cells) {
+      const firstControl = visibleCandidates("button,a,[role='button'],.el-button,.el-link,[tabindex]", cell)[0];
+      if (firstControl) return firstControl;
+    }
+    return null;
+  };
   const clickRowAction = () => {
     const locator = action.locator || {};
+    if ((locator.row_context_required || locator.requires_row_context) && !hasExplicitRowContext()) return false;
     const tables = locator.table_selector ? [query(locator.table_selector)].filter(Boolean) : visibleCandidates(".el-table,table");
     const wantedText = clean(locator.row_action_text || action.name);
     const wantedColumnClass = clean(locator.column_class);
     for (const table of tables) {
+      const targetRow = hasExplicitRowContext() ? targetRowInTable(table) : null;
+      if (targetRow) {
+        const control = findControlInRow(targetRow, wantedText, wantedColumnClass, table, locator.column_header || locator.table_column);
+        if (control) return clickElement(control);
+        continue;
+      }
       const cells = visibleCandidates("tbody td", table);
       for (const cell of cells) {
         if (wantedColumnClass && !String(cell.className || "").includes(wantedColumnClass)) continue;
@@ -263,8 +335,77 @@ const expression = `(() => {
     }
     return false;
   };
+  const clickRowScopedColumnAction = () => {
+    const locator = action.locator || {};
+    if (!hasExplicitRowContext()) return false;
+    const wantedText = clean(locator.row_action_text || action.name || locator.table_column);
+    const wantedColumnClass = clean(locator.column_class);
+    for (const table of targetTables()) {
+      const row = targetRowInTable(table);
+      if (!row) continue;
+      const control = findControlInRow(row, wantedText, wantedColumnClass, table, locator.column_header || locator.table_column);
+      if (control) return clickElement(control);
+    }
+    return false;
+  };
+  const clickRowScopedDialog = async () => {
+    const locator = action.locator || {};
+    if (!hasExplicitRowContext()) return false;
+    const triggerText = clean(locator.row_action_text || locator.trigger_text || action.name);
+    for (const table of targetTables()) {
+      const row = targetRowInTable(table);
+      if (!row) continue;
+      const trigger = findControlInRow(row, triggerText, clean(locator.column_class), table, locator.column_header || locator.table_column);
+      if (!trigger || !clickElement(trigger)) continue;
+      await wait(450);
+      if (action.type === "dialog_opener") return true;
+      const buttonText = clean(locator.button_text || action.name);
+      for (const dialog of visibleDialogs()) {
+        if (/^(关闭|close)$/i.test(buttonText)) {
+          const closeButton = visibleCandidates(".el-dialog__headerbtn,.el-drawer__close-btn,.el-message-box__headerbtn,[aria-label='Close']", dialog)[0];
+          if (closeButton) return clickElement(closeButton);
+        }
+        const button = findByText(buttonText, dialog, "button,a,[role='button'],.el-button,.el-dialog__headerbtn");
+        if (button) return clickElement(button);
+      }
+      return clickElement(findByText(buttonText));
+    }
+    return false;
+  };
   const run = async () => {
+    if (["row_action", "row_navigation", "row_operation"].includes(action.type) && !hasExplicitRowContext()) {
+      return {
+        ok: false,
+        action_id: action.id || "",
+        action_name: action.name || "",
+        action_type: action.type || "",
+        safety: action.safety || "",
+        page: {
+          href: location.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]"),
+          title: document.title,
+          path: location.pathname
+        },
+        error: "row_context_required",
+        next_action: "Pass a 1-based RowIndex or a RowText visible in the target row before executing row-level actions."
+      };
+    }
     if (action.locator?.table_column && ["row_navigation", "row_operation"].includes(action.type)) {
+      if (hasExplicitRowContext() && clickRowScopedColumnAction()) {
+        await wait(250);
+        return {
+          ok: true,
+          action_id: action.id || "",
+          action_name: action.name || "",
+          action_type: action.type || "",
+          safety: action.safety || "",
+          page: {
+            href: location.href.replace(/([?&][^=]*(token|secret|password|passwd|pwd|cookie|session|auth|key|code)[^=]*=)[^&#]*/ig, "$1[redacted]"),
+            title: document.title,
+            path: location.pathname
+          },
+          row_context_used: true
+        };
+      }
       return {
         ok: false,
         action_id: action.id || "",
@@ -283,6 +424,7 @@ const expression = `(() => {
     let clicked = false;
     if (action.type === "navigation" || action.type === "module_switch") clicked = clickNavigation();
     else if (action.type === "overlay_trigger" || action.type === "overlay_item") clicked = await clickOverlay();
+    else if ((action.type === "dialog_opener" || action.type === "dialog_button") && (action.locator?.row_context_required || action.locator?.requires_row_context)) clicked = await clickRowScopedDialog();
     else if (action.type === "dialog_opener" || action.type === "dialog_button") clicked = await clickDialog();
     else if (["filter_input", "filter_dropdown", "form_input"].includes(action.type) && action.locator?.dom_placeholder) clicked = clickFilterLabelOrText();
     else if (action.type === "date_filter") clicked = clickDateFilter();

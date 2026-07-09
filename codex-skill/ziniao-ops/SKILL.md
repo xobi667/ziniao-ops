@@ -436,7 +436,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<安全动作>" -Execute -Json
 ```
 
-`-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching.
+`-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` or `-RowText "<visible row text>"` when the target row is clear. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
 
 If no debuggable CDP port is resolved but the matching already-open 心舰 window has a UIA-mapped safe non-write control, the invoker reports `execution_backend = "uia"` and can run it with `-Execute` through Windows UI Automation without moving the mouse or opening another browser. Write/export actions, row-context actions, read-only table-column memory, and unknown-safety actions remain blocked without explicit confirmation and a controllable route.
 

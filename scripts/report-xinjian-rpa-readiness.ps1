@@ -86,7 +86,7 @@ if ($catalog.audit) {
 $noPurpose = @($actions | Where-Object { !$_.purpose })
 $noFunctionSource = @($actions | Where-Object { !$_.function_source })
 $noContext = @($actions | Where-Object { !$_.context })
-$rowContextActions = @($actions | Where-Object { $_.locator_strategy -like "row_context_required*" })
+$rowContextActions = @($actions | Where-Object { $_.locator_strategy -like "row_context_required*" -or $_.type -in @("row_action", "row_navigation", "row_operation") })
 $tableColumnActions = @($actions | Where-Object { $_.type -eq "table_column" -or $_.locator_strategy -eq "read_table_column_header" })
 $writeActions = @($actions | Where-Object { $_.safety_mode -eq "confirmation_required_write" })
 $exportActions = @($actions | Where-Object { $_.safety_mode -eq "confirmation_required_export" })
@@ -149,7 +149,7 @@ if ($rowContextActions.Count -gt 0) {
   $remainingBoundaries += [ordered]@{
     kind = "row_context_required"
     count = $rowContextActions.Count
-    meaning = "Row-level actions need a target row or exact row-action metadata; they are not safe to blindly click."
+    meaning = "Row-level actions need RowIndex or RowText; the invoker refuses to blindly click a row."
   }
 }
 if ($tableColumnActions.Count -gt 0) {
@@ -186,6 +186,7 @@ $payload = [ordered]@{
     confirmation_required_export = $exportActions.Count
     table_column_memory = $tableColumnActions.Count
     row_context_required = $rowContextActions.Count
+    row_context_executable_with_explicit_context = $rowContextActions.Count
     css_selector_actions = $cssSelectorActions.Count
   }
   quality = [ordered]@{
@@ -224,6 +225,7 @@ $lines += "- Catalog: $($payload.totals.pages) pages / $($payload.totals.actions
 $lines += "- Quality gaps: purpose $($payload.quality.no_purpose), function_source $($payload.quality.no_function_source), context $($payload.quality.no_context), manual/map/empty $($payload.quality.manual_review_actions)/$($payload.quality.map_only_actions)/$($payload.quality.empty_locator_actions)"
 $lines += "- Live controls: observed $($payload.live_coverage.observed_controls), matched $($payload.live_coverage.matched_controls), missing $($payload.live_coverage.missing_controls), no-access pages $($payload.live_coverage.pages_noaccess)"
 $lines += "- Safe action exercise: executable $($payload.safe_action_exercise.executable_actions), verified $($payload.safe_action_exercise.verified_actions), failed $($payload.safe_action_exercise.failed_actions), not attempted $($payload.safe_action_exercise.not_attempted_actions)"
+$lines += "- Row-context execution: $($payload.totals.row_context_executable_with_explicit_context) row-level actions can be planned with explicit RowIndex/RowText; none are blindly clicked by default."
 $lines += "- Next action: $($payload.next_action)"
 $lines += ""
 $lines += "## Remaining Boundaries"

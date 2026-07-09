@@ -9,6 +9,8 @@ param(
   [switch]$AllowExport,
   [switch]$NoAutoDetectUrl,
   [int]$CandidateIndex = 0,
+  [int]$RowIndex = 0,
+  [string]$RowText = "",
   [switch]$Json
 )
 
@@ -643,7 +645,9 @@ $locatorStrategy = Get-LocatorStrategy $action
 $requiresExport = ($safetyMode -eq "confirmation_required_export")
 $requiresWrite = ($safetyMode -eq "confirmation_required_write")
 $unknownSafety = ($safetyMode -eq "dry_run_only_unknown_safety")
-$requiresRowContext = ($locatorStrategy -like "row_context_required*")
+$hasExplicitRowContext = ($RowIndex -gt 0 -or ![string]::IsNullOrWhiteSpace($RowText))
+$actionHasRowContextBoundary = ($locatorStrategy -like "row_context_required*" -or [string]$action.type -in @("row_action", "row_navigation", "row_operation"))
+$requiresRowContext = ($actionHasRowContextBoundary -and !$hasExplicitRowContext)
 $requiresUiaLocator = ($locatorStrategy -eq "map_only_uia_locator")
 $requiresPageContext = !$Url
 $requiresCdpPort = !$effectivePort
@@ -672,6 +676,12 @@ $plan = [ordered]@{
   uia_fallback_available = [bool]$uiaCanExecute
   uia_window_process_id = $uiaWindowProcessId
   candidate_index = $CandidateIndex
+  row_context = [ordered]@{
+    required = [bool]$actionHasRowContextBoundary
+    provided = [bool]$hasExplicitRowContext
+    row_index = if ($RowIndex -gt 0) { $RowIndex } else { $null }
+    row_text = if (![string]::IsNullOrWhiteSpace($RowText)) { "[provided]" } else { $null }
+  }
   page_id = $match.page_id
   page_name = $match.page_name
   score = $match.score
@@ -690,7 +700,11 @@ $plan = [ordered]@{
   } elseif ($requiresPageContext) {
     "No current Xinjian URL was resolved. Dry-run only; bring the target Xinjian window to the foreground or pass -Url to execute."
   } elseif ($requiresRowContext) {
-    "Row-level action needs an explicit row context or captured row button metadata. Dry-run only; refusing to blindly click the first row."
+    "Row-level action needs an explicit row context. Pass -RowIndex <1-based row number> or -RowText <text visible in the target row>; refusing to blindly click a row."
+  } elseif ($actionHasRowContextBoundary -and $hasExplicitRowContext -and ($requiresWrite -or $requiresExport)) {
+    "Row-level write/export action has explicit row context. Dry-run by default; pass -Execute with the required AllowWrite/AllowExport switch only after explicit user confirmation."
+  } elseif ($actionHasRowContextBoundary -and $hasExplicitRowContext) {
+    "Row-level action has explicit row context and can execute against that row with -Execute."
   } elseif ($requiresWrite -and $requiresCdpPort) {
     "Write/delete/save/submit-like action and no controllable Xinjian CDP/UIA target was resolved. Dry-run only; focus/pass the target page and use -Execute -AllowWrite only after explicit confirmation."
   } elseif ($requiresExport -and $requiresCdpPort) {
@@ -836,6 +850,12 @@ New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
 $actionPath = Join-Path $stateDir ("action-{0}.json" -f ([guid]::NewGuid().ToString("N")))
 $actionForRun = $action | ConvertTo-Json -Depth 14 | ConvertFrom-Json
 $actionForRun | Add-Member -NotePropertyName "runtime_intent" -NotePropertyValue $Intent -Force
+if ($RowIndex -gt 0) {
+  $actionForRun | Add-Member -NotePropertyName "runtime_row_index" -NotePropertyValue $RowIndex -Force
+}
+if (![string]::IsNullOrWhiteSpace($RowText)) {
+  $actionForRun | Add-Member -NotePropertyName "runtime_row_text" -NotePropertyValue $RowText -Force
+}
 $actionForRun | ConvertTo-Json -Depth 14 | Set-Content -LiteralPath $actionPath -Encoding UTF8
 
 $argsList = @($helper, "--port", [string]$effectivePort, "--action-file", $actionPath)
