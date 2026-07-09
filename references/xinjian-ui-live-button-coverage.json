@@ -2,7 +2,7 @@
     "version":  "2026-07-09",
     "system":  "xinjian_erp",
     "source":  "live_cdp_dom_vs_action_catalog",
-    "generated_at":  "2026-07-09T04:24:06.1578620Z",
+    "generated_at":  "2026-07-09T04:50:33.6835500Z",
     "policy":  {
                    "note":  "This report stores only sanitized route, page, control type/name, selector, and coverage status. It does not store cookies, tokens, storage values, input values, table row values, or private business values.",
                    "comparison_scope":  "Visible non-transient controls from live route-scoped CDP DOM capture compared against xinjian-ui-action-catalog page/global action names, aliases, context, and locator labels."
@@ -11,7 +11,8 @@
                    "pages_selected":  48,
                    "pages_captured":  47,
                    "pages_redirected":  0,
-                   "pages_noaccess":  1,
+                   "pages_noaccess":  0,
+                   "pages_restricted_terminal":  1,
                    "pages_login":  0,
                    "pages_failed":  0,
                    "observed_controls":  827,
@@ -20,7 +21,7 @@
                    "pages_with_missing_controls":  0,
                    "status_counts":  {
                                          "captured":  47,
-                                         "noaccess":  1
+                                         "restricted_terminal":  1
                                      },
                    "missing_type_counts":  {
 
@@ -426,7 +427,7 @@
                       "page_id":  "auto.index.noaccess",
                       "page_name":  "受限页面",
                       "route":  "/index/noaccess",
-                      "status":  "noaccess",
+                      "status":  "restricted_terminal",
                       "captured_path":  "/index/noaccess",
                       "observed_controls":  0,
                       "matched_controls":  0,

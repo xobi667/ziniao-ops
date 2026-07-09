@@ -49,6 +49,10 @@ function Get-RouteKey([string]$Value) {
   return $text
 }
 
+function Test-RestrictedTerminalRoute([string]$Value) {
+  return ((Get-RouteKey $Value).ToLowerInvariant() -eq "/index/noaccess")
+}
+
 function Get-SafeSlug([string]$Value) {
   $text = (Get-RouteKey $Value).Trim("/")
   if (!$text) { $text = "root" }
@@ -254,7 +258,8 @@ if (!(Test-Path -LiteralPath $CatalogPath)) {
   exit 2
 }
 
-if (!(Test-CdpPort -CdpPort $Port)) {
+$cdpAvailable = Test-CdpPort -CdpPort $Port
+if (!$cdpAvailable -and !$UseExistingCaptures) {
   $payload = [ordered]@{ ok = $false; error = "cdp_port_not_reachable"; port = $Port }
   if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "CDP port not reachable: $Port" }
   exit 2
@@ -281,7 +286,7 @@ foreach ($page in $pages) {
       }
     }
   }
-  if (!$capture) {
+  if (!$capture -and $cdpAvailable) {
     $raw = @()
     try {
       $raw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "capture-xinjian-dom-map.ps1") -Port $Port -Url $url -OutputPath $capturePath -Json 2>&1)
@@ -302,7 +307,7 @@ foreach ($page in $pages) {
       observed_controls = 0
       matched_controls = 0
       missing_controls = @()
-      error = if ($capture) { [string]$capture.error } else { "capture_output_parse_failed" }
+      error = if ($capture) { [string]$capture.error } elseif (!$cdpAvailable -and $UseExistingCaptures) { "existing_capture_missing" } else { "capture_output_parse_failed" }
       capture_path = $capturePath
     }
     continue
@@ -312,7 +317,7 @@ foreach ($page in $pages) {
   $status = if ($capture.page.has_password_input) {
     "login"
   } elseif ($capturedPath -eq "/index/noaccess") {
-    "noaccess"
+    if (Test-RestrictedTerminalRoute $route) { "restricted_terminal" } else { "noaccess" }
   } elseif ($capturedPath.ToLowerInvariant() -ne $route.ToLowerInvariant()) {
     "redirected"
   } else {
@@ -382,6 +387,7 @@ $payload = [ordered]@{
     pages_captured = @($results | Where-Object { $_.status -eq "captured" }).Count
     pages_redirected = @($results | Where-Object { $_.status -eq "redirected" }).Count
     pages_noaccess = @($results | Where-Object { $_.status -eq "noaccess" }).Count
+    pages_restricted_terminal = @($results | Where-Object { $_.status -eq "restricted_terminal" }).Count
     pages_login = @($results | Where-Object { $_.status -eq "login" }).Count
     pages_failed = @($results | Where-Object { $_.status -eq "capture_failed" }).Count
     observed_controls = [int](($results | Measure-Object -Property observed_controls -Sum).Sum)
@@ -402,7 +408,7 @@ $lines += "# Xinjian Live Button Coverage Audit"
 $lines += ""
 $lines += ("Generated at: {0}" -f $payload.generated_at)
 $lines += ""
-$lines += "This report compares live route-scoped CDP DOM controls against the merged 心舰 action catalog. It stores sanitized control labels/selectors only; it does not store cookies, tokens, storage values, input values, table row values, or private business values."
+$lines += "This report compares live route-scoped CDP DOM controls against the merged Xinjian action catalog. It stores sanitized control labels/selectors only; it does not store cookies, tokens, storage values, input values, table row values, or private business values."
 $lines += ""
 $lines += "## Totals"
 $lines += ""
@@ -412,7 +418,7 @@ $lines += ("- Observed controls: {0}" -f $payload.totals.observed_controls)
 $lines += ("- Matched controls: {0}" -f $payload.totals.matched_controls)
 $lines += ("- Missing controls: {0}" -f $payload.totals.missing_controls)
 $lines += ("- Pages with missing controls: {0}" -f $payload.totals.pages_with_missing_controls)
-$lines += ("- Redirected/no-access/login/failed pages: {0}/{1}/{2}/{3}" -f $payload.totals.pages_redirected, $payload.totals.pages_noaccess, $payload.totals.pages_login, $payload.totals.pages_failed)
+$lines += ("- Redirected/no-access/restricted-terminal/login/failed pages: {0}/{1}/{2}/{3}/{4}" -f $payload.totals.pages_redirected, $payload.totals.pages_noaccess, $payload.totals.pages_restricted_terminal, $payload.totals.pages_login, $payload.totals.pages_failed)
 if ($missingRows.Count -gt 0) {
   $lines += ""
   $lines += "## Missing Controls"

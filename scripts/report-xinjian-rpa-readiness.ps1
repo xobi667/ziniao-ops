@@ -38,6 +38,35 @@ function Get-PropertyValue($Object, [string]$Name, $Fallback = $null) {
   return $value
 }
 
+function Get-RouteKey([string]$Value) {
+  if (!$Value) { return "" }
+  $text = [string]$Value
+  if ($text -match "^[A-Za-z][A-Za-z0-9+.-]*://") {
+    try { $text = ([uri]$text).AbsolutePath } catch {}
+  }
+  if (!$text.StartsWith("/")) { $text = "/" + $text }
+  $text = $text -replace "/+", "/"
+  if ($text.Length -gt 1) { $text = $text.TrimEnd("/") }
+  return $text
+}
+
+function Test-RestrictedTerminalPage($Page) {
+  $route = (Get-RouteKey ([string](Get-PropertyValue $Page "route" ""))).ToLowerInvariant()
+  $capturedPath = (Get-RouteKey ([string](Get-PropertyValue $Page "captured_path" ""))).ToLowerInvariant()
+  $pageId = [string](Get-PropertyValue $Page "page_id" "")
+  return ($route -eq "/index/noaccess" -or $capturedPath -eq "/index/noaccess" -and $pageId -eq "auto.index.noaccess")
+}
+
+function Convert-LivePageBrief($Page) {
+  return [ordered]@{
+    page_id = [string](Get-PropertyValue $Page "page_id" "")
+    page_name = [string](Get-PropertyValue $Page "page_name" "")
+    route = [string](Get-PropertyValue $Page "route" "")
+    status = [string](Get-PropertyValue $Page "status" "")
+    captured_path = [string](Get-PropertyValue $Page "captured_path" "")
+  }
+}
+
 $catalog = Read-JsonFile $CatalogPath
 if (!$catalog) {
   $payload = [ordered]@{
@@ -98,15 +127,33 @@ $liveTotals = [ordered]@{
   pages_selected = $null
   pages_captured = $null
   pages_noaccess = $null
+  pages_noaccess_raw = $null
+  pages_restricted_terminal = $null
   observed_controls = $null
   matched_controls = $null
   missing_controls = $null
   pages_with_missing_controls = $null
+  noaccess_pages = @()
+  restricted_terminal_pages = @()
 }
 if ($live -and $live.totals) {
-  foreach ($name in @("pages_selected", "pages_captured", "pages_noaccess", "observed_controls", "matched_controls", "missing_controls", "pages_with_missing_controls")) {
+  foreach ($name in @("pages_selected", "pages_captured", "pages_noaccess", "pages_restricted_terminal", "observed_controls", "matched_controls", "missing_controls", "pages_with_missing_controls")) {
     $liveTotals[$name] = Get-PropertyValue $live.totals $name
   }
+  $liveTotals.pages_noaccess_raw = Get-PropertyValue $live.totals "pages_noaccess" $null
+}
+if ($live -and $live.pages) {
+  $restrictedTerminalPages = @($live.pages | Where-Object {
+    [string](Get-PropertyValue $_ "status" "") -eq "restricted_terminal" -or
+      ([string](Get-PropertyValue $_ "status" "") -eq "noaccess" -and (Test-RestrictedTerminalPage $_))
+  })
+  $businessNoAccessPages = @($live.pages | Where-Object {
+    [string](Get-PropertyValue $_ "status" "") -eq "noaccess" -and !(Test-RestrictedTerminalPage $_)
+  })
+  $liveTotals.pages_noaccess = $businessNoAccessPages.Count
+  $liveTotals.pages_restricted_terminal = $restrictedTerminalPages.Count
+  $liveTotals.noaccess_pages = @($businessNoAccessPages | ForEach-Object { Convert-LivePageBrief $_ })
+  $liveTotals.restricted_terminal_pages = @($restrictedTerminalPages | ForEach-Object { Convert-LivePageBrief $_ })
 }
 
 $exerciseTotals = [ordered]@{
@@ -129,6 +176,15 @@ if (($liveTotals.pages_noaccess -as [int]) -gt 0) {
     kind = "noaccess_live_pages"
     count = [int]$liveTotals.pages_noaccess
     meaning = "Visible controls cannot be fully proven for these route pages under the current account/session."
+  }
+}
+$nonGapBoundaries = @()
+if (($liveTotals.pages_restricted_terminal -as [int]) -gt 0) {
+  $nonGapBoundaries += [ordered]@{
+    kind = "restricted_terminal_pages"
+    count = [int]$liveTotals.pages_restricted_terminal
+    meaning = "Known Xinjian access-denied terminal pages are tracked separately; they are not missing button memory."
+    pages = @($liveTotals.restricted_terminal_pages)
   }
 }
 if ($writeActions.Count -gt 0) {
@@ -202,6 +258,7 @@ $payload = [ordered]@{
   live_coverage = $liveTotals
   safe_action_exercise = $exerciseTotals
   remaining_boundaries = @($remainingBoundaries)
+  non_gap_boundaries = @($nonGapBoundaries)
   next_action = if ($qualityOk -and $liveOk -and $exerciseOk) {
     "rpa_memory_ready_for_accessible_visible_safe_controls"
   } elseif (!$qualityOk) {
@@ -224,7 +281,7 @@ $lines += "# Xinjian RPA Readiness"
 $lines += ""
 $lines += "- Catalog: $($payload.totals.pages) pages / $($payload.totals.actions) actions"
 $lines += "- Quality gaps: purpose $($payload.quality.no_purpose), function_source $($payload.quality.no_function_source), context $($payload.quality.no_context), manual/map/empty $($payload.quality.manual_review_actions)/$($payload.quality.map_only_actions)/$($payload.quality.empty_locator_actions)"
-$lines += "- Live controls: observed $($payload.live_coverage.observed_controls), matched $($payload.live_coverage.matched_controls), missing $($payload.live_coverage.missing_controls), no-access pages $($payload.live_coverage.pages_noaccess)"
+$lines += "- Live controls: observed $($payload.live_coverage.observed_controls), matched $($payload.live_coverage.matched_controls), missing $($payload.live_coverage.missing_controls), business no-access pages $($payload.live_coverage.pages_noaccess), restricted terminal pages $($payload.live_coverage.pages_restricted_terminal)"
 $lines += "- Safe action exercise: executable $($payload.safe_action_exercise.executable_actions), verified $($payload.safe_action_exercise.verified_actions), failed $($payload.safe_action_exercise.failed_actions), not attempted $($payload.safe_action_exercise.not_attempted_actions)"
 $lines += "- Row-context execution: $($payload.totals.row_context_executable_with_resolved_context) row-level actions can be planned with explicit or inferred row context; none are blindly clicked by default."
 $lines += "- Next action: $($payload.next_action)"
@@ -239,6 +296,17 @@ if ($remainingBoundaries.Count -eq 0) {
   }
 }
 $lines += ""
+if ($nonGapBoundaries.Count -gt 0) {
+  $lines += "## Known Non-Gap Boundaries"
+  $lines += ""
+  foreach ($item in $nonGapBoundaries) {
+    $lines += ("- {0}: {1}. {2}" -f $item.kind, $item.count, $item.meaning)
+    foreach ($page in @($item.pages)) {
+      $lines += ('  - {0} `{1}` -> `{2}`' -f $page.page_name, $page.route, $page.captured_path)
+    }
+  }
+  $lines += ""
+}
 $lines += "This report is generated from public sanitized catalog, live coverage, and safe exercise evidence. It does not store cookies, tokens, input values, table row data, or private business values."
 $lines | Set-Content -LiteralPath $OutputMarkdownPath -Encoding UTF8
 

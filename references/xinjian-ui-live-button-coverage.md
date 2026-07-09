@@ -1,8 +1,8 @@
 ﻿# Xinjian Live Button Coverage Audit
 
-Generated at: 2026-07-09T04:24:06.1578620Z
+Generated at: 2026-07-09T04:50:33.6835500Z
 
-This report compares live route-scoped CDP DOM controls against the merged 蹇冭埌 action catalog. It stores sanitized control labels/selectors only; it does not store cookies, tokens, storage values, input values, table row values, or private business values.
+This report compares live route-scoped CDP DOM controls against the merged Xinjian action catalog. It stores sanitized control labels/selectors only; it does not store cookies, tokens, storage values, input values, table row values, or private business values.
 
 ## Totals
 
@@ -12,7 +12,7 @@ This report compares live route-scoped CDP DOM controls against the merged 蹇�
 - Matched controls: 827
 - Missing controls: 0
 - Pages with missing controls: 0
-- Redirected/no-access/login/failed pages: 0/1/0/0
+- Redirected/no-access/restricted-terminal/login/failed pages: 0/0/1/0/0
 
 ## Missing Controls
 
