@@ -522,6 +522,7 @@ function Get-LocatorStrategy($Action) {
     if ($locator.trigger_selector -and $locator.button_text) { return "click_trigger_selector_then_dialog_button_text" }
     if ($locator.trigger_selector) { return "click_trigger_selector" }
     if ($locator.table_selector -and $locator.row_action_text) { return "click_first_matching_row_action_in_table" }
+    if ($locator.selector) { return "click_css_selector" }
     if ($locator.href) { return "navigate_href" }
     if ($locator.dom_text) { return "click_visible_dom_text" }
     if ($locator.dom_placeholder) { return "input_or_filter_placeholder" }

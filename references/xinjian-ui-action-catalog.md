@@ -70,16 +70,16 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 修改关闭 | 修改 -> 关闭 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 关闭 inside the 修改 dialog/drawer on 广告详情. |
 | 修改取消 | 修改 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 修改 dialog/drawer on 广告详情. |
 | 修改确定 | 修改 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 修改 dialog/drawer on 广告详情. |
-| 修改 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 修改 dialog/drawer on 广告详情; do not submit changes without explicit confirmation. |
+| 修改 | dialog_opener:修改 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 修改 dialog/drawer on 广告详情; do not submit changes without explicit confirmation. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 广告详情 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 广告详情 by 开始日期. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 广告详情. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 广告详情. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 广告详情. |
-| 今天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 今天 tab/view. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 近7天 tab/view. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 昨天 tab/view. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 广告详情. |
+| 今天 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 今天 tab/view. |
+| 近30天 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 近7天 tab/view. |
+| 昨天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 广告详情 to the 昨天 tab/view. |
 | 点击出价 | column:点击出价 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告详情 has the 点击出价 table column/metric. |
 | 关键词 | column:关键词 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告详情 has the 关键词 table column/metric. |
 | 关联版位 | column:关联版位 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告详情 has the 关联版位 table column/metric. |
@@ -115,14 +115,14 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 批量排除 | 选择批量操作 -> 批量排除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量排除 from the 选择批量操作 overlay on 创意详情. |
 | 批量添加至广告计划 | 选择批量操作 -> 添加至广告计划 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 添加至广告计划 from the 选择批量操作 overlay on 创意详情. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 创意详情. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 创意详情. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 创意详情. |
-| 请选择创意状态 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择创意状态 overlay on 创意详情. |
-| 选择批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择批量操作 overlay on 创意详情. |
-| 今天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 今天 tab/view. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 近7天 tab/view. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 昨天 tab/view. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 创意详情. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 创意详情. |
+| 请选择创意状态 | overlay_trigger:请选择创意状态 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择创意状态 overlay on 创意详情. |
+| 选择批量操作 | overlay_trigger:选择批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择批量操作 overlay on 创意详情. |
+| 今天 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 今天 tab/view. |
+| 近30天 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 近7天 tab/view. |
+| 昨天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 创意详情 to the 昨天 tab/view. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 创意详情 has the 操作 table column/metric. |
 
 ## ADS / 店铺广告分析
@@ -143,7 +143,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 预警设置关闭 | 预警设置 -> 关闭 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 关闭 inside the 预警设置 dialog/drawer on 店铺广告分析. |
 | 预警设置取消 | 预警设置 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 预警设置 dialog/drawer on 店铺广告分析. |
 | 预警设置确定 | 预警设置 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 预警设置 dialog/drawer on 店铺广告分析. |
-| 预警设置 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 预警设置 dialog/drawer on 店铺广告分析; do not submit changes without explicit confirmation. |
+| 预警设置 | dialog_opener:预警设置 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 预警设置 dialog/drawer on 店铺广告分析; do not submit changes without explicit confirmation. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 店铺广告分析 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 店铺广告分析 by 开始日期. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | curated | Filter shop-level advertising analysis by shop. |
@@ -153,18 +153,18 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 按人员 | 请选择 -> 按人员 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按人员 from the 请选择 overlay on 店铺广告分析. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 店铺广告分析. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 店铺广告分析. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 店铺广告分析. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 店铺广告分析. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 店铺广告分析. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 店铺广告分析. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 店铺广告分析. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 店铺广告分析. |
 | 行分析 | column:分析 | row_navigation | safe_execute_allowed | row_context_required_column_header | curated | Open a row-level advertising analysis/detail page for the selected shop or ad entity. |
-| 今天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 今天 tab/view. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 近7天 tab/view. |
+| 今天 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 今天 tab/view. |
+| 近30天 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 近7天 tab/view. |
 | 平台标签 | tabs:Shopee/Lazada/Tiktok | tab | safe_execute_allowed | click_visible_tab_text_from_list | curated | Switch the shop advertising analysis table between platform tabs. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 昨天 tab/view. |
-| Lazada |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the Lazada tab/view. |
-| Shopee |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the Shopee tab/view. |
-| Tiktok |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the Tiktok tab/view. |
+| 昨天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the 昨天 tab/view. |
+| Lazada | selector:div#tab-Lazada | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the Lazada tab/view. |
+| Shopee | selector:div#tab-Shopee | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the Shopee tab/view. |
+| Tiktok | selector:div#tab-Tiktok | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺广告分析 to the Tiktok tab/view. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺广告分析 has the 操作 table column/metric. |
 | 点击量 | column:点击量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 点击量 table column/metric. |
 | 点击率 | column:点击率 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 店铺广告分析 has the 点击率 table column/metric. |
@@ -205,9 +205,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 广告规则执行日志. |
 | 失败 | 请选择 -> 失败 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 失败 from the 请选择 overlay on 广告规则执行日志. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 广告规则执行日志. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 广告规则执行日志. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 广告规则执行日志. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 广告规则执行日志. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 广告规则执行日志. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 广告规则执行日志. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 广告规则执行日志. |
 | 详情 | column:操作 | row_navigation | safe_execute_allowed | click_visible_dom_text | curated | Open detail for a visible advertising rule execution log row. |
 | 变更 | column:变更 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 广告规则执行日志 has the 变更 table column/metric. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 广告规则执行日志 has the 操作 table column/metric. |
@@ -248,17 +248,17 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增售后单取消 | 新增售后单 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增售后单 dialog/drawer on 售后单管理. |
 | 新增售后单确定 | 新增售后单 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增售后单 dialog/drawer on 售后单管理. |
 | 新增售后单添加补发 | 新增售后单 -> 添加补发 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 添加补发 inside the 新增售后单 dialog/drawer on 售后单管理. |
-| 新增售后单 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation. |
+| 新增售后单 | dialog_opener:新增售后单 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 开始日期. |
 | 请输入订单号（双击批量搜索） | placeholder:请输入订单号（双击批量搜索） | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 请输入订单号（双击批量搜索）. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 选择店铺. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 售后单管理. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 售后单管理. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 售后单管理. |
-| 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 售后单管理. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 售后单管理. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 售后单管理. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 售后单管理. |
+| 批量操作 | overlay_trigger:批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 售后单管理. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 售后单管理. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 售后单管理. |
 | 补发加补优惠券 | text:补发加补优惠券 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发加补优惠券 tab/view. |
 | 补发加赔偿 | text:补发加赔偿 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发加赔偿 tab/view. |
 | 补发商品 | text:补发商品 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发商品 tab/view. |
@@ -270,10 +270,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 退款加优惠券 | text:退款加优惠券 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 退款加优惠券 tab/view. |
 | 未确定方案 | text:未确定方案 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 未确定方案 tab/view. |
 | 线下退款 | text:线下退款 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 线下退款 tab/view. |
-| 商品售后统计 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 商品售后统计 tab/view. |
-| 售后单 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后单 tab/view. |
-| 售后专项统计 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
-| 数据概览 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 数据概览 tab/view. |
+| 商品售后统计 | selector:div#tab-productStats | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 商品售后统计 tab/view. |
+| 售后单 | selector:div#tab-list | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后单 tab/view. |
+| 售后专项统计 | selector:div#tab-reissueStats | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
+| 数据概览 | selector:div#tab-overview | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 数据概览 tab/view. |
 | 包裹信息 | column:包裹信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 包裹信息 table column/metric. |
 | 备注 | column:备注 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 备注 table column/metric. |
 | 标签 | column:标签 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 标签 table column/metric. |
@@ -302,17 +302,17 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 刷新 Top10 | text:刷新 Top10 | button | safe_execute_allowed | click_css_selector | auto | Change the visible view setting on 推送监控. |
 | 刷新 | text:刷新 | button | safe_execute_allowed | click_css_selector | auto | Change the visible view setting on 推送监控. |
 | 刷新同步详情 | text:刷新同步详情 | navigation | safe_execute_allowed | click_css_selector | auto | Navigate from 推送监控 to a related detail or analysis view. |
-| 待处理超时 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 待处理超时 tab/view. |
-| 订单同步 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 订单同步 tab/view. |
-| 拉单店铺 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 拉单店铺 tab/view. |
-| 拉单租户 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 拉单租户 tab/view. |
-| 平台推送 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 平台推送 tab/view. |
-| 普通队列 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 普通队列 tab/view. |
-| 入库店铺 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 入库店铺 tab/view. |
-| 入库租户 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 入库租户 tab/view. |
-| 同步点落后 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 同步点落后 tab/view. |
-| 优先队列 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 优先队列 tab/view. |
-| 执行中超时 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 执行中超时 tab/view. |
+| 待处理超时 | selector:div#tab-pending | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 待处理超时 tab/view. |
+| 订单同步 | selector:div#tab-orderSync | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 订单同步 tab/view. |
+| 拉单店铺 | selector:div#tab-requestShop | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 拉单店铺 tab/view. |
+| 拉单租户 | selector:div#tab-requestTenant | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 拉单租户 tab/view. |
+| 平台推送 | selector:div#tab-platformPush | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 平台推送 tab/view. |
+| 普通队列 | selector:div#tab-normal | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 普通队列 tab/view. |
+| 入库店铺 | selector:div#tab-saveShop | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 入库店铺 tab/view. |
+| 入库租户 | selector:div#tab-saveTenant | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 入库租户 tab/view. |
+| 同步点落后 | selector:div#tab-checkpoint | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 同步点落后 tab/view. |
+| 优先队列 | selector:div#tab-prior | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 优先队列 tab/view. |
+| 执行中超时 | selector:div#tab-working | tab | safe_execute_allowed | click_css_selector | auto | Switch 推送监控 to the 执行中超时 tab/view. |
 | 待处理时长 | column:待处理时长 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 待处理时长 table column/metric. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 店铺 table column/metric. |
 | 风险 | column:风险 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 推送监控 has the 风险 table column/metric. |
@@ -341,17 +341,17 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增售后单取消 | 新增售后单 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增售后单 dialog/drawer on 售后单管理. |
 | 新增售后单确定 | 新增售后单 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增售后单 dialog/drawer on 售后单管理. |
 | 新增售后单添加补发 | 新增售后单 -> 添加补发 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 添加补发 inside the 新增售后单 dialog/drawer on 售后单管理. |
-| 新增售后单 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation. |
+| 新增售后单 | dialog_opener:新增售后单 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 开始日期. |
 | 请输入订单号（双击批量搜索） | placeholder:请输入订单号（双击批量搜索） | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 请输入订单号（双击批量搜索）. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 选择店铺. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 售后单管理. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 售后单管理. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 售后单管理. |
-| 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 售后单管理. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 售后单管理. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 售后单管理. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 售后单管理. |
+| 批量操作 | overlay_trigger:批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 售后单管理. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 售后单管理. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 售后单管理. |
 | 补发加补优惠券 | text:补发加补优惠券 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发加补优惠券 tab/view. |
 | 补发加赔偿 | text:补发加赔偿 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发加赔偿 tab/view. |
 | 补发商品 | text:补发商品 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发商品 tab/view. |
@@ -363,10 +363,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 退款加优惠券 | text:退款加优惠券 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 退款加优惠券 tab/view. |
 | 未确定方案 | text:未确定方案 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 未确定方案 tab/view. |
 | 线下退款 | text:线下退款 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 线下退款 tab/view. |
-| 商品售后统计 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 商品售后统计 tab/view. |
-| 售后单 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后单 tab/view. |
-| 售后专项统计 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
-| 数据概览 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 数据概览 tab/view. |
+| 商品售后统计 | selector:div#tab-productStats | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 商品售后统计 tab/view. |
+| 售后单 | selector:div#tab-list | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后单 tab/view. |
+| 售后专项统计 | selector:div#tab-reissueStats | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
+| 数据概览 | selector:div#tab-overview | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 数据概览 tab/view. |
 | 包裹信息 | column:包裹信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 包裹信息 table column/metric. |
 | 备注 | column:备注 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 备注 table column/metric. |
 | 标签 | column:标签 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 标签 table column/metric. |
@@ -401,17 +401,17 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增售后单取消 | 新增售后单 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增售后单 dialog/drawer on 售后单管理. |
 | 新增售后单确定 | 新增售后单 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增售后单 dialog/drawer on 售后单管理. |
 | 新增售后单添加补发 | 新增售后单 -> 添加补发 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 添加补发 inside the 新增售后单 dialog/drawer on 售后单管理. |
-| 新增售后单 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation. |
+| 新增售后单 | dialog_opener:新增售后单 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增售后单 dialog/drawer on 售后单管理; do not submit changes without explicit confirmation. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 开始日期. |
 | 请输入订单号（双击批量搜索） | placeholder:请输入订单号（双击批量搜索） | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 请输入订单号（双击批量搜索）. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 售后单管理 by 选择店铺. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 售后单管理. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 售后单管理. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 售后单管理. |
-| 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 售后单管理. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 售后单管理. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 售后单管理. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 售后单管理. |
+| 批量操作 | overlay_trigger:批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 售后单管理. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 售后单管理. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 售后单管理. |
 | 补发加补优惠券 | text:补发加补优惠券 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发加补优惠券 tab/view. |
 | 补发加赔偿 | text:补发加赔偿 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发加赔偿 tab/view. |
 | 补发商品 | text:补发商品 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 补发商品 tab/view. |
@@ -423,10 +423,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 退款加优惠券 | text:退款加优惠券 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 退款加优惠券 tab/view. |
 | 未确定方案 | text:未确定方案 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 未确定方案 tab/view. |
 | 线下退款 | text:线下退款 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 线下退款 tab/view. |
-| 商品售后统计 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 商品售后统计 tab/view. |
-| 售后单 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后单 tab/view. |
-| 售后专项统计 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
-| 数据概览 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 数据概览 tab/view. |
+| 商品售后统计 | selector:div#tab-productStats | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 商品售后统计 tab/view. |
+| 售后单 | selector:div#tab-list | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后单 tab/view. |
+| 售后专项统计 | selector:div#tab-reissueStats | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 售后专项统计 tab/view. |
+| 数据概览 | selector:div#tab-overview | tab | safe_execute_allowed | click_css_selector | auto | Switch 售后单管理 to the 数据概览 tab/view. |
 | 包裹信息 | column:包裹信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 包裹信息 table column/metric. |
 | 备注 | column:备注 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 备注 table column/metric. |
 | 标签 | column:标签 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 售后单管理 has the 标签 table column/metric. |
@@ -458,11 +458,11 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 店铺利润分析详情 by 开始日期. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 店铺利润分析详情. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 店铺利润分析详情. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 店铺利润分析详情. |
-| 今天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 今天 tab/view. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 近7天 tab/view. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 昨天 tab/view. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 店铺利润分析详情. |
+| 今天 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 今天 tab/view. |
+| 近30天 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 近7天 tab/view. |
+| 昨天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺利润分析详情 to the 昨天 tab/view. |
 | 日期 | column:日期 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺利润分析详情 has the 日期 table column/metric. |
 
 ## BI / 商品复购分析报告详情
@@ -477,7 +477,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 商品复购分析报告详情 by 开始日期. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 商品复购分析报告详情. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 商品复购分析报告详情. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 商品复购分析报告详情. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 商品复购分析报告详情. |
 | 产品规格 | column:产品规格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 产品规格 table column/metric. |
 | 订单复购率 | column:订单复购率 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 订单复购率 table column/metric. |
 | 复购订单数 | column:复购订单数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品复购分析报告详情 has the 复购订单数 table column/metric. |
@@ -523,10 +523,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
-| 订单列表 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 订单列表 tab/view. |
-| 视频链接 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 视频链接 tab/view. |
-| 销售数据 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 销售数据 tab/view. |
-| 直播链接 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 直播链接 tab/view. |
+| 订单列表 | selector:div#tab-order | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 订单列表 tab/view. |
+| 视频链接 | selector:div#tab-video | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 视频链接 tab/view. |
+| 销售数据 | selector:div#tab-sale | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 销售数据 tab/view. |
+| 直播链接 | selector:div#tab-live | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 直播链接 tab/view. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 店铺 table column/metric. |
 | 价格 | column:价格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 价格 table column/metric. |
 | 结算销量 | column:结算销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算销量 table column/metric. |
@@ -546,10 +546,10 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
-| 订单列表 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 订单列表 tab/view. |
-| 视频链接 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 视频链接 tab/view. |
-| 销售数据 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 销售数据 tab/view. |
-| 直播链接 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 直播链接 tab/view. |
+| 订单列表 | selector:div#tab-order | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 订单列表 tab/view. |
+| 视频链接 | selector:div#tab-video | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 视频链接 tab/view. |
+| 销售数据 | selector:div#tab-sale | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 销售数据 tab/view. |
+| 直播链接 | selector:div#tab-live | tab | safe_execute_allowed | click_css_selector | auto | Switch 合作单详情 to the 直播链接 tab/view. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 店铺 table column/metric. |
 | 价格 | column:价格 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 价格 table column/metric. |
 | 结算销量 | column:结算销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 合作单详情 has the 结算销量 table column/metric. |
@@ -577,8 +577,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 邀约次数 | text:邀约次数 | filter_dropdown | safe_execute_allowed | click_css_selector | auto | Filter 收藏夹详情 by 邀约次数. |
 | 请输入昵称或达人ID | placeholder:请输入昵称或达人ID | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 收藏夹详情 by 请输入昵称或达人ID. |
 | 邀约次数 | placeholder:邀约次数 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 收藏夹详情 by 邀约次数. |
-| 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 收藏夹详情. |
-| 邀约次数 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 邀约次数 overlay on 收藏夹详情. |
+| 批量操作 | overlay_trigger:批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 收藏夹详情. |
+| 邀约次数 | overlay_trigger:邀约次数 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 邀约次数 overlay on 收藏夹详情. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 操作 table column/metric. |
 | 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 达人信息 table column/metric. |
 | 粉丝数 | column:粉丝数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 粉丝数 table column/metric. |
@@ -615,11 +615,11 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 达人ID | 请选择 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 请选择 overlay on 黑名单. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 黑名单. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 黑名单. |
-| 达人标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 达人标签 overlay on 黑名单. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 黑名单. |
-| 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 黑名单. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 黑名单. |
-| 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 黑名单. |
+| 达人标签 | overlay_trigger:达人标签 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 达人标签 overlay on 黑名单. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 黑名单. |
+| 品类 | overlay_trigger:品类 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 黑名单. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 黑名单. |
+| 全部商务 | overlay_trigger:全部商务 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 黑名单. |
 | 达人公海 | text:达人公海 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 黑名单 to the 达人公海 tab/view. |
 | 黑名单 | text:黑名单 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 黑名单 to the 黑名单 tab/view. |
 | 我的达人 | text:我的达人 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 黑名单 to the 我的达人 tab/view. |
@@ -666,12 +666,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 达人ID | 请选择 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 请选择 overlay on 重点关注. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 重点关注. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 重点关注. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 重点关注. |
-| 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 重点关注. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 重点关注. |
-| 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 重点关注. |
-| 选择标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 重点关注. |
-| 状态 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 状态 overlay on 重点关注. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 重点关注. |
+| 品类 | overlay_trigger:品类 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 重点关注. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 重点关注. |
+| 全部商务 | overlay_trigger:全部商务 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 重点关注. |
+| 选择标签 | overlay_trigger:选择标签 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 重点关注. |
+| 状态 | overlay_trigger:状态 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 状态 overlay on 重点关注. |
 | 达人公海 | text:达人公海 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 重点关注 to the 达人公海 tab/view. |
 | 黑名单 | text:黑名单 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 重点关注 to the 黑名单 tab/view. |
 | 我的达人 | text:我的达人 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 重点关注 to the 我的达人 tab/view. |
@@ -740,31 +740,31 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 达人ID | 请选择 -> 达人ID | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 达人ID from the 请选择 overlay on 达人公海. |
 | 批量删除 | 批量操作 -> 批量删除 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 批量删除 from the 批量操作 overlay on 达人公海. |
 | 批量信息更新 | 批量操作 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 批量操作 overlay on 达人公海. |
-| 年龄分布 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 年龄分布 overlay on 达人公海. |
-| 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 达人公海. |
-| 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 达人公海. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 达人公海. |
-| 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 达人公海. |
-| 选择标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 达人公海. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 达人公海. |
+| 年龄分布 | overlay_trigger:年龄分布 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 年龄分布 overlay on 达人公海. |
+| 批量操作 | overlay_trigger:批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 达人公海. |
+| 品类 | overlay_trigger:品类 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 达人公海. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 达人公海. |
+| 全部商务 | overlay_trigger:全部商务 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 达人公海. |
+| 选择标签 | overlay_trigger:选择标签 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 达人公海. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 达人公海. |
 | 操作分配 | 操作 -> 分配 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 分配 in the 操作 column on 达人公海. |
 | 操作认领 | 操作 -> 认领 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 认领 in the 操作 column on 达人公海. |
 | 操作删除 | 操作 -> 删除 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 删除 in the 操作 column on 达人公海. |
 | 操作详情 | 操作 -> 详情 | row_action | safe_execute_allowed | click_first_matching_row_action_in_table | row-action | Use row action 详情 in the 操作 column on 达人公海. |
 | 达人公海 | text:达人公海 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 达人公海 tab/view. |
-| 合作中 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators currently cooperating. |
+| 合作中 | status_tab:合作中 | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators currently cooperating. |
 | 黑名单 | text:黑名单 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 黑名单 tab/view. |
-| 全部 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show all creators in the high-seas list. |
+| 全部 | status_tab:全部 | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show all creators in the high-seas list. |
 | 我的达人 | text:我的达人 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 我的达人 tab/view. |
-| 已出单 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators that already generated orders. |
-| 已触达 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators already reached/contacted. |
-| 已申样 |  | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators already in sample request status. |
+| 已出单 | status_tab:已出单 | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators that already generated orders. |
+| 已触达 | status_tab:已触达 | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators already reached/contacted. |
+| 已申样 | status_tab:已申样 | status_tab | safe_execute_allowed | click_visible_action_text | curated | Show creators already in sample request status. |
 | 重点关注 | text:重点关注 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 重点关注 tab/view. |
-| 合作中 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 合作中 tab/view. |
-| 全部 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 全部 tab/view. |
-| 已出单 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 已出单 tab/view. |
-| 已触达 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 已触达 tab/view. |
-| 已申样 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 已申样 tab/view. |
+| 合作中 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 合作中 tab/view. |
+| 全部 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 全部 tab/view. |
+| 已出单 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 已出单 tab/view. |
+| 已触达 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 已触达 tab/view. |
+| 已申样 | selector:div#tab-4 | tab | safe_execute_allowed | click_css_selector | auto | Switch 达人公海 to the 已申样 tab/view. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 达人公海 has the 操作 table column/metric. |
 | 达人标签 | column:达人标签 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 达人标签 table column/metric. |
 | 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 达人公海 has the 达人信息 table column/metric. |
@@ -797,7 +797,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 添加达人确定 | 添加达人 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 添加达人 dialog/drawer on 我的达人. |
 | 添加达人搜索 | 添加达人 -> 搜索 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 搜索 inside the 添加达人 dialog/drawer on 我的达人. |
 | 添加达人添加 | 添加达人 -> 添加 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 添加 inside the 添加达人 dialog/drawer on 我的达人. |
-| 添加达人 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 添加达人 dialog/drawer on 我的达人; do not submit changes without explicit confirmation. |
+| 添加达人 | dialog_opener:添加达人 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 添加达人 dialog/drawer on 我的达人; do not submit changes without explicit confirmation. |
 | 年龄分布 | text:年龄分布 | filter_dropdown | safe_execute_allowed | click_css_selector | auto | Filter 我的达人 by 年龄分布. |
 | 全部商务 | text:全部商务 | filter_dropdown | safe_execute_allowed | click_css_selector | auto | Filter 我的达人 by 全部商务. |
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 我的达人 by 结束日期. |
@@ -817,22 +817,22 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 批量信息更新 | 批量操作 -> 信息更新 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 信息更新 from the 批量操作 overlay on 我的达人. |
 | 批量转移达人 | 批量操作 -> 转移达人 | overlay_item | confirmation_required_write | click_trigger_selector_then_overlay_item_text | overlay | Choose 转移达人 from the 批量操作 overlay on 我的达人. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 我的达人. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 我的达人. |
-| 年龄分布 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 年龄分布 overlay on 我的达人. |
-| 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 我的达人. |
-| 品类 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 我的达人. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 我的达人. |
-| 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 我的达人. |
-| 选择标签 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 我的达人. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 我的达人. |
+| 年龄分布 | overlay_trigger:年龄分布 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 年龄分布 overlay on 我的达人. |
+| 批量操作 | overlay_trigger:批量操作 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 我的达人. |
+| 品类 | overlay_trigger:品类 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 品类 overlay on 我的达人. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 我的达人. |
+| 全部商务 | overlay_trigger:全部商务 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 我的达人. |
+| 选择标签 | overlay_trigger:选择标签 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择标签 overlay on 我的达人. |
 | 达人公海 | text:达人公海 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 达人公海 tab/view. |
 | 黑名单 | text:黑名单 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 黑名单 tab/view. |
 | 我的达人 | text:我的达人 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 我的达人 tab/view. |
 | 重点关注 | text:重点关注 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 重点关注 tab/view. |
-| 合作中 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 合作中 tab/view. |
-| 全部 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 全部 tab/view. |
-| 已出单 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 已出单 tab/view. |
-| 已触达 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 已触达 tab/view. |
-| 已申样 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 已申样 tab/view. |
+| 合作中 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 合作中 tab/view. |
+| 全部 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 全部 tab/view. |
+| 已出单 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 已出单 tab/view. |
+| 已触达 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 已触达 tab/view. |
+| 已申样 | selector:div#tab-4 | tab | safe_execute_allowed | click_css_selector | auto | Switch 我的达人 to the 已申样 tab/view. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 我的达人 has the 操作 table column/metric. |
 | 达人标签 | column:达人标签 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 达人标签 table column/metric. |
 | 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 我的达人 has the 达人信息 table column/metric. |
@@ -852,8 +852,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
-| 店铺商品 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺详情 to the 店铺商品 tab/view. |
-| 关联达人 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺详情 to the 关联达人 tab/view. |
+| 店铺商品 | selector:div#tab-goods | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺详情 to the 店铺商品 tab/view. |
+| 关联达人 | selector:div#tab-master | tab | safe_execute_allowed | click_css_selector | auto | Switch 店铺详情 to the 关联达人 tab/view. |
 | 单价 | column:单价 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 单价 table column/metric. |
 | 关联达人 | column:关联达人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 关联达人 table column/metric. |
 | 商品信息 | column:商品信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 商品信息 table column/metric. |
@@ -881,14 +881,14 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 数据概览 by 选择店铺. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 数据概览. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 数据概览. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 数据概览. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 数据概览. |
-| 全部商务 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 数据概览. |
-| 搜索商品名称或链接ID |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 搜索商品名称或链接ID overlay on 数据概览. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 数据概览. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 数据概览 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 数据概览 to the 近7天 tab/view. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 数据概览 to the 昨天 tab/view. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 数据概览. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 数据概览. |
+| 全部商务 | overlay_trigger:全部商务 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 全部商务 overlay on 数据概览. |
+| 搜索商品名称或链接ID | overlay_trigger:搜索商品名称或链接ID | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 搜索商品名称或链接ID overlay on 数据概览. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 数据概览. |
+| 近30天 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 数据概览 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 数据概览 to the 近7天 tab/view. |
+| 昨天 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 数据概览 to the 昨天 tab/view. |
 | 成交订单量 | column:成交订单量 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 成交订单量 table column/metric. |
 | 成交金额 | column:成交金额 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 成交金额 table column/metric. |
 | 成交商品数 | column:成交商品数 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 数据概览 has the 成交商品数 table column/metric. |
@@ -926,9 +926,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 请输入原因 | placeholder:请输入原因 | form_input | safe_execute_allowed | click_css_selector | auto | Fill or choose the 请输入原因 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
 | 选择结束时间 | placeholder:选择结束时间 | form_input | safe_execute_allowed | click_css_selector | auto | Fill or choose the 选择结束时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
 | 选择开始时间 | placeholder:选择开始时间 | form_input | safe_execute_allowed | click_css_selector | auto | Fill or choose the 选择开始时间 field on 发起 OA 请假; submitting the form still requires explicit confirmation. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 发起 OA 请假. |
-| 选择结束时间 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择结束时间 overlay on 发起 OA 请假. |
-| 选择开始时间 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择开始时间 overlay on 发起 OA 请假. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 发起 OA 请假. |
+| 选择结束时间 | overlay_trigger:选择结束时间 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择结束时间 overlay on 发起 OA 请假. |
+| 选择开始时间 | overlay_trigger:选择开始时间 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择开始时间 overlay on 发起 OA 请假. |
 
 ## ERP / 查看 OA 请假
 
@@ -985,7 +985,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增关闭 | 新增 -> 关闭 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 关闭 inside the 新增 dialog/drawer on 黑名单管理. |
 | 新增取消 | 新增 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增 dialog/drawer on 黑名单管理. |
 | 新增确定 | 新增 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增 dialog/drawer on 黑名单管理. |
-| 新增 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增 dialog/drawer on 黑名单管理; do not submit changes without explicit confirmation. |
+| 新增 | dialog_opener:新增 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增 dialog/drawer on 黑名单管理; do not submit changes without explicit confirmation. |
 | 请输入买家地址 | placeholder:请输入买家地址 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 黑名单管理 by 请输入买家地址. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 黑名单管理 has the 操作 table column/metric. |
 | 创建时间 | column:创建时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 黑名单管理 has the 创建时间 table column/metric. |
@@ -1009,9 +1009,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择开始执行时间 | placeholder:选择开始执行时间 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 调度日志 by 选择开始执行时间. |
 | 成功 | 请选择任务状态 -> 成功 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 成功 from the 请选择任务状态 overlay on 调度日志. |
 | 失败 | 请选择任务状态 -> 失败 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 失败 from the 请选择任务状态 overlay on 调度日志. |
-| 请选择任务状态 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择任务状态 overlay on 调度日志. |
-| 选择结束执行时间 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择结束执行时间 overlay on 调度日志. |
-| 选择开始执行时间 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择开始执行时间 overlay on 调度日志. |
+| 请选择任务状态 | overlay_trigger:请选择任务状态 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择任务状态 overlay on 调度日志. |
+| 选择结束执行时间 | overlay_trigger:选择结束执行时间 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择结束执行时间 overlay on 调度日志. |
+| 选择开始执行时间 | overlay_trigger:选择开始执行时间 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择开始执行时间 overlay on 调度日志. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 操作 table column/metric. |
 | 处理器的参数 | column:处理器的参数 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 处理器的参数 table column/metric. |
 | 处理器的名字 | column:处理器的名字 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 调度日志 has the 处理器的名字 table column/metric. |
@@ -1046,9 +1046,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 按人员 | 请选择 -> 按人员 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按人员 from the 请选择 overlay on 预警消息. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 预警消息. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 预警消息. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 预警消息. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 预警消息. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 预警消息. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 预警消息. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 预警消息. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 预警消息. |
 | 店铺 | text:店铺 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 预警消息 to the 店铺 tab/view. |
 | 店铺健康 | text:店铺健康 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 预警消息 to the 店铺健康 tab/view. |
 | 订单 | text:订单 | status_tab | safe_execute_allowed | click_css_selector | auto | Switch 预警消息 to the 订单 tab/view. |
@@ -1083,12 +1083,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增取消 | 新增 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增 dialog/drawer on SKU最低售价配置. |
 | 新增确定 | 新增 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增 dialog/drawer on SKU最低售价配置. |
 | 新增选择 | 新增 -> 选择 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 选择 inside the 新增 dialog/drawer on SKU最低售价配置. |
-| 新增 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增 dialog/drawer on SKU最低售价配置; do not submit changes without explicit confirmation. |
+| 新增 | dialog_opener:新增 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增 dialog/drawer on SKU最低售价配置; do not submit changes without explicit confirmation. |
 | 请输入商品SKU | placeholder:请输入商品SKU | filter_input | safe_execute_allowed | click_css_selector | auto | Filter SKU最低售价配置 by 请输入商品SKU. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter SKU最低售价配置 by 选择店铺. |
 | 导出最低售价 | 导入导出 -> 导出最低售价 | overlay_item | confirmation_required_export | click_trigger_selector_then_overlay_item_text | overlay | Choose 导出最低售价 from the 导入导出 overlay on SKU最低售价配置. |
-| 导入导出 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 导入导出 overlay on SKU最低售价配置. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on SKU最低售价配置. |
+| 导入导出 | overlay_trigger:导入导出 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 导入导出 overlay on SKU最低售价配置. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on SKU最低售价配置. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 操作 table column/metric. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 店铺 table column/metric. |
 | 商品SKU | column:商品SKU | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 商品SKU table column/metric. |
@@ -1111,12 +1111,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 未处理 | 请选择 -> 未处理 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 未处理 from the 请选择 overlay on 商品评论详情. |
 | 已处理 | 请选择 -> 已处理 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 已处理 from the 请选择 overlay on 商品评论详情. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 商品评论详情. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 商品评论详情. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 商品评论详情. |
-| 今天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 今天 tab/view. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 近7天 tab/view. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 昨天 tab/view. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 商品评论详情. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 商品评论详情. |
+| 今天 | selector:div#tab-0 | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 今天 tab/view. |
+| 近30天 | selector:div#tab-3 | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-2 | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 近7天 tab/view. |
+| 昨天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 商品评论详情 to the 昨天 tab/view. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 操作 table column/metric. |
 | 处理状态 | column:处理状态 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 处理状态 table column/metric. |
 | 评级 | column:评级 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 商品评论详情 has the 评级 table column/metric. |
@@ -1193,11 +1193,11 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 进销存详情 by 开始日期. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 进销存详情. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 进销存详情. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 进销存详情. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 进销存详情. |
-| 近30天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 进销存详情 to the 近30天 tab/view. |
-| 近7天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 进销存详情 to the 近7天 tab/view. |
-| 昨天 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 进销存详情 to the 昨天 tab/view. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 进销存详情. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 进销存详情. |
+| 近30天 | selector:div#tab-30 | tab | safe_execute_allowed | click_css_selector | auto | Switch 进销存详情 to the 近30天 tab/view. |
+| 近7天 | selector:div#tab-7 | tab | safe_execute_allowed | click_css_selector | auto | Switch 进销存详情 to the 近7天 tab/view. |
+| 昨天 | selector:div#tab-1 | tab | safe_execute_allowed | click_css_selector | auto | Switch 进销存详情 to the 昨天 tab/view. |
 | 采购入库 | column:采购入库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 采购入库 table column/metric. |
 | 出库 | column:出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 出库 table column/metric. |
 | 调拨出库 | column:调拨出库 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 进销存详情 has the 调拨出库 table column/metric. |
@@ -1229,9 +1229,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择日期 | placeholder:选择日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 业绩利润报表 by 选择日期. |
 | 按回款时间 | 请选择 -> 按回款时间 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按回款时间 from the 请选择 overlay on 业绩利润报表. |
 | 按下单时间 | 请选择 -> 按下单时间 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按下单时间 from the 请选择 overlay on 业绩利润报表. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 业绩利润报表. |
-| 请选择运营人员 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择运营人员 overlay on 业绩利润报表. |
-| 选择日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择日期 overlay on 业绩利润报表. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 业绩利润报表. |
+| 请选择运营人员 | overlay_trigger:请选择运营人员 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择运营人员 overlay on 业绩利润报表. |
+| 选择日期 | overlay_trigger:选择日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择日期 overlay on 业绩利润报表. |
 
 ## ERP / 店铺利润报表
 
@@ -1247,9 +1247,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择日期 | placeholder:选择日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 店铺利润报表 by 选择日期. |
 | 按回款时间 | 请选择 -> 按回款时间 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按回款时间 from the 请选择 overlay on 店铺利润报表. |
 | 按下单时间 | 请选择 -> 按下单时间 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按下单时间 from the 请选择 overlay on 店铺利润报表. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 店铺利润报表. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 店铺利润报表. |
-| 选择日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择日期 overlay on 店铺利润报表. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 店铺利润报表. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 店铺利润报表. |
+| 选择日期 | overlay_trigger:选择日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择日期 overlay on 店铺利润报表. |
 
 ## ERP / Shopee商品数据表
 
@@ -1266,7 +1266,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 请选择商品 | placeholder:请选择商品 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter Shopee商品数据表 by 请选择商品. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on Shopee商品数据表. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on Shopee商品数据表. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on Shopee商品数据表. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on Shopee商品数据表. |
 | 测评金额 | column:测评金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 测评金额 table column/metric. |
 | 测评损耗 | column:测评损耗 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 测评损耗 table column/metric. |
 | 测评销量 | column:测评销量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee商品数据表 has the 测评销量 table column/metric. |
@@ -1323,9 +1323,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter Shopee店铺数据表 by 选择店铺. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on Shopee店铺数据表. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on Shopee店铺数据表. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on Shopee店铺数据表. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on Shopee店铺数据表. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on Shopee店铺数据表. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on Shopee店铺数据表. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on Shopee店铺数据表. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on Shopee店铺数据表. |
 | 测评订单量 | column:测评订单量 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评订单量 table column/metric. |
 | 测评金额 | column:测评金额 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评金额 table column/metric. |
 | 测评损耗 | column:测评损耗 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that Shopee店铺数据表 has the 测评损耗 table column/metric. |
@@ -1473,12 +1473,12 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 新增自定义费用取消 | 新增自定义费用 -> 取消 | dialog_button | safe_execute_allowed | click_trigger_selector_then_dialog_button_text | dialog | Use 取消 inside the 新增自定义费用 dialog/drawer on 自定义费用. |
 | 新增自定义费用确定 | 新增自定义费用 -> 确定 | dialog_button | confirmation_required_write | click_trigger_selector_then_dialog_button_text | dialog | Use 确定 inside the 新增自定义费用 dialog/drawer on 自定义费用. |
 | 编辑 | 编辑 | dialog_opener | safe_execute_allowed | row_context_required_dialog | dialog | Remember the row-level 编辑 dialog/drawer on 自定义费用; execution requires an explicit target row. |
-| 新增自定义费用 |  | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增自定义费用 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation. |
+| 新增自定义费用 | dialog_opener:新增自定义费用 | dialog_opener | safe_execute_allowed | click_trigger_selector | dialog | Open the 新增自定义费用 dialog/drawer on 自定义费用; do not submit changes without explicit confirmation. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 自定义费用 by 选择店铺. |
 | 选择月 | placeholder:选择月 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 自定义费用 by 选择月. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 自定义费用. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 自定义费用. |
-| 选择月 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择月 overlay on 自定义费用. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 自定义费用. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 自定义费用. |
+| 选择月 | overlay_trigger:选择月 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择月 overlay on 自定义费用. |
 | 操作编辑 | 操作 -> 编辑 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 编辑 in the 操作 column on 自定义费用. |
 | 操作删除 | 操作 -> 删除 | row_action | confirmation_required_write | click_first_matching_row_action_in_table | row-action | Use row action 删除 in the 操作 column on 自定义费用. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 自定义费用 has the 操作 table column/metric. |
@@ -1500,8 +1500,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 套餐开通记录 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 套餐开通记录 by 开始日期. |
 | 租户名称/联系人/手机号 | placeholder:租户名称/联系人/手机号 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 套餐开通记录 by 租户名称/联系人/手机号. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 套餐开通记录. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 套餐开通记录. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 套餐开通记录. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 套餐开通记录. |
 | 开通人 | column:开通人 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 开通人 table column/metric. |
 | 开通时间 | column:开通时间 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 开通时间 table column/metric. |
 | 套餐 | column:套餐 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 套餐开通记录 has the 套餐 table column/metric. |
@@ -1515,7 +1515,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
-| 单量套餐 |  | tab | safe_execute_allowed | click_css_selector | auto | Switch 单量套餐 to the 单量套餐 tab/view. |
+| 单量套餐 | selector:div#tab-order | tab | safe_execute_allowed | click_css_selector | auto | Switch 单量套餐 to the 单量套餐 tab/view. |
 
 ## Global / Global
 
@@ -1549,8 +1549,8 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 请输入报告名称 | placeholder:请输入报告名称 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 下载中心 by 请输入报告名称. |
 | 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 下载中心. |
 | 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 下载中心. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 下载中心. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 下载中心. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 下载中心. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 下载中心. |
 | 操作 | column:操作 | row_operation | confirmation_required_export | row_context_required_column_header | curated | Operate on a generated report row, usually to download or open the generated file. Exact row button text still needs capture. |
 | 报表名称 | column:报表名称 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 报表名称 table column/metric. |
 | 报表日期范围 | column:报表日期范围 | table_column | safe_execute_allowed | read_table_column_header | table-header | Remember that 下载中心 has the 报表日期范围 table column/metric. |
@@ -1572,9 +1572,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 结束日期 | placeholder:结束日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 首页 by 结束日期. |
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 首页 by 开始日期. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | click_css_selector | auto | Filter 首页 by 选择店铺. |
-| 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 首页. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 首页. |
-| 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
+| 开始日期 | overlay_trigger:开始日期 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 首页. |
+| 请选择 | overlay_trigger:请选择 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 首页. |
+| 选择店铺 | overlay_trigger:选择店铺 | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
 | 城市 | column:城市 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 城市 table column/metric. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 店铺 table column/metric. |
 | 分析 | column:分析 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 首页 has the 分析 table column/metric. |

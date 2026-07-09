@@ -1,0 +1,73 @@
+﻿{
+    "ok":  true,
+    "version":  "2026-07-09",
+    "generated_at":  "2026-07-09T04:29:36.6733335Z",
+    "catalog_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-action-catalog.json",
+    "live_coverage_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-live-button-coverage.json",
+    "exercise_report_path":  "D:\\UserData\\Desktop\\dianpu\\references\\xinjian-ui-action-exercise-report.json",
+    "totals":  {
+                   "pages":  49,
+                   "actions":  1117,
+                   "safe_execute_allowed":  1025,
+                   "confirmation_required_write":  83,
+                   "confirmation_required_export":  9,
+                   "table_column_memory":  460,
+                   "row_context_required":  5,
+                   "css_selector_actions":  364
+               },
+    "quality":  {
+                    "ok":  true,
+                    "no_purpose":  0,
+                    "no_function_source":  0,
+                    "no_context":  0,
+                    "manual_review_actions":  0,
+                    "map_only_actions":  0,
+                    "empty_locator_actions":  0
+                },
+    "live_coverage":  {
+                          "loaded":  true,
+                          "pages_selected":  48,
+                          "pages_captured":  47,
+                          "pages_noaccess":  1,
+                          "observed_controls":  827,
+                          "matched_controls":  827,
+                          "missing_controls":  0,
+                          "pages_with_missing_controls":  0
+                      },
+    "safe_action_exercise":  {
+                                 "loaded":  true,
+                                 "executable_actions":  551,
+                                 "attempted_actions":  551,
+                                 "verified_actions":  551,
+                                 "failed_actions":  0,
+                                 "not_attempted_actions":  0
+                             },
+    "remaining_boundaries":  [
+                                 {
+                                     "kind":  "noaccess_live_pages",
+                                     "count":  1,
+                                     "meaning":  "Visible controls cannot be fully proven for these route pages under the current account/session."
+                                 },
+                                 {
+                                     "kind":  "confirmation_required_write",
+                                     "count":  83,
+                                     "meaning":  "Write/delete/save/submit actions are remembered but must not execute without explicit confirmation."
+                                 },
+                                 {
+                                     "kind":  "confirmation_required_export",
+                                     "count":  9,
+                                     "meaning":  "Export/download actions are remembered but require explicit confirmation before execution."
+                                 },
+                                 {
+                                     "kind":  "row_context_required",
+                                     "count":  5,
+                                     "meaning":  "Row-level actions need a target row or exact row-action metadata; they are not safe to blindly click."
+                                 },
+                                 {
+                                     "kind":  "read_only_table_memory",
+                                     "count":  460,
+                                     "meaning":  "Table columns/metrics are remembered for reading/planning and are not clickable actions."
+                                 }
+                             ],
+    "next_action":  "rpa_memory_ready_for_accessible_visible_safe_controls"
+}

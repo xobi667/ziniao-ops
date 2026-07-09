@@ -16,9 +16,12 @@ references/xinjian-ui-action-exercise-report.json
 references/xinjian-ui-action-exercise-report.md
 references/xinjian-ui-live-button-coverage.json
 references/xinjian-ui-live-button-coverage.md
+references/xinjian-ui-rpa-readiness.json
+references/xinjian-ui-rpa-readiness.md
 ```
 
 `xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement; it excludes transient Element UI poppers, date-picker panels, select dropdowns, dialogs, drawers, message boxes, global sidebars, user menus, and theme drawers so dynamic controls are not misfiled as always-visible page buttons. The auto map can also supplement curated pages with live DOM selectors when generic controls are missing from the curated map. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores table headers, row action labels, and generic action words from operation columns. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing. `xinjian-ui-action-exercise-report.json` and `.md` record sanitized execution evidence for safe route-scoped CDP actions. `xinjian-ui-live-button-coverage.json` and `.md` compare live route-scoped DOM controls against the action catalog to prove whether visible controls are still missing from memory.
+`xinjian-ui-rpa-readiness.json` and `.md` summarize catalog quality, live coverage, safe exercise proof, and the remaining non-default execution boundaries.
 
 ## Workflow
 
@@ -120,6 +123,14 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\audi
 ```
 
 The live audit opens or reuses route-scoped CDP captures, filters non-business chrome such as global sidebars, user menus, theme drawers, pagination, vendor watermarks, and table operation headers, then compares sanitized control names/selectors against the unified action catalog. It writes `references/xinjian-ui-live-button-coverage.json` and `.md`; local raw captures stay under `.ziniao-ops`.
+
+To answer "还缺什么" from public evidence without opening a browser, generate the RPA readiness report:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-rpa-readiness.ps1") -Json
+```
+
+The readiness report writes `references/xinjian-ui-rpa-readiness.json` and `.md`. It checks whether every catalog action has purpose, function source, context, locator metadata, and whether live controls and safe execution evidence still have gaps. Remaining boundaries such as no-access pages, confirmation-required write/export actions, row-context actions, and read-only table-column memory are listed separately so they are not confused with missing button memory.
 
 5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 
@@ -255,6 +266,7 @@ Coverage snapshot validated from the logged-in CDP page on 2026-07-09:
 - Unified action catalog: 49 pages, 1117 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 460 read-only `table_column` actions for remembered table metrics/headers, including 82 generated from sanitized public table-header metadata, and 364 generated actions with live CSS selectors. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report uses live coverage evidence and now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when live DOM coverage proves all visible controls are matched, and restricted/no-access pages are tracked as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`, and row-level dialog openers are marked `row_context_required_dialog`.
 - Live button coverage audit: 48 catalog routes selected, 47 live pages captured, 1 no-access page, 827 visible business controls observed, 827 matched, 0 missing controls.
 - Safe action exercise: 551 route-scoped CDP-clickable `safe_execute_allowed` actions verified by actual execution with 0 failures. The exercise scope excludes read-only table-column memory, confirmation-required write/export actions, account menus, row actions without row context, and no-route UIA global module switches.
+- RPA readiness: catalog quality has 0 missing purpose, 0 missing function source, 0 missing context, 0 manual-review/map-only/empty-locator actions. Remaining non-default boundaries are 1 no-access live page, 83 confirmation-required write actions, 9 confirmation-required export actions, 5 row-context actions, and 460 read-only table-column memories.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

@@ -299,6 +299,12 @@ function Get-ActionContext($Action) {
   if ($locator.dom_text) { return ("text:{0}" -f $locator.dom_text) }
   if ($locator.href) { return ("href:{0}" -f $locator.href) }
   if ($locator.uia_name) { return ("uia:{0}" -f $locator.uia_name) }
+  if ($locator.selector) { return ("selector:{0}" -f $locator.selector) }
+  $type = [string]$Action.type
+  $name = [string]$Action.name
+  if ($type -and $name) { return ("{0}:{1}" -f $type, $name) }
+  if ($name) { return $name }
+  if ($type) { return $type }
   return ""
 }
 

@@ -375,6 +375,14 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\audi
 
 The live coverage report is `references\xinjian-ui-live-button-coverage.json` / `.md`. It compares sanitized live DOM controls against the unified catalog and filters non-business chrome such as global sidebars, user menus, theme drawers, pagination, vendor watermarks, and table operation headers.
 
+To answer "还缺什么" from saved evidence without opening a browser, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-rpa-readiness.ps1") -Json
+```
+
+It writes `references\xinjian-ui-rpa-readiness.json` / `.md` and checks catalog quality, live button coverage, safe action exercise proof, and remaining non-default boundaries such as no-access pages, confirmation-required write/export actions, row-context actions, and read-only table-column memory.
+
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
 
 ```powershell

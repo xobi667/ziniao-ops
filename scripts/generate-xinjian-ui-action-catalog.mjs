@@ -128,6 +128,12 @@ function actionContext(action) {
   if (locator.dom_text) return `text:${clean(locator.dom_text)}`;
   if (locator.href) return `href:${clean(locator.href)}`;
   if (locator.uia_name) return `uia:${clean(locator.uia_name)}`;
+  if (locator.selector) return `selector:${clean(locator.selector)}`;
+  const type = clean(action?.type);
+  const name = clean(action?.name);
+  if (type && name) return `${type}:${name}`;
+  if (name) return name;
+  if (type) return type;
   return "";
 }
 

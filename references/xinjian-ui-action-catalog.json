@@ -2,7 +2,7 @@
   "version": "2026-07-09",
   "system": "xinjian_erp",
   "source": "merged_public_xinjian_ui_action_maps",
-  "generated_at": "2026-07-09T04:11:13.044Z",
+  "generated_at": "2026-07-09T04:28:03.088Z",
   "policy": {
     "default_mode": "map_first_dry_run_before_execute",
     "note": "This catalog merges public sanitized UI maps. It does not contain credentials, cookies, tokens, storage values, input values, or private table row data.",
@@ -326,7 +326,7 @@
         {
           "id": "dialog.ad.group.detail.dialog_opener.修改",
           "name": "修改",
-          "context": "",
+          "context": "dialog_opener:修改",
           "aliases": [
             "修改",
             "修改弹窗",
@@ -432,7 +432,7 @@
         {
           "id": "overlay.ad.group.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -452,7 +452,7 @@
         {
           "id": "auto.ad.group.detail.tab.今天",
           "name": "今天",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "今天"
           ],
@@ -472,7 +472,7 @@
         {
           "id": "auto.ad.group.detail.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "近30天"
           ],
@@ -492,7 +492,7 @@
         {
           "id": "auto.ad.group.detail.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "近7天"
           ],
@@ -512,7 +512,7 @@
         {
           "id": "auto.ad.group.detail.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "昨天"
           ],
@@ -1108,7 +1108,7 @@
         {
           "id": "overlay.ad.originality.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -1128,7 +1128,7 @@
         {
           "id": "overlay.ad.originality.detail.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -1148,7 +1148,7 @@
         {
           "id": "overlay.ad.originality.detail.overlay_trigger.请选择创意状态",
           "name": "请选择创意状态",
-          "context": "",
+          "context": "overlay_trigger:请选择创意状态",
           "aliases": [
             "请选择创意状态"
           ],
@@ -1168,7 +1168,7 @@
         {
           "id": "overlay.ad.originality.detail.overlay_trigger.选择批量操作",
           "name": "选择批量操作",
-          "context": "",
+          "context": "overlay_trigger:选择批量操作",
           "aliases": [
             "选择批量操作"
           ],
@@ -1188,7 +1188,7 @@
         {
           "id": "auto.ad.originality.detail.tab.今天",
           "name": "今天",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "今天"
           ],
@@ -1208,7 +1208,7 @@
         {
           "id": "auto.ad.originality.detail.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "近30天"
           ],
@@ -1228,7 +1228,7 @@
         {
           "id": "auto.ad.originality.detail.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "近7天"
           ],
@@ -1248,7 +1248,7 @@
         {
           "id": "auto.ad.originality.detail.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "昨天"
           ],
@@ -1537,7 +1537,7 @@
         {
           "id": "dialog.ad.shop.detail.dialog_opener.预警设置",
           "name": "预警设置",
-          "context": "",
+          "context": "dialog_opener:预警设置",
           "aliases": [
             "预警设置",
             "预警设置弹窗",
@@ -1752,7 +1752,7 @@
         {
           "id": "overlay.ad.shop.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -1772,7 +1772,7 @@
         {
           "id": "overlay.ad.shop.detail.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -1792,7 +1792,7 @@
         {
           "id": "overlay.ad.shop.detail.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -1835,7 +1835,7 @@
         {
           "id": "auto.ad.shop.detail.tab.今天",
           "name": "今天",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "今天"
           ],
@@ -1855,7 +1855,7 @@
         {
           "id": "auto.ad.shop.detail.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "近30天"
           ],
@@ -1875,7 +1875,7 @@
         {
           "id": "auto.ad.shop.detail.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "近7天"
           ],
@@ -1922,7 +1922,7 @@
         {
           "id": "auto.ad.shop.detail.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "昨天"
           ],
@@ -1942,7 +1942,7 @@
         {
           "id": "auto.ad.shop.detail.tab.lazada",
           "name": "Lazada",
-          "context": "",
+          "context": "selector:div#tab-Lazada",
           "aliases": [
             "Lazada"
           ],
@@ -1962,7 +1962,7 @@
         {
           "id": "auto.ad.shop.detail.tab.shopee",
           "name": "Shopee",
-          "context": "",
+          "context": "selector:div#tab-Shopee",
           "aliases": [
             "Shopee"
           ],
@@ -1982,7 +1982,7 @@
         {
           "id": "auto.ad.shop.detail.tab.tiktok",
           "name": "Tiktok",
-          "context": "",
+          "context": "selector:div#tab-Tiktok",
           "aliases": [
             "Tiktok"
           ],
@@ -2651,7 +2651,7 @@
         {
           "id": "overlay.erp.ads.rule.log.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -2671,7 +2671,7 @@
         {
           "id": "overlay.erp.ads.rule.log.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -2691,7 +2691,7 @@
         {
           "id": "overlay.erp.ads.rule.log.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -3201,7 +3201,7 @@
         {
           "id": "dialog.bi.aftersalesorder.index.dialog_opener.新增售后单",
           "name": "新增售后单",
-          "context": "",
+          "context": "dialog_opener:新增售后单",
           "aliases": [
             "新增售后单",
             "新增售后单弹窗",
@@ -3350,7 +3350,7 @@
         {
           "id": "overlay.bi.aftersalesorder.index.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -3370,7 +3370,7 @@
         {
           "id": "overlay.bi.aftersalesorder.index.overlay_trigger.批量操作",
           "name": "批量操作",
-          "context": "",
+          "context": "overlay_trigger:批量操作",
           "aliases": [
             "批量操作"
           ],
@@ -3390,7 +3390,7 @@
         {
           "id": "overlay.bi.aftersalesorder.index.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -3410,7 +3410,7 @@
         {
           "id": "overlay.bi.aftersalesorder.index.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -3650,7 +3650,7 @@
         {
           "id": "auto.bi.aftersalesorder.index.tab.商品售后统计",
           "name": "商品售后统计",
-          "context": "",
+          "context": "selector:div#tab-productStats",
           "aliases": [
             "商品售后统计"
           ],
@@ -3670,7 +3670,7 @@
         {
           "id": "auto.bi.aftersalesorder.index.tab.售后单",
           "name": "售后单",
-          "context": "",
+          "context": "selector:div#tab-list",
           "aliases": [
             "售后单"
           ],
@@ -3690,7 +3690,7 @@
         {
           "id": "auto.bi.aftersalesorder.index.tab.售后专项统计",
           "name": "售后专项统计",
-          "context": "",
+          "context": "selector:div#tab-reissueStats",
           "aliases": [
             "售后专项统计"
           ],
@@ -3710,7 +3710,7 @@
         {
           "id": "auto.bi.aftersalesorder.index.tab.数据概览",
           "name": "数据概览",
-          "context": "",
+          "context": "selector:div#tab-overview",
           "aliases": [
             "数据概览"
           ],
@@ -4117,7 +4117,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.待处理超时",
           "name": "待处理超时",
-          "context": "",
+          "context": "selector:div#tab-pending",
           "aliases": [
             "待处理超时"
           ],
@@ -4137,7 +4137,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.订单同步",
           "name": "订单同步",
-          "context": "",
+          "context": "selector:div#tab-orderSync",
           "aliases": [
             "订单同步"
           ],
@@ -4157,7 +4157,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.拉单店铺",
           "name": "拉单店铺",
-          "context": "",
+          "context": "selector:div#tab-requestShop",
           "aliases": [
             "拉单店铺"
           ],
@@ -4177,7 +4177,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.拉单租户",
           "name": "拉单租户",
-          "context": "",
+          "context": "selector:div#tab-requestTenant",
           "aliases": [
             "拉单租户"
           ],
@@ -4197,7 +4197,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.平台推送",
           "name": "平台推送",
-          "context": "",
+          "context": "selector:div#tab-platformPush",
           "aliases": [
             "平台推送"
           ],
@@ -4217,7 +4217,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.普通队列",
           "name": "普通队列",
-          "context": "",
+          "context": "selector:div#tab-normal",
           "aliases": [
             "普通队列"
           ],
@@ -4237,7 +4237,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.入库店铺",
           "name": "入库店铺",
-          "context": "",
+          "context": "selector:div#tab-saveShop",
           "aliases": [
             "入库店铺"
           ],
@@ -4257,7 +4257,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.入库租户",
           "name": "入库租户",
-          "context": "",
+          "context": "selector:div#tab-saveTenant",
           "aliases": [
             "入库租户"
           ],
@@ -4277,7 +4277,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.同步点落后",
           "name": "同步点落后",
-          "context": "",
+          "context": "selector:div#tab-checkpoint",
           "aliases": [
             "同步点落后"
           ],
@@ -4297,7 +4297,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.优先队列",
           "name": "优先队列",
-          "context": "",
+          "context": "selector:div#tab-prior",
           "aliases": [
             "优先队列"
           ],
@@ -4317,7 +4317,7 @@
         {
           "id": "auto.bi.monitor.pushflowstats.tab.执行中超时",
           "name": "执行中超时",
-          "context": "",
+          "context": "selector:div#tab-working",
           "aliases": [
             "执行中超时"
           ],
@@ -4743,7 +4743,7 @@
         {
           "id": "dialog.bi.operationcenter.aftersaleorder.index.dialog_opener.新增售后单",
           "name": "新增售后单",
-          "context": "",
+          "context": "dialog_opener:新增售后单",
           "aliases": [
             "新增售后单",
             "新增售后单弹窗",
@@ -4892,7 +4892,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -4912,7 +4912,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.批量操作",
           "name": "批量操作",
-          "context": "",
+          "context": "overlay_trigger:批量操作",
           "aliases": [
             "批量操作"
           ],
@@ -4932,7 +4932,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -4952,7 +4952,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -5192,7 +5192,7 @@
         {
           "id": "auto.bi.operationcenter.aftersaleorder.index.tab.商品售后统计",
           "name": "商品售后统计",
-          "context": "",
+          "context": "selector:div#tab-productStats",
           "aliases": [
             "商品售后统计"
           ],
@@ -5212,7 +5212,7 @@
         {
           "id": "auto.bi.operationcenter.aftersaleorder.index.tab.售后单",
           "name": "售后单",
-          "context": "",
+          "context": "selector:div#tab-list",
           "aliases": [
             "售后单"
           ],
@@ -5232,7 +5232,7 @@
         {
           "id": "auto.bi.operationcenter.aftersaleorder.index.tab.售后专项统计",
           "name": "售后专项统计",
-          "context": "",
+          "context": "selector:div#tab-reissueStats",
           "aliases": [
             "售后专项统计"
           ],
@@ -5252,7 +5252,7 @@
         {
           "id": "auto.bi.operationcenter.aftersaleorder.index.tab.数据概览",
           "name": "数据概览",
-          "context": "",
+          "context": "selector:div#tab-overview",
           "aliases": [
             "数据概览"
           ],
@@ -5792,7 +5792,7 @@
         {
           "id": "dialog.bi.operationcenter.aftersalesorder.index.dialog_opener.新增售后单",
           "name": "新增售后单",
-          "context": "",
+          "context": "dialog_opener:新增售后单",
           "aliases": [
             "新增售后单",
             "新增售后单弹窗",
@@ -5941,7 +5941,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -5961,7 +5961,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.批量操作",
           "name": "批量操作",
-          "context": "",
+          "context": "overlay_trigger:批量操作",
           "aliases": [
             "批量操作"
           ],
@@ -5981,7 +5981,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -6001,7 +6001,7 @@
         {
           "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -6241,7 +6241,7 @@
         {
           "id": "auto.bi.operationcenter.aftersalesorder.index.tab.商品售后统计",
           "name": "商品售后统计",
-          "context": "",
+          "context": "selector:div#tab-productStats",
           "aliases": [
             "商品售后统计"
           ],
@@ -6261,7 +6261,7 @@
         {
           "id": "auto.bi.operationcenter.aftersalesorder.index.tab.售后单",
           "name": "售后单",
-          "context": "",
+          "context": "selector:div#tab-list",
           "aliases": [
             "售后单"
           ],
@@ -6281,7 +6281,7 @@
         {
           "id": "auto.bi.operationcenter.aftersalesorder.index.tab.售后专项统计",
           "name": "售后专项统计",
-          "context": "",
+          "context": "selector:div#tab-reissueStats",
           "aliases": [
             "售后专项统计"
           ],
@@ -6301,7 +6301,7 @@
         {
           "id": "auto.bi.operationcenter.aftersalesorder.index.tab.数据概览",
           "name": "数据概览",
-          "context": "",
+          "context": "selector:div#tab-overview",
           "aliases": [
             "数据概览"
           ],
@@ -6771,7 +6771,7 @@
         {
           "id": "overlay.bi.profit.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -6791,7 +6791,7 @@
         {
           "id": "auto.bi.profit.detail.tab.今天",
           "name": "今天",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "今天"
           ],
@@ -6811,7 +6811,7 @@
         {
           "id": "auto.bi.profit.detail.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "近30天"
           ],
@@ -6831,7 +6831,7 @@
         {
           "id": "auto.bi.profit.detail.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "近7天"
           ],
@@ -6851,7 +6851,7 @@
         {
           "id": "auto.bi.profit.detail.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "昨天"
           ],
@@ -6996,7 +6996,7 @@
         {
           "id": "overlay.user.analyze.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -7573,7 +7573,7 @@
         {
           "id": "auto.crm.cooperation.detail.simple.tab.订单列表",
           "name": "订单列表",
-          "context": "",
+          "context": "selector:div#tab-order",
           "aliases": [
             "订单列表"
           ],
@@ -7593,7 +7593,7 @@
         {
           "id": "auto.crm.cooperation.detail.simple.tab.视频链接",
           "name": "视频链接",
-          "context": "",
+          "context": "selector:div#tab-video",
           "aliases": [
             "视频链接"
           ],
@@ -7613,7 +7613,7 @@
         {
           "id": "auto.crm.cooperation.detail.simple.tab.销售数据",
           "name": "销售数据",
-          "context": "",
+          "context": "selector:div#tab-sale",
           "aliases": [
             "销售数据"
           ],
@@ -7633,7 +7633,7 @@
         {
           "id": "auto.crm.cooperation.detail.simple.tab.直播链接",
           "name": "直播链接",
-          "context": "",
+          "context": "selector:div#tab-live",
           "aliases": [
             "直播链接"
           ],
@@ -7865,7 +7865,7 @@
         {
           "id": "auto.crm.cooperation.detail.tab.订单列表",
           "name": "订单列表",
-          "context": "",
+          "context": "selector:div#tab-order",
           "aliases": [
             "订单列表"
           ],
@@ -7885,7 +7885,7 @@
         {
           "id": "auto.crm.cooperation.detail.tab.视频链接",
           "name": "视频链接",
-          "context": "",
+          "context": "selector:div#tab-video",
           "aliases": [
             "视频链接"
           ],
@@ -7905,7 +7905,7 @@
         {
           "id": "auto.crm.cooperation.detail.tab.销售数据",
           "name": "销售数据",
-          "context": "",
+          "context": "selector:div#tab-sale",
           "aliases": [
             "销售数据"
           ],
@@ -7925,7 +7925,7 @@
         {
           "id": "auto.crm.cooperation.detail.tab.直播链接",
           "name": "直播链接",
-          "context": "",
+          "context": "selector:div#tab-live",
           "aliases": [
             "直播链接"
           ],
@@ -8317,7 +8317,7 @@
         {
           "id": "overlay.crm.favorite.detail.overlay_trigger.批量操作",
           "name": "批量操作",
-          "context": "",
+          "context": "overlay_trigger:批量操作",
           "aliases": [
             "批量操作"
           ],
@@ -8337,7 +8337,7 @@
         {
           "id": "overlay.crm.favorite.detail.overlay_trigger.邀约次数",
           "name": "邀约次数",
-          "context": "",
+          "context": "overlay_trigger:邀约次数",
           "aliases": [
             "邀约次数"
           ],
@@ -8931,7 +8931,7 @@
         {
           "id": "overlay.crm.matser.management.blacklist.overlay_trigger.达人标签",
           "name": "达人标签",
-          "context": "",
+          "context": "overlay_trigger:达人标签",
           "aliases": [
             "达人标签"
           ],
@@ -8951,7 +8951,7 @@
         {
           "id": "overlay.crm.matser.management.blacklist.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -8971,7 +8971,7 @@
         {
           "id": "overlay.crm.matser.management.blacklist.overlay_trigger.品类",
           "name": "品类",
-          "context": "",
+          "context": "overlay_trigger:品类",
           "aliases": [
             "品类"
           ],
@@ -8991,7 +8991,7 @@
         {
           "id": "overlay.crm.matser.management.blacklist.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -9011,7 +9011,7 @@
         {
           "id": "overlay.crm.matser.management.blacklist.overlay_trigger.全部商务",
           "name": "全部商务",
-          "context": "",
+          "context": "overlay_trigger:全部商务",
           "aliases": [
             "全部商务"
           ],
@@ -9799,7 +9799,7 @@
         {
           "id": "overlay.crm.matser.management.focus.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -9819,7 +9819,7 @@
         {
           "id": "overlay.crm.matser.management.focus.overlay_trigger.品类",
           "name": "品类",
-          "context": "",
+          "context": "overlay_trigger:品类",
           "aliases": [
             "品类"
           ],
@@ -9839,7 +9839,7 @@
         {
           "id": "overlay.crm.matser.management.focus.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -9859,7 +9859,7 @@
         {
           "id": "overlay.crm.matser.management.focus.overlay_trigger.全部商务",
           "name": "全部商务",
-          "context": "",
+          "context": "overlay_trigger:全部商务",
           "aliases": [
             "全部商务"
           ],
@@ -9879,7 +9879,7 @@
         {
           "id": "overlay.crm.matser.management.focus.overlay_trigger.选择标签",
           "name": "选择标签",
-          "context": "",
+          "context": "overlay_trigger:选择标签",
           "aliases": [
             "选择标签"
           ],
@@ -9899,7 +9899,7 @@
         {
           "id": "overlay.crm.matser.management.focus.overlay_trigger.状态",
           "name": "状态",
-          "context": "",
+          "context": "overlay_trigger:状态",
           "aliases": [
             "状态"
           ],
@@ -11168,7 +11168,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.年龄分布",
           "name": "年龄分布",
-          "context": "",
+          "context": "overlay_trigger:年龄分布",
           "aliases": [
             "年龄分布"
           ],
@@ -11188,7 +11188,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.批量操作",
           "name": "批量操作",
-          "context": "",
+          "context": "overlay_trigger:批量操作",
           "aliases": [
             "批量操作"
           ],
@@ -11208,7 +11208,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.品类",
           "name": "品类",
-          "context": "",
+          "context": "overlay_trigger:品类",
           "aliases": [
             "品类"
           ],
@@ -11228,7 +11228,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -11248,7 +11248,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.全部商务",
           "name": "全部商务",
-          "context": "",
+          "context": "overlay_trigger:全部商务",
           "aliases": [
             "全部商务"
           ],
@@ -11268,7 +11268,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.选择标签",
           "name": "选择标签",
-          "context": "",
+          "context": "overlay_trigger:选择标签",
           "aliases": [
             "选择标签"
           ],
@@ -11288,7 +11288,7 @@
         {
           "id": "overlay.crm.matser.management.highseas.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -11432,7 +11432,7 @@
         {
           "id": "crm.highseas.tab.cooperating",
           "name": "合作中",
-          "context": "",
+          "context": "status_tab:合作中",
           "aliases": [
             "合作中",
             "正在合作"
@@ -11473,7 +11473,7 @@
         {
           "id": "crm.highseas.tab.all",
           "name": "全部",
-          "context": "",
+          "context": "status_tab:全部",
           "aliases": [
             "全部",
             "全部达人"
@@ -11514,7 +11514,7 @@
         {
           "id": "crm.highseas.tab.ordered",
           "name": "已出单",
-          "context": "",
+          "context": "status_tab:已出单",
           "aliases": [
             "已出单",
             "出单达人"
@@ -11535,7 +11535,7 @@
         {
           "id": "crm.highseas.tab.reached",
           "name": "已触达",
-          "context": "",
+          "context": "status_tab:已触达",
           "aliases": [
             "已触达",
             "已联系"
@@ -11556,7 +11556,7 @@
         {
           "id": "crm.highseas.tab.sampled",
           "name": "已申样",
-          "context": "",
+          "context": "status_tab:已申样",
           "aliases": [
             "已申样",
             "已申请样品",
@@ -11598,7 +11598,7 @@
         {
           "id": "auto.crm.matser.management.highseas.tab.合作中",
           "name": "合作中",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "合作中"
           ],
@@ -11618,7 +11618,7 @@
         {
           "id": "auto.crm.matser.management.highseas.tab.全部",
           "name": "全部",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "全部"
           ],
@@ -11638,7 +11638,7 @@
         {
           "id": "auto.crm.matser.management.highseas.tab.已出单",
           "name": "已出单",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "已出单"
           ],
@@ -11658,7 +11658,7 @@
         {
           "id": "auto.crm.matser.management.highseas.tab.已触达",
           "name": "已触达",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "已触达"
           ],
@@ -11678,7 +11678,7 @@
         {
           "id": "auto.crm.matser.management.highseas.tab.已申样",
           "name": "已申样",
-          "context": "",
+          "context": "selector:div#tab-4",
           "aliases": [
             "已申样"
           ],
@@ -12200,7 +12200,7 @@
         {
           "id": "dialog.crm.matser.management.mymaster.dialog_opener.添加达人",
           "name": "添加达人",
-          "context": "",
+          "context": "dialog_opener:添加达人",
           "aliases": [
             "添加达人",
             "添加达人弹窗",
@@ -12623,7 +12623,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -12643,7 +12643,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.年龄分布",
           "name": "年龄分布",
-          "context": "",
+          "context": "overlay_trigger:年龄分布",
           "aliases": [
             "年龄分布"
           ],
@@ -12663,7 +12663,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.批量操作",
           "name": "批量操作",
-          "context": "",
+          "context": "overlay_trigger:批量操作",
           "aliases": [
             "批量操作"
           ],
@@ -12683,7 +12683,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.品类",
           "name": "品类",
-          "context": "",
+          "context": "overlay_trigger:品类",
           "aliases": [
             "品类"
           ],
@@ -12703,7 +12703,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -12723,7 +12723,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.全部商务",
           "name": "全部商务",
-          "context": "",
+          "context": "overlay_trigger:全部商务",
           "aliases": [
             "全部商务"
           ],
@@ -12743,7 +12743,7 @@
         {
           "id": "overlay.crm.matser.management.mymaster.overlay_trigger.选择标签",
           "name": "选择标签",
-          "context": "",
+          "context": "overlay_trigger:选择标签",
           "aliases": [
             "选择标签"
           ],
@@ -12843,7 +12843,7 @@
         {
           "id": "auto.crm.matser.management.mymaster.tab.合作中",
           "name": "合作中",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "合作中"
           ],
@@ -12863,7 +12863,7 @@
         {
           "id": "auto.crm.matser.management.mymaster.tab.全部",
           "name": "全部",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "全部"
           ],
@@ -12883,7 +12883,7 @@
         {
           "id": "auto.crm.matser.management.mymaster.tab.已出单",
           "name": "已出单",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "已出单"
           ],
@@ -12903,7 +12903,7 @@
         {
           "id": "auto.crm.matser.management.mymaster.tab.已触达",
           "name": "已触达",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "已触达"
           ],
@@ -12923,7 +12923,7 @@
         {
           "id": "auto.crm.matser.management.mymaster.tab.已申样",
           "name": "已申样",
-          "context": "",
+          "context": "selector:div#tab-4",
           "aliases": [
             "已申样"
           ],
@@ -13155,7 +13155,7 @@
         {
           "id": "auto.crm.shop.detail.tab.店铺商品",
           "name": "店铺商品",
-          "context": "",
+          "context": "selector:div#tab-goods",
           "aliases": [
             "店铺商品"
           ],
@@ -13175,7 +13175,7 @@
         {
           "id": "auto.crm.shop.detail.tab.关联达人",
           "name": "关联达人",
-          "context": "",
+          "context": "selector:div#tab-master",
           "aliases": [
             "关联达人"
           ],
@@ -13581,7 +13581,7 @@
         {
           "id": "overlay.dataview.data.overview.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -13601,7 +13601,7 @@
         {
           "id": "overlay.dataview.data.overview.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -13621,7 +13621,7 @@
         {
           "id": "overlay.dataview.data.overview.overlay_trigger.全部商务",
           "name": "全部商务",
-          "context": "",
+          "context": "overlay_trigger:全部商务",
           "aliases": [
             "全部商务"
           ],
@@ -13641,7 +13641,7 @@
         {
           "id": "overlay.dataview.data.overview.overlay_trigger.搜索商品名称或链接id",
           "name": "搜索商品名称或链接ID",
-          "context": "",
+          "context": "overlay_trigger:搜索商品名称或链接ID",
           "aliases": [
             "搜索商品名称或链接ID"
           ],
@@ -13661,7 +13661,7 @@
         {
           "id": "overlay.dataview.data.overview.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -13681,7 +13681,7 @@
         {
           "id": "auto.dataview.data.overview.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "近30天"
           ],
@@ -13701,7 +13701,7 @@
         {
           "id": "auto.dataview.data.overview.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "近7天"
           ],
@@ -13721,7 +13721,7 @@
         {
           "id": "auto.dataview.data.overview.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "昨天"
           ],
@@ -14151,7 +14151,7 @@
         {
           "id": "overlay.bpm.oa.leave.create.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -14171,7 +14171,7 @@
         {
           "id": "overlay.bpm.oa.leave.create.overlay_trigger.选择结束时间",
           "name": "选择结束时间",
-          "context": "",
+          "context": "overlay_trigger:选择结束时间",
           "aliases": [
             "选择结束时间"
           ],
@@ -14191,7 +14191,7 @@
         {
           "id": "overlay.bpm.oa.leave.create.overlay_trigger.选择开始时间",
           "name": "选择开始时间",
-          "context": "",
+          "context": "overlay_trigger:选择开始时间",
           "aliases": [
             "选择开始时间"
           ],
@@ -14702,7 +14702,7 @@
         {
           "id": "dialog.erp.blacklist.dialog_opener.新增",
           "name": "新增",
-          "context": "",
+          "context": "dialog_opener:新增",
           "aliases": [
             "新增",
             "新增弹窗",
@@ -15026,7 +15026,7 @@
         {
           "id": "overlay.job.log.overlay_trigger.请选择任务状态",
           "name": "请选择任务状态",
-          "context": "",
+          "context": "overlay_trigger:请选择任务状态",
           "aliases": [
             "请选择任务状态"
           ],
@@ -15046,7 +15046,7 @@
         {
           "id": "overlay.job.log.overlay_trigger.选择结束执行时间",
           "name": "选择结束执行时间",
-          "context": "",
+          "context": "overlay_trigger:选择结束执行时间",
           "aliases": [
             "选择结束执行时间"
           ],
@@ -15066,7 +15066,7 @@
         {
           "id": "overlay.job.log.overlay_trigger.选择开始执行时间",
           "name": "选择开始执行时间",
-          "context": "",
+          "context": "overlay_trigger:选择开始执行时间",
           "aliases": [
             "选择开始执行时间"
           ],
@@ -15612,7 +15612,7 @@
         {
           "id": "overlay.monitor.message.list.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -15632,7 +15632,7 @@
         {
           "id": "overlay.monitor.message.list.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -15652,7 +15652,7 @@
         {
           "id": "overlay.monitor.message.list.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -16199,7 +16199,7 @@
         {
           "id": "dialog.order.sku.min.price.dialog_opener.新增",
           "name": "新增",
-          "context": "",
+          "context": "dialog_opener:新增",
           "aliases": [
             "新增",
             "新增弹窗",
@@ -16284,7 +16284,7 @@
         {
           "id": "overlay.order.sku.min.price.overlay_trigger.导入导出",
           "name": "导入导出",
-          "context": "",
+          "context": "overlay_trigger:导入导出",
           "aliases": [
             "导入导出"
           ],
@@ -16304,7 +16304,7 @@
         {
           "id": "overlay.order.sku.min.price.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -16610,7 +16610,7 @@
         {
           "id": "overlay.product.data.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -16630,7 +16630,7 @@
         {
           "id": "overlay.product.data.detail.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -16650,7 +16650,7 @@
         {
           "id": "auto.product.data.detail.tab.今天",
           "name": "今天",
-          "context": "",
+          "context": "selector:div#tab-0",
           "aliases": [
             "今天"
           ],
@@ -16670,7 +16670,7 @@
         {
           "id": "auto.product.data.detail.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-3",
           "aliases": [
             "近30天"
           ],
@@ -16690,7 +16690,7 @@
         {
           "id": "auto.product.data.detail.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-2",
           "aliases": [
             "近7天"
           ],
@@ -16710,7 +16710,7 @@
         {
           "id": "auto.product.data.detail.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "昨天"
           ],
@@ -17887,7 +17887,7 @@
         {
           "id": "overlay.product.sku.inventoryreport.detail.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -17907,7 +17907,7 @@
         {
           "id": "overlay.product.sku.inventoryreport.detail.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -17927,7 +17927,7 @@
         {
           "id": "auto.product.sku.inventoryreport.detail.tab.近30天",
           "name": "近30天",
-          "context": "",
+          "context": "selector:div#tab-30",
           "aliases": [
             "近30天"
           ],
@@ -17947,7 +17947,7 @@
         {
           "id": "auto.product.sku.inventoryreport.detail.tab.近7天",
           "name": "近7天",
-          "context": "",
+          "context": "selector:div#tab-7",
           "aliases": [
             "近7天"
           ],
@@ -17967,7 +17967,7 @@
         {
           "id": "auto.product.sku.inventoryreport.detail.tab.昨天",
           "name": "昨天",
-          "context": "",
+          "context": "selector:div#tab-1",
           "aliases": [
             "昨天"
           ],
@@ -18439,7 +18439,7 @@
         {
           "id": "overlay.report.center.detail.performance.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -18459,7 +18459,7 @@
         {
           "id": "overlay.report.center.detail.performance.overlay_trigger.请选择运营人员",
           "name": "请选择运营人员",
-          "context": "",
+          "context": "overlay_trigger:请选择运营人员",
           "aliases": [
             "请选择运营人员"
           ],
@@ -18479,7 +18479,7 @@
         {
           "id": "overlay.report.center.detail.performance.overlay_trigger.选择日期",
           "name": "选择日期",
-          "context": "",
+          "context": "overlay_trigger:选择日期",
           "aliases": [
             "选择日期"
           ],
@@ -18646,7 +18646,7 @@
         {
           "id": "overlay.report.center.detail.shop.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -18666,7 +18666,7 @@
         {
           "id": "overlay.report.center.detail.shop.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -18686,7 +18686,7 @@
         {
           "id": "overlay.report.center.detail.shop.overlay_trigger.选择日期",
           "name": "选择日期",
-          "context": "",
+          "context": "overlay_trigger:选择日期",
           "aliases": [
             "选择日期"
           ],
@@ -18873,7 +18873,7 @@
         {
           "id": "overlay.report.center.detail.shopeegoods.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -19820,7 +19820,7 @@
         {
           "id": "overlay.report.center.detail.shopeeshop.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -19840,7 +19840,7 @@
         {
           "id": "overlay.report.center.detail.shopeeshop.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -19860,7 +19860,7 @@
         {
           "id": "overlay.report.center.detail.shopeeshop.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -21968,7 +21968,7 @@
         {
           "id": "dialog.system.costom.fee.dialog_opener.新增自定义费用",
           "name": "新增自定义费用",
-          "context": "",
+          "context": "dialog_opener:新增自定义费用",
           "aliases": [
             "新增自定义费用",
             "新增自定义费用弹窗",
@@ -22033,7 +22033,7 @@
         {
           "id": "overlay.system.costom.fee.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -22053,7 +22053,7 @@
         {
           "id": "overlay.system.costom.fee.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
@@ -22073,7 +22073,7 @@
         {
           "id": "overlay.system.costom.fee.overlay_trigger.选择月",
           "name": "选择月",
-          "context": "",
+          "context": "overlay_trigger:选择月",
           "aliases": [
             "选择月"
           ],
@@ -22361,7 +22361,7 @@
         {
           "id": "overlay.system.package.open.record.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -22381,7 +22381,7 @@
         {
           "id": "overlay.system.package.open.record.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -22499,7 +22499,7 @@
         {
           "id": "auto.user.package.tab.单量套餐",
           "name": "单量套餐",
-          "context": "",
+          "context": "selector:div#tab-order",
           "aliases": [
             "单量套餐"
           ],
@@ -22889,7 +22889,7 @@
         {
           "id": "overlay.download.list.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -22909,7 +22909,7 @@
         {
           "id": "overlay.download.list.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -23187,7 +23187,7 @@
         {
           "id": "overlay.index.home.overlay_trigger.开始日期",
           "name": "开始日期",
-          "context": "",
+          "context": "overlay_trigger:开始日期",
           "aliases": [
             "开始日期"
           ],
@@ -23207,7 +23207,7 @@
         {
           "id": "overlay.index.home.overlay_trigger.请选择",
           "name": "请选择",
-          "context": "",
+          "context": "overlay_trigger:请选择",
           "aliases": [
             "请选择"
           ],
@@ -23227,7 +23227,7 @@
         {
           "id": "overlay.index.home.overlay_trigger.选择店铺",
           "name": "选择店铺",
-          "context": "",
+          "context": "overlay_trigger:选择店铺",
           "aliases": [
             "选择店铺"
           ],
