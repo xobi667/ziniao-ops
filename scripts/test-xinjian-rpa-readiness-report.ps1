@@ -51,6 +51,10 @@ try {
     Test-Equal -Failures $failures -Label "execution_guard_plans.export_download_follow_up" -Actual $payload.execution_guard_plans.export_download_follow_up -Expected $payload.totals.confirmation_required_export
     Test-Equal -Failures $failures -Label "execution_guard_plans.row_context_required_follow_up" -Actual $payload.execution_guard_plans.row_context_required_follow_up -Expected $payload.totals.row_context_required
     Test-Equal -Failures $failures -Label "execution_guard_plans.table_column_read_with_cdp" -Actual $payload.execution_guard_plans.table_column_read_with_cdp -Expected $payload.totals.table_column_readable_with_cdp
+    Test-Equal -Failures $failures -Label "command_inventory.inventory_actions" -Actual $payload.command_inventory.inventory_actions -Expected $payload.totals.actions
+    Test-Equal -Failures $failures -Label "command_inventory.exact_query_commands" -Actual $payload.command_inventory.exact_query_commands -Expected $payload.totals.actions
+    Test-Equal -Failures $failures -Label "command_inventory.dry_run_commands" -Actual $payload.command_inventory.dry_run_commands -Expected $payload.totals.actions
+    Test-Equal -Failures $failures -Label "command_inventory.missing_exact_or_dry_run_command" -Actual $payload.command_inventory.missing_exact_or_dry_run_command -Expected 0
 
     $remaining = @($payload.remaining_boundaries)
     $nonGap = @($payload.non_gap_boundaries)
@@ -70,6 +74,9 @@ try {
     $mdText = if (Test-Path -LiteralPath $tmpMd) { Get-Content -LiteralPath $tmpMd -Raw } else { "" }
     if ($mdText -notmatch "Structured follow-up plans") {
       Add-Failure -Failures $failures -Message "markdown missing structured follow-up summary"
+    }
+    if ($mdText -notmatch "Exact command inventory") {
+      Add-Failure -Failures $failures -Message "markdown missing exact command inventory summary"
     }
   }
 } finally {

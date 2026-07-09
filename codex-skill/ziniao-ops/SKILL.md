@@ -351,6 +351,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\quer
 ```
 
 By default the query script reads `references\xinjian-ui-action-catalog.json` first, so generated read-only table-header memory is available to intent matching. If the catalog is unavailable, it falls back to the raw curated/auto/overlay/dialog/row-action maps.
+When an exact remembered action is known from `references\xinjian-ui-rpa-command-inventory.json`, pass `-ActionId "<catalog action id>"` to query or invoke. Exact action-id routing bypasses fuzzy ranking and rejects mismatched route URLs before execution.
 For page-name intents such as `打开下载中心`, the query layer synthesizes a safe page navigation action from the catalog page route so it does not confuse a page name with a row-level operation button. After changing query/routing logic, run:
 
 ```powershell
@@ -360,6 +361,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-table-column-read-planning.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-export-action-planning.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-write-action-planning.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-command-inventory.ps1") -Json
 ```
 
 To prove that remembered safe route-scoped controls still click through CDP instead of only existing in the static map, run the safe action exerciser in batches:
@@ -386,7 +388,7 @@ To answer "还缺什么" from saved evidence without opening a browser, run:
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\report-xinjian-rpa-readiness.ps1") -Json
 ```
 
-It writes `references\xinjian-ui-rpa-readiness.json` / `.md` and checks catalog quality, live button coverage, safe action exercise proof, and remaining non-default boundaries such as business no-access pages, confirmation-required write/export actions, and row-context actions. Read-only table-column memory is tracked separately as non-gap readable column memory. Known terminal pages such as `/index/noaccess` are tracked separately as non-gap restricted pages, not missing button memory.
+It writes `references\xinjian-ui-rpa-readiness.json` / `.md` and checks catalog quality, exact command inventory, live button coverage, safe action exercise proof, and remaining non-default boundaries such as business no-access pages, confirmation-required write/export actions, and row-context actions. Read-only table-column memory is tracked separately as non-gap readable column memory. Known terminal pages such as `/index/noaccess` are tracked separately as non-gap restricted pages, not missing button memory.
 Read `execution_guard_plans` before answering "还缺什么": write/export/row-context counts there mean those actions have machine-readable confirmation or row-selection follow-up plans, so they are controlled execution boundaries rather than missing button memory.
 
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
@@ -431,14 +433,16 @@ For a full compact audit of remembered 心舰 pages/actions, regenerate and insp
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-action-catalog.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-rpa-command-inventory.ps1") -Json
 ```
 
-`references\xinjian-ui-action-catalog.md` is the human-readable action table. `references\xinjian-ui-action-catalog.json` is the machine-readable merged index with context, safety mode, source map, locator strategy, locator metadata, and audit lists for manual-review or map-only actions.
+`references\xinjian-ui-action-catalog.md` is the human-readable action table. `references\xinjian-ui-action-catalog.json` is the machine-readable merged index with context, safety mode, source map, locator strategy, locator metadata, and audit lists for manual-review or map-only actions. `references\xinjian-ui-rpa-command-inventory.json` maps every action to exact query, dry-run, safe execute, row-context, or confirmation commands keyed by `action_id`.
 
 To turn a mapped intent into a safe RPA-style action plan, use the action invoker. It dry-runs by default and reports the exact matched action, safety gate, locator strategy, `execution_backend`, and top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. Add `-Execute` only for safe non-write actions. Add `-AllowWrite` or `-AllowExport` only after the employee explicitly confirms that exact write/export operation:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -ActionId "<catalog action id>" -Url "<当前心舰URL>" -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<安全动作>" -Execute -Json
 ```
 

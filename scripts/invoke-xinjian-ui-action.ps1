@@ -1,7 +1,7 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
-  [Parameter(Mandatory = $true)]
-  [string]$Intent,
+  [string]$Intent = "",
+  [string]$ActionId = "",
   [string]$Url = "",
   [int[]]$Port = @(),
   [switch]$Execute,
@@ -16,6 +16,17 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+$requestedActionId = ([string]$ActionId).Trim()
+if (!$Intent -and !$requestedActionId) {
+  $payload = [ordered]@{
+    ok = $false
+    error = "intent_or_action_id_required"
+    mode = "input_error"
+    next_action = "pass_intent_or_action_id"
+  }
+  if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "Pass -Intent or -ActionId." }
+  exit 2
+}
 
 function ConvertFrom-JsonText($Lines) {
   $text = (($Lines | Out-String).Trim())
@@ -116,6 +127,7 @@ function New-ExportFollowUpPlan {
     [bool]$AllowExportFlag,
     [bool]$ExecuteRequested,
     [string]$InputIntent,
+    [string]$InputActionId,
     [string]$InputUrl,
     [int]$ResolvedPortValue
   )
@@ -124,6 +136,7 @@ function New-ExportFollowUpPlan {
   $rerun = [ordered]@{
     script = "scripts\invoke-xinjian-ui-action.ps1"
     intent = $InputIntent
+    action_id = if ($InputActionId) { $InputActionId } else { $null }
     url = if ($InputUrl) { $InputUrl } else { $null }
     port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
     execute = $true
@@ -166,6 +179,7 @@ function New-WriteFollowUpPlan {
     [bool]$AllowWriteFlag,
     [bool]$ExecuteRequested,
     [string]$InputIntent,
+    [string]$InputActionId,
     [string]$InputUrl,
     [int]$ResolvedPortValue
   )
@@ -174,6 +188,7 @@ function New-WriteFollowUpPlan {
   $rerun = [ordered]@{
     script = "scripts\invoke-xinjian-ui-action.ps1"
     intent = $InputIntent
+    action_id = if ($InputActionId) { $InputActionId } else { $null }
     url = if ($InputUrl) { $InputUrl } else { $null }
     port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
     execute = $true
@@ -213,6 +228,7 @@ function New-RowContextFollowUpPlan {
     [bool]$HasRowContext,
     [bool]$ExecuteRequested,
     [string]$InputIntent,
+    [string]$InputActionId,
     [string]$InputUrl,
     [int]$ResolvedPortValue,
     [bool]$IsWriteAction,
@@ -225,6 +241,7 @@ function New-RowContextFollowUpPlan {
   $withRowIndex = [ordered]@{
     script = "scripts\invoke-xinjian-ui-action.ps1"
     intent = $InputIntent
+    action_id = if ($InputActionId) { $InputActionId } else { $null }
     url = if ($InputUrl) { $InputUrl } else { $null }
     port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
     row_index = 1
@@ -236,6 +253,7 @@ function New-RowContextFollowUpPlan {
   $withRowText = [ordered]@{
     script = "scripts\invoke-xinjian-ui-action.ps1"
     intent = $InputIntent
+    action_id = if ($InputActionId) { $InputActionId } else { $null }
     url = if ($InputUrl) { $InputUrl } else { $null }
     port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
     row_text = "[visible row text]"
@@ -292,9 +310,12 @@ function Resolve-XinjianCurrentUrlByScript {
 function Invoke-XinjianActionQuery {
   param(
     [string]$QueryIntent,
-    [string]$QueryUrl
+    [string]$QueryUrl,
+    [string]$QueryActionId = ""
   )
-  $queryArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", (Join-Path $PSScriptRoot "query-xinjian-ui-action.ps1"), "-Intent", $QueryIntent, "-Json")
+  $queryArgs = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", (Join-Path $PSScriptRoot "query-xinjian-ui-action.ps1"), "-Json")
+  if ($QueryIntent) { $queryArgs += @("-Intent", $QueryIntent) }
+  if ($QueryActionId) { $queryArgs += @("-ActionId", $QueryActionId) }
   if ($QueryUrl) { $queryArgs += @("-Url", $QueryUrl) }
   $raw = @(& powershell @queryArgs 2>&1)
   [pscustomobject]@{
@@ -802,9 +823,10 @@ if (!$explicitRowContextProvided) {
 }
 
 $requestedUrl = $Url
+$detectionIntent = if ($Intent) { $Intent } else { $requestedActionId }
 $urlDetection = $null
 if (!$Url -and !$NoAutoDetectUrl) {
-  $urlDetection = Resolve-XinjianCurrentUrlByScript -QueryIntent $Intent
+  $urlDetection = Resolve-XinjianCurrentUrlByScript -QueryIntent $detectionIntent
   if ($urlDetection.ok -and $urlDetection.url) {
     $Url = [string]$urlDetection.url
   }
@@ -825,6 +847,7 @@ if ($nonBusinessReason) {
     ok = $false
     mode = "non_business_xinjian_page"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -840,7 +863,7 @@ if ($nonBusinessReason) {
   exit 1
 }
 
-$queryResult = Invoke-XinjianActionQuery -QueryIntent $Intent -QueryUrl $Url
+$queryResult = Invoke-XinjianActionQuery -QueryIntent $Intent -QueryUrl $Url -QueryActionId $requestedActionId
 $queryRaw = $queryResult.raw
 $queryExit = $queryResult.exit_code
 $query = $queryResult.parsed
@@ -850,6 +873,7 @@ if (!$query) {
     error = "query_output_parse_failed"
     mode = "query_output_parse_failed"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -871,6 +895,7 @@ if (!$query.ok -or $matches.Count -eq 0) {
     ok = $false
     mode = "no_match"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -919,6 +944,7 @@ $canExecute = if ($readOnlyCatalogEntry) {
 
 $plan = [ordered]@{
   intent = $Intent
+  action_id_request = if ($requestedActionId) { $requestedActionId } else { $null }
   url = $Url
   current_url = $currentUrl
   current_title = $currentTitle
@@ -940,6 +966,7 @@ $plan = [ordered]@{
   }
   page_id = $match.page_id
   page_name = $match.page_name
+  page_route = if ($match.PSObject.Properties.Match("page_route").Count -gt 0) { $match.page_route } else { $null }
   score = $match.score
   rank = $match.rank
   action = $action
@@ -988,19 +1015,20 @@ $plan = [ordered]@{
 
 $followUpUrl = if ($Url) { $Url } else { $currentUrl }
 $postExecutePlan = if ($requiresExport) {
-  New-ExportFollowUpPlan -IsExportAction $requiresExport -AllowExportFlag ([bool]($AllowExport -or $AllowWrite)) -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort)
+  New-ExportFollowUpPlan -IsExportAction $requiresExport -AllowExportFlag ([bool]($AllowExport -or $AllowWrite)) -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputActionId $requestedActionId -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort)
 } elseif ($requiresWrite) {
-  New-WriteFollowUpPlan -IsWriteAction $requiresWrite -AllowWriteFlag ([bool]$AllowWrite) -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort)
+  New-WriteFollowUpPlan -IsWriteAction $requiresWrite -AllowWriteFlag ([bool]$AllowWrite) -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputActionId $requestedActionId -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort)
 } else {
   $null
 }
-$rowContextFollowUp = New-RowContextFollowUpPlan -IsRowContextAction $actionHasRowContextBoundary -HasRowContext $hasExplicitRowContext -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort) -IsWriteAction $requiresWrite -IsExportAction $requiresExport -AllowWriteFlag ([bool]$AllowWrite) -AllowExportFlag ([bool]$AllowExport)
+$rowContextFollowUp = New-RowContextFollowUpPlan -IsRowContextAction $actionHasRowContextBoundary -HasRowContext $hasExplicitRowContext -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputActionId $requestedActionId -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort) -IsWriteAction $requiresWrite -IsExportAction $requiresExport -AllowWriteFlag ([bool]$AllowWrite) -AllowExportFlag ([bool]$AllowExport)
 
 if (!$Execute) {
   $payload = [ordered]@{
     ok = $true
     mode = "dry_run"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -1033,6 +1061,7 @@ if (!$canExecute) {
     ok = $false
     mode = "blocked_by_safety"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -1059,6 +1088,7 @@ if ($executionBackend -eq "uia") {
     mode = "executed"
     execution_backend = "uia"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -1089,6 +1119,7 @@ if (!$node) {
     error = "node_missing"
     mode = "node_missing"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -1110,6 +1141,7 @@ if (!(Test-Path -LiteralPath $helper)) {
     error = "invoke_helper_missing"
     mode = "invoke_helper_missing"
     intent = $Intent
+    action_id = if ($requestedActionId) { $requestedActionId } else { $null }
     url = $Url
     current_url = $currentUrl
     current_title = $currentTitle
@@ -1128,7 +1160,8 @@ $stateDir = Join-Path $root ".ziniao-ops\xinjian-action-runner"
 New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
 $actionPath = Join-Path $stateDir ("action-{0}.json" -f ([guid]::NewGuid().ToString("N")))
 $actionForRun = $action | ConvertTo-Json -Depth 14 | ConvertFrom-Json
-$actionForRun | Add-Member -NotePropertyName "runtime_intent" -NotePropertyValue $Intent -Force
+$runtimeIntent = if ($Intent) { $Intent } else { [string]$action.name }
+$actionForRun | Add-Member -NotePropertyName "runtime_intent" -NotePropertyValue $runtimeIntent -Force
 if ($RowIndex -gt 0) {
   $actionForRun | Add-Member -NotePropertyName "runtime_row_index" -NotePropertyValue $RowIndex -Force
 }
@@ -1164,6 +1197,7 @@ $payload = [ordered]@{
   ok = [bool]$result.ok
   mode = "executed"
   intent = $Intent
+  action_id = if ($requestedActionId) { $requestedActionId } else { $null }
   url = $Url
   current_url = $currentUrl
   current_title = $currentTitle

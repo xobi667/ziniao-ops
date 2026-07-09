@@ -3,6 +3,7 @@ param(
   [string]$CatalogPath = "",
   [string]$LiveCoveragePath = "",
   [string]$ExerciseReportPath = "",
+  [string]$CommandInventoryPath = "",
   [string]$OutputJsonPath = "",
   [string]$OutputMarkdownPath = "",
   [switch]$Json
@@ -13,6 +14,7 @@ $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 if (!$CatalogPath) { $CatalogPath = Join-Path $root "references\xinjian-ui-action-catalog.json" }
 if (!$LiveCoveragePath) { $LiveCoveragePath = Join-Path $root "references\xinjian-ui-live-button-coverage.json" }
 if (!$ExerciseReportPath) { $ExerciseReportPath = Join-Path $root "references\xinjian-ui-action-exercise-report.json" }
+if (!$CommandInventoryPath) { $CommandInventoryPath = Join-Path $root "references\xinjian-ui-rpa-command-inventory.json" }
 if (!$OutputJsonPath) { $OutputJsonPath = Join-Path $root "references\xinjian-ui-rpa-readiness.json" }
 if (!$OutputMarkdownPath) { $OutputMarkdownPath = Join-Path $root "references\xinjian-ui-rpa-readiness.md" }
 
@@ -80,6 +82,7 @@ if (!$catalog) {
 
 $live = Read-JsonFile $LiveCoveragePath
 $exercise = Read-JsonFile $ExerciseReportPath
+$commandInventory = Read-JsonFile $CommandInventoryPath
 
 $actions = @()
 foreach ($page in @($catalog.pages)) {
@@ -170,6 +173,24 @@ if ($exercise -and $exercise.totals) {
   }
 }
 
+$commandInventoryTotals = [ordered]@{
+  loaded = [bool]$commandInventory
+  inventory_actions = $null
+  exact_query_commands = $null
+  dry_run_commands = $null
+  safe_execute_commands = $null
+  table_read_commands = $null
+  row_context_command_templates = $null
+  write_confirmation_commands = $null
+  export_confirmation_commands = $null
+  missing_exact_or_dry_run_command = $null
+}
+if ($commandInventory -and $commandInventory.totals) {
+  foreach ($name in @("inventory_actions", "exact_query_commands", "dry_run_commands", "safe_execute_commands", "table_read_commands", "row_context_command_templates", "write_confirmation_commands", "export_confirmation_commands", "missing_exact_or_dry_run_command")) {
+    $commandInventoryTotals[$name] = Get-PropertyValue $commandInventory.totals $name
+  }
+}
+
 $remainingBoundaries = @()
 if (($liveTotals.pages_noaccess -as [int]) -gt 0) {
   $remainingBoundaries += [ordered]@{
@@ -257,14 +278,22 @@ $qualityOk = (
 )
 $liveOk = ($live -and ([int](Get-PropertyValue $live.totals "missing_controls" 1)) -eq 0 -and ([int](Get-PropertyValue $live.totals "pages_with_missing_controls" 1)) -eq 0)
 $exerciseOk = ($exercise -and ([int](Get-PropertyValue $exercise.totals "failed_actions" 1)) -eq 0 -and ([int](Get-PropertyValue $exercise.totals "not_attempted_actions" 1)) -eq 0)
+$commandInventoryOk = (
+  $commandInventory -and
+  ([int](Get-PropertyValue $commandInventory.totals "inventory_actions" 0)) -eq ([int]$catalog.totals.actions) -and
+  ([int](Get-PropertyValue $commandInventory.totals "exact_query_commands" 0)) -eq ([int]$catalog.totals.actions) -and
+  ([int](Get-PropertyValue $commandInventory.totals "dry_run_commands" 0)) -eq ([int]$catalog.totals.actions) -and
+  ([int](Get-PropertyValue $commandInventory.totals "missing_exact_or_dry_run_command" 1)) -eq 0
+)
 
 $payload = [ordered]@{
-  ok = [bool]($qualityOk -and $liveOk -and $exerciseOk)
+  ok = [bool]($qualityOk -and $liveOk -and $exerciseOk -and $commandInventoryOk)
   version = (Get-Date).ToString("yyyy-MM-dd")
   generated_at = (Get-Date).ToUniversalTime().ToString("o")
   catalog_path = $CatalogPath
   live_coverage_path = $LiveCoveragePath
   exercise_report_path = $ExerciseReportPath
+  command_inventory_path = $CommandInventoryPath
   totals = [ordered]@{
     pages = [int]$catalog.totals.pages
     actions = [int]$catalog.totals.actions
@@ -289,6 +318,7 @@ $payload = [ordered]@{
   }
   live_coverage = $liveTotals
   safe_action_exercise = $exerciseTotals
+  command_inventory = $commandInventoryTotals
   execution_guard_plans = $executionGuardPlans
   remaining_boundaries = @($remainingBoundaries)
   non_gap_boundaries = @($nonGapBoundaries)
@@ -298,6 +328,8 @@ $payload = [ordered]@{
     "fix_catalog_quality_gaps"
   } elseif (!$liveOk) {
     "rerun_live_button_coverage_or_learn_missing_controls"
+  } elseif (!$commandInventoryOk) {
+    "regenerate_xinjian_rpa_command_inventory"
   } else {
     "rerun_safe_action_exercise"
   }
@@ -316,6 +348,7 @@ $lines += "- Catalog: $($payload.totals.pages) pages / $($payload.totals.actions
 $lines += "- Quality gaps: purpose $($payload.quality.no_purpose), function_source $($payload.quality.no_function_source), context $($payload.quality.no_context), manual/map/empty $($payload.quality.manual_review_actions)/$($payload.quality.map_only_actions)/$($payload.quality.empty_locator_actions)"
 $lines += "- Live controls: observed $($payload.live_coverage.observed_controls), matched $($payload.live_coverage.matched_controls), missing $($payload.live_coverage.missing_controls), business no-access pages $($payload.live_coverage.pages_noaccess), restricted terminal pages $($payload.live_coverage.pages_restricted_terminal)"
 $lines += "- Safe action exercise: executable $($payload.safe_action_exercise.executable_actions), verified $($payload.safe_action_exercise.verified_actions), failed $($payload.safe_action_exercise.failed_actions), not attempted $($payload.safe_action_exercise.not_attempted_actions)"
+$lines += "- Exact command inventory: actions $($payload.command_inventory.inventory_actions), exact-query $($payload.command_inventory.exact_query_commands), dry-run $($payload.command_inventory.dry_run_commands), missing exact/dry-run $($payload.command_inventory.missing_exact_or_dry_run_command)"
 $lines += "- Row-context execution: $($payload.totals.row_context_executable_with_resolved_context) row-level actions can be planned with explicit or inferred row context; none are blindly clicked by default."
 $lines += "- Table-column reading: $($payload.totals.table_column_readable_with_cdp) remembered columns can be read from a debuggable current page without clicking."
 $lines += "- Structured follow-up plans: write $($payload.execution_guard_plans.write_confirmation_follow_up), export $($payload.execution_guard_plans.export_download_follow_up), row-context $($payload.execution_guard_plans.row_context_required_follow_up), table-read $($payload.execution_guard_plans.table_column_read_with_cdp)."

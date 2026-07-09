@@ -12,6 +12,8 @@ references/xinjian-ui-dialog-map.json
 references/xinjian-ui-row-action-map.json
 references/xinjian-ui-action-catalog.json
 references/xinjian-ui-action-catalog.md
+references/xinjian-ui-rpa-command-inventory.json
+references/xinjian-ui-rpa-command-inventory.md
 references/xinjian-ui-action-exercise-report.json
 references/xinjian-ui-action-exercise-report.md
 references/xinjian-ui-live-button-coverage.json
@@ -20,7 +22,7 @@ references/xinjian-ui-rpa-readiness.json
 references/xinjian-ui-rpa-readiness.md
 ```
 
-`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement; it excludes transient Element UI poppers, date-picker panels, select dropdowns, dialogs, drawers, message boxes, global sidebars, user menus, and theme drawers so dynamic controls are not misfiled as always-visible page buttons. The auto map can also supplement curated pages with live DOM selectors when generic controls are missing from the curated map. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores table headers, row action labels, and generic action words from operation columns. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing. `xinjian-ui-action-exercise-report.json` and `.md` record sanitized execution evidence for safe route-scoped CDP actions. `xinjian-ui-live-button-coverage.json` and `.md` compare live route-scoped DOM controls against the action catalog to prove whether visible controls are still missing from memory.
+`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement; it excludes transient Element UI poppers, date-picker panels, select dropdowns, dialogs, drawers, message boxes, global sidebars, user menus, and theme drawers so dynamic controls are not misfiled as always-visible page buttons. The auto map can also supplement curated pages with live DOM selectors when generic controls are missing from the curated map. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores table headers, row action labels, and generic action words from operation columns. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing. `xinjian-ui-rpa-command-inventory.json` and `.md` turn every catalog action into exact `action_id` query, dry-run, safe execute, row-context, or confirmation command records so duplicate button names do not require fuzzy guessing. `xinjian-ui-action-exercise-report.json` and `.md` record sanitized execution evidence for safe route-scoped CDP actions. `xinjian-ui-live-button-coverage.json` and `.md` compare live route-scoped DOM controls against the action catalog to prove whether visible controls are still missing from memory.
 `xinjian-ui-rpa-readiness.json` and `.md` summarize catalog quality, live coverage, safe exercise proof, and the remaining non-default execution boundaries.
 
 ## Workflow
@@ -91,14 +93,16 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-ui-action-catalog.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\generate-xinjian-rpa-command-inventory.ps1") -Json
 ```
 
-The generated `references/xinjian-ui-action-catalog.md` is a human-readable page/action table. The JSON version includes action context, safety mode, source map, locator strategy, raw locator, and an audit section for `manual_review`, `map_only`, and empty-locator actions.
+The generated `references/xinjian-ui-action-catalog.md` is a human-readable page/action table. The JSON version includes action context, safety mode, source map, locator strategy, raw locator, and an audit section for `manual_review`, `map_only`, and empty-locator actions. The generated command inventory adds exact `action_id` commands for every catalog action.
 
 4. For RPA-style routing, convert the mapped intent into a dry-run action plan before clicking:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<用户要做什么>" -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -ActionId "<catalog action id>" -Url "<当前心舰URL>" -Json
 ```
 
 The invoker reports the matched page/action, safety gate, locator strategy, `execution_backend`, and top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. If `-Url` is omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent; a single best visible match becomes the current page. By default it scans reachable DevTools ports instead of assuming `9342`; pass `-Port` only to pin execution to a specific browser. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` to force global matching. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
@@ -143,6 +147,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\repo
 
 The readiness report writes `references/xinjian-ui-rpa-readiness.json` and `.md`. It checks whether every catalog action has purpose, function source, context, locator metadata, and whether live controls and safe execution evidence still have gaps. Remaining boundaries such as business no-access pages, confirmation-required write/export actions, and row-context actions are listed separately so they are not confused with missing button memory. Read-only table-column memory is listed as non-gap readable column memory. Known terminal pages such as `/index/noaccess` are tracked as non-gap restricted pages. Row-context actions are executable only with explicit `-RowIndex` / `-RowText` or clear row intent inferred from the user's wording.
 The readiness report also includes `execution_guard_plans`: write/export/row-context counts there are controlled execution plans (`post_execute` or `row_context_follow_up`), not missing button memory.
+The command inventory includes exact `action_id` commands for every catalog action. Use it when a remembered action must be selected precisely instead of relying on intent ranking or candidate index. If a command inventory action is route-scoped, `query-xinjian-ui-action.ps1 -ActionId ... -Url ...` rejects mismatched URLs before execution.
 
 5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 

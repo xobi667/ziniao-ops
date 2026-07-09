@@ -4,6 +4,7 @@
 - Quality gaps: purpose 0, function_source 0, context 0, manual/map/empty 0/0/0
 - Live controls: observed 827, matched 827, missing 0, business no-access pages 0, restricted terminal pages 1
 - Safe action exercise: executable 551, verified 551, failed 0, not attempted 0
+- Exact command inventory: actions 1117, exact-query 1117, dry-run 1117, missing exact/dry-run 0
 - Row-context execution: 12 row-level actions can be planned with explicit or inferred row context; none are blindly clicked by default.
 - Table-column reading: 460 remembered columns can be read from a debuggable current page without clicking.
 - Structured follow-up plans: write 83, export 9, row-context 12, table-read 460.

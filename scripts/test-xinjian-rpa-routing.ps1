@@ -6,6 +6,7 @@ param(
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 $queryScript = Join-Path $PSScriptRoot "query-xinjian-ui-action.ps1"
+$invokeScript = Join-Path $PSScriptRoot "invoke-xinjian-ui-action.ps1"
 
 function U([int[]]$Codepoints) {
   return -join ($Codepoints | ForEach-Object { [char]$_ })
@@ -21,6 +22,7 @@ $textRecent7Days = ((U @(0x8FD1)) + "7" + (U @(0x5929)))
 $textAdSpend = (U @(0x5E7F, 0x544A, 0x82B1, 0x8D39))
 $textExportRuleLog = (U @(0x5BFC, 0x51FA, 0x5E7F, 0x544A, 0x89C4, 0x5219, 0x65E5, 0x5FD7))
 $textSearchCreatorId = ((U @(0x641C, 0x7D22, 0x8FBE, 0x4EBA)) + "ID")
+$textSwitchCurrency = (U @(0x5207, 0x6362, 0x5E01, 0x79CD))
 
 function Add-Failure {
   param(
@@ -189,6 +191,92 @@ foreach ($case in $cases) {
     first_action_type = if ($first) { $first.action.type } else { $null }
     first_locator_strategy = if ($first) { $first.action.locator_strategy } else { $null }
     first_safety_mode = if ($first) { $first.action.safety_mode } else { $null }
+    failures = @($failures)
+  }
+}
+
+$exactActionId = "auto.ad.group.detail.button.$textSwitchCurrency"
+$exactCases = @(
+  [pscustomobject]@{
+    name = "exact_action_id_query_without_intent"
+    script = $queryScript
+    args = @("-ActionId", $exactActionId, "-Url", "https://erp.xinjianerp.com/ad/group-detail", "-Json")
+    expect_ok = $true
+    expected_action_id = $exactActionId
+    expected_page_match_mode = "action_id_exact"
+  },
+  [pscustomobject]@{
+    name = "exact_action_id_rejects_wrong_route"
+    script = $queryScript
+    args = @("-ActionId", $exactActionId, "-Url", "https://erp.xinjianerp.com/index/home", "-Json")
+    expect_ok = $false
+    expected_error = "action_id_route_mismatch"
+    expected_next_action = "open_or_focus_matching_xinjian_page_route_before_execute"
+  },
+  [pscustomobject]@{
+    name = "exact_action_id_invoke_dry_run"
+    script = $invokeScript
+    args = @("-ActionId", $exactActionId, "-Url", "https://erp.xinjianerp.com/ad/group-detail", "-NoAutoDetectUrl", "-Json")
+    expect_ok = $true
+    expected_action_id = $exactActionId
+    expected_plan_action_id = $exactActionId
+  }
+)
+
+foreach ($case in $exactCases) {
+  $argsList = @(
+    "-NoProfile",
+    "-ExecutionPolicy", "Bypass",
+    "-File", [string]$case.script
+  ) + @($case.args)
+
+  $raw = @(& powershell @argsList 2>&1)
+  $exitCode = $LASTEXITCODE
+  $parsed = $null
+  $failures = [System.Collections.Generic.List[object]]::new()
+  try {
+    $parsed = ($raw | Out-String | ConvertFrom-Json)
+  } catch {
+    Add-Failure -Failures $failures -Message ("exact action JSON parse failed: {0}" -f $_.Exception.Message)
+  }
+  if ($parsed) {
+    $expectedOk = [bool]$case.expect_ok
+    if ($expectedOk -and $exitCode -ne 0) {
+      Add-Failure -Failures $failures -Message ("exact action command exited with code {0}" -f $exitCode)
+    }
+    if (!$expectedOk -and $exitCode -eq 0) {
+      Add-Failure -Failures $failures -Message "exact action command was expected to fail but exited 0"
+    }
+    if ([bool]$parsed.ok -ne $expectedOk) {
+      Add-Failure -Failures $failures -Message ("exact action ok expected '{0}', got '{1}'" -f $expectedOk, [bool]$parsed.ok)
+    }
+    if ($case.expected_action_id) {
+      $actualActionId = if ($parsed.action_id) { [string]$parsed.action_id } elseif (@($parsed.matches).Count -gt 0) { [string]@($parsed.matches)[0].action.id } else { "" }
+      Test-ExpectedValue -Failures $failures -Label "exact action id" -Actual $actualActionId -Expected $case.expected_action_id
+    }
+    if ($case.expected_plan_action_id) {
+      Test-ExpectedValue -Failures $failures -Label "plan action.id" -Actual $parsed.plan.action.id -Expected $case.expected_plan_action_id
+    }
+    if ($case.expected_page_match_mode) {
+      Test-ExpectedValue -Failures $failures -Label "page_match_mode" -Actual $parsed.page_match_mode -Expected $case.expected_page_match_mode
+    }
+    if ($case.expected_error) {
+      Test-ExpectedValue -Failures $failures -Label "error" -Actual $parsed.error -Expected $case.expected_error
+    }
+    if ($case.expected_next_action) {
+      Test-ExpectedValue -Failures $failures -Label "next_action" -Actual $parsed.next_action -Expected $case.expected_next_action
+    }
+  }
+
+  $results += [pscustomobject]@{
+    name = $case.name
+    ok = ($failures.Count -eq 0)
+    intent = ""
+    url = ""
+    first_action_id = if ($parsed -and @($parsed.matches).Count -gt 0) { @($parsed.matches)[0].action.id } elseif ($parsed -and $parsed.plan) { $parsed.plan.action.id } else { $null }
+    first_action_type = if ($parsed -and @($parsed.matches).Count -gt 0) { @($parsed.matches)[0].action.type } elseif ($parsed -and $parsed.plan) { $parsed.plan.action.type } else { $null }
+    first_locator_strategy = if ($parsed -and @($parsed.matches).Count -gt 0) { @($parsed.matches)[0].action.locator_strategy } elseif ($parsed -and $parsed.plan) { $parsed.plan.locator_strategy } else { $null }
+    first_safety_mode = if ($parsed -and @($parsed.matches).Count -gt 0) { @($parsed.matches)[0].action.safety_mode } elseif ($parsed -and $parsed.plan) { $parsed.plan.safety_mode } else { $null }
     failures = @($failures)
   }
 }

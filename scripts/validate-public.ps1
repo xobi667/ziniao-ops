@@ -211,6 +211,7 @@ $required = @(
   "scripts\generate-xinjian-ui-row-action-map.mjs",
   "scripts\generate-xinjian-ui-action-catalog.ps1",
   "scripts\generate-xinjian-ui-action-catalog.mjs",
+  "scripts\generate-xinjian-rpa-command-inventory.ps1",
   "scripts\resolve-xinjian-current-url.ps1",
   "scripts\list-xinjian-page-actions.ps1",
   "scripts\report-xinjian-action-memory.ps1",
@@ -228,6 +229,7 @@ $required = @(
   "scripts\audit-xinjian-live-button-coverage.ps1",
   "scripts\report-xinjian-rpa-readiness.ps1",
   "scripts\test-xinjian-rpa-readiness-report.ps1",
+  "scripts\test-xinjian-rpa-command-inventory.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",
   "scripts\install-upstream-tools.ps1",
@@ -272,6 +274,8 @@ $required = @(
   "references\xinjian-ui-action-exercise-report.md",
   "references\xinjian-ui-live-button-coverage.json",
   "references\xinjian-ui-live-button-coverage.md",
+  "references\xinjian-ui-rpa-command-inventory.json",
+  "references\xinjian-ui-rpa-command-inventory.md",
   "references\xinjian-ui-rpa-readiness.json",
   "references\xinjian-ui-rpa-readiness.md"
 )
@@ -454,6 +458,25 @@ if (Test-Path -LiteralPath $rpaReadinessReportTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_rpa_readiness_report_test_error" $_.Exception.Message $rpaReadinessReportTestPath
+  }
+}
+
+$rpaCommandInventoryTestPath = Join-Path $Root "scripts\test-xinjian-rpa-command-inventory.ps1"
+if (Test-Path -LiteralPath $rpaCommandInventoryTestPath) {
+  try {
+    $rpaCommandInventoryRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $rpaCommandInventoryTestPath -Json 2>&1)
+    $rpaCommandInventoryExit = $LASTEXITCODE
+    $rpaCommandInventoryResult = $null
+    try {
+      $rpaCommandInventoryResult = ($rpaCommandInventoryRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_rpa_command_inventory_test_parse_failed" ("RPA command inventory test output was not JSON: {0}" -f ($rpaCommandInventoryRaw | Out-String).Trim()) $rpaCommandInventoryTestPath
+    }
+    if ($rpaCommandInventoryResult -and ($rpaCommandInventoryExit -ne 0 -or !$rpaCommandInventoryResult.ok)) {
+      Add-Issue "error" "xinjian_rpa_command_inventory_test_failed" ("RPA command inventory regression test failed: {0}" -f (($rpaCommandInventoryResult.failures) -join ",")) $rpaCommandInventoryTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_rpa_command_inventory_test_error" $_.Exception.Message $rpaCommandInventoryTestPath
   }
 }
 

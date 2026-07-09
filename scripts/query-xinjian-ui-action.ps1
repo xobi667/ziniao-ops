@@ -1,7 +1,7 @@
 [CmdletBinding(PositionalBinding = $false)]
 param(
-  [Parameter(Mandatory = $true)]
-  [string]$Intent,
+  [string]$Intent = "",
+  [string]$ActionId = "",
   [string]$Url = "",
   [string]$MapPath = "",
   [string]$AutoMapPath = "",
@@ -373,6 +373,48 @@ function New-PageNavigationAction($Page) {
   }
 }
 
+function Test-PageMatchesUrl($Page, [string]$InputUrl) {
+  if (!$InputUrl) { return $true }
+  $inputRoute = Get-RoutePath $InputUrl
+  if ($inputRoute -and $Page.PSObject.Properties.Match("route_pattern").Count -gt 0 -and $Page.route_pattern -and $inputRoute -match $Page.route_pattern) {
+    return $true
+  }
+  if ($InputUrl -and $Page.PSObject.Properties.Match("url_contains").Count -gt 0 -and $Page.url_contains) {
+    foreach ($needle in @($Page.url_contains)) {
+      if ($needle -and $InputUrl -like "*$needle*") { return $true }
+    }
+  }
+  if ($inputRoute -and $Page.PSObject.Properties.Match("route").Count -gt 0 -and $Page.route) {
+    return ((Get-RouteKey $inputRoute) -eq (Get-RouteKey ([string]$Page.route)))
+  }
+  return $false
+}
+
+function Find-ExactActionMatches([string]$RequestedActionId, $Pages, $GlobalActions) {
+  $items = @()
+  foreach ($action in @($GlobalActions)) {
+    if ([string]$action.id -eq $RequestedActionId) {
+      $items += [pscustomobject]@{
+        page = $null
+        action = $action
+        match_scope = "global_action_id"
+      }
+    }
+  }
+  foreach ($page in @($Pages)) {
+    foreach ($action in @($page.actions)) {
+      if ([string]$action.id -eq $RequestedActionId) {
+        $items += [pscustomobject]@{
+          page = $page
+          action = $action
+          match_scope = "action_id"
+        }
+      }
+    }
+  }
+  return @($items)
+}
+
 $map = Get-Content -LiteralPath $MapPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $autoMap = $null
 if (!$NoAutoMap -and (Test-Path -LiteralPath $AutoMapPath)) {
@@ -475,8 +517,122 @@ if ($catalog -and $catalog.pages) {
     $allGlobalActions += @($rowActionMap.global_actions)
   }
 }
-$query = Normalize-Text $Intent
+
 $route = Get-RoutePath $Url
+$requestedActionId = ([string]$ActionId).Trim()
+if (!$Intent -and !$requestedActionId) {
+  $payload = [ordered]@{
+    ok = $false
+    error = "intent_or_action_id_required"
+    next_action = "pass_intent_or_action_id"
+  }
+  if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "Pass -Intent or -ActionId." }
+  exit 2
+}
+
+if ($requestedActionId) {
+  $exactMatches = @(Find-ExactActionMatches -RequestedActionId $requestedActionId -Pages $allPages -GlobalActions $allGlobalActions)
+  if ($exactMatches.Count -eq 0) {
+    $payload = [ordered]@{
+      ok = $false
+      error = "action_id_not_found"
+      action_id = $requestedActionId
+      source_mode = $catalogSourceMode
+      catalog_path = if ($catalogSourceMode -eq "action_catalog") { $CatalogPath } else { $null }
+      catalog_version = if ($catalog) { $catalog.version } else { $null }
+      map_version = $map.version
+      auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
+      overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
+      dialog_map_version = if ($dialogMap) { $dialogMap.version } else { $null }
+      row_action_map_version = if ($rowActionMap) { $rowActionMap.version } else { $null }
+      next_action = "regenerate_or_inspect_xinjian_action_catalog"
+    }
+    if ($Json) { $payload | ConvertTo-Json -Depth 12 } else { Write-Host ("No mapped Xinjian action id matched: {0}" -f $requestedActionId) }
+    exit 1
+  }
+
+  $routeMatchedExact = @($exactMatches | Where-Object { !$_.page -or (Test-PageMatchesUrl -Page $_.page -InputUrl $Url) })
+  if ($Url -and $routeMatchedExact.Count -eq 0) {
+    $payload = [ordered]@{
+      ok = $false
+      error = "action_id_route_mismatch"
+      action_id = $requestedActionId
+      intent = $Intent
+      url = $Url
+      route = $route
+      source_mode = $catalogSourceMode
+      catalog_path = if ($catalogSourceMode -eq "action_catalog") { $CatalogPath } else { $null }
+      catalog_version = if ($catalog) { $catalog.version } else { $null }
+      matched_actions = @($exactMatches | ForEach-Object {
+          [ordered]@{
+            match_scope = $_.match_scope
+            page_id = if ($_.page) { $_.page.id } else { $null }
+            page_name = if ($_.page) { $_.page.name } else { $null }
+            page_route = if ($_.page) { $_.page.route } else { $null }
+            action_id = $_.action.id
+            action_name = $_.action.name
+          }
+        })
+      next_action = "open_or_focus_matching_xinjian_page_route_before_execute"
+    }
+    if ($Json) { $payload | ConvertTo-Json -Depth 12 } else { Write-Host ("Action id {0} belongs to another Xinjian route." -f $requestedActionId) }
+    exit 1
+  }
+
+  $candidates = @($routeMatchedExact | ForEach-Object {
+      $action = Add-ActionMetadata $_.action
+      [pscustomobject]@{
+        score = 100000
+        rank = 1000
+        match_scope = $_.match_scope
+        page_id = if ($_.page) { $_.page.id } else { $null }
+        page_name = if ($_.page) { $_.page.name } else { $null }
+        page_route = if ($_.page) { $_.page.route } else { $null }
+        action = $action
+      }
+    })
+  $payload = [ordered]@{
+    ok = ($candidates.Count -gt 0)
+    intent = $Intent
+    action_id = $requestedActionId
+    url = $Url
+    route = $route
+    page_match_mode = "action_id_exact"
+    suppressed_off_page_name_matches = 0
+    suppressed_global_matches = 0
+    source_mode = $catalogSourceMode
+    catalog_path = if ($catalogSourceMode -eq "action_catalog") { $CatalogPath } else { $null }
+    catalog_version = if ($catalog) { $catalog.version } else { $null }
+    catalog_totals = if ($catalog) { $catalog.totals } else { $null }
+    map_version = $map.version
+    auto_map_version = if ($autoMap) { $autoMap.version } else { $null }
+    overlay_map_version = if ($overlayMap) { $overlayMap.version } else { $null }
+    dialog_map_version = if ($dialogMap) { $dialogMap.version } else { $null }
+    row_action_map_version = if ($rowActionMap) { $rowActionMap.version } else { $null }
+    map_pages_total = $allPages.Count
+    matched_pages = @($candidates | Where-Object { $_.page_id } | Select-Object -First 5 | ForEach-Object {
+        [ordered]@{
+          id = $_.page_id
+          name = $_.page_name
+          route = $_.page_route
+          score = $_.score
+          current_url_match = [bool]$Url
+        }
+      })
+    matches = @($candidates)
+    next_action = "use_exact_action_id_match"
+  }
+  if ($Json) {
+    $payload | ConvertTo-Json -Depth 14
+  } else {
+    foreach ($match in $candidates) {
+      Write-Host ("[{0}] {1} / {2} -> {3}" -f $match.score, $match.page_name, $match.action.name, $match.action.purpose)
+    }
+  }
+  exit 0
+}
+
+$query = Normalize-Text $Intent
 $queryCompact = Compact-Text $query
 $dateQuickCanonical = Get-DateQuickIntentCanonical $queryCompact
 $openOrChooseIntentWords = @(
