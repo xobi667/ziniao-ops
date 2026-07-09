@@ -8,6 +8,8 @@ param(
   [switch]$AllowWrite,
   [switch]$AllowExport,
   [switch]$NoAutoDetectUrl,
+  [string]$LoginBridgeScriptPath = "",
+  [switch]$NoAutoOpenLogin,
   [int]$CandidateIndex = 0,
   [int]$RowIndex = 0,
   [string]$RowText = "",
@@ -16,6 +18,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
+if (!$LoginBridgeScriptPath) {
+  $LoginBridgeScriptPath = Join-Path $PSScriptRoot "open-xinjian-login.ps1"
+}
 $requestedActionId = ([string]$ActionId).Trim()
 if (!$Intent -and !$requestedActionId) {
   $payload = [ordered]@{
@@ -289,6 +294,95 @@ function Get-FirstExplicitPort {
   $items = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   if ($items.Count -gt 0) { return [int]$items[0] }
   return $null
+}
+
+function Invoke-XinjianLoginBridge {
+  param([string]$TargetUrl)
+
+  $bridgePort = Get-FirstExplicitPort
+  if (!$bridgePort) { $bridgePort = 9339 }
+  $payload = [ordered]@{
+    attempted = $true
+    script = $LoginBridgeScriptPath
+    target_url = $TargetUrl
+    port = $bridgePort
+    ok = $false
+    exit_code = $null
+    result = $null
+    raw_output = ""
+    error = ""
+  }
+  if (!(Test-Path -LiteralPath $LoginBridgeScriptPath)) {
+    $payload.error = "login_bridge_script_missing"
+    return [pscustomobject]$payload
+  }
+
+  $bridgeArgs = @(
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    $LoginBridgeScriptPath,
+    "-Port",
+    [string]$bridgePort,
+    "-Url",
+    $TargetUrl,
+    "-Json"
+  )
+  $raw = @(& powershell @bridgeArgs 2>&1)
+  $parsed = ConvertFrom-JsonText $raw
+  $payload.exit_code = $LASTEXITCODE
+  $payload.result = $parsed
+  $payload.raw_output = ($raw | Out-String).Trim()
+  $payload.ok = [bool]($parsed -and $LASTEXITCODE -eq 0 -and $parsed.ok)
+  if (!$parsed) { $payload.error = "login_bridge_output_parse_failed" }
+  return [pscustomobject]$payload
+}
+
+function New-XinjianLoginBridgeDetection {
+  param($Bridge)
+
+  if (!$Bridge -or !$Bridge.result) { return $null }
+  $result = $Bridge.result
+  $matchedUrl = if ($result.PSObject.Properties.Match("matched_page_url").Count -gt 0) { [string]$result.matched_page_url } else { "" }
+  $matchedTitle = if ($result.PSObject.Properties.Match("matched_page_title").Count -gt 0) { [string]$result.matched_page_title } else { "" }
+  $matchedPort = if ($result.PSObject.Properties.Match("port").Count -gt 0 -and $result.port) { [int]$result.port } else { $null }
+  $matchedKind = if ($result.PSObject.Properties.Match("matched_page_kind").Count -gt 0 -and $result.matched_page_kind) { [string]$result.matched_page_kind } else { Get-XinjianPageKind $matchedUrl }
+
+  if ($result.PSObject.Properties.Match("url_detection").Count -gt 0 -and $result.url_detection) {
+    $detection = $result.url_detection
+    if ($matchedUrl) {
+      $detection | Add-Member -NotePropertyName "ok" -NotePropertyValue $true -Force
+      $detection | Add-Member -NotePropertyName "url" -NotePropertyValue $matchedUrl -Force
+      $detection | Add-Member -NotePropertyName "source" -NotePropertyValue "login_bridge" -Force
+      $detection | Add-Member -NotePropertyName "confidence" -NotePropertyValue "login_bridge_selected_page" -Force
+      if ($matchedPort) { $detection | Add-Member -NotePropertyName "resolved_port" -NotePropertyValue $matchedPort -Force }
+    }
+    return $detection
+  }
+
+  if (!$matchedUrl) { return $null }
+  return [pscustomobject]([ordered]@{
+      ok = $true
+      url = $matchedUrl
+      source = "login_bridge"
+      confidence = "login_bridge_selected_page"
+      reason = "auto_opened_or_reused_xinjian_login_bridge"
+      ports = @($matchedPort | Where-Object { $_ })
+      resolved_port = $matchedPort
+      candidates = @(
+        [pscustomobject]([ordered]@{
+            source = if ($result.skipped_debuggable_open) { "existing_xinjian_window" } else { "cdp_page_url" }
+            process_id = $null
+            port = $matchedPort
+            title = $matchedTitle
+            url = $matchedUrl
+            page_kind = $matchedKind
+            is_foreground_process = $false
+            reachable = [bool]$matchedPort
+          })
+      )
+    })
 }
 
 function Resolve-XinjianCurrentUrlByScript {
@@ -825,6 +919,7 @@ if (!$explicitRowContextProvided) {
 $requestedUrl = $Url
 $detectionIntent = if ($Intent) { $Intent } else { $requestedActionId }
 $urlDetection = $null
+$loginBridge = $null
 if (!$Url -and !$NoAutoDetectUrl) {
   $urlDetection = Resolve-XinjianCurrentUrlByScript -QueryIntent $detectionIntent
   if ($urlDetection.ok -and $urlDetection.url) {
@@ -836,6 +931,23 @@ if (!$Url -and !$NoAutoDetectUrl) {
 
 $explicitUrlProvided = [bool]$requestedUrl
 $effectivePort = Get-ResolvedPort -Detection $urlDetection -InputUrl $Url -ExplicitUrlProvided $explicitUrlProvided
+$detectedCandidateCount = if ($urlDetection -and $urlDetection.PSObject.Properties.Match("candidates").Count -gt 0) { @($urlDetection.candidates).Count } else { 0 }
+$shouldOpenLoginBridge = (!$Url -or ($Execute -and $requestedUrl -and !$effectivePort -and $detectedCandidateCount -eq 0))
+if (!$NoAutoOpenLogin -and $shouldOpenLoginBridge) {
+  $loginTargetUrl = if ($Url) { $Url } elseif ($requestedUrl) { $requestedUrl } else { "https://erp.xinjianerp.com/index/home" }
+  $loginBridge = Invoke-XinjianLoginBridge -TargetUrl $loginTargetUrl
+  if ($loginBridge -and $loginBridge.result) {
+    $bridgeUrl = if ($loginBridge.result.PSObject.Properties.Match("matched_page_url").Count -gt 0) { [string]$loginBridge.result.matched_page_url } else { "" }
+    if ($bridgeUrl -and (!$Url -or (Get-XinjianNonBusinessPageReason $bridgeUrl))) {
+      $Url = $bridgeUrl
+    }
+    $bridgeDetection = New-XinjianLoginBridgeDetection -Bridge $loginBridge
+    if ($bridgeDetection) {
+      $urlDetection = $bridgeDetection
+      $effectivePort = Get-ResolvedPort -Detection $urlDetection -InputUrl $Url -ExplicitUrlProvided $explicitUrlProvided
+    }
+  }
+}
 
 $currentUrl = $Url
 $currentTitle = Get-ResolvedTitle -Detection $urlDetection -InputUrl $Url
@@ -855,6 +967,7 @@ if ($nonBusinessReason) {
     page_kind = $currentPageKind
     requested_url = $requestedUrl
     url_detection = $urlDetection
+    login_bridge = $loginBridge
     ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
     reason = $nonBusinessReason
     next_action = $nonBusinessReason
@@ -881,6 +994,7 @@ if (!$query) {
     page_kind = $currentPageKind
     requested_url = $requestedUrl
     url_detection = $urlDetection
+    login_bridge = $loginBridge
     exit_code = $queryExit
     raw_output = ($queryRaw | Out-String).Trim()
     next_action = "repair_xinjian_action_query_output"
@@ -903,6 +1017,7 @@ if (!$query.ok -or $matches.Count -eq 0) {
     page_kind = $currentPageKind
     requested_url = $requestedUrl
     url_detection = $urlDetection
+    login_bridge = $loginBridge
     query = $query
     next_action = "capture_current_page_then_update_xinjian_ui_map"
   }
@@ -951,6 +1066,7 @@ $plan = [ordered]@{
   page_kind = $currentPageKind
   requested_url = $requestedUrl
   url_detection = $urlDetection
+  login_bridge = $loginBridge
   ports = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   resolved_port = $effectivePort
   execution_backend = $executionBackend
@@ -1035,6 +1151,7 @@ if (!$Execute) {
     resolved_port = $effectivePort
     page_kind = $currentPageKind
     execution_backend = $executionBackend
+    login_bridge = $loginBridge
     plan = $plan
     post_execute = $postExecutePlan
     row_context_follow_up = $rowContextFollowUp
@@ -1068,6 +1185,7 @@ if (!$canExecute) {
     resolved_port = $effectivePort
     page_kind = $currentPageKind
     execution_backend = $executionBackend
+    login_bridge = $loginBridge
     plan = $plan
     post_execute = $postExecutePlan
     row_context_follow_up = $rowContextFollowUp
@@ -1094,6 +1212,7 @@ if ($executionBackend -eq "uia") {
     current_title = $currentTitle
     resolved_port = $effectivePort
     page_kind = $currentPageKind
+    login_bridge = $loginBridge
     plan = $plan
     post_execute = $postExecutePlan
     next_action = if ($postExecutePlan -and $result.ok) { $postExecutePlan.next_action } else { $null }
@@ -1126,6 +1245,7 @@ if (!$node) {
     resolved_port = $effectivePort
     page_kind = $currentPageKind
     message = "Node.js is required for CDP action execution."
+    login_bridge = $loginBridge
     plan = $plan
     post_execute = $postExecutePlan
     next_action = if ($requiresExport) { "install_node_then_rerun_export_action" } elseif ($requiresWrite) { "install_node_then_rerun_write_action" } else { $null }
@@ -1148,6 +1268,7 @@ if (!(Test-Path -LiteralPath $helper)) {
     resolved_port = $effectivePort
     page_kind = $currentPageKind
     path = $helper
+    login_bridge = $loginBridge
     plan = $plan
     post_execute = $postExecutePlan
     next_action = if ($requiresExport) { "repair_missing_xinjian_cdp_helper_then_rerun_export_action" } elseif ($requiresWrite) { "repair_missing_xinjian_cdp_helper_then_rerun_write_action" } else { $null }
@@ -1204,6 +1325,7 @@ $payload = [ordered]@{
   resolved_port = $effectivePort
   page_kind = $currentPageKind
   execution_backend = "cdp"
+  login_bridge = $loginBridge
   plan = $plan
   post_execute = $postExecutePlan
   next_action = if ($postExecutePlan -and $result.ok) { $postExecutePlan.next_action } elseif ($requiresExport) { "inspect_export_action_result_before_waiting_for_download" } elseif ($requiresWrite) { "inspect_write_action_result_before_verifying_page_state" } else { $null }

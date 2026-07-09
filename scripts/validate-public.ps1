@@ -215,6 +215,7 @@ $required = @(
   "scripts\resolve-xinjian-current-url.ps1",
   "scripts\list-xinjian-page-actions.ps1",
   "scripts\test-xinjian-page-actions-command-inventory.ps1",
+  "scripts\test-xinjian-auto-open-login-bridge.ps1",
   "scripts\report-xinjian-action-memory.ps1",
   "scripts\learn-xinjian-current-page.ps1",
   "scripts\learn-xinjian-open-pages.ps1",
@@ -234,6 +235,7 @@ $required = @(
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",
   "scripts\install-upstream-tools.ps1",
+  "scripts\ensure-chrome-devtools-mcp.ps1",
   "scripts\sensitive-text.ps1",
   "scripts\check-external-tools.ps1",
   "scripts\check-ecommerce-tools.ps1",
@@ -497,6 +499,25 @@ if (Test-Path -LiteralPath $pageActionCommandInventoryTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_page_action_command_inventory_test_error" $_.Exception.Message $pageActionCommandInventoryTestPath
+  }
+}
+
+$autoOpenLoginBridgeTestPath = Join-Path $Root "scripts\test-xinjian-auto-open-login-bridge.ps1"
+if (Test-Path -LiteralPath $autoOpenLoginBridgeTestPath) {
+  try {
+    $autoOpenLoginBridgeRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $autoOpenLoginBridgeTestPath -Json 2>&1)
+    $autoOpenLoginBridgeExit = $LASTEXITCODE
+    $autoOpenLoginBridgeResult = $null
+    try {
+      $autoOpenLoginBridgeResult = ($autoOpenLoginBridgeRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_auto_open_login_bridge_test_parse_failed" ("Auto-open login bridge test output was not JSON: {0}" -f ($autoOpenLoginBridgeRaw | Out-String).Trim()) $autoOpenLoginBridgeTestPath
+    }
+    if ($autoOpenLoginBridgeResult -and ($autoOpenLoginBridgeExit -ne 0 -or !$autoOpenLoginBridgeResult.ok)) {
+      Add-Issue "error" "xinjian_auto_open_login_bridge_test_failed" ("Auto-open login bridge regression test failed: {0}" -f (($autoOpenLoginBridgeResult.failures) -join ",")) $autoOpenLoginBridgeTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_auto_open_login_bridge_test_error" $_.Exception.Message $autoOpenLoginBridgeTestPath
   }
 }
 

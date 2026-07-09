@@ -400,7 +400,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\list
 
 When multiple 心舰 windows are open, URL resolution prefers logged-in business pages over login/restricted pages, even if the login page is the foreground debuggable window. Foreground and intent scoring are used only after business-page candidates are isolated. Passing `-Port` still pins diagnostics to that explicit port.
 
-These high-level 心舰 action commands scan reachable Chrome/Edge/Ziniao DevTools ports by default and return `resolved_port` when a debuggable tab is selected. Use `-Port` only when intentionally pinning diagnostics or execution to a specific browser port.
+These high-level 心舰 action commands scan reachable Chrome/Edge/Ziniao DevTools ports by default and return `resolved_port` when a debuggable tab is selected. If no current 心舰 URL can be resolved, `list-xinjian-page-actions.ps1` automatically calls the manual DevTools login bridge (`open-xinjian-login.ps1`) and returns `login_bridge` with the matched page kind and next action. Use `-NoAutoOpenLogin` only for diagnostics where opening/reusing the login bridge must be suppressed. Use `-Port` only when intentionally pinning diagnostics or execution to a specific browser port.
 
 Before broad learning passes, audit global action memory quality so the next crawl targets weak pages instead of repeating strong pages:
 
@@ -446,7 +446,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invoke-xinjian-ui-action.ps1") -Intent "<安全动作>" -Execute -Json
 ```
 
-`-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` / `-RowText "<visible row text>"`, or write the row target directly in the intent such as `第1行编辑`, `第一行详情`, or `包含 xxx 的行编辑`. Explicit `-RowIndex` / `-RowText` override inferred row context. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
+`-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. If no 心舰 page is resolved, or an explicit execute request names a URL while no 心舰 window is detected at all, the invoker automatically calls `open-xinjian-login.ps1` and returns `login_bridge`; login pages stop with `manual_login_required_in_debuggable_xinjian_browser` until the employee logs in manually. Pass `-Url "<当前心舰URL>"` to override detection, `-NoAutoDetectUrl` only for diagnostics/global matching, or `-NoAutoOpenLogin` to suppress the automatic login bridge during tests. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` / `-RowText "<visible row text>"`, or write the row target directly in the intent such as `第1行编辑`, `第一行详情`, or `包含 xxx 的行编辑`. Explicit `-RowIndex` / `-RowText` override inferred row context. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
 
 When a row-level action is matched but row context is missing, the invoker returns `row_context_follow_up.kind = row_context_required_follow_up`. Use `row_context_follow_up.rerun_with_row_index` or `row_context_follow_up.rerun_with_row_text` as the machine-readable next step; do not guess or click the first row. If `additional_confirmation_required` is `allow_write` or `allow_export`, keep the write/export confirmation boundary after the row is selected.
 
@@ -576,7 +576,7 @@ If no 心舰 window is found, `xinjian-ziniao-bridge.ps1` auto-opens a controlla
 
 Use `scripts\invoke-ziniao-cli.ps1` by default for local store list/open/inspect commands when the optional `ziniao` CLI is installed. The wrapper still refuses secret-like arguments and long-running commands unless explicitly allowed. Use `scripts\invoke-auto-ziniao.ps1` only when `auto-ziniao` is installed; running store flows requires explicit `-AllowExternalRunner`.
 
-BrowserMCP and Vibe Seller are optional external routes. BrowserMCP still requires its Chrome extension and MCP client config. Vibe Seller is a full service and should not be started unless the user explicitly asks for that route and required local keys/configuration are present.
+BrowserMCP, Chrome DevTools MCP, and Vibe Seller are optional external routes. BrowserMCP still requires its Chrome extension and MCP client config. If the user explicitly asks for the Google/Chrome DevTools MCP route and the command is missing, run `scripts\ensure-chrome-devtools-mcp.ps1 -Json`; after it installs or updates PATH, tell the employee to restart Codex before expecting the new MCP tool to appear. Vibe Seller is a full service and should not be started unless the user explicitly asks for that route and required local keys/configuration are present.
 
 For standardized visible-data reports, use:
 

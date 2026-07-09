@@ -42,6 +42,8 @@ If the requested DevTools port is already reachable, `open-xinjian-login.ps1` fi
 
 Before opening or reusing a login bridge, `open-xinjian-login.ps1` checks visible/debuggable 心舰 windows. If any 心舰 page is already open, it returns `skipped_debuggable_open = true`, `window = "existing"`, the detected `matched_page_kind`, and a `next_action` for that existing page instead of opening another browser. Use `-ForceDebuggable` only when the user explicitly wants a separate debuggable login/data-capture browser despite the already-open 心舰 window.
 
+High-level action commands use that bridge automatically when no 心舰 page can be resolved. `scripts/list-xinjian-page-actions.ps1` and `scripts/invoke-xinjian-ui-action.ps1` return a top-level `login_bridge` object showing whether an existing page was reused, a debuggable page was opened, and whether the result is `business_page`, `login_page`, or `non_business_page`. Use `-NoAutoOpenLogin` only for diagnostics or tests where bridge opening must be suppressed.
+
 After the user confirms login is complete in that browser window, fetch the hourly endpoint through the logged-in page context and run the Excel analyzer:
 
 ```powershell
@@ -105,7 +107,7 @@ If the endpoint reports `账号未登录`, continue in this order:
 3. If the user can export now, run `wait-xinjian-export.ps1` before they export so the download is analyzed automatically.
 4. If Codex in-app browser is available, open 心舰 ERP there and let the user manually log in, then inspect page responses.
 5. If the user explicitly asks for a login workaround and accepts a manual browser login, use `open-xinjian-login.ps1` plus `fetch-xinjian-browser-data.ps1`.
-6. Do not use system Chrome, BrowserMCP, Ziniao GUI, coordinate clicks, or foreground browser automation unless the user explicitly accepts foreground control for this specific task.
+6. Do not use system Chrome, BrowserMCP, Ziniao GUI, coordinate clicks, or foreground browser automation unless the user explicitly accepts foreground control for this specific task. For the optional Google/Chrome DevTools MCP route, install/check it with `scripts\ensure-chrome-devtools-mcp.ps1 -Json` when explicitly requested; if it installs or updates PATH, restart Codex before expecting the MCP tool to appear.
 
 ## Report Shape
 

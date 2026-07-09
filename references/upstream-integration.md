@@ -46,6 +46,14 @@ Install the generic browser MCP routes too:
 .\scripts\install-upstream-tools.ps1 -InstallGenericBrowserMcps
 ```
 
+Ensure just the Google/Chrome DevTools MCP route is available:
+
+```powershell
+.\scripts\ensure-chrome-devtools-mcp.ps1 -Json
+```
+
+If this installs `chrome-devtools-mcp` or updates PATH, restart Codex before expecting the new MCP tool to appear in the active tool list.
+
 Check upstream remote commits:
 
 ```powershell

@@ -195,7 +195,7 @@ $features = @(
     available = [bool]$chromeDevToolsMcp
     mode = "optional_external"
     command = $chromeDevToolsMcp
-    notes = "Official Chrome DevTools MCP. Prefer --browser-url against an already-running local browser when explicitly using this route."
+    notes = "Official Chrome DevTools MCP. Run scripts/ensure-chrome-devtools-mcp.ps1 -Json when the command is missing; restart Codex after install/PATH changes."
   },
   [ordered]@{
     id = "playwright_mcp"

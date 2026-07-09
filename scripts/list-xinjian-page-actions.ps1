@@ -5,7 +5,9 @@ param(
   [string]$Intent = "",
   [string]$CatalogPath = "",
   [string]$CommandInventoryPath = "",
+  [string]$LoginBridgeScriptPath = "",
   [switch]$NoAutoDetectUrl,
+  [switch]$NoAutoOpenLogin,
   [switch]$SafeOnly,
   [int]$Limit = 0,
   [switch]$Json
@@ -18,6 +20,9 @@ if (!$CatalogPath) {
 }
 if (!$CommandInventoryPath) {
   $CommandInventoryPath = Join-Path $root "references\xinjian-ui-rpa-command-inventory.json"
+}
+if (!$LoginBridgeScriptPath) {
+  $LoginBridgeScriptPath = Join-Path $PSScriptRoot "open-xinjian-login.ps1"
 }
 
 function ConvertFrom-JsonText($Lines) {
@@ -46,6 +51,95 @@ function Get-FirstExplicitPort {
   $items = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   if ($items.Count -gt 0) { return [int]$items[0] }
   return $null
+}
+
+function Invoke-XinjianLoginBridge {
+  param([string]$TargetUrl)
+
+  $bridgePort = Get-FirstExplicitPort
+  if (!$bridgePort) { $bridgePort = 9339 }
+  $payload = [ordered]@{
+    attempted = $true
+    script = $LoginBridgeScriptPath
+    target_url = $TargetUrl
+    port = $bridgePort
+    ok = $false
+    exit_code = $null
+    result = $null
+    raw_output = ""
+    error = ""
+  }
+  if (!(Test-Path -LiteralPath $LoginBridgeScriptPath)) {
+    $payload.error = "login_bridge_script_missing"
+    return [pscustomobject]$payload
+  }
+
+  $bridgeArgs = @(
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    $LoginBridgeScriptPath,
+    "-Port",
+    [string]$bridgePort,
+    "-Url",
+    $TargetUrl,
+    "-Json"
+  )
+  $raw = @(& powershell @bridgeArgs 2>&1)
+  $parsed = ConvertFrom-JsonText $raw
+  $payload.exit_code = $LASTEXITCODE
+  $payload.result = $parsed
+  $payload.raw_output = ($raw | Out-String).Trim()
+  $payload.ok = [bool]($parsed -and $LASTEXITCODE -eq 0 -and $parsed.ok)
+  if (!$parsed) { $payload.error = "login_bridge_output_parse_failed" }
+  return [pscustomobject]$payload
+}
+
+function New-XinjianLoginBridgeResolution {
+  param($Bridge)
+
+  if (!$Bridge -or !$Bridge.result) { return $null }
+  $result = $Bridge.result
+  $matchedUrl = if ($result.PSObject.Properties.Match("matched_page_url").Count -gt 0) { [string]$result.matched_page_url } else { "" }
+  $matchedTitle = if ($result.PSObject.Properties.Match("matched_page_title").Count -gt 0) { [string]$result.matched_page_title } else { "" }
+  $matchedPort = if ($result.PSObject.Properties.Match("port").Count -gt 0 -and $result.port) { [int]$result.port } else { $null }
+  $matchedKind = if ($result.PSObject.Properties.Match("matched_page_kind").Count -gt 0 -and $result.matched_page_kind) { [string]$result.matched_page_kind } else { Get-XinjianPageKind $matchedUrl }
+
+  if ($result.PSObject.Properties.Match("url_detection").Count -gt 0 -and $result.url_detection) {
+    $detection = $result.url_detection
+    if ($matchedUrl) {
+      $detection | Add-Member -NotePropertyName "ok" -NotePropertyValue $true -Force
+      $detection | Add-Member -NotePropertyName "url" -NotePropertyValue $matchedUrl -Force
+      $detection | Add-Member -NotePropertyName "source" -NotePropertyValue "login_bridge" -Force
+      $detection | Add-Member -NotePropertyName "confidence" -NotePropertyValue "login_bridge_selected_page" -Force
+      if ($matchedPort) { $detection | Add-Member -NotePropertyName "resolved_port" -NotePropertyValue $matchedPort -Force }
+    }
+    return $detection
+  }
+
+  if (!$matchedUrl) { return $null }
+  return [pscustomobject]([ordered]@{
+      ok = $true
+      url = $matchedUrl
+      source = "login_bridge"
+      confidence = "login_bridge_selected_page"
+      reason = "auto_opened_or_reused_xinjian_login_bridge"
+      ports = @($matchedPort | Where-Object { $_ })
+      resolved_port = $matchedPort
+      candidates = @(
+        [pscustomobject]([ordered]@{
+            source = if ($result.skipped_debuggable_open) { "existing_xinjian_window" } else { "cdp_page_url" }
+            process_id = $null
+            port = $matchedPort
+            title = $matchedTitle
+            url = $matchedUrl
+            page_kind = $matchedKind
+            is_foreground_process = $false
+            reachable = [bool]$matchedPort
+          })
+      )
+    })
 }
 
 function Get-RoutePath([string]$InputUrl) {
@@ -197,6 +291,7 @@ if (Test-Path -LiteralPath $CommandInventoryPath) {
 
 $requestedUrl = $Url
 $urlResolution = $null
+$loginBridge = $null
 if (!$NoAutoDetectUrl) {
   $resolver = Join-Path $PSScriptRoot "resolve-xinjian-current-url.ps1"
   if (Test-Path -LiteralPath $resolver) {
@@ -208,6 +303,17 @@ if (!$NoAutoDetectUrl) {
     $urlResolution = ConvertFrom-JsonText $rawResolution
     if (!$Url -and $urlResolution -and $urlResolution.ok -and $urlResolution.url) {
       $Url = [string]$urlResolution.url
+    }
+  }
+}
+
+if (!$Url -and !$NoAutoOpenLogin) {
+  $loginBridge = Invoke-XinjianLoginBridge -TargetUrl "https://erp.xinjianerp.com/index/home"
+  if ($loginBridge -and $loginBridge.result) {
+    $bridgeUrl = if ($loginBridge.result.PSObject.Properties.Match("matched_page_url").Count -gt 0) { [string]$loginBridge.result.matched_page_url } else { "" }
+    if ($bridgeUrl) {
+      $Url = $bridgeUrl
+      $urlResolution = New-XinjianLoginBridgeResolution -Bridge $loginBridge
     }
   }
 }
@@ -227,7 +333,8 @@ if (!$Url) {
     resolved_port = $resolvedPort
     page_kind = "unknown"
     url_resolution = $urlResolution
-    next_action = "focus_the_target_xinjian_window_or_pass_url"
+    login_bridge = $loginBridge
+    next_action = if ($loginBridge) { "open_debuggable_chrome_devtools_login_bridge_or_pass_url" } else { "focus_the_target_xinjian_window_or_pass_url" }
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 14 } else { Write-Host "No current Xinjian page URL was resolved. Pass -Url or focus the target Xinjian window." }
   exit 1
@@ -246,6 +353,7 @@ if ($nonBusinessReason) {
     page_kind = $pageKind
     requested_url = $requestedUrl
     url_resolution = $urlResolution
+    login_bridge = $loginBridge
     next_action = $nonBusinessReason
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 14 } else { Write-Host "Current Xinjian page is not a business page: $Url" }
@@ -271,6 +379,7 @@ if ($matches.Count -eq 0) {
     page_kind = $pageKind
     requested_url = $requestedUrl
     url_resolution = $urlResolution
+    login_bridge = $loginBridge
     catalog_version = $catalog.version
     catalog_totals = $catalog.totals
     next_action = "capture_current_page_then_regenerate_xinjian_action_catalog"
@@ -315,6 +424,7 @@ $payload = [ordered]@{
   page_kind = $pageKind
   requested_url = $requestedUrl
   url_resolution = $urlResolution
+  login_bridge = $loginBridge
   catalog_version = $catalog.version
   catalog_totals = $catalog.totals
   command_inventory = [ordered]@{
