@@ -30,6 +30,8 @@ If the user is about to export from 心舰 ERP but does not want to provide the 
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\wait-xinjian-export.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -TimeoutSec 300 -Json
 ```
 
+When a mapped 心舰 export/download button is run through `scripts\invoke-xinjian-ui-action.ps1`, read its `post_execute` object. Before authorization, `post_execute.rerun_after_confirmation` shows the exact rerun fields for `-Execute -AllowExport`; after a successful authorized export, top-level `next_action` is `wait_for_xinjian_export_or_open_download_center`. Run `wait-xinjian-export.ps1` first, then use the mapped `打开下载中心` fallback if 心舰 generates the file asynchronously.
+
 If the user explicitly asks to solve login and the in-app browser is unavailable, use the isolated manual login bridge. It opens Edge/Chrome with a temporary browser profile and local DevTools port. The user must enter credentials and verification manually. Do not read cookies, localStorage, access tokens, or passwords.
 
 ```powershell

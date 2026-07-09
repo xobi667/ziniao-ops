@@ -110,6 +110,56 @@ function Get-PortArgumentList {
   return $args
 }
 
+function New-ExportFollowUpPlan {
+  param(
+    [bool]$IsExportAction,
+    [bool]$AllowExportFlag,
+    [bool]$ExecuteRequested,
+    [string]$InputIntent,
+    [string]$InputUrl,
+    [int]$ResolvedPortValue
+  )
+  if (!$IsExportAction) { return $null }
+
+  $rerun = [ordered]@{
+    script = "scripts\invoke-xinjian-ui-action.ps1"
+    intent = $InputIntent
+    url = if ($InputUrl) { $InputUrl } else { $null }
+    port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
+    execute = $true
+    allow_export = $true
+  }
+  $wait = [ordered]@{
+    script = "scripts\wait-xinjian-export.ps1"
+    purpose = "Wait for the generated Xinjian export file in Downloads, then analyze it when it is an ad-hourly export."
+    timeout_sec = 300
+  }
+  $downloadCenter = [ordered]@{
+    script = "scripts\invoke-xinjian-ui-action.ps1"
+    intent = -join (@(0x6253, 0x5f00, 0x4e0b, 0x8f7d, 0x4e2d, 0x5fc3) | ForEach-Object { [char]$_ })
+    execute = $true
+    purpose = "Open Xinjian download center if the export creates an async report instead of a direct browser download."
+  }
+
+  return [ordered]@{
+    kind = "export_download_follow_up"
+    confirmation_required = !$AllowExportFlag
+    execute_requested = $ExecuteRequested
+    next_action = if (!$AllowExportFlag) {
+      "rerun_with_execute_allow_export_after_explicit_confirmation"
+    } elseif ($ExecuteRequested) {
+      "wait_for_xinjian_export_or_open_download_center"
+    } else {
+      "run_with_execute_allow_export_after_explicit_confirmation"
+    }
+    rerun_after_confirmation = if (!$AllowExportFlag) { $rerun } else { $null }
+    after_success = [ordered]@{
+      primary = $wait
+      fallback = $downloadCenter
+    }
+  }
+}
+
 function Get-FirstExplicitPort {
   $items = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   if ($items.Count -gt 0) { return [int]$items[0] }
@@ -829,6 +879,9 @@ $plan = [ordered]@{
   }
 }
 
+$followUpUrl = if ($Url) { $Url } else { $currentUrl }
+$exportFollowUp = New-ExportFollowUpPlan -IsExportAction $requiresExport -AllowExportFlag ([bool]$AllowExport) -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort)
+
 if (!$Execute) {
   $payload = [ordered]@{
     ok = $true
@@ -841,6 +894,8 @@ if (!$Execute) {
     page_kind = $currentPageKind
     execution_backend = $executionBackend
     plan = $plan
+    post_execute = $exportFollowUp
+    next_action = if ($exportFollowUp) { $exportFollowUp.next_action } else { $null }
     query_versions = [ordered]@{
       map = $query.map_version
       auto_map = $query.auto_map_version
@@ -870,6 +925,7 @@ if (!$canExecute) {
     page_kind = $currentPageKind
     execution_backend = $executionBackend
     plan = $plan
+    post_execute = $exportFollowUp
     next_action = if ($readOnlyCatalogEntry -and $requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_to_read_table_column" } elseif ($readOnlyCatalogEntry) { "rerun_with_execute_to_read_visible_table_column" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresWrite -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresExport -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } elseif ($requiresUiaLocator) { "capture_or_focus_matching_uia_xinjian_control" } elseif ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } else { "manual_review_action_safety" }
   }
   if ($Json) {
@@ -893,6 +949,8 @@ if ($executionBackend -eq "uia") {
     resolved_port = $effectivePort
     page_kind = $currentPageKind
     plan = $plan
+    post_execute = $exportFollowUp
+    next_action = if ($exportFollowUp -and $result.ok) { $exportFollowUp.next_action } else { $null }
     result = $result
   }
   if ($Json) {
@@ -922,6 +980,8 @@ if (!$node) {
     page_kind = $currentPageKind
     message = "Node.js is required for CDP action execution."
     plan = $plan
+    post_execute = $exportFollowUp
+    next_action = if ($exportFollowUp) { "install_node_then_rerun_export_action" } else { $null }
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 16 } else { Write-Host $payload.message }
   exit 2
@@ -941,6 +1001,8 @@ if (!(Test-Path -LiteralPath $helper)) {
     page_kind = $currentPageKind
     path = $helper
     plan = $plan
+    post_execute = $exportFollowUp
+    next_action = if ($exportFollowUp) { "repair_missing_xinjian_cdp_helper_then_rerun_export_action" } else { $null }
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 16 } else { Write-Host "Missing helper: $helper" }
   exit 2
@@ -993,6 +1055,8 @@ $payload = [ordered]@{
   page_kind = $currentPageKind
   execution_backend = "cdp"
   plan = $plan
+  post_execute = $exportFollowUp
+  next_action = if ($exportFollowUp -and $result.ok) { $exportFollowUp.next_action } elseif ($exportFollowUp) { "inspect_export_action_result_before_waiting_for_download" } else { $null }
   result = $result
 }
 if ($Json) {

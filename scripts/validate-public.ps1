@@ -221,6 +221,7 @@ $required = @(
   "scripts\test-xinjian-rpa-routing.ps1",
   "scripts\test-xinjian-row-context-inference.ps1",
   "scripts\test-xinjian-table-column-read-planning.ps1",
+  "scripts\test-xinjian-export-action-planning.ps1",
   "scripts\exercise-xinjian-safe-actions.ps1",
   "scripts\audit-xinjian-live-button-coverage.ps1",
   "scripts\report-xinjian-rpa-readiness.ps1",
@@ -374,6 +375,25 @@ if (Test-Path -LiteralPath $tableColumnReadTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_table_column_read_test_error" $_.Exception.Message $tableColumnReadTestPath
+  }
+}
+
+$exportActionTestPath = Join-Path $Root "scripts\test-xinjian-export-action-planning.ps1"
+if (Test-Path -LiteralPath $exportActionTestPath) {
+  try {
+    $exportActionRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $exportActionTestPath -Json 2>&1)
+    $exportActionExit = $LASTEXITCODE
+    $exportActionResult = $null
+    try {
+      $exportActionResult = ($exportActionRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_export_action_test_parse_failed" ("Export action planning test output was not JSON: {0}" -f ($exportActionRaw | Out-String).Trim()) $exportActionTestPath
+    }
+    if ($exportActionResult -and ($exportActionExit -ne 0 -or !$exportActionResult.ok)) {
+      Add-Issue "error" "xinjian_export_action_test_failed" ("Export action planning regression test failed: {0}" -f (($exportActionResult.cases | Where-Object { !$_.ok } | Select-Object -ExpandProperty name) -join ",")) $exportActionTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_export_action_test_error" $_.Exception.Message $exportActionTestPath
   }
 }
 

@@ -82,6 +82,7 @@ After changing query ranking or RPA routing behavior, run:
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-row-context-inference.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-table-column-read-planning.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-export-action-planning.ps1") -Json
 ```
 
 3. To inspect the full remembered button/action catalog:
@@ -99,6 +100,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 ```
 
 The invoker reports the matched page/action, safety gate, locator strategy, `execution_backend`, and top-level `current_url`, `current_title`, `resolved_port`, and `page_kind`. If `-Url` is omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent; a single best visible match becomes the current page. By default it scans reachable DevTools ports instead of assuming `9342`; pass `-Port` only to pin execution to a specific browser. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` to force global matching. It only clicks when `-Execute` is passed. Write/delete/save/submit/export actions stay blocked unless the exact operation is explicitly allowed with `-AllowWrite` or `-AllowExport`.
+
+For export/download actions, the invoker now returns a machine-readable `post_execute` object. If export is not authorized yet, `post_execute.rerun_after_confirmation` contains the exact execution flags (`execute=true`, `allow_export=true`) required after explicit user confirmation. If an authorized export execution succeeds, top-level `next_action` is `wait_for_xinjian_export_or_open_download_center`; first run `scripts/wait-xinjian-export.ps1` to watch Downloads and analyze supported exports, then fall back to the mapped `打开下载中心` action if 心舰 creates an async report in the download center instead of a direct browser download.
 
 When no debuggable CDP port is resolved, the invoker can still execute mapped safe non-write controls through Windows UI Automation if the already-open 心舰 window exposes a matching UIA element. In that case dry-run reports `execution_backend = "uia"`, `uia_fallback_available = true`, and `can_execute = true`; `-Execute` invokes the UIA `InvokePattern` or `SelectionItemPattern` without moving the mouse or opening a duplicate browser. UIA fallback is deliberately narrow: write/export actions, row-context actions, and unknown-safety actions remain blocked. Read-only table-column memory needs a debuggable CDP route because it reads visible DOM table cells instead of clicking UIA controls.
 
