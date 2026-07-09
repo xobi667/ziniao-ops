@@ -4,6 +4,7 @@ param(
   [int[]]$Port = @(),
   [string]$Intent = "",
   [string]$CatalogPath = "",
+  [string]$CommandInventoryPath = "",
   [switch]$NoAutoDetectUrl,
   [switch]$SafeOnly,
   [int]$Limit = 0,
@@ -14,6 +15,9 @@ $ErrorActionPreference = "Stop"
 $root = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 if (!$CatalogPath) {
   $CatalogPath = Join-Path $root "references\xinjian-ui-action-catalog.json"
+}
+if (!$CommandInventoryPath) {
+  $CommandInventoryPath = Join-Path $root "references\xinjian-ui-rpa-command-inventory.json"
 }
 
 function ConvertFrom-JsonText($Lines) {
@@ -129,8 +133,18 @@ function Get-PageMatchScore($Page, [string]$InputUrl) {
   return $score
 }
 
-function New-ActionSummary($Action) {
-  [ordered]@{
+function Get-CommandMode($CommandRecord) {
+  if (!$CommandRecord) { return "missing_command_inventory" }
+  if ($CommandRecord.commands.confirmed_export) { return "confirmed_export" }
+  if ($CommandRecord.commands.confirmed_write) { return "confirmed_write" }
+  if ($CommandRecord.commands.row_context) { return "row_context" }
+  if ($CommandRecord.commands.read_table_column) { return "read_table_column" }
+  if ($CommandRecord.commands.execute_safe) { return "execute_safe" }
+  return "dry_run_only"
+}
+
+function New-ActionSummary($Action, $CommandRecord) {
+  $summary = [ordered]@{
     id = [string]$Action.id
     name = [string]$Action.name
     type = [string]$Action.type
@@ -143,6 +157,14 @@ function New-ActionSummary($Action) {
     aliases = @($Action.aliases)
     locator = $Action.locator
   }
+  if ($CommandRecord) {
+    $summary.rpa_command_mode = Get-CommandMode $CommandRecord
+    $summary.rpa_commands = $CommandRecord.commands
+  } else {
+    $summary.rpa_command_mode = "missing_command_inventory"
+    $summary.rpa_commands = $null
+  }
+  return $summary
 }
 
 if (!(Test-Path -LiteralPath $CatalogPath)) {
@@ -154,6 +176,23 @@ if (!(Test-Path -LiteralPath $CatalogPath)) {
   }
   if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "Xinjian action catalog missing: $CatalogPath" }
   exit 2
+}
+
+$commandInventory = $null
+$commandIndex = @{}
+if (Test-Path -LiteralPath $CommandInventoryPath) {
+  try {
+    $commandInventory = Get-Content -LiteralPath $CommandInventoryPath -Raw -Encoding UTF8 | ConvertFrom-Json
+    foreach ($record in @($commandInventory.commands)) {
+      $actionId = [string]$record.action_id
+      if ($actionId -and !$commandIndex.ContainsKey($actionId)) {
+        $commandIndex[$actionId] = $record
+      }
+    }
+  } catch {
+    $commandInventory = $null
+    $commandIndex = @{}
+  }
 }
 
 $requestedUrl = $Url
@@ -250,7 +289,11 @@ if ($Limit -gt 0) {
   $listedActions = @($listedActions | Select-Object -First $Limit)
 }
 
-$actionSummaries = @($listedActions | ForEach-Object { New-ActionSummary $_ })
+$actionSummaries = @($listedActions | ForEach-Object {
+    $actionId = [string]$_.id
+    $commandRecord = if ($actionId -and $commandIndex.ContainsKey($actionId)) { $commandIndex[$actionId] } else { $null }
+    New-ActionSummary -Action $_ -CommandRecord $commandRecord
+  })
 $counts = [ordered]@{
   total = $allActions.Count
   listed = $actionSummaries.Count
@@ -258,6 +301,8 @@ $counts = [ordered]@{
   confirmation_required_write = @($allActions | Where-Object { $_.safety_mode -eq "confirmation_required_write" }).Count
   confirmation_required_export = @($allActions | Where-Object { $_.safety_mode -eq "confirmation_required_export" }).Count
   row_context_required = @($allActions | Where-Object { $_.locator_strategy -like "row_context_required*" }).Count
+  command_records = @($allActions | Where-Object { $commandIndex.ContainsKey([string]$_.id) }).Count
+  listed_command_records = @($actionSummaries | Where-Object { $_.Contains("rpa_commands") -and $_["rpa_commands"] }).Count
 }
 
 $payload = [ordered]@{
@@ -272,6 +317,14 @@ $payload = [ordered]@{
   url_resolution = $urlResolution
   catalog_version = $catalog.version
   catalog_totals = $catalog.totals
+  command_inventory = [ordered]@{
+    loaded = [bool]$commandInventory
+    path = if ($commandInventory) { $CommandInventoryPath } else { $null }
+    version = if ($commandInventory) { $commandInventory.version } else { $null }
+    total_commands = if ($commandInventory -and $commandInventory.totals) { $commandInventory.totals.inventory_actions } else { $null }
+    page_action_commands = $counts.command_records
+    listed_action_commands = $counts.listed_command_records
+  }
   page = [ordered]@{
     id = [string]$selected.id
     name = [string]$selected.name
@@ -282,20 +335,21 @@ $payload = [ordered]@{
   }
   counts = $counts
   actions = $actionSummaries
-  next_action = "use_invoke_xinjian_ui_action_with_intent_for_safe_dry_run_or_execution"
+  next_action = "use_listed_rpa_commands_or_invoke_xinjian_ui_action_with_action_id"
 }
 
 if ($Json) {
   $payload | ConvertTo-Json -Depth 18
 } else {
   Write-Host ("{0} / {1} ({2})" -f $payload.page.module, $payload.page.name, $payload.page.route)
-  Write-Host ("Actions: total={0}, safe={1}, write={2}, export={3}, row-context={4}" -f $counts.total, $counts.safe_execute_allowed, $counts.confirmation_required_write, $counts.confirmation_required_export, $counts.row_context_required)
+  Write-Host ("Actions: total={0}, safe={1}, write={2}, export={3}, row-context={4}, command-records={5}" -f $counts.total, $counts.safe_execute_allowed, $counts.confirmation_required_write, $counts.confirmation_required_export, $counts.row_context_required, $counts.command_records)
   $rows = @($actionSummaries | ForEach-Object {
       [pscustomobject]@{
         name = $_.name
         type = $_.type
         safety = $_.safety_mode
         locator = $_.locator_strategy
+        command_mode = $_.rpa_command_mode
         purpose = $_.purpose
       }
     })

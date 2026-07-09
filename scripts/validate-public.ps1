@@ -214,6 +214,7 @@ $required = @(
   "scripts\generate-xinjian-rpa-command-inventory.ps1",
   "scripts\resolve-xinjian-current-url.ps1",
   "scripts\list-xinjian-page-actions.ps1",
+  "scripts\test-xinjian-page-actions-command-inventory.ps1",
   "scripts\report-xinjian-action-memory.ps1",
   "scripts\learn-xinjian-current-page.ps1",
   "scripts\learn-xinjian-open-pages.ps1",
@@ -477,6 +478,25 @@ if (Test-Path -LiteralPath $rpaCommandInventoryTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_rpa_command_inventory_test_error" $_.Exception.Message $rpaCommandInventoryTestPath
+  }
+}
+
+$pageActionCommandInventoryTestPath = Join-Path $Root "scripts\test-xinjian-page-actions-command-inventory.ps1"
+if (Test-Path -LiteralPath $pageActionCommandInventoryTestPath) {
+  try {
+    $pageActionCommandInventoryRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $pageActionCommandInventoryTestPath -Json 2>&1)
+    $pageActionCommandInventoryExit = $LASTEXITCODE
+    $pageActionCommandInventoryResult = $null
+    try {
+      $pageActionCommandInventoryResult = ($pageActionCommandInventoryRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_page_action_command_inventory_test_parse_failed" ("Page action command inventory test output was not JSON: {0}" -f ($pageActionCommandInventoryRaw | Out-String).Trim()) $pageActionCommandInventoryTestPath
+    }
+    if ($pageActionCommandInventoryResult -and ($pageActionCommandInventoryExit -ne 0 -or !$pageActionCommandInventoryResult.ok)) {
+      Add-Issue "error" "xinjian_page_action_command_inventory_test_failed" ("Page action command inventory regression test failed: {0}" -f (($pageActionCommandInventoryResult.failures) -join ",")) $pageActionCommandInventoryTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_page_action_command_inventory_test_error" $_.Exception.Message $pageActionCommandInventoryTestPath
   }
 }
 
