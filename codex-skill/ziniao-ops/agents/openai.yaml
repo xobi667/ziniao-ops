@@ -1,7 +1,7 @@
 interface:
   display_name: "Ziniao Ops"
-  short_description: "Operate local seller stores through Ziniao"
-  default_prompt: "Use $ziniao-ops to open or operate a local seller store through Ziniao, inspect operations pages, or create a read-only report."
+  short_description: "Run local Ziniao and Xinjian shop commands"
+  default_prompt: "Use $ziniao-ops to run local Ziniao or Xinjian commands, open/reuse Xinjian pages, analyze ad hourly data, watch exports, or inspect store operations."
 
 policy:
   allow_implicit_invocation: true

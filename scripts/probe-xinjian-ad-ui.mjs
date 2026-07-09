@@ -126,6 +126,16 @@ function buildProbeExpression(targetUrl) {
       return false;
     };
 
+    const waitForAnyText = async (labels, timeoutMs) => {
+      const deadline = Date.now() + timeoutMs;
+      while (Date.now() < deadline) {
+        const bodyText = document.body?.innerText || "";
+        if (labels.some((label) => bodyText.includes(label))) return true;
+        await sleep(300);
+      }
+      return false;
+    };
+
     const closeBlockingPopups = async () => {
       let closed = 0;
       const closeSelectors = [
@@ -179,6 +189,7 @@ function buildProbeExpression(targetUrl) {
     };
 
     await waitForApp();
+    await waitForAnyText(["店铺广告分析", "Tiktok", "TikTok", "近7天", "广告花费", "ROAS"], 12000);
     await closeBlockingPopups();
 
     const isAdRoute = () => /\\/ad\\/(shop-detail|group-detail|originality-detail)/.test(location.pathname);
@@ -200,6 +211,7 @@ function buildProbeExpression(targetUrl) {
     }
 
     await waitForApp();
+    await waitForAnyText(["店铺广告分析", "Tiktok", "TikTok", "近7天", "广告花费", "ROAS"], 12000);
     await closeBlockingPopups();
 
     await clickText(

@@ -9,13 +9,13 @@ For 心舰 page/button memory and RPA-like "say what to do" routing, use `refere
 Always start with the real-page browser data workflow. The command opens or reuses an actual 心舰 page, navigates to the advertising analysis page, closes safe blocking popups, clicks read-only/navigation controls such as the advertising module, platform/date tabs, or query button, then fetches the hourly endpoint through that page context. Only report figures as real when both `real_data_verified=true` and `ui_interaction_verified=true`. It avoids hijacking the physical mouse, but it must still operate the real browser page before fetching data.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-ad-hourly.ps1") -Json
 ```
 
 For a request such as "最近七天 <店铺A> / <店铺B> 产品广告分时数据", use:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-ad-hourly.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -Json
 ```
 
 If the user provides an exported file:
@@ -27,7 +27,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinj
 If the user is about to export from 心舰 ERP but does not want to provide the filename, wait for a new file in Downloads and analyze it automatically:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\wait-xinjian-export.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -TimeoutSec 300 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-export-watch.ps1") -StoreName "<店铺A>,<店铺B>" -Days 7 -TimeoutSec 300 -Json
 ```
 
 When a mapped 心舰 export/download button is run through `scripts\invoke-xinjian-ui-action.ps1`, read its `post_execute` object. Before authorization, `post_execute.rerun_after_confirmation` shows the exact rerun fields for `-Execute -AllowExport`; after a successful authorized export, top-level `next_action` is `wait_for_xinjian_export_or_open_download_center`. Run `wait-xinjian-export.ps1` first, then use the mapped `打开下载中心` fallback if 心舰 generates the file asynchronously.

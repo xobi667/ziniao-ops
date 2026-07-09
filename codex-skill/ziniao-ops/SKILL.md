@@ -104,6 +104,17 @@ Hard rules:
 
 ## Quick Workflow
 
+For 心舰/Xinjian work, prefer the short business commands first. They are the default path for normal requests:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-status.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-open.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-ad-hourly.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xj-export-watch.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
+```
+
+Use the lower-level 心舰 scripts only when debugging or when a command output names a specific `next_action`. `xj-ad-hourly.ps1` still requires both `real_data_verified = true` and `ui_interaction_verified = true` before figures can be reported.
+
 1. Confirm the local package exists:
 
 ```powershell

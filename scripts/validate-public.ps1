@@ -217,6 +217,11 @@ $required = @(
   "scripts\test-xinjian-page-actions-command-inventory.ps1",
   "scripts\test-xinjian-auto-open-login-bridge.ps1",
   "scripts\test-xinjian-ad-hourly-browser-first.ps1",
+  "scripts\xj-status.ps1",
+  "scripts\xj-open.ps1",
+  "scripts\xj-ad-hourly.ps1",
+  "scripts\xj-export-watch.ps1",
+  "scripts\test-xj-hard-commands.ps1",
   "scripts\report-xinjian-action-memory.ps1",
   "scripts\learn-xinjian-current-page.ps1",
   "scripts\learn-xinjian-open-pages.ps1",
@@ -538,6 +543,25 @@ if (Test-Path -LiteralPath $adHourlyBrowserFirstTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_ad_hourly_browser_first_test_error" $_.Exception.Message $adHourlyBrowserFirstTestPath
+  }
+}
+
+$xjHardCommandsTestPath = Join-Path $Root "scripts\test-xj-hard-commands.ps1"
+if (Test-Path -LiteralPath $xjHardCommandsTestPath) {
+  try {
+    $xjHardCommandsRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $xjHardCommandsTestPath -Json 2>&1)
+    $xjHardCommandsExit = $LASTEXITCODE
+    $xjHardCommandsResult = $null
+    try {
+      $xjHardCommandsResult = ($xjHardCommandsRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xj_hard_commands_test_parse_failed" ("XJ hard commands test output was not JSON: {0}" -f ($xjHardCommandsRaw | Out-String).Trim()) $xjHardCommandsTestPath
+    }
+    if ($xjHardCommandsResult -and ($xjHardCommandsExit -ne 0 -or !$xjHardCommandsResult.ok)) {
+      Add-Issue "error" "xj_hard_commands_test_failed" ("XJ hard commands regression test failed: {0}" -f (($xjHardCommandsResult.failures) -join ",")) $xjHardCommandsTestPath
+    }
+  } catch {
+    Add-Issue "error" "xj_hard_commands_test_error" $_.Exception.Message $xjHardCommandsTestPath
   }
 }
 
