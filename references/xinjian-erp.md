@@ -73,6 +73,8 @@ The PowerShell wrapper writes both a Markdown summary and an Excel workbook by d
 - `原始记录`: normalized source rows used in the calculation.
 - `说明`: date window, data source, and selection logic.
 
+Only present final ad-performance figures as real data when the JSON result has `real_data_verified: true`. The answer should cite the evidence from `data_source.evidence`, especially the CDP page URL or input file path, response path, record count, files used, and source types. If `real_data_verified` is false, do not use any generated table as a business conclusion; report the blocker from `next_action` and the relevant login/store-match fields. Window detection, title-only matches, UIA action maps, route maps, remembered buttons, and MCP/browser availability checks are not real data sources.
+
 ## Known API
 
 The frontend uses:

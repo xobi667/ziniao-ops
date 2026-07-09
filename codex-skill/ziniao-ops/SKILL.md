@@ -351,6 +351,11 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\quer
 ```
 
 By default the query script reads `references\xinjian-ui-action-catalog.json` first, so generated read-only table-header memory is available to intent matching. If the catalog is unavailable, it falls back to the raw curated/auto/overlay/dialog/row-action maps.
+For page-name intents such as `打开下载中心`, the query layer synthesizes a safe page navigation action from the catalog page route so it does not confuse a page name with a row-level operation button. After changing query/routing logic, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
+```
 
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
 
@@ -490,6 +495,7 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinj
 ```
 
 The workflow writes a Markdown summary and an Excel workbook. Treat the `excel_output` path in JSON output as the main deliverable for requests that ask for a table or Excel file.
+For 心舰 ad reports, only report final figures as real data when the command returns top-level `real_data_verified = true`. Include or summarize `data_source.evidence` in the answer: page URL when captured through CDP, response path, record count, files used, and source types. If `real_data_verified = false`, do not present best-hour results as factual; report the blocker from `next_action` instead. Window detection, title-only matches, UIA action catalogs, route maps, button memory, and MCP/browser availability checks are never data sources by themselves.
 
 If 心舰 returns `账号未登录`, do not switch to system Chrome, BrowserMCP, Ziniao GUI, coordinate clicks, or foreground automation by default. First look for a local export or ask the employee to export the required hourly product ad data. Use an in-app browser login handoff only if that browser is available; the employee must enter credentials and verification manually.
 

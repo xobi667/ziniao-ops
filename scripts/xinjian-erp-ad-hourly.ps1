@@ -27,6 +27,30 @@ if (!(Test-Path -LiteralPath $analyzer)) {
   throw "Analyzer not found: $analyzer"
 }
 
+function Get-ResultProperty {
+  param(
+    [object]$Object,
+    [string]$Name,
+    [object]$Default = $null
+  )
+  if ($Object -and $Object.PSObject.Properties.Match($Name).Count -gt 0) {
+    return $Object.$Name
+  }
+  return $Default
+}
+
+function Get-ResultArray {
+  param(
+    [object]$Object,
+    [string]$Name
+  )
+  $value = Get-ResultProperty -Object $Object -Name $Name -Default @()
+  if ($null -eq $value) {
+    return @()
+  }
+  return @($value | ForEach-Object { $_ } | Where-Object { $null -ne $_ -and [string]$_ -ne "" })
+}
+
 if (!$SearchRoot -or $SearchRoot.Count -eq 0) {
   $workspaceParent = Split-Path -Parent $root
   $userDataRoot = Split-Path -Parent $workspaceParent
@@ -152,9 +176,41 @@ if ($analysis -and $analysis.PSObject.Properties.Match("xlsx_output").Count -gt 
   $analysisExcelOutput = $analysis.xlsx_output
 }
 
+$analysisOk = [bool](Get-ResultProperty -Object $analysis -Name "ok" -Default $false)
+$analysisRecordCount = [int](Get-ResultProperty -Object $analysis -Name "record_count" -Default 0)
+$analysisFilesUsed = @(Get-ResultArray -Object $analysis -Name "files_used")
+$analysisSourceTypes = @(Get-ResultArray -Object $analysis -Name "source_types")
+$realDataVerified = [bool]($analysisOk -and $analysisRecordCount -gt 0 -and $analysisFilesUsed.Count -gt 0)
+$dataSourceType = if ($analysisSourceTypes.Count -eq 1) {
+  [string]$analysisSourceTypes[0]
+} elseif ($analysisSourceTypes.Count -gt 1) {
+  "mixed_input_files"
+} else {
+  "none"
+}
+
 $result = [ordered]@{
-  ok = [bool]$analysis.ok
+  ok = $analysisOk
+  real_data_verified = $realDataVerified
   endpoint_probe = $endpointProbe
+  data_source = [ordered]@{
+    type = $dataSourceType
+    verified = $realDataVerified
+    evidence = [ordered]@{
+      record_count = $analysisRecordCount
+      files_used = @($analysisFilesUsed)
+      source_types = @($analysisSourceTypes)
+      output = $analysisOutput
+      excel_output = $analysisExcelOutput
+    }
+    rejected_sources = @(
+      "window_detection",
+      "uia_action_catalog",
+      "route_map",
+      "button_memory",
+      "browser_title_only"
+    )
+  }
   analysis = $analysis
   output = $analysisOutput
   excel_output = $analysisExcelOutput

@@ -264,6 +264,59 @@ function Add-ActionMetadata($Action) {
   return $Action
 }
 
+function Get-PageRouteHref($Page) {
+  $routeValue = ""
+  if ($Page.PSObject.Properties.Match("route").Count -gt 0 -and $Page.route) {
+    $routeValue = [string]$Page.route
+  } elseif ($Page.PSObject.Properties.Match("url_contains").Count -gt 0 -and $Page.url_contains) {
+    $routeValue = [string](@($Page.url_contains | Where-Object { $_ }) | Select-Object -First 1)
+  }
+  if (!$routeValue) { return "" }
+  if ($routeValue -match "^[A-Za-z][A-Za-z0-9+.-]*://") { return $routeValue }
+  if (!$routeValue.StartsWith("/")) { $routeValue = "/" + $routeValue }
+  return "https://erp.xinjianerp.com$routeValue"
+}
+
+function Test-PageNameIntent($Page, [string]$QueryCompact, [string[]]$CommandWords) {
+  if (!$QueryCompact) { return $false }
+  $pageNameCompact = Compact-Text ([string]$Page.name)
+  if (!$pageNameCompact) { return $false }
+  if ($QueryCompact -eq $pageNameCompact -or $QueryCompact.Contains($pageNameCompact)) { return $true }
+  $withoutCommands = [string]$QueryCompact
+  foreach ($word in @($CommandWords)) {
+    if ($word) {
+      $withoutCommands = $withoutCommands.Replace($word, "")
+    }
+  }
+  return ($withoutCommands -and ($withoutCommands -eq $pageNameCompact -or $withoutCommands.Contains($pageNameCompact)))
+}
+
+function New-PageNavigationAction($Page) {
+  $href = Get-PageRouteHref $Page
+  if (!$href) { return $null }
+  $routeLabel = ""
+  if ($Page.PSObject.Properties.Match("route").Count -gt 0 -and $Page.route) {
+    $routeLabel = [string]$Page.route
+  }
+  $pageId = if ($Page.id) { [string]$Page.id } else { (Get-RouteKey $routeLabel).Trim("/").Replace("/", ".") }
+  $aliases = @([string]$Page.name)
+  if ($routeLabel) { $aliases += $routeLabel }
+  return [pscustomobject]@{
+    id = "synthetic.page.navigation.$pageId"
+    name = [string]$Page.name
+    aliases = @($aliases | Where-Object { $_ } | Select-Object -Unique)
+    type = "navigation"
+    safety = "navigation"
+    purpose = "Navigate to the $($Page.name) page."
+    function_source = "synthesized from catalog page route for page-name intent"
+    source_map = "page_navigation"
+    locator = [pscustomobject]@{
+      dom_text = [string]$Page.name
+      href = $href
+    }
+  }
+}
+
 $map = Get-Content -LiteralPath $MapPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $autoMap = $null
 if (!$NoAutoMap -and (Test-Path -LiteralPath $AutoMapPath)) {
@@ -368,6 +421,21 @@ if ($catalog -and $catalog.pages) {
 }
 $query = Normalize-Text $Intent
 $route = Get-RoutePath $Url
+$queryCompact = Compact-Text $query
+$openOrChooseIntentWords = @(
+  (New-UnicodeText @(0x6253, 0x5F00)),
+  (New-UnicodeText @(0x5C55, 0x5F00)),
+  (New-UnicodeText @(0x9009, 0x62E9)),
+  (New-UnicodeText @(0x7B5B, 0x9009)),
+  (New-UnicodeText @(0x5207, 0x6362))
+)
+$hasOpenOrChooseIntent = $false
+foreach ($word in $openOrChooseIntentWords) {
+  if ($queryCompact -and $queryCompact.Contains($word)) {
+    $hasOpenOrChooseIntent = $true
+    break
+  }
+}
 
 $matchedPages = @()
 $urlMatchedPages = @()
@@ -451,9 +519,39 @@ foreach ($matched in @($matchedPages)) {
   }
 }
 
+$pageActionCandidateCount = @($candidates | Where-Object { $_.match_scope -eq "page" }).Count
+$pageNavigationMatchedPages = @()
+$seenPageNavigationKeys = @{}
+foreach ($matched in @($matchedPages + $nameMatchedPages)) {
+  if (!$matched -or !$matched.page) { continue }
+  $pageKey = if ($matched.page.id) { [string]$matched.page.id } else { Get-PageRouteHref $matched.page }
+  if (!$pageKey -or $seenPageNavigationKeys.ContainsKey($pageKey)) { continue }
+  if (!(Test-PageNameIntent -Page $matched.page -QueryCompact $queryCompact -CommandWords $openOrChooseIntentWords)) { continue }
+  if ($Url -and $urlMatchedPages.Count -gt 0 -and !$matched.current_url_match -and !$hasOpenOrChooseIntent -and $pageActionCandidateCount -gt 0) {
+    continue
+  }
+  $pageNavigationAction = New-PageNavigationAction $matched.page
+  if (!$pageNavigationAction) { continue }
+  $seenPageNavigationKeys[$pageKey] = $true
+  $pageNavigationAction = Add-ActionMetadata $pageNavigationAction
+  $pageNavigationScore = 360 + [int]($matched.score / 5)
+  if ($matched.current_url_match) { $pageNavigationScore += 60 }
+  if ($hasOpenOrChooseIntent) { $pageNavigationScore += 80 }
+  if ($queryCompact -eq (Compact-Text ([string]$matched.page.name))) { $pageNavigationScore += 80 }
+  $candidate = [pscustomobject]@{
+    score = $pageNavigationScore
+    match_scope = "page_navigation"
+    page_id = $matched.page.id
+    page_name = $matched.page.name
+    action = $pageNavigationAction
+  }
+  $pageNavigationMatchedPages += $matched
+  $candidates += $candidate
+}
+
 $suppressedGlobalMatches = 0
 if ($Url -and $urlMatchedPages.Count -gt 0) {
-  $pageCandidateCount = @($candidates | Where-Object { $_.match_scope -eq "page" }).Count
+  $pageCandidateCount = @($candidates | Where-Object { $_.match_scope -in @("page", "page_navigation") }).Count
   if ($pageCandidateCount -gt 0) {
     $globalCandidates = @($candidates | Where-Object { $_.match_scope -eq "global" })
     $suppressedGlobalMatches = $globalCandidates.Count
@@ -471,6 +569,7 @@ $candidates = @($candidates |
       $triggerText = [string]$action.locator.trigger_text
     }
     if ($action.type -eq "navigation") { $rank -= 20 }
+    if ($action.source_map -eq "page_navigation") { $rank += 90 }
     if ($action.type -eq "button" -or $action.type -eq "batch_action") { $rank += 10 }
     if ($action.type -eq "filter_input") { $rank += 16 }
     if ($action.type -eq "filter_dropdown") { $rank += 12 }
@@ -482,6 +581,12 @@ $candidates = @($candidates |
     if ($action.type -eq "row_action") { $rank += 12 }
     if ($action.safety -eq "read_filter") { $rank += 8 }
     if ([string]$action.safety -like "confirmation_required*") { $rank += 6 }
+    if ($hasOpenOrChooseIntent) {
+      if ($action.type -eq "overlay_trigger") { $rank += 35 }
+      if ($action.type -eq "overlay_item") { $rank += 18 }
+      if ($action.type -eq "filter_input") { $rank -= 4 }
+      if ($action.type -eq "table_column") { $rank -= 18 }
+    }
     if ($triggerText -eq $genericChooseText) { $rank -= 8 }
     elseif ($triggerText) { $rank += 4 }
     $_ | Add-Member -NotePropertyName rank -NotePropertyValue $rank -Force

@@ -67,6 +67,14 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\quer
 
 By default the query script reads `references/xinjian-ui-action-catalog.json` first, so generated read-only table-header memory is available to intent matching. If the catalog is unavailable, it falls back to the raw curated/auto/overlay/dialog/row-action maps.
 
+When an intent names a page, especially with `打开`, `进入`, or another navigation verb, the query layer synthesizes a safe `page_navigation` action from the catalog page route. This keeps page-level requests such as `打开下载中心` from being misrouted to row-level actions like a report download operation.
+
+After changing query ranking or RPA routing behavior, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
+```
+
 3. To inspect the full remembered button/action catalog:
 
 ```powershell
@@ -87,7 +95,9 @@ When no debuggable CDP port is resolved, the invoker can still execute mapped sa
 
 Locator strategy is layered. Exact selectors, row-action locators, hrefs, visible DOM text, placeholder strings, placeholder lists, and known tab-text lists are used first. For known date/platform lists, the invoker passes the user's original intent into the CDP helper so requests such as `近7天`, `最近七天`, `Shopee`, or `Lazada` can choose the matching visible tab instead of clicking a generic label. When a safe tab/status-tab has no explicit locator, the invoker may click the matching visible action text. When a date filter has no explicit placeholder, it may focus the nearest visible date/select control next to the filter label. Observed table metric/header entries such as `ROAS`, `广告花费`, and `转化率` are recorded as read-only `table_column` actions with `read_table_column_header`; they are query/planning memory and are not clicked. Row-level generic entries such as `行分析` and `操作` are recorded as `row_context_required_column_header` when only the operation column is known; the invoker refuses to blindly click the first row until a row context or exact row-action button metadata is available.
 
-When `-Url` is provided, query and invoke scripts first scope page-level matches to the current route. Off-page name matches are suppressed unless no current-page match exists, so an intent like `首页` on `/ai/talk` resolves to the current page's 首页 action instead of the 首页 page's unrelated controls.
+Intent ranking is action-aware. When the user says `打开`, `展开`, `选择`, `筛选`, or `切换`, prefer executable overlay triggers/items over passive `filter_input` and read-only `table_column` memories with the same label. When the user says `查看` or asks for a metric/column, keep table-column matches read-only and do not click them.
+
+When `-Url` is provided, query and invoke scripts first scope page-level matches to the current route. Off-page name matches are suppressed unless no current-page match exists, except explicit page-navigation intents where the named page route is returned as `page_navigation`. This means an intent like `首页` on `/ai/talk` can still resolve to the current page's 首页 action, while `打开下载中心` resolves to the 下载中心 route instead of a row operation.
 
 5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 
@@ -209,7 +219,7 @@ Curated mapped pages:
 
 Generated auto-map coverage currently includes additional BI, CRM detail, BPM/process, AI, and restricted-state pages captured from logged-in CDP DOM. Query scripts merge the curated and generated maps, with curated pages taking precedence.
 
-Coverage snapshot from the 2026-07-08 CDP crawl:
+Coverage snapshot validated from the logged-in CDP page on 2026-07-09:
 
 - Vue Router entries discovered: 109.
 - Directly navigable eligible routes after safety exclusions: 56.

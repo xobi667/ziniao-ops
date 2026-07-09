@@ -218,6 +218,7 @@ $required = @(
   "scripts\learn-xinjian-open-pages.ps1",
   "scripts\learn-xinjian-weak-pages.ps1",
   "scripts\query-xinjian-ui-action.ps1",
+  "scripts\test-xinjian-rpa-routing.ps1",
   "scripts\invoke-xinjian-ui-action.ps1",
   "scripts\invoke-xinjian-ui-action-cdp.mjs",
   "scripts\install-upstream-tools.ps1",
@@ -306,6 +307,25 @@ Get-ChildItem -LiteralPath $Root -Recurse -Filter *.ps1 -File | ForEach-Object {
 }
 foreach ($err in $psErrors) {
   Add-Issue "error" "powershell_parse_failed" $err.error $err.path
+}
+
+$routingTestPath = Join-Path $Root "scripts\test-xinjian-rpa-routing.ps1"
+if (Test-Path -LiteralPath $routingTestPath) {
+  try {
+    $routingRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $routingTestPath -Json 2>&1)
+    $routingExit = $LASTEXITCODE
+    $routingResult = $null
+    try {
+      $routingResult = ($routingRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_rpa_routing_test_parse_failed" ("Routing test output was not JSON: {0}" -f ($routingRaw | Out-String).Trim()) $routingTestPath
+    }
+    if ($routingResult -and ($routingExit -ne 0 -or !$routingResult.ok)) {
+      Add-Issue "error" "xinjian_rpa_routing_test_failed" ("Routing regression test failed: {0}" -f (($routingResult.cases | Where-Object { !$_.ok } | Select-Object -ExpandProperty name) -join ",")) $routingTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_rpa_routing_test_error" $_.Exception.Message $routingTestPath
+  }
 }
 
 $python = Get-Command python -ErrorAction SilentlyContinue

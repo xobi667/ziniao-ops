@@ -36,6 +36,23 @@ EXCLUDE_DIRS = {".git", ".upstreams", ".ziniao-ops", "node_modules", "__pycache_
 EXTS = {".csv", ".json", ".xlsx"}
 
 
+def classify_source(path: Path) -> str:
+    suffix = path.suffix.lower()
+    if suffix == ".json":
+        try:
+            value = json.loads(path.read_text(encoding="utf-8-sig"))
+        except Exception:  # noqa: BLE001 - source classification must not block parsing later.
+            return "json_file"
+        if isinstance(value, dict) and "code" in value and "msg" in value:
+            return "xinjian_endpoint_response_json"
+        return "json_export"
+    if suffix == ".xlsx":
+        return "xlsx_export"
+    if suffix == ".csv":
+        return "csv_export"
+    return "unknown"
+
+
 def norm(value: Any) -> str:
     return re.sub(r"[^0-9a-zA-Z\u4e00-\u9fff]+", "", str(value or "")).lower()
 
@@ -287,6 +304,7 @@ def analyze_file(path: Path, stores: list[str], start: dt.date | None, end: dt.d
             record = {
                 "file": str(path),
                 "sheet": sheet_name,
+                "source_type": classify_source(path),
                 "store": store or (stores[0] if len(stores) == 1 else "UNKNOWN_STORE"),
                 "hour": hour,
                 "date": row_date.isoformat() if row_date else "",
@@ -342,9 +360,36 @@ def aggregate(records: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
 def best_rows(by_store: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
     result = []
     for store, items in by_store.items():
+        activity_items = [
+            i
+            for i in items
+            if any(float(i.get(metric) or 0) > 0 for metric in NUMERIC_KEYS)
+        ]
+        if not activity_items:
+            dates = sorted({date for item in items for date in item.get("dates", [])})
+            item = {
+                "store": store,
+                "hour": None,
+                "rows": sum(int(i.get("rows") or 0) for i in items),
+                "dates": dates,
+                "cost": sum(float(i.get("cost") or 0) for i in items),
+                "revenue": sum(float(i.get("revenue") or 0) for i in items),
+                "orders": sum(float(i.get("orders") or 0) for i in items),
+                "clicks": sum(float(i.get("clicks") or 0) for i in items),
+                "impressions": sum(float(i.get("impressions") or 0) for i in items),
+                "roas": 0.0,
+                "ctr": 0.0,
+                "cr": 0.0,
+                "cpc": 0.0,
+                "date_count": len(dates),
+                "no_activity": True,
+                "reason": "全部时段无花费、销售额、订单、点击和展示，无法判断最佳投放时段",
+            }
+            result.append(item)
+            continue
         candidates = [i for i in items if i["cost"] > 0 and (i["revenue"] > 0 or i["orders"] > 0 or i["clicks"] > 0)]
         if not candidates:
-            candidates = items
+            candidates = activity_items
         best = max(
             candidates,
             key=lambda i: (
@@ -356,6 +401,7 @@ def best_rows(by_store: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]
             ),
         )
         item = dict(best)
+        item["no_activity"] = False
         item["reason"] = "ROAS最高，订单/销售额作为并列判断" if best["cost"] > 0 else "缺少花费，按可用互动/订单判断"
         result.append(item)
     result.sort(key=lambda x: x["store"].lower())
@@ -374,7 +420,9 @@ def fmt_pct(value: float) -> str:
     return f"{value * 100:.2f}%"
 
 
-def hour_label(hour: int) -> str:
+def hour_label(hour: Any) -> str:
+    if hour is None or hour == "":
+        return "无有效时段"
     return f"{hour:02d}:00-{hour:02d}:59"
 
 
@@ -383,6 +431,7 @@ def markdown_report(result: dict[str, Any]) -> str:
         "# 心舰 ERP 产品广告分时分析",
         "",
         f"- 数据文件数: {len(result['files_used'])}",
+        f"- 数据来源类型: {', '.join(result.get('source_types') or []) or '-'}",
         f"- 记录数: {result['record_count']}",
         f"- 日期范围: {result.get('start_date') or '-'} ~ {result.get('end_date') or '-'}",
         "",
@@ -557,7 +606,7 @@ def write_xlsx_report(result: dict[str, Any], output: Path, records: list[dict[s
     add_rows(ws_hourly, hourly_headers, hourly_data)
 
     ws_raw = wb.create_sheet("原始记录")
-    raw_headers = ["店铺", "日期", "时段", "广告销售额", "广告花费", "广告订单", "点击", "展示", "来源文件", "工作表"]
+    raw_headers = ["店铺", "日期", "时段", "广告销售额", "广告花费", "广告订单", "点击", "展示", "来源类型", "来源文件", "工作表"]
     raw_data = []
     for record in records:
         raw_data.append(
@@ -570,6 +619,7 @@ def write_xlsx_report(result: dict[str, Any], output: Path, records: list[dict[s
                 round(record["orders"], 0),
                 round(record["clicks"], 0),
                 round(record["impressions"], 0),
+                record.get("source_type", ""),
                 record["file"],
                 record["sheet"],
             ]
@@ -582,6 +632,7 @@ def write_xlsx_report(result: dict[str, Any], output: Path, records: list[dict[s
         ["日期范围", f"{result.get('start_date') or '-'} ~ {result.get('end_date') or '-'}"],
         ["请求店铺", ", ".join(result.get("stores_requested") or [])],
         ["数据文件数", len(result.get("files_used") or [])],
+        ["数据来源类型", ", ".join(result.get("source_types") or [])],
         ["记录数", result.get("record_count", 0)],
         ["最佳时段口径", "优先 ROAS；并列时看广告订单、广告销售额、点击、CPC"],
         ["日期过滤", "已放宽到文件内全部可识别小时数据" if result.get("date_filter_relaxed") else "使用指定日期范围"],
@@ -673,6 +724,7 @@ def main() -> int:
         "stores_requested": args.store,
         "files_scanned": [str(p) for p in input_paths],
         "files_used": files_used,
+        "source_types": sorted({classify_source(Path(path)) for path in files_used}),
         "record_count": len(all_records),
         "best": best,
         "hourly": by_store,

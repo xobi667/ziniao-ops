@@ -232,43 +232,54 @@ const expression = `(() => {
       if (req) {
         const bi = req("./src/api/bi.js");
         if (bi && typeof bi.summaryByDate_v2 === "function") {
-          if (requestedStores.length > 0) {
-            let shopRows = [];
-            try {
-              const shopApi = req("./src/api/erp/shop.js");
-              const shopCalls = [];
-              if (shopApi && typeof shopApi.getShopPage === "function") {
-                shopCalls.push(shopApi.getShopPage({ pageNo: 1, pageSize: 500 }));
-              }
-              if (shopApi && typeof shopApi.getShops === "function") {
-                shopCalls.push(shopApi.getShops({}));
-              }
-              const shopResults = await withTimeout(
-                Promise.allSettled(shopCalls),
-                8000,
-                "shop_lookup_timeout"
-              );
-              shopRows = uniqueShops(shopResults.flatMap((item) => (
-                item.status === "fulfilled" ? collectShops(item.value) : []
-              )));
-            } catch (error) {
-              appModuleError = "shop_lookup_failed: " + String(error && (error.message || error));
+          let shopRows = [];
+          try {
+            const shopApi = req("./src/api/erp/shop.js");
+            const shopCalls = [];
+            if (shopApi && typeof shopApi.getShopPage === "function") {
+              shopCalls.push(shopApi.getShopPage({ pageNo: 1, pageSize: 500 }));
             }
+            if (shopApi && typeof shopApi.getShops === "function") {
+              shopCalls.push(shopApi.getShops({}));
+            }
+            const shopResults = await withTimeout(
+              Promise.allSettled(shopCalls),
+              8000,
+              "shop_lookup_timeout"
+            );
+            shopRows = uniqueShops(shopResults.flatMap((item) => (
+              item.status === "fulfilled" ? collectShops(item.value) : []
+            )));
+          } catch (error) {
+            appModuleError = "shop_lookup_failed: " + String(error && (error.message || error));
+          }
+
+          if (requestedStores.length > 0 || shopRows.length > 0) {
 
             const matched = [];
             const notFound = [];
             const suggestions = {};
-            requestedStores.forEach((requested) => {
-              const row = matchShop(requested, shopRows);
-              if (row) {
-                matched.push({ requested, shop: compactShop(row) });
-              } else {
-                notFound.push(requested);
-                suggestions[requested] = suggestShops(requested, shopRows);
-              }
-            });
+            if (requestedStores.length > 0) {
+              requestedStores.forEach((requested) => {
+                const row = matchShop(requested, shopRows);
+                if (row) {
+                  matched.push({ requested, shop: compactShop(row) });
+                } else {
+                  notFound.push(requested);
+                  suggestions[requested] = suggestShops(requested, shopRows);
+                }
+              });
+            } else {
+              shopRows.forEach((shop) => {
+                const compact = compactShop(shop);
+                matched.push({
+                  requested: compact.shopName || compact.name || String(compact.id),
+                  shop: compact
+                });
+              });
+            }
 
-            if (matched.length === 0 && appModuleError) {
+            if (requestedStores.length > 0 && matched.length === 0 && appModuleError) {
               throw new Error(appModuleError + "; falling_back_to_native_fetch");
             }
 
@@ -310,7 +321,9 @@ const expression = `(() => {
                 msg: responseMsg,
                 data: { currentData, preData },
                 codexMeta: {
-                  stores_requested: requestedStores,
+                  stores_requested: requestedStores.length > 0
+                    ? requestedStores
+                    : matched.map((item) => item.requested),
                   stores_matched: matched,
                   stores_not_found: notFound,
                   store_suggestions: suggestions,

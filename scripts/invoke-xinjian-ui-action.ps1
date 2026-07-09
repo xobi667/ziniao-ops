@@ -679,11 +679,7 @@ $plan = [ordered]@{
   locator_strategy = $locatorStrategy
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
-  safety_note = if ($requiresCdpPort -and $uiaCanExecute) {
-    "No debuggable Xinjian CDP port was resolved, but this safe non-write action can run through Windows UI Automation on the already-open window without mouse movement."
-  } elseif ($requiresCdpPort) {
-    "No debuggable Xinjian CDP port was resolved. Dry-run only; open or log in to Xinjian in a Chrome/Edge/Ziniao window with DevTools enabled."
-  } elseif ($readOnlyCatalogEntry) {
+  safety_note = if ($readOnlyCatalogEntry) {
     "Read-only table column memory. No click is needed; use the matched page/column to locate or interpret visible data."
   } elseif ($requiresPageContext -and $requiresWrite) {
     "Write/delete/save/submit-like action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowWrite only after explicit confirmation."
@@ -693,12 +689,20 @@ $plan = [ordered]@{
     "No current Xinjian URL was resolved. Dry-run only; bring the target Xinjian window to the foreground or pass -Url to execute."
   } elseif ($requiresRowContext) {
     "Row-level action needs an explicit row context or captured row button metadata. Dry-run only; refusing to blindly click the first row."
+  } elseif ($requiresWrite -and $requiresCdpPort) {
+    "Write/delete/save/submit-like action and no controllable Xinjian CDP/UIA target was resolved. Dry-run only; focus/pass the target page and use -Execute -AllowWrite only after explicit confirmation."
+  } elseif ($requiresExport -and $requiresCdpPort) {
+    "Export/download action and no controllable Xinjian CDP/UIA target was resolved. Dry-run only; focus/pass the target page and use -Execute -AllowExport only after explicit confirmation."
   } elseif ($requiresWrite) {
     "Write/delete/save/submit-like action. Dry-run by default; pass -Execute -AllowWrite only after explicit user confirmation."
   } elseif ($requiresExport) {
     "Export/download action. Dry-run by default; pass -Execute -AllowExport only after explicit user confirmation."
   } elseif ($unknownSafety) {
     "Unknown safety. Dry-run only until this action is manually classified."
+  } elseif ($requiresCdpPort -and $uiaCanExecute) {
+    "No debuggable Xinjian CDP port was resolved, but this safe non-write action can run through Windows UI Automation on the already-open window without mouse movement."
+  } elseif ($requiresCdpPort) {
+    "No debuggable Xinjian CDP port was resolved. Dry-run only; open or log in to Xinjian in a Chrome/Edge/Ziniao window with DevTools enabled."
   } else {
     "Safe non-write action can be executed with -Execute."
   }
@@ -745,7 +749,7 @@ if (!$canExecute) {
     page_kind = $currentPageKind
     execution_backend = $executionBackend
     plan = $plan
-    next_action = if ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } elseif ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } else { "manual_review_action_safety" }
+    next_action = if ($readOnlyCatalogEntry) { "use_table_column_memory_for_read_only_planning" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresWrite -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresExport -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } elseif ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20

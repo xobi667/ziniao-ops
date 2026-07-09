@@ -176,7 +176,11 @@ $nodeHelper = Join-Path $PSScriptRoot "fetch-xinjian-cdp.mjs"
 if ($node -and (Test-Path -LiteralPath $nodeHelper)) {
   $bodyJsonForNode = $body | ConvertTo-Json -Depth 8 -Compress
   $bodyB64ForNode = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($bodyJsonForNode))
-  $storesJsonForNode = $StoreName | ConvertTo-Json -Depth 4 -Compress
+  $storesJsonForNode = if ($StoreName.Count -gt 0) {
+    $StoreName | ConvertTo-Json -Depth 4 -Compress
+  } else {
+    "[]"
+  }
   $storesB64ForNode = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($storesJsonForNode))
   $nodeArgs = @(
     $nodeHelper,
@@ -253,11 +257,13 @@ if ($responseJson -and $responseJson.code -ne 401) {
     "-ExecutionPolicy", "Bypass",
     "-File", (Join-Path $PSScriptRoot "xinjian-erp-ad-hourly.ps1"),
     "-InputPath", $responsePath,
-    "-StoreName", ($StoreName -join ","),
     "-StartDate", $StartDate,
     "-EndDate", $EndDate,
     "-Json"
   )
+  if ($StoreName.Count -gt 0) {
+    $argsList += @("-StoreName", ($StoreName -join ","))
+  }
   if ($OutputPath) { $argsList += @("-OutputPath", $OutputPath) }
   if ($ExcelOutputPath) { $argsList += @("-ExcelOutputPath", $ExcelOutputPath) }
   $rawAnalysis = & powershell @argsList
@@ -282,8 +288,71 @@ $loginState = if ($fetchMeta -and $fetchMeta.PSObject.Properties.Match("login_st
   "unknown"
 }
 
+$analysisCore = $analysis
+if ($analysis -and
+  $analysis.PSObject.Properties.Match("analysis").Count -gt 0 -and
+  $analysis.analysis -and
+  $analysis.analysis.PSObject.Properties.Match("record_count").Count -gt 0) {
+  $analysisCore = $analysis.analysis
+}
+$analysisEvidence = $null
+if ($analysis -and
+  $analysis.PSObject.Properties.Match("data_source").Count -gt 0 -and
+  $analysis.data_source -and
+  $analysis.data_source.PSObject.Properties.Match("evidence").Count -gt 0) {
+  $analysisEvidence = $analysis.data_source.evidence
+}
+
+$analysisRecordCount = if ($analysisEvidence -and $analysisEvidence.PSObject.Properties.Match("record_count").Count -gt 0) {
+  [int]$analysisEvidence.record_count
+} elseif ($analysisCore -and $analysisCore.PSObject.Properties.Match("record_count").Count -gt 0) {
+  [int]$analysisCore.record_count
+} else {
+  0
+}
+$analysisFilesUsed = if ($analysisEvidence -and $analysisEvidence.PSObject.Properties.Match("files_used").Count -gt 0) {
+  @(Get-JsonPropertyArray -Object $analysisEvidence -Name "files_used")
+} elseif ($analysisCore -and $analysisCore.PSObject.Properties.Match("files_used").Count -gt 0) {
+  @(Get-JsonPropertyArray -Object $analysisCore -Name "files_used")
+} else {
+  @()
+}
+$analysisSourceTypes = if ($analysisEvidence -and $analysisEvidence.PSObject.Properties.Match("source_types").Count -gt 0) {
+  @(Get-JsonPropertyArray -Object $analysisEvidence -Name "source_types")
+} elseif ($analysisCore -and $analysisCore.PSObject.Properties.Match("source_types").Count -gt 0) {
+  @(Get-JsonPropertyArray -Object $analysisCore -Name "source_types")
+} else {
+  @()
+}
+$analysisVerified = if ($analysis -and $analysis.PSObject.Properties.Match("real_data_verified").Count -gt 0) {
+  [bool]$analysis.real_data_verified
+} else {
+  [bool]($analysis -and $analysis.ok)
+}
+$pageUrlForEvidence = if ($fetchMeta -and $fetchMeta.PSObject.Properties.Match("page_url").Count -gt 0) {
+  [string]$fetchMeta.page_url
+} else {
+  ""
+}
+$browserContextVerified = [bool]($fetchMeta -and $pageUrlForEvidence -match "erp\.xinjianerp\.com")
+$authenticatedEndpoint = [bool](
+  $loginState -in @("app_authenticated", "endpoint_authenticated") -or
+  $responseJson.code -eq 0 -or
+  $responseJson.code -eq 200
+)
+$realDataVerified = [bool](
+  $analysis -and
+  $analysisVerified -and
+  $analysisRecordCount -gt 0 -and
+  $analysisFilesUsed.Count -gt 0 -and
+  $browserContextVerified -and
+  $authenticatedEndpoint
+)
+
 $result = [ordered]@{
-  ok = [bool]($analysis -and $analysis.ok)
+  ok = $realDataVerified
+  analysis_ok = [bool]($analysis -and $analysis.ok)
+  real_data_verified = $realDataVerified
   login_state = $loginState
   fetch_method = if ($fetchMeta) { $fetchMeta.method } else { $null }
   page_url = $fetchMeta.page_url
@@ -294,6 +363,29 @@ $result = [ordered]@{
   response_code = $responseJson.code
   response_msg = $responseJson.msg
   login_required = ($loginState -eq "not_logged_in" -or $responseJson.code -eq 401)
+  data_source = [ordered]@{
+    type = "browser_cdp_endpoint_response"
+    verified = $realDataVerified
+    evidence = [ordered]@{
+      page_url = $pageUrlForEvidence
+      page_title = if ($fetchMeta) { $fetchMeta.page_title } else { $null }
+      fetch_method = if ($fetchMeta) { $fetchMeta.method } else { $null }
+      login_state = $loginState
+      http_status = if ($fetchMeta) { $fetchMeta.http_status } else { $null }
+      response_code = $responseJson.code
+      response_path = $responsePath
+      record_count = $analysisRecordCount
+      files_used = @($analysisFilesUsed)
+      source_types = @($analysisSourceTypes)
+    }
+    rejected_sources = @(
+      "window_detection",
+      "uia_action_catalog",
+      "route_map",
+      "button_memory",
+      "browser_title_only"
+    )
+  }
   stores_requested = if ($fetchMeta) { $fetchMeta.stores_requested } else { $StoreName }
   stores_matched = @($storesMatched)
   stores_not_found = @($storesNotFound)
@@ -310,6 +402,8 @@ if (!$result.ok) {
     $result.next_action = "manual_login_required"
   } elseif ($storesMatched.Count -eq 0 -and $storesNotFound.Count -gt 0) {
     $result.next_action = "target_stores_not_found_in_xinjian"
+  } elseif ($analysis -and [bool]$analysis.ok -and !$result.real_data_verified) {
+    $result.next_action = "real_data_source_not_verified"
   } else {
     $result.next_action = "check_response_or_export_hourly_data"
   }

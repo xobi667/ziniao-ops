@@ -1,8 +1,8 @@
 {
-  "version": "2026-07-08",
+  "version": "2026-07-09",
   "system": "xinjian_erp",
   "source": "generated_from_sanitized_cdp_row_action_captures",
-  "generated_at": "2026-07-08T14:30:00.993Z",
+  "generated_at": "2026-07-09T02:37:49.701Z",
   "policy": {
     "default_mode": "read_only_map_first",
     "note": "Row action map stores table headers and row action button labels only. It does not store row cell values, cookies, storage, tokens, or private-looking text.",
@@ -236,7 +236,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
         "captured_page_title": "售后单管理 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -263,6 +263,29 @@
               "备注",
               "售后时间",
               "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "包裹信息",
+              "售后方案",
+              "状态",
+              "售后原因",
+              "标签",
+              "订单实付金额",
+              "售后明细",
+              "换货明细",
+              "售后金额",
+              "创建人",
+              "附件",
+              "备注",
+              "售后时间",
+              "创建时间",
+              "订单信息",
               "操作"
             ],
             "row_count_sampled": 0,
@@ -353,7 +376,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
         "captured_page_title": "售后单管理 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -384,6 +407,29 @@
             ],
             "row_count_sampled": 0,
             "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "包裹信息",
+              "售后方案",
+              "状态",
+              "售后原因",
+              "标签",
+              "订单实付金额",
+              "售后明细",
+              "换货明细",
+              "售后金额",
+              "创建人",
+              "附件",
+              "备注",
+              "售后时间",
+              "创建时间",
+              "订单信息",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
           }
         ]
       },
@@ -407,7 +453,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
         "captured_page_title": "售后单管理 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -434,6 +480,29 @@
               "备注",
               "售后时间",
               "创建时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "包裹信息",
+              "售后方案",
+              "状态",
+              "售后原因",
+              "标签",
+              "订单实付金额",
+              "售后明细",
+              "换货明细",
+              "售后金额",
+              "创建人",
+              "附件",
+              "备注",
+              "售后时间",
+              "创建时间",
+              "订单信息",
               "操作"
             ],
             "row_count_sampled": 0,
@@ -883,7 +952,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/focus",
         "captured_page_title": "重点关注 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -914,6 +983,33 @@
               "跟进商务",
               "状态",
               "跟进时间",
+              "操作"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "画像 / 品类",
+              "粉丝数",
+              "点赞数",
+              "视频平均播放量",
+              "互动率",
+              "GMV",
+              "Item Sold",
+              "带货订单量",
+              "商品销量",
+              "销售额",
+              "视频销售额",
+              "直播销售额",
+              "佣金总额",
+              "ROI",
+              "达人标签",
+              "跟进商务",
+              "状态",
+              "跟进时间",
+              "达人信息",
               "操作"
             ],
             "row_count_sampled": 0,
@@ -1890,7 +1986,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeGoods",
         "captured_page_title": "Shopee商品数据表 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -1945,6 +2041,53 @@
             ],
             "row_count_sampled": 0,
             "actions": []
+          },
+          {
+            "title": "-",
+            "headers": [
+              "项目",
+              "总数据",
+              "收入",
+              "支出",
+              "日期",
+              "商品访客数",
+              "件数",
+              "销售",
+              "测评销量",
+              "有效销量",
+              "测评金额",
+              "平均客单价",
+              "转化率",
+              "有效销售额",
+              "搜索广告费",
+              "搜索广告转化",
+              "搜索广告销售额",
+              "搜索广告点击率",
+              "搜索广告转化率",
+              "搜索广告ROI",
+              "关联广告费",
+              "关联广告转化",
+              "关联广告销售额",
+              "关联广告点击率",
+              "关联广告转化率",
+              "关联广告ROI",
+              "推广广告费",
+              "推广广告转化",
+              "推广广告销售额",
+              "推广广告点击率",
+              "推广广告转化率",
+              "推广广告ROI",
+              "测评损耗",
+              "商品成本",
+              "平台费用",
+              "退款金额",
+              "预估运费",
+              "利润",
+              "销售利润率",
+              "产出"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
           }
         ]
       },
@@ -1968,7 +2111,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeShop",
         "captured_page_title": "Shopee店铺数据表 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -2022,6 +2165,55 @@
               "预估运费",
               "利润",
               "销售利润率"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "项目",
+              "总数据",
+              "收入",
+              "支出",
+              "日期",
+              "访客数",
+              "订单量",
+              "销售额",
+              "测评订单量",
+              "测评销量",
+              "测评金额",
+              "有效订单量",
+              "有效销量",
+              "每个订单的销售额",
+              "店铺转化率",
+              "有效销售额",
+              "搜索广告费",
+              "搜索广告转化",
+              "搜索广告销售额",
+              "搜索广告点击率",
+              "搜索广告转化率",
+              "搜索广告ROI",
+              "关联广告费",
+              "关联广告转化",
+              "关联广告销售额",
+              "关联广告点击率",
+              "关联广告转化率",
+              "关联广告ROI",
+              "推广广告费",
+              "推广广告转化",
+              "推广广告销售额",
+              "推广广告点击率",
+              "推广广告转化率",
+              "推广广告ROI",
+              "测评损耗",
+              "退款金额",
+              "商品成本",
+              "平台费用",
+              "预估运费",
+              "利润",
+              "销售利润率",
+              "产出"
             ],
             "row_count_sampled": 0,
             "actions": []
@@ -2384,7 +2576,7 @@
         "captured_page_url": "https://erp.xinjianerp.com/system/package-open-record/",
         "captured_page_title": "套餐开通记录 - 心舰",
         "captured_counts": {
-          "tables": 1,
+          "tables": 2,
           "row_actions": 0,
           "sampled_rows": 0
         },
@@ -2400,6 +2592,17 @@
               "套餐",
               "开通人",
               "开通时间"
+            ],
+            "row_count_sampled": 0,
+            "actions": []
+          },
+          {
+            "title": "",
+            "headers": [
+              "套餐",
+              "开通人",
+              "开通时间",
+              "租户"
             ],
             "row_count_sampled": 0,
             "actions": []
