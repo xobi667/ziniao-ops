@@ -322,13 +322,17 @@ const expression = `(() => {
     const locator = action.locator || {};
     const headerText = clean(locator.table_column || locator.column_header || action.name);
     const wantedColumnClass = clean(locator.column_class);
+    const rowContextUsed = hasExplicitRowContext();
     const tables = targetTables();
     const tableResults = [];
     tables.forEach((table, tableIndex) => {
       const indexes = columnIndexesForTable(table, headerText);
       const rows = visibleRows(table);
       const values = [];
-      rows.forEach((row) => {
+      let matchedRowCount = 0;
+      rows.forEach((row, originalIndex) => {
+        if (rowContextUsed && !rowMatchesContext(row, originalIndex)) return;
+        matchedRowCount += 1;
         const cells = visibleCandidates("td,.el-table__cell", row);
         let selected = [];
         if (indexes.length) selected = cells.filter((_, index) => indexes.includes(index));
@@ -337,20 +341,32 @@ const expression = `(() => {
         }
         if (!selected.length) return;
         const value = clean(selected.map((cell) => cell.innerText || cell.textContent || "").join(" "));
-        if (value) values.push({ row_index: values.length + 1, text: value });
+        if (value) values.push({ row_index: originalIndex + 1, text: value });
       });
-      if (indexes.length || values.length) {
+      if (indexes.length || values.length || (rowContextUsed && matchedRowCount > 0)) {
         tableResults.push({
           table_index: tableIndex + 1,
           header: headerText,
           column_indexes: indexes,
+          row_context_used: rowContextUsed,
+          requested_row_index: rowIndexValue() || null,
+          requested_row_text: rowTextValue() ? "[provided]" : null,
+          matched_rows: matchedRowCount,
           row_count: values.length,
           values: values.slice(0, 20),
           truncated: values.length > 20
         });
       }
     });
-    const found = tableResults.length > 0;
+    const columnFound = tableResults.some((result) => result.column_indexes.length > 0 || result.row_count > 0);
+    const rowContextMatched = !rowContextUsed || tableResults.some((result) => result.matched_rows > 0);
+    const found = columnFound && rowContextMatched;
+    const error = !columnFound
+      ? "target_table_column_not_found"
+      : (!rowContextMatched ? "target_row_context_not_found" : "");
+    const nextAction = !columnFound
+      ? "Confirm the current page contains the requested table column or learn the current page again."
+      : (!rowContextMatched ? "Confirm the requested row is visible in the current table, then rerun with RowIndex or RowText." : "");
     return {
       ok: found,
       action_id: action.id || "",
@@ -360,9 +376,12 @@ const expression = `(() => {
       read_only: true,
       page: currentPageInfo(),
       table_column: headerText,
+      row_context_used: rowContextUsed,
+      requested_row_index: rowIndexValue() || null,
+      requested_row_text: rowTextValue() ? "[provided]" : null,
       tables: tableResults,
-      error: found ? "" : "target_table_column_not_found",
-      next_action: found ? "" : "Confirm the current page contains the requested table column or learn the current page again."
+      error,
+      next_action: nextAction
     };
   };
   const clickRowAction = () => {

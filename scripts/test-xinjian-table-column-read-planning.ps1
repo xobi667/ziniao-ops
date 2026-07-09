@@ -56,6 +56,7 @@ function Invoke-Action {
 }
 
 $textAdSpend = U @(0x5e7f, 0x544a, 0x82b1, 0x8d39)
+$textFirstRowAdSpend = (U @(0x7b2c, 0x31, 0x884c, 0x20, 0x5e7f, 0x544a, 0x82b1, 0x8d39))
 $cases = @(
   [pscustomobject]@{
     name = "dry_run_without_port_blocks_table_read"
@@ -76,6 +77,20 @@ $cases = @(
     expected_mode = "dry_run"
     expected_can_execute = $true
     expected_backend = "cdp"
+  },
+  [pscustomobject]@{
+    name = "dry_run_with_port_preserves_row_context_for_table_read"
+    intent = $textFirstRowAdSpend
+    port = 65535
+    execute = $false
+    expected_exit = 0
+    expected_mode = "dry_run"
+    expected_can_execute = $true
+    expected_backend = "cdp"
+    expected_row_required = $false
+    expected_row_provided = $true
+    expected_row_source = "intent_row_index"
+    expected_row_index = 1
   },
   [pscustomobject]@{
     name = "execute_without_port_reports_read_blocker"
@@ -120,6 +135,26 @@ foreach ($case in $cases) {
     if ($case.PSObject.Properties.Name -contains "expected_next_action") {
       if ([string]$result.payload.next_action -ne [string]$case.expected_next_action) {
         Add-Failure -Failures $caseFailures -Message ("next_action expected '{0}', got '{1}'" -f $case.expected_next_action, $result.payload.next_action)
+      }
+    }
+    if ($case.PSObject.Properties.Name -contains "expected_row_required") {
+      if ([bool]$result.payload.plan.row_context.required -ne [bool]$case.expected_row_required) {
+        Add-Failure -Failures $caseFailures -Message ("row_context.required expected {0}, got {1}" -f $case.expected_row_required, $result.payload.plan.row_context.required)
+      }
+    }
+    if ($case.PSObject.Properties.Name -contains "expected_row_provided") {
+      if ([bool]$result.payload.plan.row_context.provided -ne [bool]$case.expected_row_provided) {
+        Add-Failure -Failures $caseFailures -Message ("row_context.provided expected {0}, got {1}" -f $case.expected_row_provided, $result.payload.plan.row_context.provided)
+      }
+    }
+    if ($case.PSObject.Properties.Name -contains "expected_row_source") {
+      if ([string]$result.payload.plan.row_context.source -ne [string]$case.expected_row_source) {
+        Add-Failure -Failures $caseFailures -Message ("row_context.source expected '{0}', got '{1}'" -f $case.expected_row_source, $result.payload.plan.row_context.source)
+      }
+    }
+    if ($case.PSObject.Properties.Name -contains "expected_row_index") {
+      if ([int]$result.payload.plan.row_context.row_index -ne [int]$case.expected_row_index) {
+        Add-Failure -Failures $caseFailures -Message ("row_context.row_index expected {0}, got {1}" -f $case.expected_row_index, $result.payload.plan.row_context.row_index)
       }
     }
   }

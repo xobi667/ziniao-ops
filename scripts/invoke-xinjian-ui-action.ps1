@@ -791,9 +791,9 @@ $plan = [ordered]@{
   execute_requested = [bool]$Execute
   can_execute = [bool]$canExecute
   safety_note = if ($readOnlyCatalogEntry -and !$requiresCdpPort) {
-    "Read-only table column can be read with -Execute through CDP. No click, write, export, cookie, token, or storage access is needed."
+    "Read-only table column can be read with -Execute through CDP. If RowIndex/RowText or a clear row phrase is provided, the visible column values are filtered to that row. No click, write, export, cookie, token, or storage access is needed."
   } elseif ($readOnlyCatalogEntry) {
-    "Read-only table column memory. No click is needed; open or focus a debuggable Xinjian page to read visible column values with -Execute."
+    "Read-only table column memory. No click is needed; open or focus a debuggable Xinjian page to read visible column values with -Execute. RowIndex/RowText can restrict the read to a specific visible row."
   } elseif ($requiresPageContext -and $requiresWrite) {
     "Write/delete/save/submit-like action and no current Xinjian URL was resolved. Pass -Url or focus the target Xinjian window, then use -Execute -AllowWrite only after explicit confirmation."
   } elseif ($requiresPageContext -and $requiresExport) {
