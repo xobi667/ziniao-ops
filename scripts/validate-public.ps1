@@ -220,6 +220,7 @@ $required = @(
   "scripts\query-xinjian-ui-action.ps1",
   "scripts\test-xinjian-rpa-routing.ps1",
   "scripts\test-xinjian-row-context-inference.ps1",
+  "scripts\test-xinjian-row-context-follow-up.ps1",
   "scripts\test-xinjian-table-column-read-planning.ps1",
   "scripts\test-xinjian-export-action-planning.ps1",
   "scripts\test-xinjian-write-action-planning.ps1",
@@ -357,6 +358,25 @@ if (Test-Path -LiteralPath $rowContextTestPath) {
     }
   } catch {
     Add-Issue "error" "xinjian_row_context_test_error" $_.Exception.Message $rowContextTestPath
+  }
+}
+
+$rowContextFollowUpTestPath = Join-Path $Root "scripts\test-xinjian-row-context-follow-up.ps1"
+if (Test-Path -LiteralPath $rowContextFollowUpTestPath) {
+  try {
+    $rowContextFollowUpRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $rowContextFollowUpTestPath -Json 2>&1)
+    $rowContextFollowUpExit = $LASTEXITCODE
+    $rowContextFollowUpResult = $null
+    try {
+      $rowContextFollowUpResult = ($rowContextFollowUpRaw | Out-String | ConvertFrom-Json)
+    } catch {
+      Add-Issue "error" "xinjian_row_context_follow_up_test_parse_failed" ("Row-context follow-up test output was not JSON: {0}" -f ($rowContextFollowUpRaw | Out-String).Trim()) $rowContextFollowUpTestPath
+    }
+    if ($rowContextFollowUpResult -and ($rowContextFollowUpExit -ne 0 -or !$rowContextFollowUpResult.ok)) {
+      Add-Issue "error" "xinjian_row_context_follow_up_test_failed" ("Row-context follow-up regression test failed: {0}" -f (($rowContextFollowUpResult.cases | Where-Object { !$_.ok } | Select-Object -ExpandProperty name) -join ",")) $rowContextFollowUpTestPath
+    }
+  } catch {
+    Add-Issue "error" "xinjian_row_context_follow_up_test_error" $_.Exception.Message $rowContextFollowUpTestPath
   }
 }
 

@@ -207,6 +207,66 @@ function New-WriteFollowUpPlan {
   }
 }
 
+function New-RowContextFollowUpPlan {
+  param(
+    [bool]$IsRowContextAction,
+    [bool]$HasRowContext,
+    [bool]$ExecuteRequested,
+    [string]$InputIntent,
+    [string]$InputUrl,
+    [int]$ResolvedPortValue,
+    [bool]$IsWriteAction,
+    [bool]$IsExportAction,
+    [bool]$AllowWriteFlag,
+    [bool]$AllowExportFlag
+  )
+  if (!$IsRowContextAction -or $HasRowContext) { return $null }
+
+  $withRowIndex = [ordered]@{
+    script = "scripts\invoke-xinjian-ui-action.ps1"
+    intent = $InputIntent
+    url = if ($InputUrl) { $InputUrl } else { $null }
+    port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
+    row_index = 1
+    execute = $ExecuteRequested
+  }
+  if ($IsWriteAction) { $withRowIndex.allow_write = $AllowWriteFlag }
+  if ($IsExportAction) { $withRowIndex.allow_export = ($AllowExportFlag -or $AllowWriteFlag) }
+
+  $withRowText = [ordered]@{
+    script = "scripts\invoke-xinjian-ui-action.ps1"
+    intent = $InputIntent
+    url = if ($InputUrl) { $InputUrl } else { $null }
+    port = if ($ResolvedPortValue -gt 0) { $ResolvedPortValue } else { $null }
+    row_text = "[visible row text]"
+    execute = $ExecuteRequested
+  }
+  if ($IsWriteAction) { $withRowText.allow_write = $AllowWriteFlag }
+  if ($IsExportAction) { $withRowText.allow_export = ($AllowExportFlag -or $AllowWriteFlag) }
+
+  $extraConfirmation = if ($IsWriteAction -and !$AllowWriteFlag) {
+    "allow_write"
+  } elseif ($IsExportAction -and !($AllowExportFlag -or $AllowWriteFlag)) {
+    "allow_export"
+  } else {
+    $null
+  }
+
+  return [ordered]@{
+    kind = "row_context_required_follow_up"
+    required = $true
+    execute_requested = $ExecuteRequested
+    next_action = "rerun_with_row_index_or_row_text"
+    accepted_inputs = [ordered]@{
+      row_index = "Use -RowIndex with a 1-based visible row number."
+      row_text = "Use -RowText with text visible in the target row, or include a contains-row phrase in the intent."
+    }
+    additional_confirmation_required = $extraConfirmation
+    rerun_with_row_index = $withRowIndex
+    rerun_with_row_text = $withRowText
+  }
+}
+
 function Get-FirstExplicitPort {
   $items = @($Port | Where-Object { $_ -gt 0 } | Sort-Object -Unique)
   if ($items.Count -gt 0) { return [int]$items[0] }
@@ -934,6 +994,7 @@ $postExecutePlan = if ($requiresExport) {
 } else {
   $null
 }
+$rowContextFollowUp = New-RowContextFollowUpPlan -IsRowContextAction $actionHasRowContextBoundary -HasRowContext $hasExplicitRowContext -ExecuteRequested ([bool]$Execute) -InputIntent $Intent -InputUrl $followUpUrl -ResolvedPortValue ([int]$effectivePort) -IsWriteAction $requiresWrite -IsExportAction $requiresExport -AllowWriteFlag ([bool]$AllowWrite) -AllowExportFlag ([bool]$AllowExport)
 
 if (!$Execute) {
   $payload = [ordered]@{
@@ -948,7 +1009,8 @@ if (!$Execute) {
     execution_backend = $executionBackend
     plan = $plan
     post_execute = $postExecutePlan
-    next_action = if ($postExecutePlan) { $postExecutePlan.next_action } else { $null }
+    row_context_follow_up = $rowContextFollowUp
+    next_action = if ($rowContextFollowUp) { $rowContextFollowUp.next_action } elseif ($postExecutePlan) { $postExecutePlan.next_action } else { $null }
     query_versions = [ordered]@{
       map = $query.map_version
       auto_map = $query.auto_map_version
@@ -979,7 +1041,8 @@ if (!$canExecute) {
     execution_backend = $executionBackend
     plan = $plan
     post_execute = $postExecutePlan
-    next_action = if ($readOnlyCatalogEntry -and $requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_to_read_table_column" } elseif ($readOnlyCatalogEntry) { "rerun_with_execute_to_read_visible_table_column" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresWrite -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresExport -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } elseif ($requiresUiaLocator) { "capture_or_focus_matching_uia_xinjian_control" } elseif ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } else { "manual_review_action_safety" }
+    row_context_follow_up = $rowContextFollowUp
+    next_action = if ($rowContextFollowUp) { $rowContextFollowUp.next_action } elseif ($readOnlyCatalogEntry -and $requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_to_read_table_column" } elseif ($readOnlyCatalogEntry) { "rerun_with_execute_to_read_visible_table_column" } elseif ($requiresRowContext) { "provide_row_context_or_capture_row_action_buttons" } elseif ($requiresPageContext -and $requiresWrite) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresPageContext -and $requiresExport) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresPageContext) { "focus_target_xinjian_window_or_pass_url" } elseif ($requiresWrite -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_write" } elseif ($requiresExport -and $requiresCdpPort) { "focus_target_xinjian_window_or_pass_url_then_confirm_export" } elseif ($requiresWrite) { "rerun_with_execute_allow_write_after_explicit_confirmation" } elseif ($requiresExport) { "rerun_with_execute_allow_export_after_explicit_confirmation" } elseif ($requiresUiaLocator) { "capture_or_focus_matching_uia_xinjian_control" } elseif ($requiresCdpPort) { "open_or_login_debuggable_xinjian_browser_or_use_mapped_uia_window" } else { "manual_review_action_safety" }
   }
   if ($Json) {
     $payload | ConvertTo-Json -Depth 20

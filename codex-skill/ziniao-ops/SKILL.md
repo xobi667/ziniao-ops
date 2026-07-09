@@ -356,6 +356,7 @@ For page-name intents such as `打开下载中心`, the query layer synthesizes 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-row-context-inference.ps1") -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-row-context-follow-up.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-table-column-read-planning.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-export-action-planning.ps1") -Json
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-write-action-planning.ps1") -Json
@@ -441,6 +442,8 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\invo
 ```
 
 `-Url` is optional for the invoker. When omitted, it detects visible/debuggable 心舰 windows read-only and scores candidate URLs against the user's intent, so commands can pick the matching already-open 心舰 page without opening duplicate windows. Pass `-Url "<当前心舰URL>"` to override detection, or `-NoAutoDetectUrl` only for diagnostics/global matching. Row-level actions must not click the first row by default; pass `-RowIndex <1-based row number>` / `-RowText "<visible row text>"`, or write the row target directly in the intent such as `第1行编辑`, `第一行详情`, or `包含 xxx 的行编辑`. Explicit `-RowIndex` / `-RowText` override inferred row context. Write/export row actions still require `-AllowWrite` or `-AllowExport`.
+
+When a row-level action is matched but row context is missing, the invoker returns `row_context_follow_up.kind = row_context_required_follow_up`. Use `row_context_follow_up.rerun_with_row_index` or `row_context_follow_up.rerun_with_row_text` as the machine-readable next step; do not guess or click the first row. If `additional_confirmation_required` is `allow_write` or `allow_export`, keep the write/export confirmation boundary after the row is selected.
 
 For confirmation-required export/download actions, the invoker returns a machine-readable `post_execute` object. Before confirmation it contains `rerun_after_confirmation` with `execute=true` and `allow_export=true`; after an authorized export execution succeeds, top-level `next_action` becomes `wait_for_xinjian_export_or_open_download_center`. Use `scripts\wait-xinjian-export.ps1` first to watch Downloads and analyze the file when applicable. If 心舰 creates an async report instead of a direct browser download, use the fallback `打开下载中心` action from `post_execute.after_success.fallback`.
 
