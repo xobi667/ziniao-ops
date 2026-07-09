@@ -12,9 +12,11 @@ references/xinjian-ui-dialog-map.json
 references/xinjian-ui-row-action-map.json
 references/xinjian-ui-action-catalog.json
 references/xinjian-ui-action-catalog.md
+references/xinjian-ui-action-exercise-report.json
+references/xinjian-ui-action-exercise-report.md
 ```
 
-`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement; it excludes transient Element UI poppers, date-picker panels, select dropdowns, dialogs, drawers, and message boxes so dynamic controls are not misfiled as always-visible page buttons. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores table headers, row action labels, and generic action words from operation columns. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing.
+`xinjian-ui-map.json` is the curated map with manually reviewed actions. `xinjian-ui-auto-map.json` is generated from sanitized CDP DOM captures and is used for broad page/button memory before manual refinement; it excludes transient Element UI poppers, date-picker panels, select dropdowns, dialogs, drawers, and message boxes so dynamic controls are not misfiled as always-visible page buttons. `xinjian-ui-overlay-map.json` is generated from sanitized dropdown/menu/date/select overlay captures and supplements both maps. `xinjian-ui-dialog-map.json` is generated from sanitized dialog/drawer captures for buttons that only appear after safe openers. `xinjian-ui-row-action-map.json` is generated from sanitized table row-action captures and stores table headers, row action labels, and generic action words from operation columns. `xinjian-ui-action-catalog.json` and `.md` merge those public maps into one compact action catalog for audit, planning, and RPA-style routing. `xinjian-ui-action-exercise-report.json` and `.md` record sanitized execution evidence for safe route-scoped CDP actions.
 
 ## Workflow
 
@@ -98,6 +100,15 @@ Locator strategy is layered. Exact selectors, row-action locators, hrefs, visibl
 Intent ranking is action-aware. When the user says `打开`, `展开`, `选择`, `筛选`, or `切换`, prefer executable overlay triggers/items over passive `filter_input` and read-only `table_column` memories with the same label. When the user says `查看` or asks for a metric/column, keep table-column matches read-only and do not click them.
 
 When `-Url` is provided, query and invoke scripts first scope page-level matches to the current route. Off-page name matches are suppressed unless no current-page match exists, except explicit page-navigation intents where the named page route is returned as `page_navigation`. This means an intent like `首页` on `/ai/talk` can still resolve to the current page's 首页 action, while `打开下载中心` resolves to the 下载中心 route instead of a row operation.
+
+To batch exercise all route-scoped safe CDP-clickable actions that are already in the catalog, use:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\exercise-xinjian-safe-actions.ps1") -Port 9339 -MaxActions 50 -WritePublicReport -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\exercise-xinjian-safe-actions.ps1") -Port 9339 -RetryFailed -WritePublicReport -Json
+```
+
+The exercise script opens temporary CDP tabs, executes only `safe_execute_allowed` route-scoped actions, and records local state under `.ziniao-ops\xinjian-safe-action-exercise-state.json`. It excludes read-only table columns, write/export/submit/delete actions, row actions without row context, account menus by default, and no-route UIA globals. `-WritePublicReport` updates the sanitized public exercise report without storing cookies, tokens, input values, row data, or private business values.
 
 5. If the target page or route is unclear and a debuggable Chrome/Edge page is available, discover real 心舰 frontend routes and visible menus:
 
@@ -227,10 +238,11 @@ Coverage snapshot validated from the logged-in CDP page on 2026-07-09:
 - Eligible routes attempted but not mapped: 14 (`empty`, `noaccess`, or `redirected`).
 - Pending eligible routes: 0.
 - Public map pages: 10 curated route pages plus one curated global action group and 38 generated auto-map pages.
-- Dynamic overlay coverage: 47 public known pages, 0 pending after exclusions, 26 pages with promoted overlay actions, 21 pages retained as safely probed with no public overlay actions, 121 overlay actions after stale action-menu leakage filtering and same-context de-duplication.
+- Dynamic overlay coverage: 47 public known pages, 0 pending after exclusions, 163 overlay actions after pagination-trigger filtering, stale action-menu leakage filtering, latest-capture replacement, and same-context de-duplication.
 - Dialog/drawer coverage: 47 public known pages, 0 pending after exclusions, 9 pages with promoted dialog actions, 38 pages retained as safely probed with no public dialog actions, 41 dialog actions.
 - Table row-action coverage: 47 public known pages, 0 pending after exclusions, 2 pages with promoted row actions, 45 pages retained as safely probed with no public row actions, 6 row actions.
-- Unified action catalog: 49 pages, 1010 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 452 read-only `table_column` actions for remembered table metrics/headers, including 82 generated from sanitized public table-header metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when they only expose generic shell controls, and restricted/no-access pages are tagged as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`, and row-level dialog openers are marked `row_context_required_dialog`.
+- Unified action catalog: 49 pages, 1052 deduplicated actions, with context, safety mode, source map, locator strategy, and locator metadata. This includes 452 read-only `table_column` actions for remembered table metrics/headers, including 82 generated from sanitized public table-header metadata. Current catalog audit has 0 `manual_review`, 0 `map_only`, and 0 empty-locator actions. The global memory report now shows dynamic page coverage of 47 overlay pages, 47 dialog pages, and 47 row-action pages, with 0 weak pages. Sparse shell pages are tagged as fully covered when they only expose generic shell controls, and restricted/no-access pages are tagged as restricted rather than learnable weak pages. Row-level generic actions that cannot be executed without a selected row are marked `row_context_required_column_header`, and row-level dialog openers are marked `row_context_required_dialog`.
+- Safe action exercise: 406 route-scoped CDP-clickable `safe_execute_allowed` actions verified by actual execution with 0 failures. The exercise scope excludes read-only table-column memory, confirmation-required write/export actions, account menus, row actions without row context, and no-route UIA global module switches.
 
 Known CRM controls include shop/category/business-owner filters, creator ID search, status tabs, creator assignment/claim/batch buttons, transfer and blacklist restore actions. Write actions are marked confirmation-required.
 

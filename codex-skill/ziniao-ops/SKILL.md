@@ -357,6 +357,15 @@ For page-name intents such as `打开下载中心`, the query layer synthesizes 
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\test-xinjian-rpa-routing.ps1") -Json
 ```
 
+To prove that remembered safe route-scoped controls still click through CDP instead of only existing in the static map, run the safe action exerciser in batches:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\exercise-xinjian-safe-actions.ps1") -Port 9339 -MaxActions 50 -WritePublicReport -Json
+powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\exercise-xinjian-safe-actions.ps1") -Port 9339 -RetryFailed -WritePublicReport -Json
+```
+
+It opens temporary CDP tabs and executes only route-scoped `safe_execute_allowed` controls. It excludes read-only table-column memory, confirmation-required write/export actions, row actions without row context, account menus by default, and no-route UIA globals. The sanitized public report is `references\xinjian-ui-action-exercise-report.json` / `.md`; local per-run state stays under `.ziniao-ops`.
+
 To see what the currently open page already has in memory, list the page actions first. This resolves the current 心舰 URL read-only from visible/debuggable windows, then returns every remembered action with purpose, safety mode, and locator strategy. Read top-level `current_url`, `current_title`, `resolved_port`, `page_kind`, and `next_action` first; login/no-access pages return those fields even when no actions are listed:
 
 ```powershell

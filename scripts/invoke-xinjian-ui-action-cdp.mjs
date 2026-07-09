@@ -28,6 +28,14 @@ function comparablePath(value) {
   return String(value || "").replace(/\/+$/g, "") || "/";
 }
 
+function isTargetPage(item) {
+  const currentUrl = parseUrl(item?.url || "");
+  const targetUrl = parseUrl(matchUrl);
+  if (!targetUrl) return true;
+  if (!currentUrl) return false;
+  return currentUrl.origin === targetUrl.origin && comparablePath(currentUrl.pathname) === comparablePath(targetUrl.pathname);
+}
+
 function pageScore(item) {
   const url = String(item.url || "");
   const title = String(item.title || "");
@@ -59,12 +67,14 @@ if (safety.startsWith("confirmation_required") && !allowWrite && !safety.startsW
 }
 
 const pages = await (await fetch(`http://127.0.0.1:${port}/json`, { signal: AbortSignal.timeout(8000) })).json();
-const page = pages
-  .filter((item) => item.webSocketDebuggerUrl && item.type === "page")
+const pageCandidates = pages
+  .filter((item) => item.webSocketDebuggerUrl && item.type === "page");
+const matchedPageCandidates = matchUrl ? pageCandidates.filter(isTargetPage) : pageCandidates;
+const page = matchedPageCandidates
   .sort((a, b) => pageScore(b) - pageScore(a))[0];
 
 if (!page?.webSocketDebuggerUrl) {
-  throw new Error(`No debuggable page was found on port ${port}.`);
+  throw new Error(matchUrl ? `No debuggable page matching ${matchUrl} was found on port ${port}.` : `No debuggable page was found on port ${port}.`);
 }
 
 const expression = `(() => {
@@ -119,6 +129,10 @@ const expression = `(() => {
     const input = candidates.find((el) => clean(el.getAttribute("placeholder")) === target) ||
       candidates.find((el) => clean(el.getAttribute("placeholder")).replace(/\\s+/g, "").includes(normalizedTarget));
     if (input) return focusElement(input);
+    if (/^(开始日期|结束日期|日期)$/.test(target)) {
+      const dateEditor = visibleCandidates(".el-date-editor,.el-range-editor")[0];
+      if (dateEditor) return focusElement(dateEditor);
+    }
     return clickElement(findByText(target, document, ".el-select,.el-cascader,.el-date-editor,.el-range-editor,.el-input"));
   };
   const normalizeChoice = (value) => clean(value)
@@ -138,7 +152,12 @@ const expression = `(() => {
     const preferred = list.find(textMatchesIntent);
     return preferred ? clicker(preferred) : false;
   };
-  const clickTabTextFromList = () => clickPreferredText(action.locator?.tab_texts, (text) => clickElement(findByText(text)));
+  const clickTabTextFromList = () => {
+    const list = asTextList(action.locator?.tab_texts);
+    if (!list.length) return false;
+    const preferred = list.find(textMatchesIntent) || list[0];
+    return clickElement(findByText(preferred));
+  };
   const clickPlaceholderFromList = () => {
     const placeholders = asTextList(action.locator?.dom_placeholders);
     if (!placeholders.length) return false;
@@ -194,7 +213,8 @@ const expression = `(() => {
   };
   const clickOverlay = async () => {
     const triggerSelector = action.locator?.trigger_selector || "";
-    const trigger = query(triggerSelector) || findByText(action.locator?.trigger_text || action.name);
+    const triggerText = action.locator?.trigger_text || action.name;
+    const trigger = query(triggerSelector) || findByText(triggerText) || findControlNearText(triggerText);
     if (!clickElement(trigger)) return false;
     await wait(350);
     if (action.type === "overlay_trigger") return true;
@@ -212,6 +232,10 @@ const expression = `(() => {
     }
     const buttonText = action.locator?.button_text || action.name;
     for (const dialog of visibleDialogs()) {
+      if (/^(关闭|close)$/i.test(clean(buttonText))) {
+        const closeButton = visibleCandidates(".el-dialog__headerbtn,.el-drawer__close-btn,.el-message-box__headerbtn,[aria-label='Close']", dialog)[0];
+        if (closeButton) return clickElement(closeButton);
+      }
       const button = findByText(buttonText, dialog, "button,a,[role='button'],.el-button,.el-dialog__headerbtn");
       if (button) return clickElement(button);
     }
@@ -253,7 +277,7 @@ const expression = `(() => {
     if (action.type === "navigation" || action.type === "module_switch") clicked = clickNavigation();
     else if (action.type === "overlay_trigger" || action.type === "overlay_item") clicked = await clickOverlay();
     else if (action.type === "dialog_opener" || action.type === "dialog_button") clicked = await clickDialog();
-    else if (["filter_input", "filter_dropdown", "form_input"].includes(action.type) && action.locator?.dom_placeholder) clicked = clickInputByPlaceholder(action.locator.dom_placeholder);
+    else if (["filter_input", "filter_dropdown", "form_input"].includes(action.type) && action.locator?.dom_placeholder) clicked = clickFilterLabelOrText();
     else if (action.type === "date_filter") clicked = clickDateFilter();
     else if (Array.isArray(action.locator?.tab_texts) && action.locator.tab_texts.length) clicked = clickTabTextFromList() || clickDomText();
     else if (Array.isArray(action.locator?.dom_placeholders) && action.locator.dom_placeholders.length) clicked = clickPlaceholderFromList();

@@ -190,6 +190,11 @@ function isStatusLikeItem(value) {
   return /^(全部|请选择|启用|禁用|是|否|成功|失败|已处理|未处理|未开始|进行中|已完成|已取消|正常|异常)$/.test(text);
 }
 
+function isPaginationTriggerSelector(value) {
+  const text = clean(value).toLowerCase();
+  return /pagination|el-pagination|pagination-container|page-down/.test(text);
+}
+
 function normalizePath(value) {
   let text = clean(value);
   if (!text) return "";
@@ -298,6 +303,7 @@ function pageFromCapture(capture) {
   for (const trigger of capture.overlay_triggers || []) {
     const triggerName = clean(trigger.name || trigger.trigger_type);
     if (!triggerName || triggerName === "用户菜单") continue;
+    if (isPaginationTriggerSelector(trigger.selector)) continue;
     const rawItems = Array.isArray(trigger.items) ? trigger.items : [];
     if (isStaleActionMenuForFilterTrigger(triggerName, trigger.trigger_type, rawItems)) continue;
     const items = rawItems.filter((item) => {
@@ -396,28 +402,20 @@ for (const file of files) {
     skippedInvalid += 1;
     continue;
   }
-  const existing = pagesById.get(page.id);
-  if (existing) {
-    existing.actions.push(...page.actions);
-    existing.observed_controls.overlays.push(...page.observed_controls.overlays);
-    promoted += 1;
-  } else {
-    pagesById.set(page.id, page);
-    promoted += 1;
-  }
+  pagesById.set(page.id, page);
+  promoted += 1;
 }
 
 const pages = [...pagesById.values()].map((page) => {
-  const seenActions = new Set();
-  page.actions = page.actions.filter((action) => {
+  const actionByKey = new Map();
+  for (const action of page.actions) {
     const locator = action.locator || {};
     const key = locator.trigger_text
       ? `${action.type}|${action.name}|${clean(locator.trigger_text)}|${clean(locator.item_text)}`
       : `${action.type}|${action.name}|${JSON.stringify(locator)}`;
-    if (seenActions.has(key)) return false;
-    seenActions.add(key);
-    return true;
-  });
+    actionByKey.set(key, action);
+  }
+  page.actions = [...actionByKey.values()];
   ensureUniqueActionIds(page.actions);
   page.observed_controls.overlays = compactObservedOverlays(page.observed_controls.overlays);
   page.evidence.coverage_result = page.actions.length > 0 ? "actions_promoted" : "probe_ran_no_public_overlay_actions";

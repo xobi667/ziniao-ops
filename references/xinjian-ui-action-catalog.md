@@ -5,7 +5,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 ## Totals
 
 - Pages: 49
-- Actions: 1063
+- Actions: 1052
 - Global actions: 6
 
 ### Sources
@@ -14,7 +14,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | --- | ---: | ---: |
 | curated | 2026-07-08.2 | 10 | 63 |
 | auto | 2026-07-08 | 38 | 697 |
-| overlay | 2026-07-09 | 47 | 174 |
+| overlay | 2026-07-09 | 47 | 163 |
 | dialog | 2026-07-09 | 47 | 41 |
 | row-action | 2026-07-09 | 47 | 6 |
 | table-header | generated | 0 | 82 |
@@ -25,7 +25,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | confirmation_required_export | 8 |
 | confirmation_required_write | 139 |
-| safe_execute_allowed | 916 |
+| safe_execute_allowed | 905 |
 
 ### Locator Strategies
 
@@ -33,9 +33,9 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | --- | ---: |
 | click_first_matching_row_action_in_table | 6 |
 | click_quick_tab_text_or_placeholder_list | 3 |
-| click_trigger_selector | 104 |
+| click_trigger_selector | 101 |
 | click_trigger_selector_then_dialog_button_text | 29 |
-| click_trigger_selector_then_overlay_item_text | 79 |
+| click_trigger_selector_then_overlay_item_text | 71 |
 | click_visible_action_text | 50 |
 | click_visible_dom_text | 213 |
 | click_visible_tab_text_from_list | 1 |
@@ -522,7 +522,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/crm/favorite/detail`
 - Sources: auto, dialog, overlay, row-action
-- Actions: 21
+- Actions: 20
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -539,7 +539,6 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 邀约次数 | placeholder:邀约次数 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 收藏夹详情 by 邀约次数. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 收藏夹详情 to a related detail or analysis view. |
 | 批量操作 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 批量操作 overlay on 收藏夹详情. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 收藏夹详情. |
 | 邀约次数 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 邀约次数 overlay on 收藏夹详情. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 操作 table column/metric. |
 | 达人信息 | column:达人信息 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 收藏夹详情 has the 达人信息 table column/metric. |
@@ -716,7 +715,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/crm/shop-detail`
 - Sources: auto, dialog, overlay, row-action
-- Actions: 12
+- Actions: 11
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -724,7 +723,6 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 用户菜单 | text:用户菜单 | button | safe_execute_allowed | click_visible_dom_text | auto | Open the current user/account menu. |
 | 重置配置 | text:重置配置 | button | confirmation_required_write | click_visible_dom_text | auto | Open or run a write/configuration action on 店铺详情; requires explicit confirmation before committing changes. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 店铺详情 to a related detail or analysis view. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 店铺详情. |
 | 店铺商品 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺详情 to the 店铺商品 tab/view. |
 | 关联达人 |  | tab | safe_execute_allowed | click_visible_action_text | auto | Switch 店铺详情 to the 关联达人 tab/view. |
 | 单价 | column:单价 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that 店铺详情 has the 单价 table column/metric. |
@@ -947,7 +945,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/order/sku-min-price`
 - Sources: auto, dialog, overlay, row-action
-- Actions: 24
+- Actions: 23
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -969,7 +967,6 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from SKU最低售价配置 to a related detail or analysis view. |
 | 导出最低售价 | 导入导出 -> 导出最低售价 | overlay_item | confirmation_required_export | click_trigger_selector_then_overlay_item_text | overlay | Choose 导出最低售价 from the 导入导出 overlay on SKU最低售价配置. |
 | 导入导出 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 导入导出 overlay on SKU最低售价配置. |
-| 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on SKU最低售价配置. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on SKU最低售价配置. |
 | 操作 | column:操作 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 操作 table column/metric. |
 | 店铺 | column:店铺 | table_column | safe_execute_allowed | read_table_column_header | auto | Remember that SKU最低售价配置 has the 店铺 table column/metric. |
@@ -1497,7 +1494,7 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 
 - Route: `/index/home`
 - Sources: auto, dialog, overlay, row-action
-- Actions: 29
+- Actions: 21
 
 | Action | Context | Type | Safety | Strategy | Source | Purpose |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -1509,14 +1506,6 @@ Generated from sanitized public 心舰 UI maps. Use this as a compact index of r
 | 开始日期 | placeholder:开始日期 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 首页 by 开始日期. |
 | 选择店铺 | placeholder:选择店铺 | filter_input | safe_execute_allowed | input_or_filter_placeholder | auto | Filter 首页 by 选择店铺. |
 | 首页 | text:首页 | navigation | safe_execute_allowed | navigate_href | auto | Navigate from 首页 to a related detail or analysis view. |
-| 按店铺 | 请选择 -> 按店铺 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按店铺 from the 请选择 overlay on 首页. |
-| 按负责人 | 请选择 -> 按负责人 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按负责人 from the 请选择 overlay on 首页. |
-| 按人员 | 请选择 -> 按人员 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 按人员 from the 请选择 overlay on 首页. |
-| 店铺 | 请选择 -> 店铺 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 店铺 from the 请选择 overlay on 首页. |
-| 订单 | 请选择 -> 订单 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 订单 from the 请选择 overlay on 首页. |
-| 今天 | 开始日期 -> 今天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 今天 from the 开始日期 overlay on 首页. |
-| 利润 | 请选择 -> 利润 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 利润 from the 请选择 overlay on 首页. |
-| 昨天 | 开始日期 -> 昨天 | overlay_item | safe_execute_allowed | click_trigger_selector_then_overlay_item_text | overlay | Choose 昨天 from the 开始日期 overlay on 首页. |
 | 开始日期 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 开始日期 overlay on 首页. |
 | 请选择 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 请选择 overlay on 首页. |
 | 选择店铺 |  | overlay_trigger | safe_execute_allowed | click_trigger_selector | overlay | Open the 选择店铺 overlay on 首页. |
