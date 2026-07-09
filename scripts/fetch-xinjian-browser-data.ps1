@@ -9,7 +9,9 @@ param(
   [string]$ExcelOutputPath = "",
   [string]$Endpoint = "https://erp.xinjianerp.com/prod-api/erp/ad/data/summary-by-date_v2",
   [string]$PageUrl = "",
+  [string]$AdPageUrl = "https://erp.xinjianerp.com/ad/shop-detail",
   [string]$WebSocketUrl = "",
+  [switch]$SkipUiInteraction,
   [switch]$Json
 )
 
@@ -169,10 +171,63 @@ $reportDir = Join-Path $root "reports.local"
 New-Item -ItemType Directory -Force -Path $reportDir | Out-Null
 $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
 $responsePath = Join-Path $reportDir "$stamp-xinjian-browser-response.json"
+$uiScreenshotPath = Join-Path $reportDir "$stamp-xinjian-ad-ui.png"
 
 $fetchMeta = $null
 $node = Get-Command node -ErrorAction SilentlyContinue
 $nodeHelper = Join-Path $PSScriptRoot "fetch-xinjian-cdp.mjs"
+$uiProbeHelper = Join-Path $PSScriptRoot "probe-xinjian-ad-ui.mjs"
+$uiProbe = $null
+if (!$SkipUiInteraction) {
+  if ($node -and (Test-Path -LiteralPath $uiProbeHelper)) {
+    $probeArgs = @(
+      $uiProbeHelper,
+      "--port", ([string]$Port),
+      "--target-url", $AdPageUrl,
+      "--screenshot", $uiScreenshotPath
+    )
+    if ($PageUrl) { $probeArgs += @("--match-url", $PageUrl) }
+    if ($WebSocketUrl) { $probeArgs += @("--websocket-url", $WebSocketUrl) }
+    $probeOutput = @(& node @probeArgs 2>&1)
+    if ($LASTEXITCODE -eq 0) {
+      try {
+        $uiProbe = ($probeOutput | Out-String | ConvertFrom-Json)
+        if ($uiProbe -and $uiProbe.PSObject.Properties.Match("webSocketDebuggerUrl").Count -gt 0 -and $uiProbe.webSocketDebuggerUrl) {
+          $WebSocketUrl = [string]$uiProbe.webSocketDebuggerUrl
+        }
+        if ($uiProbe -and $uiProbe.PSObject.Properties.Match("page_url").Count -gt 0 -and $uiProbe.page_url) {
+          $PageUrl = [string]$uiProbe.page_url
+        }
+      } catch {
+        $uiProbe = [pscustomobject]@{
+          ok = $false
+          required = $true
+          verified = $false
+          error = "ui_probe_output_parse_failed"
+          raw_output = ($probeOutput | Out-String).Trim()
+        }
+      }
+    } else {
+      $uiProbe = [pscustomobject]@{
+        ok = $false
+        required = $true
+        verified = $false
+        error = "ui_probe_failed"
+        raw_output = ($probeOutput | Out-String).Trim()
+      }
+    }
+  } else {
+    $uiProbe = [pscustomobject]@{
+      ok = $false
+      required = $true
+      verified = $false
+      error = "ui_probe_unavailable"
+      node_available = [bool]$node
+      helper_path = $uiProbeHelper
+    }
+  }
+}
+
 if ($node -and (Test-Path -LiteralPath $nodeHelper)) {
   $bodyJsonForNode = $body | ConvertTo-Json -Depth 8 -Compress
   $bodyB64ForNode = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($bodyJsonForNode))
@@ -335,6 +390,12 @@ $pageUrlForEvidence = if ($fetchMeta -and $fetchMeta.PSObject.Properties.Match("
   ""
 }
 $browserContextVerified = [bool]($fetchMeta -and $pageUrlForEvidence -match "erp\.xinjianerp\.com")
+$uiInteractionVerified = [bool](
+  !$SkipUiInteraction -and
+  $uiProbe -and
+  $uiProbe.PSObject.Properties.Match("verified").Count -gt 0 -and
+  [bool]$uiProbe.verified
+)
 $authenticatedEndpoint = [bool](
   $loginState -in @("app_authenticated", "endpoint_authenticated") -or
   $responseJson.code -eq 0 -or
@@ -346,6 +407,7 @@ $realDataVerified = [bool](
   $analysisRecordCount -gt 0 -and
   $analysisFilesUsed.Count -gt 0 -and
   $browserContextVerified -and
+  $uiInteractionVerified -and
   $authenticatedEndpoint
 )
 
@@ -353,6 +415,8 @@ $result = [ordered]@{
   ok = $realDataVerified
   analysis_ok = [bool]($analysis -and $analysis.ok)
   real_data_verified = $realDataVerified
+  ui_interaction_verified = $uiInteractionVerified
+  ui_interaction = $uiProbe
   login_state = $loginState
   fetch_method = if ($fetchMeta) { $fetchMeta.method } else { $null }
   page_url = $fetchMeta.page_url
@@ -377,8 +441,11 @@ $result = [ordered]@{
       record_count = $analysisRecordCount
       files_used = @($analysisFilesUsed)
       source_types = @($analysisSourceTypes)
+      ui_interaction_verified = $uiInteractionVerified
+      ui_interaction = $uiProbe
     }
     rejected_sources = @(
+      "api_only_without_verified_ui_click",
       "window_detection",
       "uia_action_catalog",
       "route_map",
@@ -402,6 +469,8 @@ if (!$result.ok) {
     $result.next_action = "manual_login_required"
   } elseif ($storesMatched.Count -eq 0 -and $storesNotFound.Count -gt 0) {
     $result.next_action = "target_stores_not_found_in_xinjian"
+  } elseif (!$uiInteractionVerified) {
+    $result.next_action = "verified_ui_interaction_required"
   } elseif ($analysis -and [bool]$analysis.ok -and !$result.real_data_verified) {
     $result.next_action = "real_data_source_not_verified"
   } else {

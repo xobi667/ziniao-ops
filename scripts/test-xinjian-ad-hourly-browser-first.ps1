@@ -34,6 +34,7 @@ function Test-Equal {
 
 $failures = [System.Collections.Generic.List[object]]::new()
 $successBridge = Join-Path ([System.IO.Path]::GetTempPath()) ("fake-xinjian-browser-success-{0}.ps1" -f ([guid]::NewGuid().ToString("N")))
+$apiOnlyBridge = Join-Path ([System.IO.Path]::GetTempPath()) ("fake-xinjian-browser-api-only-{0}.ps1" -f ([guid]::NewGuid().ToString("N")))
 $loginBridge = Join-Path ([System.IO.Path]::GetTempPath()) ("fake-xinjian-browser-login-{0}.ps1" -f ([guid]::NewGuid().ToString("N")))
 
 $successBridgeText = @'
@@ -52,6 +53,16 @@ $payload = [ordered]@{
   ok = $true
   method = "fake_browser_page"
   real_data_verified = $true
+  ui_interaction_verified = $true
+  ui_interaction = [ordered]@{
+    required = $true
+    verified = $true
+    clicked_count = 2
+    actions = @(
+      [ordered]@{ action = "click"; label = "select_last_7_days"; clicked = $true },
+      [ordered]@{ action = "click"; label = "run_visible_query"; clicked = $true }
+    )
+  }
   page_url = $Url
   data_source = [ordered]@{
     type = "browser_cdp_endpoint_response"
@@ -61,6 +72,7 @@ $payload = [ordered]@{
       record_count = 3
       files_used = @("fake-response.json")
       source_types = @("xinjian_endpoint_json")
+      ui_interaction_verified = $true
     }
   }
   analysis = [ordered]@{
@@ -73,6 +85,43 @@ $payload = [ordered]@{
 }
 
 if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "OK" }
+'@
+
+$apiOnlyBridgeText = @'
+param(
+  [string[]]$StoreName = @(),
+  [int]$Days = 7,
+  [string]$StartDate = "",
+  [string]$EndDate = "",
+  [string]$OutputPath = "",
+  [string]$ExcelOutputPath = "",
+  [string]$Url = "",
+  [switch]$Json
+)
+
+$payload = [ordered]@{
+  ok = $true
+  method = "fake_browser_page"
+  real_data_verified = $true
+  ui_interaction_verified = $false
+  page_url = $Url
+  data_source = [ordered]@{
+    type = "browser_cdp_endpoint_response"
+    verified = $false
+    evidence = [ordered]@{
+      page_url = $Url
+      record_count = 3
+      files_used = @("fake-response.json")
+      source_types = @("xinjian_endpoint_json")
+      ui_interaction_verified = $false
+    }
+  }
+  output = $OutputPath
+  excel_output = $ExcelOutputPath
+  next_action = "verified_ui_interaction_required"
+}
+
+if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "API_ONLY" }
 '@
 
 $loginBridgeText = @'
@@ -99,6 +148,7 @@ if ($Json) { $payload | ConvertTo-Json -Depth 8 } else { Write-Host "LOGIN_REQUI
 
 try {
   Set-Content -LiteralPath $successBridge -Value $successBridgeText -Encoding UTF8
+  Set-Content -LiteralPath $apiOnlyBridge -Value $apiOnlyBridgeText -Encoding UTF8
   Set-Content -LiteralPath $loginBridge -Value $loginBridgeText -Encoding UTF8
 
   $script = Join-Path $PSScriptRoot "xinjian-erp-ad-hourly.ps1"
@@ -111,7 +161,20 @@ try {
     Test-Equal -Failures $failures -Label "success exit" -Actual $successExit -Expected 0
     Test-Equal -Failures $failures -Label "success mode" -Actual $success.mode -Expected "browser_page_fetch"
     Test-Equal -Failures $failures -Label "success verified" -Actual $success.real_data_verified -Expected $true
+    Test-Equal -Failures $failures -Label "success ui verified" -Actual $success.ui_interaction_verified -Expected $true
     Test-Equal -Failures $failures -Label "success source" -Actual $success.data_source.type -Expected "browser_cdp_endpoint_response"
+  }
+
+  $apiOnlyRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $script -StoreName "DEMO" -BrowserBridgeScriptPath $apiOnlyBridge -Json 2>&1)
+  $apiOnlyExit = $LASTEXITCODE
+  $apiOnly = ConvertFrom-JsonText $apiOnlyRaw
+  if (!$apiOnly) {
+    Add-Failure -Failures $failures -Message ("api-only output was not JSON: {0}" -f ($apiOnlyRaw | Out-String).Trim())
+  } else {
+    Test-Equal -Failures $failures -Label "api-only exit" -Actual $apiOnlyExit -Expected 0
+    Test-Equal -Failures $failures -Label "api-only mode" -Actual $apiOnly.mode -Expected "browser_page_required"
+    Test-Equal -Failures $failures -Label "api-only verified" -Actual $apiOnly.real_data_verified -Expected $false
+    Test-Equal -Failures $failures -Label "api-only local fallback skipped" -Actual $apiOnly.local_fallback_skipped -Expected $true
   }
 
   $loginRaw = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $script -StoreName "DEMO" -BrowserBridgeScriptPath $loginBridge -Json 2>&1)
@@ -128,6 +191,7 @@ try {
   }
 } finally {
   Remove-Item -LiteralPath $successBridge -ErrorAction SilentlyContinue
+  Remove-Item -LiteralPath $apiOnlyBridge -ErrorAction SilentlyContinue
   Remove-Item -LiteralPath $loginBridge -ErrorAction SilentlyContinue
 }
 

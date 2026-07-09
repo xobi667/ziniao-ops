@@ -530,14 +530,14 @@ powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\capt
 
 The UIA capture filters private/noisy browser controls, pagination-only list items, close glyphs, and non-action buttons before saving observations. `-CompareCatalog` compares the visible controls against the current unified action catalog and reports matched controls plus non-navigation controls that are still missing from memory.
 
-Then use the real-page browser data workflow first. It must open or reuse an actual 心舰 page, fetch through that page context, and only report figures when `real_data_verified = true`. "No mouse" means the physical mouse is not hijacked; it does not mean skipping real page navigation or real button/page interaction.
+Then use the real-page browser data workflow first. It must open or reuse an actual 心舰 page, navigate to the advertising analysis page, close safe blocking popups, click read-only/navigation controls such as the advertising module, platform/date tabs, or query button, and only then fetch through that page context. Only report figures when both `real_data_verified = true` and `ui_interaction_verified = true`. "No mouse" means the physical mouse is not hijacked; it does not mean skipping real page navigation or real button/page interaction.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File (Join-Path $ZiniaoOpsHome "scripts\xinjian-erp-ad-hourly.ps1") -StoreName "<店铺1>,<店铺2>" -Days 7 -Json
 ```
 
 The workflow writes a Markdown summary and an Excel workbook. Treat the `excel_output` path in JSON output as the main deliverable for requests that ask for a table or Excel file.
-For 心舰 ad reports, only report final figures as real data when the command returns top-level `real_data_verified = true`. Include or summarize `data_source.evidence` in the answer: page URL when captured through CDP, response path, record count, files used, and source types. If `real_data_verified = false`, do not present best-hour results as factual; report the blocker from `next_action` instead. Window detection, title-only matches, UIA action catalogs, route maps, button memory, and MCP/browser availability checks are never data sources by themselves.
+For 心舰 ad reports, only report final figures as real data when the command returns top-level `real_data_verified = true` and `ui_interaction_verified = true`. Include or summarize `data_source.evidence` in the answer: page URL when captured through CDP, UI click probe/screenshot, response path, record count, files used, and source types. If either verification flag is false, do not present best-hour results as factual; report the blocker from `next_action` instead. Window detection, title-only matches, UIA action catalogs, route maps, button memory, MCP/browser availability checks, and API-only calls without verified UI clicks are never data sources by themselves.
 
 If the browser fetch returns `manual_login_required`, a real 心舰 page was opened or found but is not logged in. Tell the employee to complete login in that page and rerun the same command. Do not use stale local exports as a substitute unless the user explicitly provides an export path or the command is rerun with `-AllowLocalFallback`.
 

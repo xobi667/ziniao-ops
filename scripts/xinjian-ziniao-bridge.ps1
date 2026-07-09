@@ -272,6 +272,8 @@ function Write-SuccessAndExit {
     page_title = $Attempt.result.page_title
     login_state = $Attempt.result.login_state
     real_data_verified = if ($Attempt.result.PSObject.Properties.Match("real_data_verified").Count -gt 0) { [bool]$Attempt.result.real_data_verified } else { $null }
+    ui_interaction_verified = if ($Attempt.result.PSObject.Properties.Match("ui_interaction_verified").Count -gt 0) { [bool]$Attempt.result.ui_interaction_verified } else { $null }
+    ui_interaction = if ($Attempt.result.PSObject.Properties.Match("ui_interaction").Count -gt 0) { $Attempt.result.ui_interaction } else { $null }
     data_source = if ($Attempt.result.PSObject.Properties.Match("data_source").Count -gt 0) { $Attempt.result.data_source } else { $null }
     result = $Attempt.result
     analysis = if ($Attempt.result.PSObject.Properties.Match("analysis").Count -gt 0) { $Attempt.result.analysis } else { $null }

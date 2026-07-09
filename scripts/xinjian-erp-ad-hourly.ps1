@@ -79,6 +79,24 @@ function Get-BrowserFetchVerified($Result) {
   return $false
 }
 
+function Get-BrowserFetchUiVerified($Result) {
+  if (!$Result) { return $false }
+  if ($Result.PSObject.Properties.Match("ui_interaction_verified").Count -gt 0) {
+    return [bool]$Result.ui_interaction_verified
+  }
+  if ($Result.PSObject.Properties.Match("result").Count -gt 0 -and $Result.result -and $Result.result.PSObject.Properties.Match("ui_interaction_verified").Count -gt 0) {
+    return [bool]$Result.result.ui_interaction_verified
+  }
+  if ($Result.PSObject.Properties.Match("data_source").Count -gt 0 -and
+    $Result.data_source -and
+    $Result.data_source.PSObject.Properties.Match("evidence").Count -gt 0 -and
+    $Result.data_source.evidence -and
+    $Result.data_source.evidence.PSObject.Properties.Match("ui_interaction_verified").Count -gt 0) {
+    return [bool]$Result.data_source.evidence.ui_interaction_verified
+  }
+  return $false
+}
+
 function Get-BrowserFetchProperty($Result, [string]$Name) {
   if (!$Result) { return $null }
   if ($Result.PSObject.Properties.Match($Name).Count -gt 0) {
@@ -178,12 +196,15 @@ $browserFetch = $null
 $hasInputPath = @($InputPath | Where-Object { $_ }).Count -gt 0
 if (!$NoBrowserFetch -and !$hasInputPath) {
   $browserFetch = Invoke-BrowserPageFetch
-  $browserVerified = Get-BrowserFetchVerified $browserFetch
+  $browserUiVerified = Get-BrowserFetchUiVerified $browserFetch
+  $browserVerified = (Get-BrowserFetchVerified $browserFetch) -and $browserUiVerified
   if ($browserVerified) {
     $payload = [ordered]@{
       ok = $true
       mode = "browser_page_fetch"
       real_data_verified = $true
+      ui_interaction_verified = $browserUiVerified
+      ui_interaction = Get-BrowserFetchProperty -Result $browserFetch -Name "ui_interaction"
       browser_fetch = $browserFetch
       data_source = Get-BrowserFetchProperty -Result $browserFetch -Name "data_source"
       analysis = Get-BrowserFetchProperty -Result $browserFetch -Name "analysis"
@@ -212,8 +233,11 @@ if (!$NoBrowserFetch -and !$hasInputPath) {
         evidence = [ordered]@{
           browser_bridge_attempted = $true
           browser_next_action = Get-BrowserFetchProperty -Result $browserFetch -Name "next_action"
+          ui_interaction_verified = $browserUiVerified
+          ui_interaction = Get-BrowserFetchProperty -Result $browserFetch -Name "ui_interaction"
         }
         rejected_sources = @(
+          "api_only_without_verified_ui_click",
           "stale_local_export_without_explicit_input",
           "window_detection",
           "uia_action_catalog",

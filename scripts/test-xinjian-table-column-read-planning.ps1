@@ -30,10 +30,13 @@ function Invoke-Action {
     "-ExecutionPolicy", "Bypass",
     "-File", $invokeScript,
     "-Intent", $Intent,
-    "-Url", $testUrl,
     "-Json"
   )
-  if ($Port -gt 0) { $argsList += @("-Port", [string]$Port) }
+  if ($Port -gt 0) {
+    $argsList += @("-Url", $testUrl, "-Port", [string]$Port)
+  } else {
+    $argsList += @("-NoAutoDetectUrl", "-NoAutoOpenLogin")
+  }
   if ($Execute) { $argsList += "-Execute" }
   $raw = @(& powershell @argsList 2>&1)
   $exitCode = $LASTEXITCODE
