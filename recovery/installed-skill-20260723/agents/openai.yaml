@@ -1,0 +1,7 @@
+interface:
+  display_name: "Ziniao Ops"
+  short_description: "Use built-in Browser for Ziniao and Xinjian workflows"
+  default_prompt: "Use $ziniao-ops with the built-in Browser as the default web surface in both Codex CLI and Codex IDE. Local scripts may scan or analyze local data, but they must return a Browser handoff instead of launching Edge, Chrome, or CDP unless the user explicitly authorizes -AllowLegacyLocalBridge."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,748 @@
+{
+  "version": 1,
+  "updated_at": "2026-07-06",
+  "policy": {
+    "default_scope": "employee-local_read_only_first",
+    "install_policy": "Only local open components can be installed automatically. Closed SaaS, paid tools, browser extensions, API credentials, and MCP accounts require explicit user setup.",
+    "privacy": "Do not upload store names, screenshots, seller reports, customer data, cookies, sessions, passwords, verification codes, or credentials to external tools unless the user explicitly asks and the account boundary is clear.",
+    "write_actions": "Publishing products, changing prices, changing ad budgets, sending customer messages, refunds, payments, and settings changes require explicit user confirmation every time."
+  },
+  "support_levels": [
+    {
+      "id": "built_in",
+      "meaning": "Included in ziniao-ops and usable after local setup."
+    },
+    {
+      "id": "optional_detect_only",
+      "meaning": "Recorded and health-checked, but not installed or used unless the user configures it."
+    },
+    {
+      "id": "roadmap_read_only",
+      "meaning": "Planned connector direction. Start with read-only data retrieval and normalized reports."
+    },
+    {
+      "id": "manual_saas",
+      "meaning": "Use through the vendor website/account. Do not bundle."
+    }
+  ],
+  "normalized_entities": [
+    "platform_account",
+    "store",
+    "marketplace",
+    "product",
+    "sku",
+    "inventory",
+    "order",
+    "shipment",
+    "return_refund",
+    "review",
+    "customer_message",
+    "ad_account",
+    "campaign",
+    "keyword",
+    "creative",
+    "finance_settlement",
+    "fee",
+    "tax",
+    "competitor_product",
+    "market_keyword",
+    "ops_report"
+  ],
+  "platforms": [
+    {
+      "id": "shopee",
+      "name": "Shopee",
+      "priority": "P0",
+      "current_support": "built_in_local_ziniao_opening_and_visual_ops",
+      "default_route": "Ziniao local browser first, then visual navigation.",
+      "official_urls": [
+        "https://open.shopee.com/",
+        "https://open.shopee.com/developer-guide/4"
+      ],
+      "api_connectors": [
+        {
+          "id": "shopee-open-platform",
+          "name": "Shopee Open Platform",
+          "status": "roadmap_read_only",
+          "official_url": "https://open.shopee.com/",
+          "docs_url": "https://open.shopee.com/developer-guide/4",
+          "read_modules": [
+            "shop account",
+            "orders",
+            "listing",
+            "marketing",
+            "chat"
+          ],
+          "setup_policy": "User-owned app credentials only; store local config under ignored local state."
+        }
+      ]
+    },
+    {
+      "id": "tiktok-shop",
+      "name": "TikTok Shop / Tokopedia Seller Center",
+      "priority": "P0",
+      "current_support": "built_in_local_ziniao_opening_and_visual_ops",
+      "default_route": "Ziniao local browser first, then visual navigation to Compass and operations modules.",
+      "official_urls": [
+        "https://partner.tiktokshop.com/docv2/page/tts-developer-guide",
+        "https://partner.tiktokshop.com/docv2/page/seller-api-overview"
+      ],
+      "api_connectors": [
+        {
+          "id": "tiktok-shop-api",
+          "name": "TikTok Shop API",
+          "status": "roadmap_read_only",
+          "official_url": "https://partner.tiktokshop.com/",
+          "docs_url": "https://partner.tiktokshop.com/docv2/page/tts-developer-guide",
+          "read_modules": [
+            "shops",
+            "products",
+            "orders",
+            "shipments",
+            "payments"
+          ],
+          "setup_policy": "Partner Center app setup required; do not collect credentials through chat."
+        }
+      ]
+    },
+    {
+      "id": "lazada",
+      "name": "Lazada",
+      "priority": "P0",
+      "current_support": "built_in_local_ziniao_gui_opening_and_visual_ops",
+      "default_route": "Ziniao GUI search and switch, then visual navigation to dashboard, discovery, and Sponsored Max.",
+      "official_urls": [
+        "https://open.lazada.com/",
+        "https://open.lazada.com/apps/doc/api"
+      ],
+      "api_connectors": [
+        {
+          "id": "lazada-open-platform",
+          "name": "Lazada Open Platform",
+          "status": "roadmap_read_only",
+          "official_url": "https://open.lazada.com/",
+          "docs_url": "https://open.lazada.com/apps/doc/api",
+          "read_modules": [
+            "products",
+            "inventory",
+            "orders",
+            "finance",
+            "sponsored solutions"
+          ],
+          "setup_policy": "Service Provider or seller-owned app setup required; keep secrets out of the repository."
+        }
+      ]
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "priority": "P0",
+      "current_support": "optional_research_tools_and_roadmap_api",
+      "default_route": "Use official APIs or configured research tools; not opened through Ziniao by default.",
+      "official_urls": [
+        "https://developer.amazonservices.com/",
+        "https://advertising.amazon.com/API/docs"
+      ],
+      "api_connectors": [
+        {
+          "id": "amazon-sp-api",
+          "name": "Amazon Selling Partner API",
+          "status": "roadmap_read_only",
+          "official_url": "https://developer.amazonservices.com/",
+          "docs_url": "https://developer-docs.amazon.com/sp-api/",
+          "read_modules": [
+            "orders",
+            "shipments",
+            "payments",
+            "catalog",
+            "inventory",
+            "reports"
+          ],
+          "setup_policy": "Developer registration, approved roles, and seller authorization required."
+        },
+        {
+          "id": "amazon-ads-api",
+          "name": "Amazon Ads API",
+          "status": "optional_detect_only",
+          "official_url": "https://advertising.amazon.com/API/docs",
+          "docs_url": "https://advertising.amazon.com/API/docs/en-us/reference/api-overview",
+          "mcp_url": "https://advertising.amazon.com/API/docs/en-us/mcp/mcp-overview",
+          "read_modules": [
+            "campaigns",
+            "keywords",
+            "ads",
+            "reports",
+            "budgets"
+          ],
+          "setup_policy": "Advertiser authorization required. Start with reports before any campaign write action."
+        }
+      ]
+    },
+    {
+      "id": "shopify",
+      "name": "Shopify",
+      "priority": "P1",
+      "current_support": "roadmap_read_only",
+      "default_route": "Official Admin GraphQL API after user config.",
+      "official_urls": [
+        "https://shopify.dev/docs/api",
+        "https://shopify.dev/docs/api/admin-graphql/latest"
+      ],
+      "api_connectors": [
+        {
+          "id": "shopify-admin-graphql-api",
+          "name": "Shopify Admin GraphQL API",
+          "status": "roadmap_read_only",
+          "official_url": "https://shopify.dev/docs/api/admin-graphql/latest",
+          "docs_url": "https://shopify.dev/docs/api",
+          "read_modules": [
+            "orders",
+            "products",
+            "inventory",
+            "customers",
+            "fulfillment"
+          ],
+          "setup_policy": "Use a user-owned Shopify app with least-privilege scopes."
+        }
+      ]
+    },
+    {
+      "id": "bigcommerce",
+      "name": "BigCommerce",
+      "priority": "P1",
+      "current_support": "roadmap_read_only",
+      "default_route": "Official BigCommerce APIs after user config.",
+      "official_urls": [
+        "https://docs.bigcommerce.com/",
+        "https://docs.bigcommerce.com/developer/api-reference/about-our-apis"
+      ],
+      "api_connectors": [
+        {
+          "id": "bigcommerce-apis",
+          "name": "BigCommerce APIs",
+          "status": "roadmap_read_only",
+          "official_url": "https://docs.bigcommerce.com/",
+          "docs_url": "https://docs.bigcommerce.com/developer/api-reference/about-our-apis",
+          "read_modules": [
+            "orders",
+            "catalog",
+            "inventory",
+            "customers",
+            "storefront"
+          ],
+          "setup_policy": "User creates API account and grants minimal scopes."
+        }
+      ]
+    }
+  ],
+  "capability_groups": [
+    {
+      "id": "local_store_operations",
+      "priority": "P0",
+      "status": "built_in",
+      "what_it_covers": [
+        "Open local Ziniao store browser",
+        "Reuse current Ziniao/store window",
+        "Navigate seller modules visually",
+        "Generate read-only task plans and reports",
+        "Send reports to Feishu only after confirmation"
+      ],
+      "built_in_entrypoints": [
+        "operate-store.ps1",
+        "open-store.ps1",
+        "open-shop.ps1",
+        "scripts/new-ops-task.ps1",
+        "scripts/new-ops-report.ps1"
+      ]
+    },
+    {
+      "id": "platform_api_data_layer",
+      "priority": "P0",
+      "status": "roadmap_read_only",
+      "what_it_covers": [
+        "Authorized orders",
+        "Products and listings",
+        "Inventory",
+        "Shipments",
+        "Finance and settlement",
+        "Ad reports where official APIs exist"
+      ],
+      "recommended_first_step": "Credential readiness detector and normalized read-only export schema."
+    },
+    {
+      "id": "ads_and_growth",
+      "priority": "P1",
+      "status": "built_in_plus_optional_tools",
+      "what_it_covers": [
+        "Visible ad spend, sales, ROAS, ACOS, CTR, CPC",
+        "Campaign anomaly check",
+        "Amazon Ads API and third-party ad platforms when configured"
+      ]
+    },
+    {
+      "id": "market_research",
+      "priority": "P1",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Product opportunity research",
+        "Keyword demand",
+        "Competitor price and rank history",
+        "Category and share-of-voice monitoring"
+      ]
+    },
+    {
+      "id": "reviews_and_voice_of_customer",
+      "priority": "P1",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Review mining",
+        "Low-star complaint extraction",
+        "Sentiment and product-improvement suggestions",
+        "Listing copy opportunity notes"
+      ]
+    },
+    {
+      "id": "creative_content",
+      "priority": "P1",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Product images",
+        "Main image variants",
+        "Short-form videos",
+        "Ad creative generation"
+      ]
+    },
+    {
+      "id": "customer_service",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Ticket and inbox analytics",
+        "Response-time risk",
+        "Customer-service automation"
+      ]
+    },
+    {
+      "id": "logistics_and_fulfillment",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Shipment tracking",
+        "Carrier label APIs",
+        "Delivery anomaly monitoring",
+        "Return workflows"
+      ]
+    },
+    {
+      "id": "finance_tax_profit",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Payout reconciliation",
+        "Fee and tax checks",
+        "Profit dashboards",
+        "Sales tax calculation APIs"
+      ]
+    },
+    {
+      "id": "multichannel_erp",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "what_it_covers": [
+        "Order centralization",
+        "Inventory sync",
+        "Warehouse workflows",
+        "Cross-channel catalog management"
+      ]
+    },
+    {
+      "id": "repricing",
+      "priority": "P3",
+      "status": "manual_saas",
+      "what_it_covers": [
+        "Amazon repricing",
+        "Buy Box competition",
+        "Margin-aware price rules"
+      ],
+      "write_risk": "High. Do not automate repricing from ziniao-ops without explicit connector design and approvals."
+    }
+  ],
+  "tools": [
+    {
+      "id": "linkfox-skills",
+      "name": "LinkFox Skills",
+      "category": "skill_marketplace",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://skill.linkfox.com/",
+      "use_for": [
+        "Discover cross-border ecommerce skills",
+        "Optional skill installation by the user"
+      ]
+    },
+    {
+      "id": "linkfox-agent",
+      "name": "LinkFox Agent",
+      "category": "market_research",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://agent.linkfox.com/",
+      "use_for": [
+        "Market insight",
+        "Competitor analysis",
+        "Report generation"
+      ]
+    },
+    {
+      "id": "seller-sprite",
+      "name": "Seller Sprite",
+      "category": "market_research",
+      "priority": "P1",
+      "status": "optional_detect_only",
+      "official_url": "https://www.sellersprite.com/cn",
+      "docs_url": "https://open.sellersprite.com/api",
+      "mcp_url": "https://www.sellersprite.com/cn/v3/mcp",
+      "use_for": [
+        "Amazon product research",
+        "Keyword research",
+        "ABA terms",
+        "Competitor and market research"
+      ]
+    },
+    {
+      "id": "keepa",
+      "name": "Keepa",
+      "category": "market_research",
+      "priority": "P1",
+      "status": "optional_detect_only",
+      "official_url": "https://keepa.com/",
+      "docs_url": "https://keepaapi.readthedocs.io/en/latest/",
+      "use_for": [
+        "Amazon price history",
+        "Rank and offer history",
+        "Product tracking"
+      ]
+    },
+    {
+      "id": "jungle-scout",
+      "name": "Jungle Scout",
+      "category": "market_research",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://www.junglescout.com/",
+      "use_for": [
+        "Amazon product research",
+        "Keyword and market intelligence"
+      ]
+    },
+    {
+      "id": "helium-10",
+      "name": "Helium 10",
+      "category": "market_research",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://www.helium10.com/",
+      "use_for": [
+        "Amazon, Walmart, and TikTok Shop seller research",
+        "Keyword and ad workflows"
+      ]
+    },
+    {
+      "id": "datahawk",
+      "name": "DataHawk",
+      "category": "market_research",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://datahawk.co/",
+      "docs_url": "https://docs.datahawk.co/",
+      "use_for": [
+        "Marketplace analytics",
+        "Share of voice",
+        "Alerts and data ownership"
+      ]
+    },
+    {
+      "id": "amazon-reviews",
+      "name": "Amazon Reviews",
+      "category": "reviews_and_voice_of_customer",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://skill.linkfox.com/",
+      "use_for": [
+        "Amazon review filtering",
+        "Sentiment analysis",
+        "Product improvement suggestions"
+      ]
+    },
+    {
+      "id": "voc-ai",
+      "name": "VOC.AI",
+      "category": "reviews_and_voice_of_customer",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://www.voc.ai/",
+      "use_for": [
+        "Ecommerce review insights",
+        "Product move recommendations",
+        "MCP/API route when user configures it"
+      ]
+    },
+    {
+      "id": "shulex-voc",
+      "name": "Shulex VOC",
+      "category": "reviews_and_voice_of_customer",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://insight.shulex.com/product/voice-of-customer-analysis",
+      "use_for": [
+        "Amazon review analysis",
+        "Customer pain point mining",
+        "Listing improvement ideas"
+      ]
+    },
+    {
+      "id": "linkfox-ai",
+      "name": "LinkFox AI",
+      "category": "creative_content",
+      "priority": "P1",
+      "status": "manual_saas",
+      "official_url": "https://skill.linkfox.com/",
+      "use_for": [
+        "Product image workflow",
+        "Main image and video generation"
+      ]
+    },
+    {
+      "id": "creatify",
+      "name": "Creatify",
+      "category": "creative_content",
+      "priority": "P1",
+      "status": "optional_detect_only",
+      "official_url": "https://creatify.ai/",
+      "docs_url": "https://docs.creatify.ai/introduction",
+      "use_for": [
+        "Product URL to video",
+        "AI marketing videos",
+        "Avatar and short video generation"
+      ]
+    },
+    {
+      "id": "canva-developers",
+      "name": "Canva Developers",
+      "category": "creative_content",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://www.canva.com/developers/",
+      "use_for": [
+        "Creative workflow integrations",
+        "Design app integrations"
+      ]
+    },
+    {
+      "id": "pacvue",
+      "name": "Pacvue",
+      "category": "ads_and_growth",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://pacvue.com/",
+      "use_for": [
+        "Retail media optimization",
+        "Cross-retailer ad insights"
+      ]
+    },
+    {
+      "id": "perpetua",
+      "name": "Perpetua",
+      "category": "ads_and_growth",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://perpetua.io/",
+      "use_for": [
+        "Ecommerce advertising software",
+        "Amazon and retail media optimization"
+      ]
+    },
+    {
+      "id": "gorgias",
+      "name": "Gorgias",
+      "category": "customer_service",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://www.gorgias.com/",
+      "docs_url": "https://docs.gorgias.com/en-US/rest-api-208286",
+      "use_for": [
+        "Ecommerce helpdesk",
+        "Support automation",
+        "Ticket and customer-service reporting"
+      ]
+    },
+    {
+      "id": "shipstation",
+      "name": "ShipStation",
+      "category": "logistics_and_fulfillment",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "official_url": "https://www.shipstation.com/documentation/",
+      "docs_url": "https://docs.shipstation.com/",
+      "use_for": [
+        "Orders and shipments",
+        "Rates",
+        "Labels",
+        "Inventory sync"
+      ]
+    },
+    {
+      "id": "shippo",
+      "name": "Shippo",
+      "category": "logistics_and_fulfillment",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "official_url": "https://goshippo.com/products/api",
+      "docs_url": "https://docs.goshippo.com/",
+      "use_for": [
+        "Carrier rates",
+        "Labels",
+        "Tracking",
+        "Returns"
+      ]
+    },
+    {
+      "id": "aftership",
+      "name": "AfterShip",
+      "category": "logistics_and_fulfillment",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "official_url": "https://www.aftership.com/docs",
+      "docs_url": "https://www.aftership.com/docs/tracking/quickstart/api-quick-start",
+      "use_for": [
+        "Tracking API",
+        "Delivery anomaly monitoring",
+        "Returns and post-purchase services"
+      ]
+    },
+    {
+      "id": "taxjar",
+      "name": "TaxJar",
+      "category": "finance_tax_profit",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "official_url": "https://developers.taxjar.com/api/reference/",
+      "use_for": [
+        "Sales tax rates",
+        "Tax calculations",
+        "Transaction upload"
+      ]
+    },
+    {
+      "id": "avalara-avatax",
+      "name": "Avalara AvaTax",
+      "category": "finance_tax_profit",
+      "priority": "P2",
+      "status": "optional_detect_only",
+      "official_url": "https://developer.avalara.com/products/avatax/",
+      "docs_url": "https://developer.avalara.com/api-reference/",
+      "use_for": [
+        "Sales and use tax determination",
+        "Tax compliance workflows"
+      ]
+    },
+    {
+      "id": "rithum",
+      "name": "Rithum / ChannelAdvisor",
+      "category": "multichannel_erp",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://developer.channeladvisor.com/",
+      "use_for": [
+        "Multichannel marketplace integration",
+        "Catalog and order data"
+      ]
+    },
+    {
+      "id": "linnworks",
+      "name": "Linnworks",
+      "category": "multichannel_erp",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://docs.linnworks.com/",
+      "docs_url": "https://apidocs.linnworks.net/docs/introduction",
+      "use_for": [
+        "Inventory",
+        "Order management",
+        "Sales-channel integration"
+      ]
+    },
+    {
+      "id": "sellercloud",
+      "name": "Sellercloud",
+      "category": "multichannel_erp",
+      "priority": "P2",
+      "status": "manual_saas",
+      "official_url": "https://developer.sellercloud.com/",
+      "use_for": [
+        "Catalog",
+        "Orders",
+        "Inventory",
+        "Warehouse workflows"
+      ]
+    },
+    {
+      "id": "seller-snap",
+      "name": "Seller Snap",
+      "category": "repricing",
+      "priority": "P3",
+      "status": "manual_saas",
+      "official_url": "https://sellersnap.io/",
+      "use_for": [
+        "Amazon repricing",
+        "Buy Box and margin-aware pricing"
+      ]
+    },
+    {
+      "id": "feedvisor",
+      "name": "Feedvisor",
+      "category": "repricing",
+      "priority": "P3",
+      "status": "manual_saas",
+      "official_url": "https://feedvisor.com/",
+      "use_for": [
+        "Amazon repricing",
+        "AI pricing optimization"
+      ]
+    },
+    {
+      "id": "streetpricer",
+      "name": "StreetPricer",
+      "category": "repricing",
+      "priority": "P3",
+      "status": "manual_saas",
+      "official_url": "https://streetpricer.com/",
+      "use_for": [
+        "Amazon repricing",
+        "Competitive price monitoring"
+      ]
+    }
+  ],
+  "next_build_items": [
+    {
+      "id": "credential-readiness-detector",
+      "priority": "P0",
+      "description": "Detect whether optional platform API configs exist, without printing credentials."
+    },
+    {
+      "id": "normalized-read-model",
+      "priority": "P0",
+      "description": "Define a local JSON schema for store, order, product, ad, finance, review, logistics, and report data."
+    },
+    {
+      "id": "read-only-platform-connectors",
+      "priority": "P1",
+      "description": "Add opt-in read-only connector scripts for official platform APIs."
+    },
+    {
+      "id": "visible-page-metric-extraction",
+      "priority": "P1",
+      "description": "Improve browser/visual metric extraction after a seller module is opened."
+    }
+  ]
+}

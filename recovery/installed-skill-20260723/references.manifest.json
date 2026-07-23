@@ -1,0 +1,177 @@
+{
+    "schema_version":  1,
+    "algorithm":  "sha256",
+    "reference_root":  "references",
+    "files":  [
+                  {
+                      "path":  "codex-browser.md",
+                      "sha256":  "5369021a9750d8a6cf049b592a08711c76fd610f3561ec39959ed66148dc5cad",
+                      "bytes":  4358
+                  },
+                  {
+                      "path":  "ecommerce-capability-map.json",
+                      "sha256":  "40adaf751827cb9a8abcfae6c350fcda2383749f048fd64bfcc2ebe2027f9581",
+                      "bytes":  22352
+                  },
+                  {
+                      "path":  "ecommerce-capability-map.md",
+                      "sha256":  "87d9d33373c1087a856a2815708c7541257795ae5722a69e0e2cc6936240705a",
+                      "bytes":  2879
+                  },
+                  {
+                      "path":  "external-projects.md",
+                      "sha256":  "b600c3d8abed1d18750a50855538d490b1849eca3d441503184a3dc58c3cb479",
+                      "bytes":  6630
+                  },
+                  {
+                      "path":  "external-tools.json",
+                      "sha256":  "7b8801b882dd5adf16966135257e18e3299cfbe86958cf2b23d3808ef1d8d5ca",
+                      "bytes":  4298
+                  },
+                  {
+                      "path":  "external-tools.md",
+                      "sha256":  "31ebff07a9e8a0973f7cccaafbe6123d4841d36513f94a8b820f7506306812ba",
+                      "bytes":  1834
+                  },
+                  {
+                      "path":  "github-release.md",
+                      "sha256":  "94b3719d2b1a798630e59c0fc6e25b189505a82ac6226e662852202a70358573",
+                      "bytes":  5685
+                  },
+                  {
+                      "path":  "lark-sync.md",
+                      "sha256":  "e07014ada25fc0e97e436f3399f88857abed8c41f7cc3a627788f246faa10a5e",
+                      "bytes":  2256
+                  },
+                  {
+                      "path":  "ops-workflows.json",
+                      "sha256":  "c27752015cb5b332a5ead0ae1fc76fed9f28517f8363d90d18f80255f9b07be1",
+                      "bytes":  8207
+                  },
+                  {
+                      "path":  "ops-workflows.md",
+                      "sha256":  "039b599df346b02463a0e8a8db1c10a8b9a926b84ea4bbb6dfaec355e7b8c2a9",
+                      "bytes":  1719
+                  },
+                  {
+                      "path":  "platform-api-roadmap.md",
+                      "sha256":  "52fa3ca4b84755ed82bd2ad2c41cf2ab8d2a60934937be68ae735bf212b42268",
+                      "bytes":  2912
+                  },
+                  {
+                      "path":  "popup-handling.md",
+                      "sha256":  "4fd69fba73a2152574dcbcc4623992c3e2b274618020ac34f30c7a09ec13e897",
+                      "bytes":  1740
+                  },
+                  {
+                      "path":  "shops-schema.md",
+                      "sha256":  "c005509ca10c40b84ed2bf086324dadbd005b938ae3bd1e6e646f1fce2106183",
+                      "bytes":  3876
+                  },
+                  {
+                      "path":  "upstream-integration.md",
+                      "sha256":  "26fa1f0f622273504e13210e7040c392da714c419684b3943cca7023d1ef5da1",
+                      "bytes":  6447
+                  },
+                  {
+                      "path":  "upstreams.json",
+                      "sha256":  "23c48a8419fff440c9488d86394286c7dc023a1bc6df7609ab96aee8e16762bd",
+                      "bytes":  3766
+                  },
+                  {
+                      "path":  "upstreams.md",
+                      "sha256":  "5013ddebfc8740f7e4535326d525c42d0f3dd3697925a21503655f2819c31e1c",
+                      "bytes":  3465
+                  },
+                  {
+                      "path":  "view-intents.md",
+                      "sha256":  "f38ff6e53d27a0059b7420df142396cdcdd60f5bd8d2afe1e7fdff27e9154b40",
+                      "bytes":  3061
+                  },
+                  {
+                      "path":  "xinjian-erp.md",
+                      "sha256":  "18ddef4c416a3fda5ba9697738960046ad1cc5eac7bf9665bb44233586266835",
+                      "bytes":  14110
+                  },
+                  {
+                      "path":  "xinjian-ui-action-catalog.json",
+                      "sha256":  "c739519ac556320a2cc96a8d2ca9d434cff9404891cb2ed802c63b7ed0a9abfc",
+                      "bytes":  1021686
+                  },
+                  {
+                      "path":  "xinjian-ui-action-catalog.md",
+                      "sha256":  "1ac61ce8f233152f5d94a5bacc4244e9cb5ee71744bd80c6124cd23878c4d19d",
+                      "bytes":  214120
+                  },
+                  {
+                      "path":  "xinjian-ui-action-exercise-report.json",
+                      "sha256":  "1a5de6f53b9cbbc0d099221967a7a2b638966926a59218c245dd54785ef3bc45",
+                      "bytes":  341268
+                  },
+                  {
+                      "path":  "xinjian-ui-action-exercise-report.md",
+                      "sha256":  "2ee3a57a9464ef1ec886fd3829bf498fdf69c0f2c677a52b67d369a6edfbd1bb",
+                      "bytes":  946
+                  },
+                  {
+                      "path":  "xinjian-ui-auto-map.json",
+                      "sha256":  "a817d4a923379f62c4ebc96c7db51413b3cf15fab31425f17755bb62f2c98a72",
+                      "bytes":  630909
+                  },
+                  {
+                      "path":  "xinjian-ui-dialog-map.json",
+                      "sha256":  "4c3e1851a40480fd21962ae4c5e2b7ab0a8c5bee14b22872d12fdc34e6e854d5",
+                      "bytes":  112903
+                  },
+                  {
+                      "path":  "xinjian-ui-live-button-coverage.json",
+                      "sha256":  "08d86a2b684a9eb6f1583aba4c91c82c1ffee414ab78f6c6cddb01b6b5dbe638",
+                      "bytes":  34827
+                  },
+                  {
+                      "path":  "xinjian-ui-live-button-coverage.md",
+                      "sha256":  "e9e1c5ece7a8669c6cb536a3e48b6a15162a02b4ff4c0b8d3daeb8a017d7d585",
+                      "bytes":  696
+                  },
+                  {
+                      "path":  "xinjian-ui-map.json",
+                      "sha256":  "91f9df56aef869c9e9a1f495ee5645dc48d983707347a542e24f65c76cfedf28",
+                      "bytes":  52879
+                  },
+                  {
+                      "path":  "xinjian-ui-map.md",
+                      "sha256":  "83be5c6767dbb5fda56f4e7cd33250b81f8e76faf995b2bca95a04c49daaeabc",
+                      "bytes":  35885
+                  },
+                  {
+                      "path":  "xinjian-ui-overlay-map.json",
+                      "sha256":  "96b5697c48fc6db586b9a4537e0abb6618e148c5a3fb594d4a40cd04b39fd43d",
+                      "bytes":  206744
+                  },
+                  {
+                      "path":  "xinjian-ui-row-action-map.json",
+                      "sha256":  "5e1bcb0fdad2a224aef9c8178b2f9e06e09c8eca67febe9f48380202f70b65ab",
+                      "bytes":  85457
+                  },
+                  {
+                      "path":  "xinjian-ui-rpa-command-inventory.json",
+                      "sha256":  "f4ecd7e8f6b04676f607118b3c9b21dad5f645b37235edbc464815a3f1d0a43a",
+                      "bytes":  6413402
+                  },
+                  {
+                      "path":  "xinjian-ui-rpa-command-inventory.md",
+                      "sha256":  "831e778816086f5e7bdd205068890dc0eab0e9b86c2cd1753fdea85d737a3eb9",
+                      "bytes":  301178
+                  },
+                  {
+                      "path":  "xinjian-ui-rpa-readiness.json",
+                      "sha256":  "7d9d47202aad050fe7d1d9e4583749bb3bc6d779c19f7884688df56b642e2102",
+                      "bytes":  8473
+                  },
+                  {
+                      "path":  "xinjian-ui-rpa-readiness.md",
+                      "sha256":  "3e85c4ea1ceda3bdafeee421bab2556af044ccc6b234bb8d0356a8a637a82e97",
+                      "bytes":  2708
+                  }
+              ]
+}

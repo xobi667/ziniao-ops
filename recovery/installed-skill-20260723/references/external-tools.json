@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "policy": {
+    "default_install": "do_not_install_closed_saas_silently",
+    "auto_update": "only_update_local_open_components; never submit credentials or install paid/SaaS tools without explicit user confirmation",
+    "privacy": "Do not send store names, cookies, screenshots, or seller data to external tools unless the user explicitly asks and the tool/account boundary is clear."
+  },
+  "tools": [
+    {
+      "id": "linkfox-skills",
+      "name": "LinkFox Skills",
+      "category": "skill-marketplace",
+      "official_url": "https://skill.linkfox.com/",
+      "install_mode": "manual_or_linkfox_cli",
+      "requires_account": true,
+      "auto_install_supported": false,
+      "auto_update_supported": false,
+      "check_mode": "html_title_and_skill_versions",
+      "watch": "Cross-border ecommerce skill catalog and install commands.",
+      "adoption": "Use as optional skill source only. Do not bundle third-party skills into ziniao-ops without license and security review."
+    },
+    {
+      "id": "linkfox-agent",
+      "name": "LinkFox Agent",
+      "category": "market-intelligence-agent",
+      "official_url": "https://agent.linkfox.com/",
+      "install_mode": "saas",
+      "requires_account": true,
+      "auto_install_supported": false,
+      "auto_update_supported": false,
+      "check_mode": "http_head",
+      "watch": "Market research, competitor analysis and report generation features.",
+      "adoption": "Route users to this tool for external market/competitor research. Do not make it a default dependency for local Ziniao store opening."
+    },
+    {
+      "id": "linkfox-ai",
+      "name": "LinkFox AI",
+      "category": "creative-automation",
+      "official_url": "https://skill.linkfox.com/",
+      "skill_catalog_name": "LinkFoxAI",
+      "install_mode": "manual_or_linkfox_cli",
+      "requires_account": true,
+      "auto_install_supported": false,
+      "auto_update_supported": false,
+      "check_mode": "linkfox_skill_version",
+      "watch": "Product image, main-image and video generation workflow support.",
+      "adoption": "Recommend for creative asset work. Keep outside default employee-local Ziniao automation."
+    },
+    {
+      "id": "self-improving-agent",
+      "name": "Self Improving Agent",
+      "category": "agent-memory-and-learning",
+      "official_url": "https://skill.linkfox.com/",
+      "skill_catalog_name": "Self Improving Agent",
+      "install_mode": "manual_or_linkfox_cli",
+      "requires_account": true,
+      "auto_install_supported": false,
+      "auto_update_supported": false,
+      "check_mode": "linkfox_skill_version",
+      "watch": "Task reflection, error recording and reusable learning patterns.",
+      "adoption": "Adopt the idea through local, privacy-safe logs in ziniao-ops. Do not send seller data to an external memory tool by default."
+    },
+    {
+      "id": "amazon-reviews",
+      "name": "Amazon Reviews",
+      "category": "review-insights",
+      "official_url": "https://skill.linkfox.com/",
+      "skill_catalog_name": "Amazon Reviews",
+      "install_mode": "manual_or_linkfox_cli",
+      "requires_account": true,
+      "auto_install_supported": false,
+      "auto_update_supported": false,
+      "check_mode": "linkfox_skill_version",
+      "watch": "Amazon review scraping, filtering, sentiment and product-improvement insights.",
+      "adoption": "Useful for Amazon research workflows, not for opening Ziniao seller stores."
+    },
+    {
+      "id": "seller-sprite",
+      "name": "Seller Sprite",
+      "category": "amazon-research-api-mcp",
+      "official_url": "https://www.sellersprite.com/cn",
+      "open_platform_url": "https://open.sellersprite.com/",
+      "api_doc_url": "https://open.sellersprite.com/api",
+      "api_pricing_url": "https://www.sellersprite.com/cn/price/api?type=seller",
+      "mcp_url": "https://www.sellersprite.com/cn/v3/mcp",
+      "install_mode": "api_or_mcp",
+      "requires_account": true,
+      "auto_install_supported": false,
+      "auto_update_supported": false,
+      "check_mode": "http_head",
+      "watch": "Amazon product research, keyword research, pricing, ads, profit and MCP/API changes.",
+      "adoption": "Optional upstream for Amazon research. Require explicit user API/MCP setup before use."
+    }
+  ]
+}

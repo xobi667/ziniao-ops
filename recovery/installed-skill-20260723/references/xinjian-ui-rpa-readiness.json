@@ -1,0 +1,138 @@
+﻿{
+    "ok":  true,
+    "version":  "2026-07-10",
+    "generated_at":  "2026-07-10T03:35:40.4420465Z",
+    "catalog_path":  "references/xinjian-ui-action-catalog.json",
+    "live_coverage_path":  "references/xinjian-ui-live-button-coverage.json",
+    "exercise_report_path":  "references/xinjian-ui-action-exercise-report.json",
+    "command_inventory_path":  "references/xinjian-ui-rpa-command-inventory.json",
+    "totals":  {
+                   "pages":  49,
+                   "actions":  1117,
+                   "safe_execute_allowed":  1025,
+                   "confirmation_required_write":  83,
+                   "confirmation_required_export":  9,
+                   "table_column_memory":  460,
+                   "table_column_readable_with_cdp":  460,
+                   "row_context_required":  12,
+                   "row_context_executable_with_explicit_context":  12,
+                   "row_context_executable_with_resolved_context":  12,
+                   "css_selector_actions":  364
+               },
+    "quality":  {
+                    "ok":  true,
+                    "no_purpose":  0,
+                    "no_function_source":  0,
+                    "no_context":  0,
+                    "manual_review_actions":  0,
+                    "map_only_actions":  0,
+                    "empty_locator_actions":  0
+                },
+    "live_coverage":  {
+                          "loaded":  true,
+                          "pages_selected":  48,
+                          "pages_captured":  47,
+                          "pages_noaccess":  0,
+                          "pages_noaccess_raw":  0,
+                          "pages_restricted_terminal":  1,
+                          "observed_controls":  827,
+                          "matched_controls":  827,
+                          "missing_controls":  0,
+                          "pages_with_missing_controls":  0,
+                          "noaccess_pages":  [
+
+                                             ],
+                          "restricted_terminal_pages":  [
+                                                            {
+                                                                "page_id":  "auto.index.noaccess",
+                                                                "page_name":  "受限页面",
+                                                                "route":  "/index/noaccess",
+                                                                "status":  "restricted_terminal",
+                                                                "captured_path":  "/index/noaccess"
+                                                            }
+                                                        ]
+                      },
+    "safe_action_exercise":  {
+                                 "loaded":  true,
+                                 "executable_actions":  551,
+                                 "attempted_actions":  551,
+                                 "verified_actions":  551,
+                                 "failed_actions":  0,
+                                 "not_attempted_actions":  0
+                             },
+    "command_inventory":  {
+                              "loaded":  true,
+                              "inventory_actions":  1117,
+                              "exact_query_commands":  1117,
+                              "dry_run_commands":  1117,
+                              "safe_execute_commands":  560,
+                              "table_read_commands":  460,
+                              "row_context_command_templates":  12,
+                              "write_confirmation_commands":  83,
+                              "export_confirmation_commands":  9,
+                              "missing_exact_or_dry_run_command":  0
+                          },
+    "execution_guard_plans":  {
+                                  "write_confirmation_follow_up":  83,
+                                  "export_download_follow_up":  9,
+                                  "row_context_required_follow_up":  12,
+                                  "table_column_read_with_cdp":  460
+                              },
+    "remaining_boundaries":  [
+                                 {
+                                     "kind":  "confirmation_required_write",
+                                     "count":  83,
+                                     "meaning":  "Write/delete/save/submit actions are remembered but must not execute without explicit confirmation.",
+                                     "handled_by":  "post_execute.write_confirmation_follow_up"
+                                 },
+                                 {
+                                     "kind":  "confirmation_required_export",
+                                     "count":  9,
+                                     "meaning":  "Export/download actions are remembered but require explicit confirmation before execution.",
+                                     "handled_by":  "post_execute.export_download_follow_up"
+                                 },
+                                 {
+                                     "kind":  "row_context_required",
+                                     "count":  12,
+                                     "meaning":  "Row-level actions need resolved row context: explicit RowIndex/RowText or row intent inferred from phrases such as first row / contains text; the invoker refuses to blindly click a row.",
+                                     "handled_by":  "row_context_follow_up.row_context_required_follow_up"
+                                 }
+                             ],
+    "non_gap_boundaries":  [
+                               {
+                                   "kind":  "restricted_terminal_pages",
+                                   "count":  1,
+                                   "meaning":  "Known Xinjian access-denied terminal pages are tracked separately; they are not missing button memory.",
+                                   "pages":  [
+                                                 {
+                                                     "page_id":  "auto.index.noaccess",
+                                                     "page_name":  "受限页面",
+                                                     "route":  "/index/noaccess",
+                                                     "status":  "restricted_terminal",
+                                                     "captured_path":  "/index/noaccess"
+                                                 }
+                                             ]
+                               },
+                               {
+                                   "kind":  "read_only_table_memory",
+                                   "count":  460,
+                                   "meaning":  "Table columns/metrics are remembered for planning and can be read from the current debuggable page through CDP without clicking; they are intentionally not treated as clickable buttons."
+                               },
+                               {
+                                   "kind":  "write_confirmation_follow_up_plans",
+                                   "count":  83,
+                                   "meaning":  "Write/delete/save/submit buttons have machine-readable post_execute rerun and verification plans; explicit AllowWrite is still required."
+                               },
+                               {
+                                   "kind":  "export_download_follow_up_plans",
+                                   "count":  9,
+                                   "meaning":  "Export/download buttons have machine-readable post_execute rerun, wait-for-download, and download-center fallback plans; explicit AllowExport is still required."
+                               },
+                               {
+                                   "kind":  "row_context_follow_up_plans",
+                                   "count":  12,
+                                   "meaning":  "Row-level buttons have machine-readable rerun plans for RowIndex or RowText; the invoker still refuses to blindly click the first row."
+                               }
+                           ],
+    "next_action":  "rpa_memory_ready_for_accessible_visible_safe_controls"
+}

@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "workflows": [
+    {
+      "id": "quick_start",
+      "name": "Open store and show action menu",
+      "phrases": ["操作一下", "看一下", "看看", "打开店铺操作", "进入店铺操作", "进店铺", "开店铺", "店铺后台", "不知道点什么", "能干嘛", "下一步"],
+      "views": ["overview"],
+      "required_metrics": [
+        "page_loaded",
+        "visible_summary_kpis",
+        "visible_todo_badges",
+        "visible_alerts"
+      ],
+      "questions": [
+        "店铺后台是否已经正常打开",
+        "首页是否有待处理事项、红点、告警或明显异常",
+        "用户下一步更可能需要看订单、广告、商品、客服售后、财务还是营销"
+      ]
+    },
+    {
+      "id": "daily_check",
+      "name": "Daily store health check",
+      "phrases": ["巡店", "日报", "每天检查", "今日店铺", "店铺体检", "全部情况", "全店巡检", "daily", "health"],
+      "views": ["overview", "orders", "ads", "business", "finance", "chat", "returns"],
+      "required_metrics": [
+        "sales_amount",
+        "orders_count",
+        "conversion_rate",
+        "visitors",
+        "ad_spend",
+        "ad_sales",
+        "roas",
+        "pending_shipments",
+        "unread_messages",
+        "refund_or_return_count",
+        "available_balance"
+      ],
+      "questions": [
+        "今天销售额、订单数、转化率是否异常",
+        "广告花费、广告销售额、ROAS 是否异常",
+        "是否有待发货、退款售后、未读客服消息需要处理",
+        "是否有财务回款或余额异常"
+      ]
+    },
+    {
+      "id": "overview",
+      "name": "Overall data summary",
+      "phrases": ["全部数据", "总览", "概览", "整体情况", "全部情况", "summary", "overview"],
+      "views": ["overview", "business"],
+      "required_metrics": ["sales_amount", "orders_count", "visitors", "conversion_rate", "average_order_value"],
+      "questions": ["整体数据是否异常", "和昨日/上周相比变化最大的是哪项"]
+    },
+    {
+      "id": "ads",
+      "name": "Ads performance check",
+      "phrases": ["广告", "广告数据", "投流", "投放", "ads", "sponsored"],
+      "views": ["ads"],
+      "required_metrics": ["ad_spend", "impressions", "clicks", "ctr", "cpc", "ad_sales", "roas", "acos"],
+      "questions": ["广告是否超预算", "ROAS/ACOS 是否异常", "哪些计划需要人工复核"]
+    },
+    {
+      "id": "orders",
+      "name": "Order operation check",
+      "phrases": ["订单", "出单", "待发货", "未发货", "orders"],
+      "views": ["orders", "logistics"],
+      "required_metrics": ["orders_count", "pending_shipments", "cancelled_orders", "late_shipments"],
+      "questions": ["是否有待发货或即将超时订单", "是否有异常取消或物流风险"]
+    },
+    {
+      "id": "products",
+      "name": "Product/listing check",
+      "phrases": ["商品", "产品", "刊登", "listing", "sku"],
+      "views": ["products", "inventory"],
+      "required_metrics": ["active_products", "inactive_products", "out_of_stock_skus", "low_stock_skus"],
+      "questions": ["是否有下架/违规/库存不足商品", "是否有需要补货或优化的 SKU"]
+    },
+    {
+      "id": "inventory",
+      "name": "Inventory risk check",
+      "phrases": ["库存", "缺货", "低库存", "补货", "仓库", "stock", "inventory"],
+      "views": ["inventory", "products"],
+      "required_metrics": ["out_of_stock_skus", "low_stock_skus", "reserved_stock", "available_stock"],
+      "questions": ["是否有缺货或低库存 SKU", "是否有库存同步异常或需要补货的商品"]
+    },
+    {
+      "id": "traffic",
+      "name": "Traffic and conversion check",
+      "phrases": ["流量", "访客", "曝光", "点击", "转化", "traffic", "visitor", "conversion"],
+      "views": ["traffic", "business", "overview"],
+      "required_metrics": ["visitors", "impressions", "clicks", "ctr", "conversion_rate", "average_order_value"],
+      "questions": ["流量、点击、转化是否异常", "变化最大的是曝光、点击率、转化率还是客单价"]
+    },
+    {
+      "id": "finance",
+      "name": "Finance check",
+      "phrases": ["财务", "钱包", "结算", "回款", "账单", "finance", "wallet"],
+      "views": ["finance"],
+      "required_metrics": ["available_balance", "pending_payout", "settlement_amount", "fees"],
+      "questions": ["余额、结算、手续费是否异常", "是否有待处理账单"]
+    },
+    {
+      "id": "reviews",
+      "name": "Review and rating risk check",
+      "phrases": ["评价", "评论", "差评", "星级", "review", "rating"],
+      "views": ["reviews", "products"],
+      "required_metrics": ["negative_reviews", "low_star_reviews", "unreplied_reviews", "product_issue_keywords"],
+      "questions": ["是否有低星评价或差评需要处理", "评论里是否暴露质量、物流、尺码、包装或功能问题"]
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics and fulfillment check",
+      "phrases": ["物流", "发货", "履约", "运单", "面单", "shipping", "logistics", "fulfillment"],
+      "views": ["logistics", "orders"],
+      "required_metrics": ["pending_shipments", "late_shipments", "failed_pickups", "tracking_anomalies"],
+      "questions": ["是否有待发货、即将超时或物流异常", "是否有面单、揽收或跟踪问题需要人工处理"]
+    },
+    {
+      "id": "returns",
+      "name": "Return and after-sale risk check",
+      "phrases": ["售后", "退款", "退货", "退货退款", "returns", "refund"],
+      "views": ["returns", "orders", "reviews"],
+      "required_metrics": ["refund_or_return_count", "pending_after_sale", "dispute_count", "return_reasons"],
+      "questions": ["是否有待处理售后、退款或争议", "退款原因是否指向商品、物流或客服问题"]
+    },
+    {
+      "id": "service",
+      "name": "Customer service and after-sale check",
+      "phrases": ["客服", "消息", "回复", "会话", "chat", "message", "inbox"],
+      "views": ["chat", "returns", "reviews"],
+      "required_metrics": ["unread_messages", "response_risk_count", "refund_or_return_count", "negative_reviews"],
+      "questions": ["是否有未读消息或回复超时风险", "是否有退款售后或差评需要人工处理"]
+    },
+    {
+      "id": "compliance",
+      "name": "Listing and account compliance check",
+      "phrases": ["违规", "下架", "审核", "封禁", "限制", "处罚", "合规", "compliance", "violation"],
+      "views": ["products", "overview"],
+      "required_metrics": ["policy_warnings", "suspended_listings", "restricted_products", "account_health_alerts"],
+      "questions": ["是否有商品下架、审核失败或账号健康告警", "是否有需要人工复核的平台政策风险"]
+    },
+    {
+      "id": "creative",
+      "name": "Creative asset operation check",
+      "phrases": ["素材", "主图", "图片", "视频", "商拍", "creative", "image", "video"],
+      "views": ["products", "marketing"],
+      "required_metrics": ["products_missing_images", "products_with_weak_media", "campaign_creative_needs"],
+      "questions": ["哪些商品素材需要优化", "是否需要转到 LinkFox AI、Creatify 或 Canva 等外部工具"]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing activity check",
+      "phrases": ["营销", "优惠券", "活动", "直播", "联盟", "marketing", "campaign"],
+      "views": ["marketing", "vouchers", "campaigns", "livestream", "affiliate"],
+      "required_metrics": ["active_campaigns", "voucher_usage", "affiliate_sales", "livestream_sales"],
+      "questions": ["活动/优惠券是否正常", "是否有报名、直播或联盟机会"]
+    }
+  ],
+  "safe_rules": [
+    "Read visible data only unless the user explicitly authorizes a safe export.",
+    "Do not click submit, publish, spend, refund, delete, edit settings, or payment buttons.",
+    "Do not handle passwords, verification codes, cookies, tokens, or browser session data.",
+    "Do not claim a module was checked unless it was actually opened or visible data was provided."
+  ]
+}

@@ -7,3 +7,6 @@
 *.csv text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
+
+# Recovery snapshots must remain byte-for-byte identical to their manifests.
+recovery/installed-skill-*/** binary

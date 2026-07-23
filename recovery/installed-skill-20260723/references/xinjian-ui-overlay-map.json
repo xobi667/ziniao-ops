@@ -1,0 +1,5021 @@
+{
+  "version": "2026-07-09",
+  "system": "xinjian_erp",
+  "source": "generated_from_sanitized_cdp_overlay_captures",
+  "generated_at": "2026-07-09T03:27:24.433Z",
+  "policy": {
+    "default_mode": "read_only_map_first",
+    "note": "Overlay map stores generic dropdown/menu/date/select item labels only. Private-looking option values are filtered at capture time.",
+    "write_action_rule": "Overlay write/export/batch/edit/save/delete actions are confirmation-required until manually verified."
+  },
+  "pages": [
+    {
+      "id": "overlay.ad.group.detail",
+      "name": "广告详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/group-detail\\/?$",
+      "url_contains": [
+        "/ad/group-detail"
+      ],
+      "title_aliases": [
+        "广告详情 - 心舰",
+        "广告详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 广告详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/group-detail",
+        "captured_page_title": "广告详情 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 7,
+          "overlays": 1,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.ad.group.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 广告详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.white-box:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.group.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 广告详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.white-box:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.group.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 广告详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.white-box:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.ad.originality.detail",
+      "name": "创意详情",
+      "module": "ADS",
+      "route_pattern": "^/ad/originality-detail\\/?$",
+      "url_contains": [
+        "/ad/originality-detail"
+      ],
+      "title_aliases": [
+        "创意详情 - 心舰",
+        "创意详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 创意详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/originality-detail",
+        "captured_page_title": "创意详情 - 心舰",
+        "captured_counts": {
+          "triggers": 5,
+          "overlays_with_items": 3,
+          "items": 7,
+          "filtered_items": 23,
+          "overlays": 4,
+          "overlay_actions": 11
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择创意状态",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 9,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 0,
+            "items": [
+              "按视频名称",
+              "按视频ID号",
+              "按Tiktok账号"
+            ]
+          },
+          {
+            "trigger": "选择批量操作",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 2,
+            "items": [
+              "添加至广告计划",
+              "批量排除"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.请选择创意状态",
+          "name": "请选择创意状态",
+          "aliases": [
+            "请选择创意状态"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择创意状态 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择创意状态",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.multiple-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按视频名称",
+          "name": "按视频名称",
+          "aliases": [
+            "按视频名称",
+            "请选择按视频名称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按视频名称 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按视频名称",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按视频id号",
+          "name": "按视频ID号",
+          "aliases": [
+            "按视频ID号",
+            "请选择按视频ID号"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按视频ID号 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按视频ID号",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.请选择.按tiktok账号",
+          "name": "按Tiktok账号",
+          "aliases": [
+            "按Tiktok账号",
+            "请选择按Tiktok账号"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按Tiktok账号 from the 请选择 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按Tiktok账号",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.first > div.el-form-item.join.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_trigger.选择批量操作",
+          "name": "选择批量操作",
+          "aliases": [
+            "选择批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.添加至广告计划",
+          "name": "批量添加至广告计划",
+          "aliases": [
+            "添加至广告计划",
+            "选择批量操作添加至广告计划",
+            "批量添加至广告计划",
+            "至广告计划添加"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 添加至广告计划 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "添加至广告计划",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.originality.detail.overlay_item.选择批量操作.批量排除",
+          "name": "批量排除",
+          "aliases": [
+            "批量排除",
+            "选择批量操作批量排除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量排除 from the 选择批量操作 overlay on 创意详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "选择批量操作",
+            "item_text": "批量排除",
+            "trigger_selector": "div.app-container.flex-column-box > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.batch-control-inline > div.el-select.batch-action-select.el-select--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.ad.shop.detail",
+      "name": "店铺广告分析",
+      "module": "ADS",
+      "route_pattern": "^/ad/shop-detail\\/?$",
+      "url_contains": [
+        "/ad/shop-detail"
+      ],
+      "title_aliases": [
+        "店铺广告分析 - 心舰",
+        "店铺广告分析"
+      ],
+      "purpose": "Auto-generated overlay memory for 店铺广告分析.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ad/shop-detail",
+        "captured_page_title": "店铺广告分析 - 心舰",
+        "captured_counts": {
+          "triggers": 6,
+          "overlays_with_items": 2,
+          "items": 5,
+          "filtered_items": 18,
+          "overlays": 4,
+          "overlay_actions": 8
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 3,
+            "filtered_item_count": 0,
+            "items": [
+              "按店铺",
+              "按人员",
+              "按负责人"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.ad.shop.detail.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_item.请选择.按店铺",
+          "name": "按店铺",
+          "aliases": [
+            "按店铺",
+            "请选择按店铺"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按店铺 from the 请选择 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按店铺",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_item.请选择.按人员",
+          "name": "按人员",
+          "aliases": [
+            "按人员",
+            "请选择按人员"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按人员 from the 请选择 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按人员",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_item.请选择.按负责人",
+          "name": "按负责人",
+          "aliases": [
+            "按负责人",
+            "请选择按负责人"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按负责人 from the 请选择 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按负责人",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.el-cascader.el-cascader--small:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.ad.shop.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 店铺广告分析.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.app-container:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.erp.ads.rule.log",
+      "name": "广告规则执行日志",
+      "module": "ADS",
+      "route_pattern": "^/erp/ads/rule-log\\/?$",
+      "url_contains": [
+        "/erp/ads/rule-log"
+      ],
+      "title_aliases": [
+        "广告规则执行日志 - 心舰",
+        "广告规则执行日志"
+      ],
+      "purpose": "Auto-generated overlay memory for 广告规则执行日志.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/erp/ads/rule-log/",
+        "captured_page_title": "广告规则执行日志 - 心舰",
+        "captured_counts": {
+          "triggers": 5,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 18,
+          "overlays": 4,
+          "overlay_actions": 7
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "成功",
+              "失败"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 6,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.noBorderStyle.join-left-right.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.请选择.成功",
+          "name": "成功",
+          "aliases": [
+            "成功",
+            "请选择成功"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 成功 from the 请选择 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "成功",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.请选择.失败",
+          "name": "失败",
+          "aliases": [
+            "失败",
+            "请选择失败"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 失败 from the 请选择 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "失败",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.erp.ads.rule.log.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 广告规则执行日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.log-header:nth-of-type(1) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.ai.talk",
+      "name": "创作会话",
+      "module": "AI",
+      "route_pattern": "^/ai/talk\\/?$",
+      "url_contains": [
+        "/ai/talk"
+      ],
+      "title_aliases": [
+        "创作会话 - 心舰",
+        "创作会话"
+      ],
+      "purpose": "Auto-generated overlay memory for 创作会话.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/ai/talk",
+        "captured_page_title": "创作会话 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.bi.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated overlay memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 10,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 41,
+          "overlays": 4,
+          "overlay_actions": 6
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.bi.aftersalesorder.index.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.bi.aftersalesorder.index.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.myCascader.el-cascader.el-cascader--small"
+          }
+        },
+        {
+          "id": "overlay.bi.aftersalesorder.index.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.aftersalesorder.index.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.aftersalesorder.index.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.aftersalesorder.index.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "div.table-card.panel-card:nth-of-type(1) > div.table-toolbar-card.panel-card:nth-of-type(1) > div.control-row.flex-row > div:nth-of-type(1) > div.after-sales-table-control-left > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.bi.monitor.pushflowstats",
+      "name": "推送监控",
+      "module": "BI",
+      "route_pattern": "^/bi/monitor/pushFlowStats\\/?$",
+      "url_contains": [
+        "/bi/monitor/pushFlowStats"
+      ],
+      "title_aliases": [
+        "推送监控 - 心舰",
+        "推送监控"
+      ],
+      "purpose": "Auto-generated overlay memory for 推送监控.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/monitor/pushFlowStats/",
+        "captured_page_title": "推送监控 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.bi.operationcenter.aftersaleorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSaleOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSaleOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated overlay memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSaleOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 10,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 41,
+          "overlays": 4,
+          "overlay_actions": 6
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.myCascader.el-cascader.el-cascader--small"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersaleorder.index.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "div.table-card.panel-card:nth-of-type(1) > div.table-toolbar-card.panel-card:nth-of-type(1) > div.control-row.flex-row > div:nth-of-type(1) > div.after-sales-table-control-left > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.bi.operationcenter.aftersalesorder.index",
+      "name": "售后单管理",
+      "module": "BI",
+      "route_pattern": "^/bi/operationCenter/afterSalesOrder/index\\/?$",
+      "url_contains": [
+        "/bi/operationCenter/afterSalesOrder/index"
+      ],
+      "title_aliases": [
+        "售后单管理 - 心舰",
+        "售后单管理"
+      ],
+      "purpose": "Auto-generated overlay memory for 售后单管理.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/operationCenter/afterSalesOrder/index",
+        "captured_page_title": "售后单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 10,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 41,
+          "overlays": 4,
+          "overlay_actions": 6
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.myCascader.el-cascader.el-cascader--small"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line:nth-of-type(1) > div.first.flex-wrap-row.has-currency-action > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.bi.operationcenter.aftersalesorder.index.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 售后单管理.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "div.table-card.panel-card:nth-of-type(1) > div.table-toolbar-card.panel-card:nth-of-type(1) > div.control-row.flex-row > div:nth-of-type(1) > div.after-sales-table-control-left > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.bi.profit.detail",
+      "name": "店铺利润分析详情",
+      "module": "BI",
+      "route_pattern": "^/bi/profit/detail\\/?$",
+      "url_contains": [
+        "/bi/profit/detail"
+      ],
+      "title_aliases": [
+        "店铺利润分析详情 - 心舰",
+        "店铺利润分析详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 店铺利润分析详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bi/profit/detail",
+        "captured_page_title": "店铺利润分析详情 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 7,
+          "overlays": 1,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.bi.profit.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 店铺利润分析详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.bi.profit.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 店铺利润分析详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.bi.profit.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 店铺利润分析详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.dataview.data.overview",
+      "name": "数据概览",
+      "module": "BI",
+      "route_pattern": "^/dataView/data-overview\\/?$",
+      "url_contains": [
+        "/dataView/data-overview"
+      ],
+      "title_aliases": [
+        "数据概览 - 心舰",
+        "数据概览"
+      ],
+      "purpose": "Auto-generated overlay memory for 数据概览.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/dataView/data-overview",
+        "captured_page_title": "数据概览 - 心舰",
+        "captured_counts": {
+          "triggers": 7,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 62,
+          "overlays": 5,
+          "overlay_actions": 7
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 21,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "搜索商品名称或链接ID",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.dataview.data.overview.overlay_trigger.全部商务",
+          "name": "全部商务",
+          "aliases": [
+            "全部商务"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 全部商务 overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.dataview.data.overview.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.dataview.data.overview.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.dataview.data.overview.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.dataview.data.overview.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.white-box:nth-of-type(2) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.dataview.data.overview.overlay_trigger.搜索商品名称或链接id",
+          "name": "搜索商品名称或链接ID",
+          "aliases": [
+            "搜索商品名称或链接ID"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 搜索商品名称或链接ID overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "搜索商品名称或链接ID",
+            "trigger_selector": "div.white-box:nth-of-type(2) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.dataview.data.overview.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 数据概览.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "section.app-main.height-auto > div.app-container > div:nth-of-type(8) > div.white-box > div.rank-filter-row:nth-of-type(3) > div.el-select.rank-limit-select.el-select--small:nth-of-type(1)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.user.analyze.detail",
+      "name": "商品复购分析报告详情",
+      "module": "BI",
+      "route_pattern": "^/user-analyze/detail\\/?$",
+      "url_contains": [
+        "/user-analyze/detail"
+      ],
+      "title_aliases": [
+        "商品复购分析报告详情 - 心舰",
+        "商品复购分析报告详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 商品复购分析报告详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/user-analyze/detail",
+        "captured_page_title": "商品复购分析报告详情 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 7,
+          "overlays": 1,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.user.analyze.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 商品复购分析报告详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.join.el-form-item--small > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.user.analyze.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 商品复购分析报告详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.join.el-form-item--small > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.user.analyze.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 商品复购分析报告详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.join.el-form-item--small > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.coopera.detail",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/coopera-detail\\/?$",
+      "url_contains": [
+        "/crm/coopera-detail"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/coopera-detail",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.crm.cooperation.detail",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/cooperation-detail\\/?$",
+      "url_contains": [
+        "/crm/cooperation-detail"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.crm.cooperation.detail.simple",
+      "name": "合作单详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/cooperation-detail-simple\\/?$",
+      "url_contains": [
+        "/crm/cooperation-detail-simple"
+      ],
+      "title_aliases": [
+        "合作单详情 - 心舰",
+        "合作单详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 合作单详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/cooperation-detail-simple",
+        "captured_page_title": "合作单详情 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.crm.favorite.detail",
+      "name": "收藏夹详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/favorite/detail\\/?$",
+      "url_contains": [
+        "/crm/favorite/detail"
+      ],
+      "title_aliases": [
+        "收藏夹详情 - 心舰",
+        "收藏夹详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 收藏夹详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/favorite/detail",
+        "captured_page_title": "收藏夹详情 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 7,
+          "overlays": 2,
+          "overlay_actions": 2
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "邀约次数",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.crm.favorite.detail.overlay_trigger.邀约次数",
+          "name": "邀约次数",
+          "aliases": [
+            "邀约次数"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 邀约次数 overlay on 收藏夹详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "邀约次数",
+            "trigger_selector": "div.app-wrapper.hideSidebar > div.main-container:nth-of-type(2) > section.app-main > div.container > div.condition:nth-of-type(2) > div.el-select.el-select--medium:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.favorite.detail.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 收藏夹详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "section.app-main > div.container > div.content:nth-of-type(3) > div.control-row.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.matser.management.blacklist",
+      "name": "黑名单",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/blacklist\\/?$",
+      "url_contains": [
+        "/crm/matser/management/blacklist"
+      ],
+      "title_aliases": [
+        "黑名单 - 心舰",
+        "黑名单"
+      ],
+      "purpose": "Auto-generated overlay memory for 黑名单.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/blacklist",
+        "captured_page_title": "黑名单 - 心舰",
+        "captured_counts": {
+          "triggers": 6,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 61,
+          "overlays": 5,
+          "overlay_actions": 9
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 20,
+            "items": []
+          },
+          {
+            "trigger": "达人标签",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 29,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_trigger.全部商务",
+          "name": "全部商务",
+          "aliases": [
+            "全部商务"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 全部商务 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_trigger.达人标签",
+          "name": "达人标签",
+          "aliases": [
+            "达人标签"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 达人标签 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "达人标签",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.tag-filter-cascader.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_trigger.品类",
+          "name": "品类",
+          "aliases": [
+            "品类"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 品类 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.请选择.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.blacklist.overlay_item.请选择.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 黑名单.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box.flex-row.align-center:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(5) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.matser.management.focus",
+      "name": "重点关注",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/focus\\/?$",
+      "url_contains": [
+        "/crm/matser/management/focus"
+      ],
+      "title_aliases": [
+        "重点关注 - 心舰",
+        "重点关注"
+      ],
+      "purpose": "Auto-generated overlay memory for 重点关注.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/focus",
+        "captured_page_title": "重点关注 - 心舰",
+        "captured_counts": {
+          "triggers": 8,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 71,
+          "overlays": 7,
+          "overlay_actions": 10
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 20,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 8,
+            "items": []
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 29,
+            "items": []
+          },
+          {
+            "trigger": "状态",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 5,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_trigger.全部商务",
+          "name": "全部商务",
+          "aliases": [
+            "全部商务"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 全部商务 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.filterable-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_trigger.选择标签",
+          "name": "选择标签",
+          "aliases": [
+            "选择标签"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择标签 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.blacklist-filter-item:nth-of-type(3) > div.el-form-item__content > div.crmCascader.tag-filter-cascader.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_trigger.品类",
+          "name": "品类",
+          "aliases": [
+            "品类"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 品类 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.blacklist-filter-item:nth-of-type(4) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_trigger.状态",
+          "name": "状态",
+          "aliases": [
+            "状态"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 状态 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "状态",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.blacklist-filter-item:nth-of-type(5) > div.el-form-item__content > div.el-select.multiple-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(6) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(6) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(6) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_item.请选择.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.focus.overlay_item.请选择.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 重点关注.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.matser.management.highseas",
+      "name": "达人公海",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/highSeas\\/?$",
+      "url_contains": [
+        "/crm/matser/management/highSeas"
+      ],
+      "title_aliases": [
+        "达人公海 - 心舰",
+        "达人公海"
+      ],
+      "purpose": "Auto-generated overlay memory for 达人公海.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/highSeas",
+        "captured_page_title": "达人公海 - 心舰",
+        "captured_counts": {
+          "triggers": 11,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 77,
+          "overlays": 8,
+          "overlay_actions": 11
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 29,
+            "items": []
+          },
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 21,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 8,
+            "items": []
+          },
+          {
+            "trigger": "年龄分布",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 5,
+            "items": []
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "批量删除",
+              "信息更新"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.myCascader.placeholder666.el-cascader"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.品类",
+          "name": "品类",
+          "aliases": [
+            "品类"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 品类 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.crmCascader.category-filter-select.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.全部商务",
+          "name": "全部商务",
+          "aliases": [
+            "全部商务"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 全部商务 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.placeholder666.filterable-select"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.年龄分布",
+          "name": "年龄分布",
+          "aliases": [
+            "年龄分布"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 年龄分布 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.选择标签",
+          "name": "选择标签",
+          "aliases": [
+            "选择标签"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择标签 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.crmCascader.w160.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.请选择.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.white-box:nth-of-type(1) > form.el-form.myForm.crm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(9) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.批量操作.批量删除",
+          "name": "批量删除",
+          "aliases": [
+            "批量删除",
+            "批量操作批量删除"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 批量删除 from the 批量操作 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "批量删除",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.highseas.overlay_item.批量操作.信息更新",
+          "name": "批量信息更新",
+          "aliases": [
+            "信息更新",
+            "批量操作信息更新",
+            "批量信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 批量操作 overlay on 达人公海.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "信息更新",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.matser.management.mymaster",
+      "name": "我的达人",
+      "module": "CRM",
+      "route_pattern": "^/crm/matser/management/myMaster\\/?$",
+      "url_contains": [
+        "/crm/matser/management/myMaster"
+      ],
+      "title_aliases": [
+        "我的达人 - 心舰",
+        "我的达人"
+      ],
+      "purpose": "Auto-generated overlay memory for 我的达人.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/matser/management/myMaster",
+        "captured_page_title": "我的达人 - 心舰",
+        "captured_counts": {
+          "triggers": 10,
+          "overlays_with_items": 3,
+          "items": 6,
+          "filtered_items": 78,
+          "overlays": 8,
+          "overlay_actions": 13
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "全部商务",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 28,
+            "items": []
+          },
+          {
+            "trigger": "选择标签",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "品类",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 29,
+            "items": []
+          },
+          {
+            "trigger": "年龄分布",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 5,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "达人ID",
+              "达人昵称"
+            ]
+          },
+          {
+            "trigger": "批量操作",
+            "trigger_type": "dropdown",
+            "item_count": 2,
+            "filtered_item_count": 2,
+            "items": [
+              "转移达人",
+              "信息更新"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.全部商务",
+          "name": "全部商务",
+          "aliases": [
+            "全部商务"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 全部商务 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "全部商务",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.filterable-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.选择标签",
+          "name": "选择标签",
+          "aliases": [
+            "选择标签"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择标签 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择标签",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.my-master-filter-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.crmCascader.my-master-tag-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.品类",
+          "name": "品类",
+          "aliases": [
+            "品类"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 品类 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "品类",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.my-master-filter-item:nth-of-type(4) > div.el-form-item__content > div.crmCascader.my-master-category-filter.placeholder666"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.年龄分布",
+          "name": "年龄分布",
+          "aliases": [
+            "年龄分布"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 年龄分布 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "年龄分布",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.follower-age-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-select.placeholder666.el-select--mini"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.mr10.no-border:nth-of-type(7) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人id",
+          "name": "达人ID",
+          "aliases": [
+            "达人ID",
+            "请选择达人ID"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人ID from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人ID",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.请选择.达人昵称",
+          "name": "达人昵称",
+          "aliases": [
+            "达人昵称",
+            "请选择达人昵称"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 达人昵称 from the 请选择 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "达人昵称",
+            "trigger_selector": "div.searchView.flex-col.mb10:nth-of-type(1) > div.new-condition.flex-row > form.el-form.myCrmForm.el-form--inline > div.el-form-item.join.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-select.joinSelect.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_trigger.批量操作",
+          "name": "批量操作",
+          "aliases": [
+            "批量操作"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.批量操作.转移达人",
+          "name": "批量转移达人",
+          "aliases": [
+            "转移达人",
+            "批量操作转移达人",
+            "批量转移达人"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 转移达人 from the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "转移达人",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.crm.matser.management.mymaster.overlay_item.批量操作.信息更新",
+          "name": "批量信息更新",
+          "aliases": [
+            "信息更新",
+            "批量操作信息更新",
+            "批量信息更新"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_write",
+          "purpose": "Choose 信息更新 from the 批量操作 overlay on 我的达人.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "批量操作",
+            "item_text": "信息更新",
+            "trigger_selector": "div#scrollView > div.white-box:nth-of-type(2) > div.control-row.flex-row:nth-of-type(2) > div:nth-of-type(1) > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.crm.shop.detail",
+      "name": "店铺详情",
+      "module": "CRM",
+      "route_pattern": "^/crm/shop-detail\\/?$",
+      "url_contains": [
+        "/crm/shop-detail"
+      ],
+      "title_aliases": [
+        "店铺详情 - 心舰",
+        "店铺详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 店铺详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/crm/shop-detail",
+        "captured_page_title": "店铺详情 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 5,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.bpm.manager.definition",
+      "name": "流程定义",
+      "module": "ERP",
+      "route_pattern": "^/bpm/manager/definition\\/?$",
+      "url_contains": [
+        "/bpm/manager/definition"
+      ],
+      "title_aliases": [
+        "流程定义 - 心舰",
+        "流程定义"
+      ],
+      "purpose": "Auto-generated overlay memory for 流程定义.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/manager/definition",
+        "captured_page_title": "流程定义 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.bpm.oa.leave.create",
+      "name": "发起 OA 请假",
+      "module": "ERP",
+      "route_pattern": "^/bpm/oa/leave/create\\/?$",
+      "url_contains": [
+        "/bpm/oa/leave/create"
+      ],
+      "title_aliases": [
+        "发起 OA 请假 - 心舰",
+        "发起 OA 请假"
+      ],
+      "purpose": "Auto-generated overlay memory for 发起 OA 请假.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/create",
+        "captured_page_title": "发起 OA 请假 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 3,
+          "overlays": 3,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "选择开始时间",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "选择结束时间",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 3,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.bpm.oa.leave.create.overlay_trigger.选择开始时间",
+          "name": "选择开始时间",
+          "aliases": [
+            "选择开始时间"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择开始时间 overlay on 发起 OA 请假.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择开始时间",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form > div.el-form-item.el-form-item--medium:nth-of-type(1) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small"
+          }
+        },
+        {
+          "id": "overlay.bpm.oa.leave.create.overlay_trigger.选择结束时间",
+          "name": "选择结束时间",
+          "aliases": [
+            "选择结束时间"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择结束时间 overlay on 发起 OA 请假.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择结束时间",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form > div.el-form-item.el-form-item--medium:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small"
+          }
+        },
+        {
+          "id": "overlay.bpm.oa.leave.create.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 发起 OA 请假.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form > div.el-form-item.el-form-item--medium:nth-of-type(3) > div.el-form-item__content > div.el-select.el-select--medium"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.bpm.oa.leave.detail",
+      "name": "查看 OA 请假",
+      "module": "ERP",
+      "route_pattern": "^/bpm/oa/leave/detail\\/?$",
+      "url_contains": [
+        "/bpm/oa/leave/detail"
+      ],
+      "title_aliases": [
+        "查看 OA 请假 - 心舰",
+        "查看 OA 请假"
+      ],
+      "purpose": "Auto-generated overlay memory for 查看 OA 请假.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/oa/leave/detail",
+        "captured_page_title": "查看 OA 请假 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.bpm.process.instance.create",
+      "name": "发起流程",
+      "module": "ERP",
+      "route_pattern": "^/bpm/process-instance/create\\/?$",
+      "url_contains": [
+        "/bpm/process-instance/create"
+      ],
+      "title_aliases": [
+        "发起流程 - 心舰",
+        "发起流程"
+      ],
+      "purpose": "Auto-generated overlay memory for 发起流程.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/create",
+        "captured_page_title": "发起流程 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.bpm.process.instance.detail",
+      "name": "流程详情",
+      "module": "ERP",
+      "route_pattern": "^/bpm/process-instance/detail\\/?$",
+      "url_contains": [
+        "/bpm/process-instance/detail"
+      ],
+      "title_aliases": [
+        "流程详情 - 心舰",
+        "流程详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 流程详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/bpm/process-instance/detail",
+        "captured_page_title": "流程详情 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.erp.blacklist",
+      "name": "黑名单管理",
+      "module": "ERP",
+      "route_pattern": "^/erp/blacklist\\/?$",
+      "url_contains": [
+        "/erp/blacklist"
+      ],
+      "title_aliases": [
+        "黑名单管理 - 心舰",
+        "黑名单管理"
+      ],
+      "purpose": "Auto-generated overlay memory for 黑名单管理.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/erp/blacklist",
+        "captured_page_title": "黑名单管理 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.job.log",
+      "name": "调度日志",
+      "module": "ERP",
+      "route_pattern": "^/job/log\\/?$",
+      "url_contains": [
+        "/job/log"
+      ],
+      "title_aliases": [
+        "调度日志 - 心舰",
+        "调度日志"
+      ],
+      "purpose": "Auto-generated overlay memory for 调度日志.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/job/log",
+        "captured_page_title": "调度日志 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 1,
+          "overlays": 3,
+          "overlay_actions": 5
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "选择开始执行时间",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "选择结束执行时间",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "请选择任务状态",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 1,
+            "items": [
+              "成功",
+              "失败"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.job.log.overlay_trigger.选择开始执行时间",
+          "name": "选择开始执行时间",
+          "aliases": [
+            "选择开始执行时间"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择开始执行时间 overlay on 调度日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择开始执行时间",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small"
+          }
+        },
+        {
+          "id": "overlay.job.log.overlay_trigger.选择结束执行时间",
+          "name": "选择结束执行时间",
+          "aliases": [
+            "选择结束执行时间"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择结束执行时间 overlay on 调度日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择结束执行时间",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small"
+          }
+        },
+        {
+          "id": "overlay.job.log.overlay_trigger.请选择任务状态",
+          "name": "请选择任务状态",
+          "aliases": [
+            "请选择任务状态"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择任务状态 overlay on 调度日志.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择任务状态",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.job.log.overlay_item.请选择任务状态.成功",
+          "name": "成功",
+          "aliases": [
+            "成功",
+            "请选择任务状态成功"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 成功 from the 请选择任务状态 overlay on 调度日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择任务状态",
+            "item_text": "成功",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.job.log.overlay_item.请选择任务状态.失败",
+          "name": "失败",
+          "aliases": [
+            "失败",
+            "请选择任务状态失败"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 失败 from the 请选择任务状态 overlay on 调度日志.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择任务状态",
+            "item_text": "失败",
+            "trigger_selector": "section.app-main > div.app-container > form.el-form.el-form--inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.monitor.message.list",
+      "name": "预警消息",
+      "module": "ERP",
+      "route_pattern": "^/monitor/message_list\\/?$",
+      "url_contains": [
+        "/monitor/message_list"
+      ],
+      "title_aliases": [
+        "预警消息 - 心舰",
+        "预警消息"
+      ],
+      "purpose": "Auto-generated overlay memory for 预警消息.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/monitor/message_list",
+        "captured_page_title": "预警消息 - 心舰",
+        "captured_counts": {
+          "triggers": 7,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 28,
+          "overlays": 4,
+          "overlay_actions": 7
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 8,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "按店铺",
+              "按人员"
+            ]
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.monitor.message.list.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline > div:nth-of-type(1) > div.el-form-item.el-form-item--small > div.el-form-item__content > div.el-select.shop-groups.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.monitor.message.list.overlay_item.请选择.按店铺",
+          "name": "按店铺",
+          "aliases": [
+            "按店铺",
+            "请选择按店铺"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按店铺 from the 请选择 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按店铺",
+            "trigger_selector": "div.my-content.el-col.el-col-20:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.monitor.message.list.overlay_item.请选择.按人员",
+          "name": "按人员",
+          "aliases": [
+            "按人员",
+            "请选择按人员"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按人员 from the 请选择 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按人员",
+            "trigger_selector": "div.my-content.el-col.el-col-20:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.monitor.message.list.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.my-content.el-col.el-col-20:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.join.myJoin:nth-of-type(2) > div.el-form-item__content > div.noBorderStyle.join-left-right.el-cascader:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.monitor.message.list.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.my-content.el-col.el-col-20:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.monitor.message.list.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.my-content.el-col.el-col-20:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.monitor.message.list.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 预警消息.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.my-content.el-col.el-col-20:nth-of-type(2) > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.order.sku.min.price",
+      "name": "SKU最低售价配置",
+      "module": "ERP",
+      "route_pattern": "^/order/sku-min-price\\/?$",
+      "url_contains": [
+        "/order/sku-min-price"
+      ],
+      "title_aliases": [
+        "SKU最低售价配置 - 心舰",
+        "SKU最低售价配置"
+      ],
+      "purpose": "Auto-generated overlay memory for SKU最低售价配置.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/order/sku-min-price/",
+        "captured_page_title": "SKU最低售价配置 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 1,
+          "items": 1,
+          "filtered_items": 8,
+          "overlays": 2,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "导入导出",
+            "trigger_type": "dropdown",
+            "item_count": 1,
+            "filtered_item_count": 1,
+            "items": [
+              "导出最低售价"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.order.sku.min.price.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on SKU最低售价配置.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-cascader.el-cascader--small"
+          }
+        },
+        {
+          "id": "overlay.order.sku.min.price.overlay_trigger.导入导出",
+          "name": "导入导出",
+          "aliases": [
+            "导入导出"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 导入导出 overlay on SKU最低售价配置.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "导入导出",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-dropdown"
+          }
+        },
+        {
+          "id": "overlay.order.sku.min.price.overlay_item.导入导出.导出最低售价",
+          "name": "导出最低售价",
+          "aliases": [
+            "导出最低售价",
+            "导入导出导出最低售价",
+            "最低售价导出"
+          ],
+          "type": "overlay_item",
+          "safety": "confirmation_required_export",
+          "purpose": "Choose 导出最低售价 from the 导入导出 overlay on SKU最低售价配置.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "导入导出",
+            "item_text": "导出最低售价",
+            "trigger_selector": "div.app-container.flex-column-box > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-dropdown"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.product.data.detail",
+      "name": "商品评论详情",
+      "module": "ERP",
+      "route_pattern": "^/product-data/detail\\/?$",
+      "url_contains": [
+        "/product-data/detail"
+      ],
+      "title_aliases": [
+        "商品评论详情 - 心舰",
+        "商品评论详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 商品评论详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/product-data/detail",
+        "captured_page_title": "商品评论详情 - 心舰",
+        "captured_counts": {
+          "triggers": 7,
+          "overlays_with_items": 2,
+          "items": 4,
+          "filtered_items": 21,
+          "overlays": 3,
+          "overlay_actions": 6
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "未处理",
+              "已处理"
+            ]
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.product.data.detail.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 商品评论详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.product.data.detail.overlay_item.请选择.未处理",
+          "name": "未处理",
+          "aliases": [
+            "未处理",
+            "请选择未处理"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 未处理 from the 请选择 overlay on 商品评论详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "未处理",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.product.data.detail.overlay_item.请选择.已处理",
+          "name": "已处理",
+          "aliases": [
+            "已处理",
+            "请选择已处理"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 已处理 from the 请选择 overlay on 商品评论详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "已处理",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.product.data.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 商品评论详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.product.data.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 商品评论详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.product.data.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 商品评论详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.app-container > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(6) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.product.data.performance.detail",
+      "name": "商品表现分析",
+      "module": "ERP",
+      "route_pattern": "^/product-data/performance-detail\\/?$",
+      "url_contains": [
+        "/product-data/performance-detail"
+      ],
+      "title_aliases": [
+        "商品表现分析 - 心舰",
+        "商品表现分析"
+      ],
+      "purpose": "Auto-generated overlay memory for 商品表现分析.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/product-data/performance-detail",
+        "captured_page_title": "商品表现分析 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.product.sku.inventoryreport.detail",
+      "name": "进销存详情",
+      "module": "ERP",
+      "route_pattern": "^/product-sku/InventoryReport_detail\\/?$",
+      "url_contains": [
+        "/product-sku/InventoryReport_detail"
+      ],
+      "title_aliases": [
+        "进销存详情 - 心舰",
+        "进销存详情"
+      ],
+      "purpose": "Auto-generated overlay memory for 进销存详情.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/product-sku/InventoryReport_detail",
+        "captured_page_title": "进销存详情 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 12,
+          "overlays": 2,
+          "overlay_actions": 4
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.product.sku.inventoryreport.detail.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 进销存详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm.el-form--inline > div.inline.small-screen-2line > div.first > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.product.sku.inventoryreport.detail.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 进销存详情.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "form.el-form.myForm.el-form--inline > div.inline.small-screen-2line > div.first > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.product.sku.inventoryreport.detail.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 进销存详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "form.el-form.myForm.el-form--inline > div.inline.small-screen-2line > div.first > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.product.sku.inventoryreport.detail.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 进销存详情.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "form.el-form.myForm.el-form--inline > div.inline.small-screen-2line > div.first > div.el-form-item.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.report.center.detail.performance",
+      "name": "业绩利润报表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/performance\\/?$",
+      "url_contains": [
+        "/report-center/detail/performance"
+      ],
+      "title_aliases": [
+        "业绩利润报表 - 心舰",
+        "业绩利润报表"
+      ],
+      "purpose": "Auto-generated overlay memory for 业绩利润报表.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/performance",
+        "captured_page_title": "业绩利润报表 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 18,
+          "overlays": 3,
+          "overlay_actions": 5
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择运营人员",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 18,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "按回款时间",
+              "按下单时间"
+            ]
+          },
+          {
+            "trigger": "选择日期",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.report.center.detail.performance.overlay_trigger.请选择运营人员",
+          "name": "请选择运营人员",
+          "aliases": [
+            "请选择运营人员"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择运营人员 overlay on 业绩利润报表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择运营人员",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.multiple-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.performance.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 业绩利润报表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.performance.overlay_item.请选择.按回款时间",
+          "name": "按回款时间",
+          "aliases": [
+            "按回款时间",
+            "请选择按回款时间"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按回款时间 from the 请选择 overlay on 业绩利润报表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按回款时间",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.performance.overlay_item.请选择.按下单时间",
+          "name": "按下单时间",
+          "aliases": [
+            "按下单时间",
+            "请选择按下单时间"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按下单时间 from the 请选择 overlay on 业绩利润报表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按下单时间",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.performance.overlay_trigger.选择日期",
+          "name": "选择日期",
+          "aliases": [
+            "选择日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择日期 overlay on 业绩利润报表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择日期",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small:nth-of-type(2)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.report.center.detail.shop",
+      "name": "店铺利润报表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/shop\\/?$",
+      "url_contains": [
+        "/report-center/detail/shop"
+      ],
+      "title_aliases": [
+        "店铺利润报表 - 心舰",
+        "店铺利润报表"
+      ],
+      "purpose": "Auto-generated overlay memory for 店铺利润报表.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shop",
+        "captured_page_title": "店铺利润报表 - 心舰",
+        "captured_counts": {
+          "triggers": 4,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 6,
+          "overlays": 4,
+          "overlay_actions": 5
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 2,
+            "filtered_item_count": 0,
+            "items": [
+              "按回款时间",
+              "按下单时间"
+            ]
+          },
+          {
+            "trigger": "选择日期",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.report.center.detail.shop.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 店铺利润报表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm.el-form--inline > div.inline > div:nth-of-type(1) > div.el-form-item.el-form-item--small > div.el-form-item__content > div.el-select.shop-groups.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shop.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 店铺利润报表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-cascader.el-cascader--small"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shop.overlay_item.请选择.按回款时间",
+          "name": "按回款时间",
+          "aliases": [
+            "按回款时间",
+            "请选择按回款时间"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按回款时间 from the 请选择 overlay on 店铺利润报表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按回款时间",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shop.overlay_item.请选择.按下单时间",
+          "name": "按下单时间",
+          "aliases": [
+            "按下单时间",
+            "请选择按下单时间"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 按下单时间 from the 请选择 overlay on 店铺利润报表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "item_text": "按下单时间",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shop.overlay_trigger.选择日期",
+          "name": "选择日期",
+          "aliases": [
+            "选择日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择日期 overlay on 店铺利润报表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择日期",
+            "trigger_selector": "div.queryRow:nth-of-type(1) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small:nth-of-type(2)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.report.center.detail.shopeegoods",
+      "name": "Shopee商品数据表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/shopeeGoods\\/?$",
+      "url_contains": [
+        "/report-center/detail/shopeeGoods"
+      ],
+      "title_aliases": [
+        "Shopee商品数据表 - 心舰",
+        "Shopee商品数据表"
+      ],
+      "purpose": "Auto-generated overlay memory for Shopee商品数据表.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeGoods",
+        "captured_page_title": "Shopee商品数据表 - 心舰",
+        "captured_counts": {
+          "triggers": 1,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 7,
+          "overlays": 1,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.report.center.detail.shopeegoods.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on Shopee商品数据表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shopeegoods.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on Shopee商品数据表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shopeegoods.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on Shopee商品数据表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.report.center.detail.shopeeshop",
+      "name": "Shopee店铺数据表",
+      "module": "ERP",
+      "route_pattern": "^/report-center/detail/shopeeShop\\/?$",
+      "url_contains": [
+        "/report-center/detail/shopeeShop"
+      ],
+      "title_aliases": [
+        "Shopee店铺数据表 - 心舰",
+        "Shopee店铺数据表"
+      ],
+      "purpose": "Auto-generated overlay memory for Shopee店铺数据表.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/report-center/detail/shopeeShop",
+        "captured_page_title": "Shopee店铺数据表 - 心舰",
+        "captured_counts": {
+          "triggers": 3,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 11,
+          "overlays": 3,
+          "overlay_actions": 5
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 4,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.report.center.detail.shopeeshop.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on Shopee店铺数据表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm.el-form--inline > div.inline > div:nth-of-type(1) > div.el-form-item.el-form-item--small > div.el-form-item__content > div.el-select.shop-groups.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shopeeshop.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on Shopee店铺数据表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.noSelect.el-cascader.el-cascader--small"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shopeeshop.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on Shopee店铺数据表.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shopeeshop.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on Shopee店铺数据表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        },
+        {
+          "id": "overlay.report.center.detail.shopeeshop.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on Shopee店铺数据表.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.queryRow:nth-of-type(2) > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(3) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.shop.auth",
+      "name": "授权结果",
+      "module": "ERP",
+      "route_pattern": "^/shop/auth\\/?$",
+      "url_contains": [
+        "/shop/auth"
+      ],
+      "title_aliases": [
+        "授权结果 - 心舰",
+        "授权结果"
+      ],
+      "purpose": "Auto-generated overlay memory for 授权结果.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop/auth",
+        "captured_page_title": "授权结果 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.shop.auth.fail",
+      "name": "授权失败",
+      "module": "ERP",
+      "route_pattern": "^/shop/auth-fail\\/?$",
+      "url_contains": [
+        "/shop/auth-fail"
+      ],
+      "title_aliases": [
+        "授权失败 - 心舰",
+        "授权失败"
+      ],
+      "purpose": "Auto-generated overlay memory for 授权失败.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop/auth-fail",
+        "captured_page_title": "授权失败 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.shop.data.performance.board",
+      "name": "店铺表现看板",
+      "module": "ERP",
+      "route_pattern": "^/shop-data/performance-board\\/?$",
+      "url_contains": [
+        "/shop-data/performance-board"
+      ],
+      "title_aliases": [
+        "店铺表现看板 - 心舰",
+        "店铺表现看板"
+      ],
+      "purpose": "Auto-generated overlay memory for 店铺表现看板.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop-data/performance-board",
+        "captured_page_title": "店铺表现看板 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.shop.data.performance.detail",
+      "name": "店铺表现分析",
+      "module": "ERP",
+      "route_pattern": "^/shop-data/performance-detail\\/?$",
+      "url_contains": [
+        "/shop-data/performance-detail"
+      ],
+      "title_aliases": [
+        "店铺表现分析 - 心舰",
+        "店铺表现分析"
+      ],
+      "purpose": "Auto-generated overlay memory for 店铺表现分析.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/shop-data/performance-detail",
+        "captured_page_title": "店铺表现分析 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.system.costom.fee",
+      "name": "自定义费用",
+      "module": "ERP",
+      "route_pattern": "^/system/costom-fee\\/?$",
+      "url_contains": [
+        "/system/costom-fee"
+      ],
+      "title_aliases": [
+        "自定义费用 - 心舰",
+        "自定义费用"
+      ],
+      "purpose": "Auto-generated overlay memory for 自定义费用.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/system/costom-fee",
+        "captured_page_title": "自定义费用 - 心舰",
+        "captured_counts": {
+          "triggers": 4,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 19,
+          "overlays": 3,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 2,
+            "items": []
+          },
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 12,
+            "items": []
+          },
+          {
+            "trigger": "选择月",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.system.costom.fee.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 自定义费用.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line > div.first:nth-of-type(1) > div.el-form-item.el-form-item--small:nth-of-type(4) > div.el-form-item__content > div.el-cascader.el-cascader--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.system.costom.fee.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 自定义费用.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line > div.first:nth-of-type(1) > div.el-form-item.el-form-item--small:nth-of-type(7) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.system.costom.fee.overlay_trigger.选择月",
+          "name": "选择月",
+          "aliases": [
+            "选择月"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择月 overlay on 自定义费用.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择月",
+            "trigger_selector": "form.el-form.myForm > div.inline.small-screen-2line > div.first:nth-of-type(1) > div.el-form-item.el-form-item--small:nth-of-type(8) > div.el-form-item__content > div.el-date-editor.el-input.el-input--small"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.system.package.open.record",
+      "name": "套餐开通记录",
+      "module": "ERP",
+      "route_pattern": "^/system/package-open-record\\/?$",
+      "url_contains": [
+        "/system/package-open-record"
+      ],
+      "title_aliases": [
+        "套餐开通记录 - 心舰",
+        "套餐开通记录"
+      ],
+      "purpose": "Auto-generated overlay memory for 套餐开通记录.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/system/package-open-record/",
+        "captured_page_title": "套餐开通记录 - 心舰",
+        "captured_counts": {
+          "triggers": 2,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 1,
+          "overlays": 2,
+          "overlay_actions": 2
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 1,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.system.package.open.record.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 套餐开通记录.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.app-container.flex-column-box.package-open-record > form.el-form.myForm > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.join-right.el-select--small:nth-of-type(1)"
+          }
+        },
+        {
+          "id": "overlay.system.package.open.record.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 套餐开通记录.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.app-container.flex-column-box.package-open-record > form.el-form.myForm > div.inline > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.user.package",
+      "name": "单量套餐",
+      "module": "ERP",
+      "route_pattern": "^/user/package\\/?$",
+      "url_contains": [
+        "/user/package"
+      ],
+      "title_aliases": [
+        "单量套餐 - 心舰",
+        "单量套餐"
+      ],
+      "purpose": "Auto-generated overlay memory for 单量套餐.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/user/package",
+        "captured_page_title": "单量套餐 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    },
+    {
+      "id": "overlay.download.list",
+      "name": "下载中心",
+      "module": "System",
+      "route_pattern": "^/download/list\\/?$",
+      "url_contains": [
+        "/download/list"
+      ],
+      "title_aliases": [
+        "下载中心 - 心舰",
+        "下载中心"
+      ],
+      "purpose": "Auto-generated overlay memory for 下载中心.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/download/list",
+        "captured_page_title": "下载中心 - 心舰",
+        "captured_counts": {
+          "triggers": 4,
+          "overlays_with_items": 1,
+          "items": 2,
+          "filtered_items": 19,
+          "overlays": 2,
+          "overlay_actions": 4
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 5,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 2,
+            "filtered_item_count": 7,
+            "items": [
+              "今天",
+              "昨天"
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.download.list.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 下载中心.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.app-container > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.el-form-item--small:nth-of-type(1) > div.el-form-item__content > div.el-select.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.download.list.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 下载中心.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.app-container > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.download.list.overlay_item.开始日期.今天",
+          "name": "今天",
+          "aliases": [
+            "今天",
+            "开始日期今天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 今天 from the 开始日期 overlay on 下载中心.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "今天",
+            "trigger_selector": "div.app-container > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.download.list.overlay_item.开始日期.昨天",
+          "name": "昨天",
+          "aliases": [
+            "昨天",
+            "开始日期昨天"
+          ],
+          "type": "overlay_item",
+          "safety": "read_filter",
+          "purpose": "Choose 昨天 from the 开始日期 overlay on 下载中心.",
+          "function_source": "auto-generated from observed overlay item; item was not clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "item_text": "昨天",
+            "trigger_selector": "div.app-container > form.el-form.myForm.el-form--inline > div.inline > div.el-form-item.join.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.index.home",
+      "name": "首页",
+      "module": "System",
+      "route_pattern": "^/index/home\\/?$",
+      "url_contains": [
+        "/index/home"
+      ],
+      "title_aliases": [
+        "首页 - 心舰",
+        "首页"
+      ],
+      "purpose": "Auto-generated overlay memory for 首页.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/index/home",
+        "captured_page_title": "首页 - 心舰",
+        "captured_counts": {
+          "triggers": 9,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 3,
+          "overlay_actions": 3
+        },
+        "coverage_result": "actions_promoted",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": [
+          {
+            "trigger": "请选择",
+            "trigger_type": "select",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "选择店铺",
+            "trigger_type": "cascader",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          },
+          {
+            "trigger": "开始日期",
+            "trigger_type": "date_picker",
+            "item_count": 0,
+            "filtered_item_count": 0,
+            "items": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "overlay.index.home.overlay_trigger.请选择",
+          "name": "请选择",
+          "aliases": [
+            "请选择"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 请选择 overlay on 首页.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "请选择",
+            "trigger_selector": "div.inline > div.flex-row:nth-of-type(1) > div:nth-of-type(1) > div.el-form-item.el-form-item--small > div.el-form-item__content > div.el-select.shop-groups.el-select--small"
+          }
+        },
+        {
+          "id": "overlay.index.home.overlay_trigger.选择店铺",
+          "name": "选择店铺",
+          "aliases": [
+            "选择店铺"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 选择店铺 overlay on 首页.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "选择店铺",
+            "trigger_selector": "form.el-form.myForm > div.inline > div.flex-row:nth-of-type(1) > div.el-form-item.el-form-item--small:nth-of-type(2) > div.el-form-item__content > div.el-cascader.el-cascader--small:nth-of-type(2)"
+          }
+        },
+        {
+          "id": "overlay.index.home.overlay_trigger.开始日期",
+          "name": "开始日期",
+          "aliases": [
+            "开始日期"
+          ],
+          "type": "overlay_trigger",
+          "safety": "view_setting",
+          "purpose": "Open the 开始日期 overlay on 首页.",
+          "function_source": "auto-generated from observed overlay trigger; trigger opened but no overlay item clicked",
+          "locator": {
+            "trigger_text": "开始日期",
+            "trigger_selector": "div.flex-row:nth-of-type(2) > div.flex-col:nth-of-type(1) > div.white-box:nth-of-type(2) > div.title:nth-of-type(1) > div.flex-box:nth-of-type(2) > div.el-date-editor.el-range-editor.el-input__inner:nth-of-type(2)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "overlay.index.thali",
+      "name": "套餐",
+      "module": "System",
+      "route_pattern": "^/index/thali\\/?$",
+      "url_contains": [
+        "/index/thali"
+      ],
+      "title_aliases": [
+        "套餐 - 心舰",
+        "套餐"
+      ],
+      "purpose": "Auto-generated overlay memory for 套餐.",
+      "evidence": {
+        "source": "chrome_cdp_overlay_probe",
+        "captured_page_url": "https://erp.xinjianerp.com/index/thali",
+        "captured_page_title": "套餐 - 心舰",
+        "captured_counts": {
+          "triggers": 0,
+          "overlays_with_items": 0,
+          "items": 0,
+          "filtered_items": 0,
+          "overlays": 0,
+          "overlay_actions": 0
+        },
+        "coverage_result": "probe_ran_no_public_overlay_actions",
+        "function_source": "observed overlay triggers and sanitized generic overlay items; overlay items not clicked"
+      },
+      "observed_controls": {
+        "overlays": []
+      },
+      "actions": []
+    }
+  ]
+}
